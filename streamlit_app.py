@@ -195,9 +195,14 @@ companies = {
         ],
         "opportunities": [
             {
+                "Prioritet": "🟢 Høy",
                 "Mulighet": "Undervannsdroner / AUV / ROV OEM-kunder",
                 "Segment": "Oceans + Water Linked",
                 "Sannsynlighet": "Høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Overvåkes",
+                "Neste trigger": "Nye OEM-avtaler, messer eller produktintegrasjoner",
+                "Sist oppdatert": "14.09.2026",
                 "Kommentar": (
                     "Water Linked gir NORBIT DVL, 3D-sonar, modem og posisjonering. "
                     "Kombinasjonen øker muligheten for kryssalg til produsenter av "
@@ -205,27 +210,42 @@ companies = {
                 ),
             },
             {
+                "Prioritet": "🟢 Høy",
                 "Mulighet": "Undervannssikring av kritisk infrastruktur",
                 "Segment": "Oceans / Security",
                 "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Overvåkes",
+                "Neste trigger": "Nye havne-, energi- eller forsvarsanskaffelser",
+                "Sist oppdatert": "14.09.2026",
                 "Kommentar": (
                     "Falcon Eye-kontrakten og eksisterende overvåkningssonarer gir "
                     "referanser mot havner, energi, forsvar og andre sikringsanlegg."
                 ),
             },
             {
+                "Prioritet": "🟡 Middels–høy",
                 "Mulighet": "Nye defence & security-ordre i PIR",
                 "Segment": "PIR",
                 "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Overvåkes",
+                "Neste trigger": "Nye kundeordre eller økt produksjonskapasitet",
+                "Sist oppdatert": "14.09.2026",
                 "Kommentar": (
                     "PIR har sterk vekst fra forsvar og sikkerhet. Kapasitetsøkninger "
                     "kan støtte nye og større produksjonsordre."
                 ),
             },
             {
+                "Prioritet": "🟡 Middels",
                 "Mulighet": "Flere GNSS OBU-ordre i Europa",
                 "Segment": "Connectivity",
                 "Sannsynlighet": "Middels",
+                "Est. verdi (MNOK)": None,
+                "Status": "Overvåkes",
+                "Neste trigger": "Nye volumordre fra europeiske bomoperatører",
+                "Sist oppdatert": "14.09.2026",
                 "Kommentar": (
                     "Gjenta ordre fra Toll4Europe viser høy kundelojalitet og fortsatt "
                     "etterspørsel etter satellittbaserte bombrikker."
@@ -568,13 +588,15 @@ elif side == "Selskaper":
             )
 
             st.subheader("Hva vi følger videre")
-            st.write(
-                "• Omsetningsvekst mot 2030-målet\n"
-                "• EBIT-margin mot målintervallet 20–25 %\n"
-                "• EPS-vekst og kontantkonvertering\n"
-                "• Utvikling i ROCE\n"
-                "• Netto gjeld / EBITDA etter oppkjøp\n"
-                "• Segmentmiks mellom Oceans, Connectivity og PIR"
+            st.markdown(
+                """
+- Omsetningsvekst mot 2030-målet
+- EBIT-margin mot målintervallet 20–25 %
+- EPS-vekst og kontantkonvertering
+- Utvikling i ROCE
+- Netto gjeld / EBITDA etter oppkjøp
+- Segmentmiks mellom Oceans, Connectivity og PIR
+                """
             )
 
         # -------------------------------------------------
@@ -609,17 +631,69 @@ elif side == "Selskaper":
         # KONTRAKTER
         # -------------------------------------------------
         with tab5:
+            known_contract_value = sum(
+                item["Verdi (MNOK)"]
+                for item in info["contracts"]
+                if isinstance(item["Verdi (MNOK)"], (int, float))
+            )
+            active_opportunities = len(info["opportunities"])
+            contract_segments = len({
+                item["Segment"] for item in info["contracts"] + info["opportunities"]
+            })
+
+            st.subheader("Kontraktsmonitor")
+
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Kjent annonsert verdi", f"{known_contract_value:,.0f} MNOK".replace(",", " "))
+            c2.metric("Annonserte kontrakter", len(info["contracts"]))
+            c3.metric("Aktive muligheter", active_opportunities)
+            c4.metric("Segmenter overvåket", contract_segments)
+
+            st.caption(
+                "Kjent annonsert verdi summerer bare kontrakter der NORBIT har oppgitt verdi. "
+                "Falcon Eye-kontrakten er derfor ikke inkludert i summen."
+            )
+
             st.subheader("Annonserte kontrakter")
             df_contracts = pd.DataFrame(info["contracts"])
-            st.dataframe(df_contracts, use_container_width=True, hide_index=True)
+            st.dataframe(
+                df_contracts,
+                use_container_width=True,
+                hide_index=True
+            )
 
-            st.subheader("Mulige kommende kontrakter / vekstområder")
+            st.subheader("Potensielle kontrakter og anbud")
             df_opp = pd.DataFrame(info["opportunities"])
-            st.dataframe(df_opp, use_container_width=True, hide_index=True)
+            opp_cols = [
+                "Prioritet",
+                "Mulighet",
+                "Segment",
+                "Sannsynlighet",
+                "Est. verdi (MNOK)",
+                "Status",
+                "Neste trigger",
+                "Sist oppdatert",
+                "Kommentar",
+            ]
+            st.dataframe(
+                df_opp[opp_cols],
+                use_container_width=True,
+                hide_index=True
+            )
 
             st.warning(
-                "Tabellen over muligheter er vår analyse, ikke annonserte kontrakter. "
-                "Sannsynlighet og mulig verdi skal oppdateres når ny informasjon kommer."
+                "Potensielle kontrakter/anbud er vår analyse, ikke annonserte ordre. "
+                "Estimert verdi står tom der vi ikke har et forsvarlig offentlig anslag."
+            )
+
+            st.subheader("Hva bør overvåkes nå?")
+            st.markdown(
+                """
+- Nye AUV/ROV-OEM-avtaler etter Water Linked-integrasjonen
+- Nye sikringsprosjekter for havner, energi og kritisk infrastruktur
+- Nye defence & security-produksjonsordre i PIR
+- Nye GNSS OBU-volumordre i Europa
+                """
             )
 
         # -------------------------------------------------
@@ -689,16 +763,41 @@ elif side == "Nyheter":
 elif side == "Kontrakter":
     st.header("Kontraktsmonitor")
 
+    norbit = companies["NORBIT"]
+    known_contract_value = sum(
+        item["Verdi (MNOK)"]
+        for item in norbit["contracts"]
+        if isinstance(item["Verdi (MNOK)"], (int, float))
+    )
+
+    c1, c2, c3 = st.columns(3)
+    c1.metric("NORBIT – kjent annonsert verdi", f"{known_contract_value:,.0f} MNOK".replace(",", " "))
+    c2.metric("Annonserte kontrakter", len(norbit["contracts"]))
+    c3.metric("Aktive muligheter", len(norbit["opportunities"]))
+
     st.subheader("NORBIT – annonserte kontrakter")
     st.dataframe(
-        pd.DataFrame(companies["NORBIT"]["contracts"]),
+        pd.DataFrame(norbit["contracts"]),
         use_container_width=True,
         hide_index=True
     )
 
-    st.subheader("NORBIT – mulige kommende kontrakter")
+    st.subheader("NORBIT – potensielle kontrakter og anbud")
+    df_opp = pd.DataFrame(norbit["opportunities"])
     st.dataframe(
-        pd.DataFrame(companies["NORBIT"]["opportunities"]),
+        df_opp[
+            [
+                "Prioritet",
+                "Mulighet",
+                "Segment",
+                "Sannsynlighet",
+                "Est. verdi (MNOK)",
+                "Status",
+                "Neste trigger",
+                "Sist oppdatert",
+                "Kommentar",
+            ]
+        ],
         use_container_width=True,
         hide_index=True
     )
