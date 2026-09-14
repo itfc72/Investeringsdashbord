@@ -380,7 +380,7 @@ elif side == "Selskaper":
         )
         k6.metric(
             "Netto gjeld / EBITDA",
-            f"{info['nibd_ebitda']:.1f}x".replace(".", ",")
+            f"{info['nibd_ebitda']:.1f}x".replace(".", ",").replace(".", ",")
         )
 
         st.divider()
@@ -438,7 +438,7 @@ elif side == "Selskaper":
             h1, h2, h3 = st.columns(3)
             h1.metric(
                 "Omsetning",
-                f"{info['h1']['revenue']:.1f} MNOK".replace(".", ",")
+                f"{info['h1']['revenue']:,.1f} MNOK".replace(",", " ").replace(".", ",")
             )
             h2.metric(
                 "Vekst",
@@ -471,7 +471,7 @@ elif side == "Selskaper":
             )
             b2.metric(
                 "NIBD / EBITDA",
-                f"{info['nibd_ebitda']:.1f}x"
+                f"{info['nibd_ebitda']:.1f}x".replace(".", ",")
             )
             b3.metric(
                 "FCF LTM",
@@ -500,24 +500,81 @@ elif side == "Selskaper":
         # NØKKELTALL
         # -------------------------------------------------
         with tab2:
-            st.subheader("Historiske nøkkeltall")
-            df_fin = pd.DataFrame(info["financials"])
-            st.dataframe(df_fin, use_container_width=True, hide_index=True)
+            st.subheader("Nøkkeltall – utvikling")
 
-            st.subheader("Segmenter – Q2 2026")
-            df_seg = pd.DataFrame(info["segments_q2"])
-            st.dataframe(df_seg, use_container_width=True, hide_index=True)
+            key_rows = []
+            for row in info["financials"]:
+                key_rows.append({
+                    "Periode": row["Periode"],
+                    "Omsetning (MNOK)": row["Omsetning"],
+                    "Vekst": row["Vekst"],
+                    "EBIT (MNOK)": row["EBIT"],
+                    "EBIT-margin": row["EBIT-margin"],
+                    "EPS": row["EPS"],
+                })
 
-            st.subheader("Kontantstrøm")
-            cf1, cf2, cf3, cf4 = st.columns(4)
-            cf1.metric("OCF Q2", f"{info['q2']['ocf']:.1f} MNOK".replace(".", ","))
-            cf2.metric("FCF Q2", f"{info['q2']['fcf']:.1f} MNOK".replace(".", ","))
-            cf3.metric("OCF H1", f"{info['h1']['ocf']:.1f} MNOK".replace(".", ","))
-            cf4.metric("FCF H1", f"{info['h1']['fcf']:.1f} MNOK".replace(".", ","))
+            df_fin = pd.DataFrame(key_rows)
+            st.dataframe(
+                df_fin,
+                use_container_width=True,
+                hide_index=True
+            )
 
             st.caption(
-                "FCF her er beregnet som kontantstrøm fra drift minus investeringer "
-                "i driftsmidler og immaterielle eiendeler."
+                "Års- og kvartalstall vises samlet for rask sammenligning. "
+                "Neste steg blir å legge inn 2026E–2028E som egne estimatkolonner."
+            )
+
+            st.subheader("Q2 2026 – segmenter")
+            df_seg = pd.DataFrame(info["segments_q2"])
+            st.dataframe(
+                df_seg,
+                use_container_width=True,
+                hide_index=True
+            )
+
+            st.subheader("Kontantstrøm")
+            cf1, cf2, cf3 = st.columns(3)
+            cf1.metric(
+                "FCF Q2",
+                f"{info['q2']['fcf']:.1f} MNOK".replace(".", ",")
+            )
+            cf2.metric(
+                "FCF H1",
+                f"{info['h1']['fcf']:.1f} MNOK".replace(".", ",")
+            )
+            cf3.metric(
+                "FCF LTM",
+                f"{info['fcf_ltm']:.0f} MNOK"
+            )
+
+            cf4, cf5, cf6 = st.columns(3)
+            cf4.metric(
+                "OCF Q2",
+                f"{info['q2']['ocf']:.1f} MNOK".replace(".", ",")
+            )
+            cf5.metric(
+                "OCF H1",
+                f"{info['h1']['ocf']:.1f} MNOK".replace(".", ",")
+            )
+            cf6.metric(
+                "FCF Yield LTM",
+                f"{info['fcf_yield']:.1f}%".replace(".", ",")
+            )
+
+            st.caption(
+                "FCF = kontantstrøm fra drift minus investeringer i driftsmidler "
+                "og immaterielle eiendeler."
+            )
+
+            st.subheader("Hva vi følger videre")
+            st.write(
+                "• Omsetningsvekst mot 2030-målet\n"
+                "• EBIT-margin mot målintervallet 20–25 %\n"
+                "• EPS-vekst og kontantkonvertering\n"
+                "• Utvikling i ROCE\n"
+                "• Netto gjeld / EBITDA etter oppkjøp\n"
+                "• Segmentmiks mellom Oceans, Connectivity og PIR"
             )
 
         # -------------------------------------------------
