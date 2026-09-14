@@ -855,7 +855,7 @@ elif side == "Selskaper":
                 a1, a2, a3, a4 = st.columns(4)
 
                 reference_price = a1.number_input(
-                    "Referansekurs (NOK)",
+                    "Dagens kurs / referansekurs (NOK)",
                     min_value=1.0,
                     value=float(info["valuation"]["reference_price"]),
                     step=1.0,
@@ -983,6 +983,10 @@ elif side == "Selskaper":
             base_total, base_cagr, base_pv = scenario_metrics(base_value)
             bull_total, bull_cagr, bull_pv = scenario_metrics(bull_value)
 
+            bear_mos = (bear_pv / reference_price - 1) * 100
+            base_mos = (base_pv / reference_price - 1) * 100
+            bull_mos = (bull_pv / reference_price - 1) * 100
+
             st.subheader(f"Estimert kurs i {target_year}")
 
             v1, v2, v3 = st.columns(3)
@@ -1027,6 +1031,31 @@ elif side == "Selskaper":
                 "modellen at scenarioet gir mer enn avkastningskravet."
             )
 
+            st.subheader("Margin of safety mot nåverdi")
+
+            m1, m2, m3 = st.columns(3)
+            m1.metric(
+                "🔴 Bear",
+                f"{bear_mos:+.0f}%",
+                help="Nåverdi i bear-scenario relativt til dagens kurs / referansekurs."
+            )
+            m2.metric(
+                "🟡 Base",
+                f"{base_mos:+.0f}%",
+                help="Nåverdi i base-scenario relativt til dagens kurs / referansekurs."
+            )
+            m3.metric(
+                "🟢 Bull",
+                f"{bull_mos:+.0f}%",
+                help="Nåverdi i bull-scenario relativt til dagens kurs / referansekurs."
+            )
+
+            st.caption(
+                "Positiv margin of safety betyr at scenarioets nåverdi ligger over "
+                "dagens kurs / referansekurs. Negativ margin betyr at kursen ligger "
+                "over scenarioets nåverdi."
+            )
+
             st.subheader("EPS-scenario 2026E–2030E")
 
             display_eps = eps_table.copy()
@@ -1051,6 +1080,8 @@ elif side == "Selskaper":
                 target_value = base_target_eps * pe
                 total_return, cagr, present_value = scenario_metrics(target_value)
 
+                margin_of_safety = (present_value / reference_price - 1) * 100
+
                 sensitivity_rows.append(
                     {
                         "P/E": f"{pe}x",
@@ -1058,6 +1089,7 @@ elif side == "Selskaper":
                         "Total avkastning": f"{total_return:+.0f}%",
                         "CAGR p.a.": f"{cagr:+.1f}%",
                         f"Nåverdi @ {required_return:.1f}%": f"{present_value:.0f} NOK",
+                        "Margin of safety": f"{margin_of_safety:+.0f}%",
                     }
                 )
 
