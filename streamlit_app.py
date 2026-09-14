@@ -7,6 +7,451 @@ st.set_page_config(
     layout="wide"
 )
 
+
+def _read_shareholder_csv(uploaded_file):
+    """Les CSV fra ulike eksportformater og separatorer."""
+    attempts = [
+        {"encoding": "utf-8-sig"},
+        {"encoding": "utf-8"},
+        {"encoding": "latin1"},
+    ]
+
+    last_error = None
+    for params in attempts:
+        try:
+            uploaded_file.seek(0)
+            return pd.read_csv(
+                uploaded_file,
+                sep=None,
+                engine="python",
+                **params
+            )
+        except Exception as exc:
+            last_error = exc
+
+    raise ValueError(f"Kunne ikke lese CSV-filen: {last_error}")
+
+
+def _find_shareholder_column(columns, candidates):
+    normalized = {
+        str(col).strip().lower()
+        .replace("_", " ")
+        .replace("-", " "): col
+        for col in columns
+    }
+
+    for candidate in candidates:
+        candidate = candidate.lower()
+        if candidate in normalized:
+            return normalized[candidate]
+
+    for normalized_name, original in normalized.items():
+        for candidate in candidates:
+            if candidate.lower() in normalized_name:
+                return original
+
+    return None
+
+
+def _standardize_shareholder_df(df, shares_outstanding):
+    owner_col = _find_shareholder_column(
+        df.columns,
+        [
+            "aksjonær",
+            "aksjonaer",
+            "shareholder",
+            "eier",
+            "investor",
+            "navn",
+            "name",
+        ],
+    )
+
+    shares_col = _find_shareholder_column(
+        df.columns,
+        [
+            "antall aksjer",
+            "aksjer",
+            "shares",
+            "beholdning",
+            "holding",
+            "antall",
+            "quantity",
+            "qty",
+        ],
+    )
+
+    if owner_col is None or shares_col is None:
+        raise ValueError(
+            "Fant ikke kolonnene for aksjonær og antall aksjer. "
+            "Bruk helst kolonnene 'Aksjonær' og 'Antall aksjer'."
+        )
+
+    clean = df[[owner_col, shares_col]].copy()
+    clean.columns = ["Aksjonær", "Antall aksjer"]
+
+    clean["Aksjonær"] = (
+        clean["Aksjonær"]
+        .astype(str)
+        .str.strip()
+    )
+
+    clean["Antall aksjer"] = (
+        clean["Antall aksjer"]
+        .astype(str)
+        .str.replace("\u00a0", "", regex=False)
+        .str.replace(" ", "", regex=False)
+        .str.replace(".", "", regex=False)
+        .str.replace(",", ".", regex=False)
+    )
+
+    clean["Antall aksjer"] = pd.to_numeric(
+        clean["Antall aksjer"],
+        errors="coerce"
+    )
+
+    clean = clean.dropna(subset=["Antall aksjer"])
+    clean = clean[clean["Aksjonær"].ne("")]
+    clean = clean[clean["Aksjonær"].str.lower().ne("nan")]
+
+    clean = (
+        clean.groupby("Aksjonær", as_index=False)["Antall aksjer"]
+        .sum()
+    )
+
+    clean["Antall aksjer"] = clean["Antall aksjer"].round().astype(int)
+    clean["Eierandel"] = clean["Antall aksjer"] / shares_outstanding * 100
+
+    return clean
+
+
+def render_shareholder_monitor(info, key_prefix="norbit"):
+    st.subheader("Aksjonærmonitor")
+
+    st.caption(
+        "Du kan nå legge inn aksjonærlistene direkte på siden. "
+        "Senere kobler vi dette til automatisk daglig innhenting."
+    )
+
+    mode = st.radio(
+        "Hvordan vil du legge inn aksjonærlistene?",
+        ["Direkte på siden", "Last opp CSV"],
+        horizontal=True,
+        key=f"{key_prefix}_shareholder_mode",
+    )
+
+    previous = None
+    current = None
+
+    if mode == "Direkte på siden":
+        st.info(
+            "Du kan skrive inn radene manuelt eller lime inn flere rader fra Excel/nettside "
+            "direkte i tabellene. Bruk + nederst i tabellen for å legge til flere rader."
+        )
+
+        empty_rows = pd.DataFrame(
+            {
+                "Aksjonær": [""] * 12,
+                "Antall aksjer": [None] * 12,
+            }
+        )
+
+        c1, c2 = st.columns(2)
+
+        with c1:
+            st.markdown("**Forrige aksjonærliste**")
+            previous_input = st.data_editor(
+                empty_rows.copy(),
+                num_rows="dynamic",
+                width="stretch",
+                hide_index=True,
+                key=f"{key_prefix}_previous_editor",
+                column_config={
+                    "Aksjonær": st.column_config.TextColumn("Aksjonær"),
+                    "Antall aksjer": st.column_config.NumberColumn(
+                        "Antall aksjer",
+                        min_value=0,
+                        step=1,
+                        format="%d",
+                    ),
+                },
+            )
+
+        with c2:
+            st.markdown("**Dagens aksjonærliste**")
+            current_input = st.data_editor(
+                empty_rows.copy(),
+                num_rows="dynamic",
+                width="stretch",
+                hide_index=True,
+                key=f"{key_prefix}_current_editor",
+                column_config={
+                    "Aksjonær": st.column_config.TextColumn("Aksjonær"),
+                    "Antall aksjer": st.column_config.NumberColumn(
+                        "Antall aksjer",
+                        min_value=0,
+                        step=1,
+                        format="%d",
+                    ),
+                },
+            )
+
+        previous_input = previous_input[
+            previous_input["Aksjonær"].astype(str).str.strip().ne("")
+        ].copy()
+
+        current_input = current_input[
+            current_input["Aksjonær"].astype(str).str.strip().ne("")
+        ].copy()
+
+        if not previous_input.empty:
+            previous = _standardize_shareholder_df(
+                previous_input,
+                info["shares_outstanding"],
+            )
+
+        if not current_input.empty:
+            current = _standardize_shareholder_df(
+                current_input,
+                info["shares_outstanding"],
+            )
+
+    else:
+        template = (
+            pd.DataFrame(
+                {
+                    "Aksjonær": ["Eksempel Investor AS"],
+                    "Antall aksjer": [100000],
+                }
+            )
+            .to_csv(index=False, sep=";")
+            .encode("utf-8-sig")
+        )
+
+        st.download_button(
+            "Last ned CSV-mal",
+            data=template,
+            file_name="aksjonaerliste-mal.csv",
+            mime="text/csv",
+            key=f"{key_prefix}_shareholder_template",
+        )
+
+        u1, u2 = st.columns(2)
+
+        previous_file = u1.file_uploader(
+            "Forrige aksjonærliste (CSV)",
+            type=["csv"],
+            key=f"{key_prefix}_shareholders_previous",
+        )
+
+        current_file = u2.file_uploader(
+            "Dagens aksjonærliste (CSV)",
+            type=["csv"],
+            key=f"{key_prefix}_shareholders_current",
+        )
+
+        if previous_file is not None:
+            try:
+                previous_raw = _read_shareholder_csv(previous_file)
+                previous = _standardize_shareholder_df(
+                    previous_raw,
+                    info["shares_outstanding"],
+                )
+            except Exception as exc:
+                st.error(f"Forrige liste: {exc}")
+
+        if current_file is not None:
+            try:
+                current_raw = _read_shareholder_csv(current_file)
+                current = _standardize_shareholder_df(
+                    current_raw,
+                    info["shares_outstanding"],
+                )
+            except Exception as exc:
+                st.error(f"Dagens liste: {exc}")
+
+    if previous is None or current is None or previous.empty or current.empty:
+        st.info(
+            "Legg inn både forrige og dagens aksjonærliste for å beregne endringer."
+        )
+
+        a1, a2 = st.columns(2)
+        a1.metric(
+            "Utestående aksjer",
+            f"{info['shares_outstanding']:,}".replace(",", " "),
+        )
+        a2.metric(
+            "Automatisk historikk",
+            "Neste steg",
+        )
+        return
+
+    comparison = current.merge(
+        previous,
+        on="Aksjonær",
+        how="outer",
+        suffixes=("_i_dag", "_forrige"),
+    )
+
+    comparison["Antall aksjer_i_dag"] = (
+        comparison["Antall aksjer_i_dag"]
+        .fillna(0)
+        .astype(int)
+    )
+
+    comparison["Antall aksjer_forrige"] = (
+        comparison["Antall aksjer_forrige"]
+        .fillna(0)
+        .astype(int)
+    )
+
+    comparison["Endring"] = (
+        comparison["Antall aksjer_i_dag"]
+        - comparison["Antall aksjer_forrige"]
+    )
+
+    comparison["Eierandel i dag"] = (
+        comparison["Antall aksjer_i_dag"]
+        / info["shares_outstanding"]
+        * 100
+    )
+
+    def status(row):
+        if row["Antall aksjer_forrige"] == 0 and row["Antall aksjer_i_dag"] > 0:
+            return "Ny"
+        if row["Antall aksjer_i_dag"] == 0 and row["Antall aksjer_forrige"] > 0:
+            return "Utgått"
+        if row["Endring"] > 0:
+            return "Økt"
+        if row["Endring"] < 0:
+            return "Redusert"
+        return "Uendret"
+
+    comparison["Status"] = comparison.apply(status, axis=1)
+
+    new_count = int((comparison["Status"] == "Ny").sum())
+    exited_count = int((comparison["Status"] == "Utgått").sum())
+    increased_count = int((comparison["Endring"] > 0).sum())
+    reduced_count = int((comparison["Endring"] < 0).sum())
+
+    top20 = (
+        current.sort_values("Antall aksjer", ascending=False)
+        .head(20)["Antall aksjer"]
+        .sum()
+        / info["shares_outstanding"]
+        * 100
+    )
+
+    m1, m2, m3, m4, m5 = st.columns(5)
+    m1.metric("Økt beholdning", increased_count)
+    m2.metric("Redusert beholdning", reduced_count)
+    m3.metric("Nye på listen", new_count)
+    m4.metric("Utgått fra listen", exited_count)
+    m5.metric("Topp 20 eierandel", f"{top20:.1f}%".replace(".", ","))
+
+    st.subheader("Største endringer")
+
+    changed = comparison[comparison["Endring"] != 0].copy()
+    changed["Absolutt endring"] = changed["Endring"].abs()
+
+    changed = changed.sort_values(
+        "Absolutt endring",
+        ascending=False,
+    )
+
+    change_view = changed[
+        [
+            "Aksjonær",
+            "Antall aksjer_i_dag",
+            "Antall aksjer_forrige",
+            "Endring",
+            "Eierandel i dag",
+            "Status",
+        ]
+    ].copy()
+
+    change_view.columns = [
+        "Aksjonær",
+        "Aksjer i dag",
+        "Aksjer forrige",
+        "Endring",
+        "Eierandel i dag",
+        "Status",
+    ]
+
+    change_view["Eierandel i dag"] = change_view["Eierandel i dag"].map(
+        lambda x: f"{x:.2f}%".replace(".", ",")
+    )
+
+    st.dataframe(
+        change_view,
+        width="stretch",
+        hide_index=True,
+    )
+
+    st.subheader("Største kjøp og salg")
+
+    b1, b2 = st.columns(2)
+
+    buys = (
+        comparison[comparison["Endring"] > 0]
+        .sort_values("Endring", ascending=False)
+        .head(10)
+        [["Aksjonær", "Endring", "Antall aksjer_i_dag"]]
+        .copy()
+    )
+    buys.columns = ["Aksjonær", "Kjøpt", "Aksjer i dag"]
+
+    sells = (
+        comparison[comparison["Endring"] < 0]
+        .sort_values("Endring", ascending=True)
+        .head(10)
+        [["Aksjonær", "Endring", "Antall aksjer_i_dag"]]
+        .copy()
+    )
+    sells["Endring"] = sells["Endring"].abs()
+    sells.columns = ["Aksjonær", "Solgt", "Aksjer i dag"]
+
+    with b1:
+        st.markdown("**Største kjøp**")
+        st.dataframe(
+            buys,
+            width="stretch",
+            hide_index=True,
+        )
+
+    with b2:
+        st.markdown("**Største salg**")
+        st.dataframe(
+            sells,
+            width="stretch",
+            hide_index=True,
+        )
+
+    st.subheader("Dagens største aksjonærer")
+
+    current_top = (
+        current.sort_values("Antall aksjer", ascending=False)
+        .head(30)
+        .copy()
+    )
+
+    current_top["Eierandel"] = current_top["Eierandel"].map(
+        lambda x: f"{x:.2f}%".replace(".", ",")
+    )
+
+    st.dataframe(
+        current_top,
+        width="stretch",
+        hide_index=True,
+    )
+
+    st.caption(
+        "Neste versjon lagrer daglige lister automatisk, slik at vi kan vise "
+        "endringer siste 1, 7 og 30 dager uten manuell opplasting."
+    )
+
+
 # =========================================================
 # DATA
 # =========================================================
@@ -717,16 +1162,10 @@ elif side == "Selskaper":
         # AKSJONÆRER
         # -------------------------------------------------
         with tab3:
-            st.subheader("Aksjonærendringer")
-            st.info(
-                "Neste automatiseringssteg blir å lagre en daglig aksjonærliste "
-                "og sammenligne den med dagen før, siste uke og siste måned."
+            render_shareholder_monitor(
+                info,
+                key_prefix="norbit_company",
             )
-
-            a1, a2, a3 = st.columns(3)
-            a1.metric("Direkte aksjonærer Q2", "ca. 9 000")
-            a2.metric("Topp 20 eierandel", "58,9%")
-            a3.metric("Utestående aksjer", f"{info['shares_outstanding']:,}".replace(",", " "))
 
         # -------------------------------------------------
         # NYHETER
@@ -1451,9 +1890,18 @@ elif side == "Nøkkeltall":
 
 elif side == "Aksjonærer":
     st.header("Aksjonærendringer")
-    st.write(
-        "Her bygger vi den daglige sammenligningen av aksjonærlister i neste steg."
+
+    selskap = st.selectbox(
+        "Velg selskap",
+        ["NORBIT"],
+        key="global_shareholder_company",
     )
+
+    if selskap == "NORBIT":
+        render_shareholder_monitor(
+            companies["NORBIT"],
+            key_prefix="norbit_global",
+        )
 
 # =========================================================
 # NYHETER
