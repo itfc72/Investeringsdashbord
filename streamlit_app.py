@@ -348,12 +348,19 @@ companies = {
             },
         ],
         "valuation": {
-            "bear": 145,
-            "base": 210,
-            "bull": 265,
+            "reference_price": 162.0,
+            "eps_2026": 8.0,
+            "growth_bear": 7.0,
+            "growth_base": 17.0,
+            "growth_bull": 24.0,
+            "pe_bear": 17.0,
+            "pe_base": 21.0,
+            "pe_bull": 25.0,
+            "required_return": 10.0,
+            "target_year": 2028,
             "note": (
-                "Foreløpig scenarioverdsettelse. Bear/base/bull er ikke konsensusmål. "
-                "Vi bør senere koble verdiene direkte til egne EPS-estimater og valgt P/E."
+                "Forutsetningene er våre arbeidsestimater og kan endres direkte i "
+                "verdsettelsesfanen. De er ikke konsensusestimater."
             )
         }
     },
@@ -436,7 +443,7 @@ if side == "Dashboard":
         "Status": ["Følg", "Følg", "Følg", "Følg", "Følg"]
     })
 
-    st.dataframe(oversikt, use_container_width=True, hide_index=True)
+    st.dataframe(oversikt, width="stretch", hide_index=True)
 
     st.subheader("Dagens viktigste endringer")
     st.info(
@@ -598,11 +605,14 @@ elif side == "Selskaper":
                 st.write(f"• {item}")
 
             st.subheader("Vår vurdering")
-            bear, base, bull = st.columns(3)
-            bear.metric("🔴 Bear", f"{info['valuation']['bear']} NOK")
-            base.metric("🟡 Base", f"{info['valuation']['base']} NOK")
-            bull.metric("🟢 Bull", f"{info['valuation']['bull']} NOK")
-            st.caption(info["valuation"]["note"])
+            v1, v2, v3 = st.columns(3)
+            v1.metric("2026E EPS – arbeidsestimat", f"{info['valuation']['eps_2026']:.2f}".replace(".", ","))
+            v2.metric("Base EPS-vekst", f"{info['valuation']['growth_base']:.0f}%")
+            v3.metric("Base P/E", f"{info['valuation']['pe_base']:.0f}x")
+            st.caption(
+                "Dynamisk bear/base/bull-verdsettelse ligger under fanen Verdsettelse. "
+                + info["valuation"]["note"]
+            )
 
             st.subheader("Siste utvikling")
             st.success(
@@ -631,7 +641,7 @@ elif side == "Selskaper":
             df_fin = pd.DataFrame(key_rows)
             st.dataframe(
                 df_fin,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
@@ -644,7 +654,7 @@ elif side == "Selskaper":
             df_seg = pd.DataFrame(info["segments_q2"])
             st.dataframe(
                 df_seg,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
@@ -744,14 +754,14 @@ elif side == "Selskaper":
                         "Lenke",
                     ]
                 ],
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
             st.subheader("Kommende hendelser")
             st.dataframe(
                 pd.DataFrame(info["upcoming_events"]),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
@@ -791,7 +801,7 @@ elif side == "Selskaper":
             df_contracts = pd.DataFrame(info["contracts"])
             st.dataframe(
                 df_contracts,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
@@ -810,7 +820,7 @@ elif side == "Selskaper":
             ]
             st.dataframe(
                 df_opp[opp_cols],
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
@@ -833,23 +843,261 @@ elif side == "Selskaper":
         # VERDSETTELSE
         # -------------------------------------------------
         with tab6:
-            st.subheader("Verdsettelse")
+            st.subheader("Dynamisk verdsettelse")
+
+            st.caption(
+                "Modellen estimerer EPS frem til valgt målår og multipliserer med "
+                "en P/E-multippel. Deretter beregnes total avkastning, årlig avkastning "
+                "(CAGR) og nåverdi basert på valgt avkastningskrav."
+            )
+
+            with st.expander("Forutsetninger", expanded=True):
+                a1, a2, a3, a4 = st.columns(4)
+
+                reference_price = a1.number_input(
+                    "Referansekurs (NOK)",
+                    min_value=1.0,
+                    value=float(info["valuation"]["reference_price"]),
+                    step=1.0,
+                    key="norbit_reference_price"
+                )
+
+                eps_2026 = a2.number_input(
+                    "EPS 2026E",
+                    min_value=0.1,
+                    value=float(info["valuation"]["eps_2026"]),
+                    step=0.1,
+                    key="norbit_eps_2026"
+                )
+
+                target_year = a3.selectbox(
+                    "Målår",
+                    [2028, 2029, 2030],
+                    index=[2028, 2029, 2030].index(info["valuation"]["target_year"]),
+                    key="norbit_target_year"
+                )
+
+                required_return = a4.number_input(
+                    "Avkastningskrav",
+                    min_value=0.0,
+                    max_value=30.0,
+                    value=float(info["valuation"]["required_return"]),
+                    step=0.5,
+                    format="%.1f",
+                    key="norbit_required_return"
+                )
+
+                st.markdown("**EPS-vekst per år**")
+                g1, g2, g3 = st.columns(3)
+                growth_bear = g1.number_input(
+                    "Bear vekst",
+                    min_value=-20.0,
+                    max_value=50.0,
+                    value=float(info["valuation"]["growth_bear"]),
+                    step=1.0,
+                    format="%.1f",
+                    key="norbit_growth_bear"
+                )
+                growth_base = g2.number_input(
+                    "Base vekst",
+                    min_value=-20.0,
+                    max_value=50.0,
+                    value=float(info["valuation"]["growth_base"]),
+                    step=1.0,
+                    format="%.1f",
+                    key="norbit_growth_base"
+                )
+                growth_bull = g3.number_input(
+                    "Bull vekst",
+                    min_value=-20.0,
+                    max_value=60.0,
+                    value=float(info["valuation"]["growth_bull"]),
+                    step=1.0,
+                    format="%.1f",
+                    key="norbit_growth_bull"
+                )
+
+                st.markdown("**P/E i målåret**")
+                p1, p2, p3 = st.columns(3)
+                pe_bear = p1.number_input(
+                    "Bear P/E",
+                    min_value=5.0,
+                    max_value=50.0,
+                    value=float(info["valuation"]["pe_bear"]),
+                    step=1.0,
+                    key="norbit_pe_bear"
+                )
+                pe_base = p2.number_input(
+                    "Base P/E",
+                    min_value=5.0,
+                    max_value=50.0,
+                    value=float(info["valuation"]["pe_base"]),
+                    step=1.0,
+                    key="norbit_pe_base"
+                )
+                pe_bull = p3.number_input(
+                    "Bull P/E",
+                    min_value=5.0,
+                    max_value=60.0,
+                    value=float(info["valuation"]["pe_bull"]),
+                    step=1.0,
+                    key="norbit_pe_bull"
+                )
+
+            years = list(range(2026, 2031))
+
+            scenario_rows = []
+            for year in years:
+                periods = year - 2026
+                scenario_rows.append(
+                    {
+                        "År": year,
+                        "Bear EPS": eps_2026 * (1 + growth_bear / 100) ** periods,
+                        "Base EPS": eps_2026 * (1 + growth_base / 100) ** periods,
+                        "Bull EPS": eps_2026 * (1 + growth_bull / 100) ** periods,
+                    }
+                )
+
+            eps_table = pd.DataFrame(scenario_rows)
+            target_row = eps_table.loc[eps_table["År"] == target_year].iloc[0]
+
+            years_to_target = target_year - 2026
+
+            bear_value = float(target_row["Bear EPS"]) * pe_bear
+            base_value = float(target_row["Base EPS"]) * pe_base
+            bull_value = float(target_row["Bull EPS"]) * pe_bull
+
+            def scenario_metrics(target_value):
+                total_return = (target_value / reference_price - 1) * 100
+
+                if years_to_target > 0:
+                    cagr = ((target_value / reference_price) ** (1 / years_to_target) - 1) * 100
+                    present_value = target_value / ((1 + required_return / 100) ** years_to_target)
+                else:
+                    cagr = total_return
+                    present_value = target_value
+
+                return total_return, cagr, present_value
+
+            bear_total, bear_cagr, bear_pv = scenario_metrics(bear_value)
+            base_total, base_cagr, base_pv = scenario_metrics(base_value)
+            bull_total, bull_cagr, bull_pv = scenario_metrics(bull_value)
+
+            st.subheader(f"Estimert kurs i {target_year}")
 
             v1, v2, v3 = st.columns(3)
-            v1.metric("Bear case", f"{info['valuation']['bear']} NOK")
-            v2.metric("Base case", f"{info['valuation']['base']} NOK")
-            v3.metric("Bull case", f"{info['valuation']['bull']} NOK")
+            v1.metric("🔴 Bear", f"{bear_value:.0f} NOK")
+            v2.metric("🟡 Base", f"{base_value:.0f} NOK")
+            v3.metric("🟢 Bull", f"{bull_value:.0f} NOK")
 
-            st.write("**Nåværende multipler**")
-            m1, m2, m3 = st.columns(3)
-            m1.metric("P/E LTM", f"{info['pe_ltm']:.1f}x".replace(".", ","))
-            m2.metric("FCF yield LTM", f"{info['fcf_yield']:.1f}%".replace(".", ","))
-            m3.metric("ROE LTM", f"{info['roe_ltm']:.1f}%".replace(".", ","))
+            st.subheader("Forventet avkastning fra referansekurs")
+
+            r1, r2, r3 = st.columns(3)
+
+            with r1:
+                st.markdown("**🔴 Bear**")
+                st.write(f"Total avkastning: **{bear_total:+.0f}%**")
+                st.write(f"Årlig avkastning (CAGR): **{bear_cagr:+.1f}%**")
+                st.write(
+                    f"Nåverdi ved {required_return:.1f}% krav: "
+                    f"**{bear_pv:.0f} NOK**"
+                )
+
+            with r2:
+                st.markdown("**🟡 Base**")
+                st.write(f"Total avkastning: **{base_total:+.0f}%**")
+                st.write(f"Årlig avkastning (CAGR): **{base_cagr:+.1f}%**")
+                st.write(
+                    f"Nåverdi ved {required_return:.1f}% krav: "
+                    f"**{base_pv:.0f} NOK**"
+                )
+
+            with r3:
+                st.markdown("**🟢 Bull**")
+                st.write(f"Total avkastning: **{bull_total:+.0f}%**")
+                st.write(f"Årlig avkastning (CAGR): **{bull_cagr:+.1f}%**")
+                st.write(
+                    f"Nåverdi ved {required_return:.1f}% krav: "
+                    f"**{bull_pv:.0f} NOK**"
+                )
+
+            st.caption(
+                "Nåverdi er kursmålet i målåret diskontert tilbake til 2026 med valgt "
+                "avkastningskrav. Hvis nåverdien ligger over referansekursen, tilsier "
+                "modellen at scenarioet gir mer enn avkastningskravet."
+            )
+
+            st.subheader("EPS-scenario 2026E–2030E")
+
+            display_eps = eps_table.copy()
+            for col in ["Bear EPS", "Base EPS", "Bull EPS"]:
+                display_eps[col] = display_eps[col].map(
+                    lambda x: f"{x:.2f}".replace(".", ",")
+                )
+
+            st.dataframe(
+                display_eps,
+                width="stretch",
+                hide_index=True
+            )
+
+            base_target_eps = float(target_row["Base EPS"])
+            st.subheader(f"P/E-sensitivitet – Base EPS {target_year}")
+
+            pe_levels = [16, 18, 20, 22, 24, 26, 28]
+
+            sensitivity_rows = []
+            for pe in pe_levels:
+                target_value = base_target_eps * pe
+                total_return, cagr, present_value = scenario_metrics(target_value)
+
+                sensitivity_rows.append(
+                    {
+                        "P/E": f"{pe}x",
+                        f"Kursmål {target_year}": f"{target_value:.0f} NOK",
+                        "Total avkastning": f"{total_return:+.0f}%",
+                        "CAGR p.a.": f"{cagr:+.1f}%",
+                        f"Nåverdi @ {required_return:.1f}%": f"{present_value:.0f} NOK",
+                    }
+                )
+
+            sensitivity = pd.DataFrame(sensitivity_rows)
+
+            st.dataframe(
+                sensitivity,
+                width="stretch",
+                hide_index=True
+            )
+
+            st.subheader("Kontantstrømbasert sjekk")
+
+            fcf_per_share = (
+                info["fcf_ltm"] * 1_000_000 / info["shares_outstanding"]
+            )
+
+            f1, f2, f3 = st.columns(3)
+            f1.metric(
+                "FCF per aksje LTM",
+                f"{fcf_per_share:.2f} NOK".replace(".", ",")
+            )
+            f2.metric(
+                "FCF Yield LTM",
+                f"{info['fcf_yield']:.1f}%".replace(".", ",")
+            )
+            f3.metric(
+                "P/E LTM",
+                f"{info['pe_ltm']:.1f}x".replace(".", ",")
+            )
+
+            st.caption(
+                info["valuation"]["note"]
+                + " Referansekurs brukes bare som sammenligningsgrunnlag i "
+                "verdsettelsesfanen."
+            )
 
             st.info(
-                "Neste steg er å bygge en egen verdsettelsesmodell med "
-                "2026E–2030E EPS, P/E-scenarioer og DCF. Da beregnes "
-                "bear/base/bull automatisk i stedet for å være faste tall."
+                "Neste steg kan være en separat DCF-modell med omsetning, "
+                "EBIT-margin, skatt, reinvesteringer, terminalvekst og diskonteringsrente."
             )
 
 # =========================================================
@@ -863,7 +1111,7 @@ elif side == "Nøkkeltall":
     st.subheader("NORBIT")
 
     df = pd.DataFrame(norbit["financials"])
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    st.dataframe(df, width="stretch", hide_index=True)
 
 # =========================================================
 # AKSJONÆRER
@@ -905,14 +1153,14 @@ elif side == "Nyheter":
                 "Lenke",
             ]
         ],
-        use_container_width=True,
+        width="stretch",
         hide_index=True
     )
 
     st.subheader("Kommende hendelser")
     st.dataframe(
         pd.DataFrame(norbit["upcoming_events"]),
-        use_container_width=True,
+        width="stretch",
         hide_index=True
     )
 
@@ -938,7 +1186,7 @@ elif side == "Kontrakter":
     st.subheader("NORBIT – annonserte kontrakter")
     st.dataframe(
         pd.DataFrame(norbit["contracts"]),
-        use_container_width=True,
+        width="stretch",
         hide_index=True
     )
 
@@ -958,6 +1206,6 @@ elif side == "Kontrakter":
                 "Kommentar",
             ]
         ],
-        use_container_width=True,
+        width="stretch",
         hide_index=True
     )
