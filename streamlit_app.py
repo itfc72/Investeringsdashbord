@@ -358,6 +358,15 @@ companies = {
             "pe_bull": 25.0,
             "required_return": 10.0,
             "target_year": 2028,
+            "dcf_revenue_2026": 3000.0,
+            "dcf_revenue_2030": 6000.0,
+            "dcf_ebit_margin_2026": 22.0,
+            "dcf_ebit_margin_2030": 23.0,
+            "dcf_tax_rate": 22.0,
+            "dcf_conversion": 85.0,
+            "dcf_wacc": 10.0,
+            "dcf_terminal_growth": 3.0,
+            "target_year": 2028,
             "note": (
                 "Forutsetningene er våre arbeidsestimater og kan endres direkte i "
                 "verdsettelsesfanen. De er ikke konsensusestimater."
@@ -1127,10 +1136,301 @@ elif side == "Selskaper":
                 "verdsettelsesfanen."
             )
 
-            st.info(
-                "Neste steg kan være en separat DCF-modell med omsetning, "
-                "EBIT-margin, skatt, reinvesteringer, terminalvekst og diskonteringsrente."
+            st.divider()
+            st.subheader("Enkel DCF-modell")
+
+            st.caption(
+                "DCF-en er en transparent arbeidsmodell. Du setter omsetning i 2026E "
+                "og mål for 2030E. Programmet beregner nødvendig CAGR automatisk. "
+                "EBIT-marginen utvikles gradvis fra 2026-nivå til valgt 2030-nivå."
             )
+
+            with st.expander("DCF-forutsetninger", expanded=True):
+                d1, d2, d3, d4 = st.columns(4)
+
+                dcf_revenue_2026 = d1.number_input(
+                    "Omsetning 2026E (MNOK)",
+                    min_value=500.0,
+                    value=float(info["valuation"]["dcf_revenue_2026"]),
+                    step=50.0,
+                    key="norbit_dcf_revenue_2026"
+                )
+
+                dcf_revenue_2030 = d2.number_input(
+                    "Omsetning 2030E (MNOK)",
+                    min_value=500.0,
+                    value=float(info["valuation"]["dcf_revenue_2030"]),
+                    step=100.0,
+                    key="norbit_dcf_revenue_2030"
+                )
+
+                dcf_ebit_margin_2026 = d3.number_input(
+                    "EBIT-margin 2026E",
+                    min_value=5.0,
+                    max_value=40.0,
+                    value=float(info["valuation"]["dcf_ebit_margin_2026"]),
+                    step=0.5,
+                    format="%.1f",
+                    key="norbit_dcf_ebit_margin_2026"
+                )
+
+                dcf_ebit_margin_2030 = d4.number_input(
+                    "EBIT-margin 2030E",
+                    min_value=5.0,
+                    max_value=40.0,
+                    value=float(info["valuation"]["dcf_ebit_margin_2030"]),
+                    step=0.5,
+                    format="%.1f",
+                    key="norbit_dcf_ebit_margin_2030"
+                )
+
+                d5, d6, d7, d8 = st.columns(4)
+
+                dcf_tax_rate = d5.number_input(
+                    "Skattesats",
+                    min_value=0.0,
+                    max_value=40.0,
+                    value=float(info["valuation"]["dcf_tax_rate"]),
+                    step=0.5,
+                    format="%.1f",
+                    key="norbit_dcf_tax_rate"
+                )
+
+                dcf_conversion = d6.number_input(
+                    "FCF-konvertering av NOPAT",
+                    min_value=20.0,
+                    max_value=120.0,
+                    value=float(info["valuation"]["dcf_conversion"]),
+                    step=1.0,
+                    format="%.1f",
+                    help="Andel av EBIT etter skatt som omdannes til fri kontantstrøm.",
+                    key="norbit_dcf_conversion"
+                )
+
+                dcf_wacc = d7.number_input(
+                    "WACC / diskonteringsrente",
+                    min_value=4.0,
+                    max_value=20.0,
+                    value=float(info["valuation"]["dcf_wacc"]),
+                    step=0.5,
+                    format="%.1f",
+                    key="norbit_dcf_wacc"
+                )
+
+                dcf_terminal_growth = d8.number_input(
+                    "Terminalvekst",
+                    min_value=0.0,
+                    max_value=6.0,
+                    value=float(info["valuation"]["dcf_terminal_growth"]),
+                    step=0.25,
+                    format="%.2f",
+                    key="norbit_dcf_terminal_growth"
+                )
+
+            if dcf_revenue_2030 <= 0 or dcf_revenue_2026 <= 0:
+                st.error("Omsetning må være høyere enn 0.")
+            elif dcf_wacc <= dcf_terminal_growth:
+                st.error("WACC må være høyere enn terminalveksten.")
+            else:
+                revenue_cagr = (
+                    (dcf_revenue_2030 / dcf_revenue_2026) ** (1 / 4) - 1
+                ) * 100
+
+                c1, c2, c3 = st.columns(3)
+                c1.metric(
+                    "Implisitt omsetnings-CAGR 2026–2030",
+                    f"{revenue_cagr:.1f}%".replace(".", ",")
+                )
+                c2.metric(
+                    "EBIT-margin 2026E",
+                    f"{dcf_ebit_margin_2026:.1f}%".replace(".", ",")
+                )
+                c3.metric(
+                    "EBIT-margin 2030E",
+                    f"{dcf_ebit_margin_2030:.1f}%".replace(".", ",")
+                )
+
+                forecast_rows = []
+                pv_fcff_sum = 0.0
+
+                for year in range(2027, 2031):
+                    periods = year - 2026
+
+                    revenue = dcf_revenue_2026 * (
+                        1 + revenue_cagr / 100
+                    ) ** periods
+
+                    margin = dcf_ebit_margin_2026 + (
+                        dcf_ebit_margin_2030 - dcf_ebit_margin_2026
+                    ) * (periods / 4)
+
+                    ebit = revenue * margin / 100
+                    nopat = ebit * (1 - dcf_tax_rate / 100)
+                    fcff = nopat * dcf_conversion / 100
+
+                    discount_factor = (1 + dcf_wacc / 100) ** periods
+                    pv_fcff = fcff / discount_factor
+                    pv_fcff_sum += pv_fcff
+
+                    forecast_rows.append(
+                        {
+                            "År": year,
+                            "Omsetning (MNOK)": revenue,
+                            "EBIT-margin": margin,
+                            "EBIT (MNOK)": ebit,
+                            "NOPAT (MNOK)": nopat,
+                            "FCFF (MNOK)": fcff,
+                            "Nåverdi FCFF": pv_fcff,
+                        }
+                    )
+
+                terminal_fcff = forecast_rows[-1]["FCFF (MNOK)"] * (
+                    1 + dcf_terminal_growth / 100
+                )
+
+                terminal_value = terminal_fcff / (
+                    dcf_wacc / 100 - dcf_terminal_growth / 100
+                )
+
+                pv_terminal = terminal_value / (
+                    (1 + dcf_wacc / 100) ** 4
+                )
+
+                enterprise_value = pv_fcff_sum + pv_terminal
+                equity_value = enterprise_value - info["nibd"]
+
+                dcf_value_per_share = (
+                    equity_value * 1_000_000 / info["shares_outstanding"]
+                )
+
+                dcf_mos = (
+                    dcf_value_per_share / reference_price - 1
+                ) * 100
+
+                terminal_share = (
+                    pv_terminal / enterprise_value * 100
+                    if enterprise_value != 0
+                    else 0
+                )
+
+                x1, x2, x3, x4 = st.columns(4)
+
+                x1.metric(
+                    "DCF-verdi per aksje",
+                    f"{dcf_value_per_share:.0f} NOK"
+                )
+
+                x2.metric(
+                    "Margin of safety",
+                    f"{dcf_mos:+.0f}%"
+                )
+
+                x3.metric(
+                    "Enterprise value",
+                    f"{enterprise_value / 1000:.2f} mrd. NOK".replace(".", ",")
+                )
+
+                x4.metric(
+                    "Terminalverdi av EV",
+                    f"{terminal_share:.0f}%"
+                )
+
+                dcf_table = pd.DataFrame(forecast_rows).copy()
+
+                dcf_table["EBIT-margin"] = dcf_table["EBIT-margin"].map(
+                    lambda x: f"{x:.1f}%".replace(".", ",")
+                )
+
+                for col in [
+                    "Omsetning (MNOK)",
+                    "EBIT (MNOK)",
+                    "NOPAT (MNOK)",
+                    "FCFF (MNOK)",
+                    "Nåverdi FCFF",
+                ]:
+                    dcf_table[col] = dcf_table[col].map(
+                        lambda x: f"{x:,.0f}".replace(",", " ")
+                    )
+
+                st.dataframe(
+                    dcf_table,
+                    width="stretch",
+                    hide_index=True
+                )
+
+                st.subheader("DCF-sensitivitet")
+
+                wacc_levels = [
+                    max(4.0, dcf_wacc - 2.0),
+                    max(4.0, dcf_wacc - 1.0),
+                    dcf_wacc,
+                    dcf_wacc + 1.0,
+                    dcf_wacc + 2.0,
+                ]
+
+                growth_levels = [
+                    max(0.0, dcf_terminal_growth - 1.0),
+                    max(0.0, dcf_terminal_growth - 0.5),
+                    dcf_terminal_growth,
+                    dcf_terminal_growth + 0.5,
+                    dcf_terminal_growth + 1.0,
+                ]
+
+                sensitivity_rows = []
+                base_fcff_2030 = forecast_rows[-1]["FCFF (MNOK)"]
+
+                for wacc in wacc_levels:
+                    row = {"WACC": f"{wacc:.1f}%".replace(".", ",")}
+
+                    for tg in growth_levels:
+                        if wacc <= tg:
+                            row[f"g {tg:.1f}%".replace(".", ",")] = "-"
+                            continue
+
+                        tv_fcff = base_fcff_2030 * (1 + tg / 100)
+
+                        tv = tv_fcff / (
+                            wacc / 100 - tg / 100
+                        )
+
+                        pv_explicit = 0.0
+
+                        for item in forecast_rows:
+                            year = item["År"]
+
+                            pv_explicit += item["FCFF (MNOK)"] / (
+                                (1 + wacc / 100) ** (year - 2026)
+                            )
+
+                        pv_tv = tv / (
+                            (1 + wacc / 100) ** 4
+                        )
+
+                        ev = pv_explicit + pv_tv
+                        eq = ev - info["nibd"]
+
+                        per_share = (
+                            eq * 1_000_000 / info["shares_outstanding"]
+                        )
+
+                        row[f"g {tg:.1f}%".replace(".", ",")] = (
+                            f"{per_share:.0f} NOK"
+                        )
+
+                    sensitivity_rows.append(row)
+
+                st.dataframe(
+                    pd.DataFrame(sensitivity_rows),
+                    width="stretch",
+                    hide_index=True
+                )
+
+                st.caption(
+                    "Omsetnings-CAGR beregnes automatisk fra 2026E til 2030E. "
+                    "EBIT-marginen interpoleres lineært mellom valgt 2026- og 2030-margin. "
+                    "DCF er særlig følsom for WACC, terminalvekst og FCF-konvertering, "
+                    "og bør brukes sammen med P/E-verdsettelsen."
+                )
 
 # =========================================================
 # NØKKELTALL
