@@ -128,27 +128,122 @@ companies = {
         "news": [
             {
                 "Dato": "25.08.2026",
+                "Kategori": "Produkt",
+                "Viktighet": "🟡 Relevant",
                 "Hendelse": "NORBIT Connect lansert",
-                "Vurdering": "Positiv",
-                "Kommentar": "Ny web-basert løsning for ROV-sonaroperasjoner."
+                "Kort oppsummering": (
+                    "Ny web-basert brukerflate for konfigurering og drift av ROV-sonarer. "
+                    "Løsningen støtter fjernstyring og enklere operatørarbeid."
+                ),
+                "Betydning for caset": (
+                    "Positiv produktutvikling i Oceans. Kan støtte mersalg og styrke "
+                    "NORBITs posisjon hos ROV- og subsea-kunder."
+                ),
+                "Kilde": "NORBIT Newsroom",
+                "Lenke": "https://norbit.com/newsroom/norbit-connect-new-web-based-user-interface-for-rov-operations",
             },
             {
                 "Dato": "13.08.2026",
-                "Hendelse": "Falcon Eye / NORBIT Security kontrakt i Abu Dhabi",
-                "Vurdering": "Positiv",
-                "Kommentar": "NORBIT-sonarer valgt til undervannssikring av et profilert anlegg."
+                "Kategori": "Kontrakt",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Falcon Eye / NORBIT Security – Abu Dhabi",
+                "Kort oppsummering": (
+                    "NORBITs sikkerhetssonarer er valgt til undervannssikring av et "
+                    "profilert waterfront-anlegg i Abu Dhabi."
+                ),
+                "Betydning for caset": (
+                    "Strategisk viktig referanse innen sikring av kritisk infrastruktur. "
+                    "Kan åpne nye muligheter mot havner, energi og forsvar."
+                ),
+                "Kilde": "NORBIT Newsroom",
+                "Lenke": "https://norbit.com/newsroom/falcon-eye-technology-and-norbit-security-awarded-underwater-security-contract-for-an-internationally-renowned-venue-in-abu-dhabi",
             },
             {
                 "Dato": "13.08.2026",
-                "Hendelse": "Q2 2026",
-                "Vurdering": "Sterk",
-                "Kommentar": "Rekordomsetning og 25 % EBIT-margin."
+                "Kategori": "Resultat",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Q2 2026 – rekordomsetning og sterk margin",
+                "Kort oppsummering": (
+                    "Q2-omsetning på 831,6 MNOK, EBIT 205,2 MNOK og EBIT-margin 24,7 %."
+                ),
+                "Betydning for caset": (
+                    "Bekrefter høy lønnsomhet og sterk vekst. Connectivity og PIR "
+                    "driver veksten, mens Oceans opprettholder svært høy margin."
+                ),
+                "Kilde": "NORBIT Investor Relations",
+                "Lenke": "https://norbit.com/investor",
             },
             {
-                "Dato": "01.07.2026",
-                "Hendelse": "Water Linked oppkjøp gjennomført",
-                "Vurdering": "Strategisk positiv",
-                "Kommentar": "Utvider tilbudet innen undervannsnavigasjon, 3D-sonar og autonomi."
+                "Dato": "13.08.2026",
+                "Kategori": "Strategi",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Strategisk og finansiell ambisjon 2026–2030",
+                "Kort oppsummering": (
+                    "NORBIT publiserte oppdatert strategisk og finansiell plan for 2026–2030."
+                ),
+                "Betydning for caset": (
+                    "Gir tydelig ramme for å følge langsiktig omsetningsvekst, marginer "
+                    "og kapitalavkastning."
+                ),
+                "Kilde": "NORBIT Investor Relations",
+                "Lenke": "https://norbit.com/investor/reports-and-presentations",
+            },
+            {
+                "Dato": "15.07.2026",
+                "Kategori": "Produkt",
+                "Viktighet": "🟡 Relevant",
+                "Hendelse": "Layered Media Detection lansert",
+                "Kort oppsummering": (
+                    "Ny funksjonalitet for hydrografiske undersøkelser i krevende sedimentforhold."
+                ),
+                "Betydning for caset": (
+                    "Viser fortsatt innovasjon i Oceans og kan øke verdien av "
+                    "WINGHEAD-plattformen mot eksisterende kunder."
+                ),
+                "Kilde": "NORBIT Newsroom",
+                "Lenke": "https://norbit.com/newsroom",
+            },
+            {
+                "Dato": "21.06.2026",
+                "Kategori": "M&A",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Water Linked-avtalen annonsert",
+                "Kort oppsummering": (
+                    "NORBIT inngikk avtale om kjøp av Water Linked, som leverer DVL, "
+                    "3D-sonar, undervannsmodemer og akustisk posisjonering."
+                ),
+                "Betydning for caset": (
+                    "Styrker posisjonen mot ROV, AUV og autonome systemer og øker "
+                    "muligheten for kryssalg i Oceans."
+                ),
+                "Kilde": "NORBIT Newsroom",
+                "Lenke": "https://norbit.com/newsroom/norbit-and-water-linked-join-forces",
+            },
+        ],
+        "upcoming_events": [
+            {
+                "Dato": "21–24.09.2026",
+                "Hendelse": "OCEANS 2026",
+                "Sted": "Monterey, USA",
+                "Hvorfor følge": "Viktig Oceans-messe; produkt- og kundesignaler."
+            },
+            {
+                "Dato": "22.09.2026",
+                "Hendelse": "Nordic Defence and Security Conference 2026",
+                "Sted": "Stjørdal, Norge",
+                "Hvorfor følge": "Relevant for defence/security og nye kundemuligheter."
+            },
+            {
+                "Dato": "23.09.2026",
+                "Hendelse": "SpillAsia 2026",
+                "Sted": "Singapore",
+                "Hvorfor følge": "Relevant for maritime løsninger og internasjonal kundekontakt."
+            },
+            {
+                "Dato": "12.11.2026",
+                "Hendelse": "Q3 2026",
+                "Sted": "Investor relations",
+                "Hvorfor følge": "Neste kvartalsrapport; viktig for vekst, margin og kontantstrøm."
             },
         ],
         "contracts": [
@@ -618,13 +713,51 @@ elif side == "Selskaper":
         # NYHETER
         # -------------------------------------------------
         with tab4:
-            st.subheader("Siste relevante nyheter")
-            df_news = pd.DataFrame(info["news"])
-            st.dataframe(df_news, use_container_width=True, hide_index=True)
+            st.subheader("Nyhetsmonitor")
+
+            news_df = pd.DataFrame(info["news"])
+            important_count = sum(
+                1 for item in info["news"] if item["Viktighet"].startswith("🔴")
+            )
+
+            n1, n2, n3 = st.columns(3)
+            n1.metric("Relevante saker", len(info["news"]))
+            n2.metric("Viktige saker", important_count)
+            n3.metric("Neste rapport", "12.11.2026")
 
             st.caption(
-                "Senere henter vi denne listen automatisk fra børsmeldinger, "
-                "NORBITs IR-side og relevante eksterne kilder."
+                "Nyhetsmonitoren skiller mellom resultater, kontrakter, strategi, "
+                "M&A og produktnyheter. Målet er å vise hva som faktisk endrer investeringscaset."
+            )
+
+            st.subheader("Siste relevante nyheter")
+            st.dataframe(
+                news_df[
+                    [
+                        "Dato",
+                        "Kategori",
+                        "Viktighet",
+                        "Hendelse",
+                        "Kort oppsummering",
+                        "Betydning for caset",
+                        "Kilde",
+                        "Lenke",
+                    ]
+                ],
+                use_container_width=True,
+                hide_index=True
+            )
+
+            st.subheader("Kommende hendelser")
+            st.dataframe(
+                pd.DataFrame(info["upcoming_events"]),
+                use_container_width=True,
+                hide_index=True
+            )
+
+            st.info(
+                "Neste automatiseringssteg blir å hente nye saker løpende fra "
+                "NORBITs IR-side, NewsWeb og utvalgte eksterne kilder."
             )
 
         # -------------------------------------------------
@@ -747,11 +880,38 @@ elif side == "Aksjonærer":
 # =========================================================
 
 elif side == "Nyheter":
-    st.header("Nyheter")
+    st.header("Nyhetsmonitor")
 
-    st.subheader("NORBIT")
+    norbit = companies["NORBIT"]
+
+    n1, n2 = st.columns(2)
+    n1.metric("Relevante saker", len(norbit["news"]))
+    n2.metric(
+        "Viktige saker",
+        sum(1 for item in norbit["news"] if item["Viktighet"].startswith("🔴"))
+    )
+
+    st.subheader("NORBIT – siste relevante nyheter")
     st.dataframe(
-        pd.DataFrame(companies["NORBIT"]["news"]),
+        pd.DataFrame(norbit["news"])[
+            [
+                "Dato",
+                "Kategori",
+                "Viktighet",
+                "Hendelse",
+                "Kort oppsummering",
+                "Betydning for caset",
+                "Kilde",
+                "Lenke",
+            ]
+        ],
+        use_container_width=True,
+        hide_index=True
+    )
+
+    st.subheader("Kommende hendelser")
+    st.dataframe(
+        pd.DataFrame(norbit["upcoming_events"]),
         use_container_width=True,
         hide_index=True
     )
