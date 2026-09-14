@@ -570,6 +570,24 @@ companies = {
             "2030: EBIT-margin 20–25 %.",
             "2030: ROCE over 30 %.",
         ],
+        "what_follow": [
+            "Omsetningsvekst mot 2030-målet.",
+            "EBIT-margin mot målintervallet 20–25 %.",
+            "EPS-vekst og kontantkonvertering.",
+            "Utvikling i ROCE.",
+            "Netto gjeld / EBITDA etter oppkjøp.",
+            "Segmentmiks mellom Oceans, Connectivity og PIR.",
+        ],
+        "latest_development": (
+            "Sterk H1 2026 med 30 % omsetningsvekst. Connectivity og PIR "
+            "driver veksten, mens Oceans fortsatt har svært høy lønnsomhet. "
+            "Water Linked styrker NORBITs posisjon innen undervannsautonomi."
+        ),
+        "news_next_report": "12.11.2026",
+        "news_auto_source": (
+            "Neste automatiseringssteg blir å hente nye saker løpende fra "
+            "NORBITs IR-side, NewsWeb og utvalgte eksterne kilder."
+        ),
         "news": [
             {
                 "Dato": "25.08.2026",
@@ -792,6 +810,17 @@ companies = {
                 ),
             },
         ],
+        "contract_value_metric_label": "Kjent annonsert verdi",
+        "contract_value_caption": (
+            "Kjent annonsert verdi summerer bare kontrakter der NORBIT har oppgitt "
+            "konkret verdi. Falcon Eye-kontrakten er derfor ikke inkludert i summen."
+        ),
+        "contract_watchlist": [
+            "Nye AUV/ROV-OEM-avtaler etter Water Linked-integrasjonen.",
+            "Nye sikringsprosjekter for havner, energi og kritisk infrastruktur.",
+            "Nye defence & security-produksjonsordre i PIR.",
+            "Nye GNSS OBU-volumordre i Europa.",
+        ],
         "valuation": {
             "reference_price": 162.0,
             "eps_2026": 8.0,
@@ -822,8 +851,429 @@ companies = {
     "Cambi": {
         "ticker": "CAMBI",
         "marked": "Euronext Growth Oslo",
-        "sektor": "Miljøteknologi",
-        "case": "Kommer i neste steg."
+        "sektor": "Miljøteknologi / Vann / Biogass",
+        "case": (
+            "Cambi er en global markedsleder innen termisk hydrolyse (THP) for "
+            "avløpsslam og organisk avfall. Investeringscaset bygger på en stor og "
+            "voksende installert base, strukturell etterspørsel etter mer effektiv "
+            "slambehandling, høy aktivitet i Storbritannias AMP8-program, nye markeder "
+            "som India, New Zealand og Egypt, samt økende tilbakevendende inntekter "
+            "fra service og Grønn Vekst. Resultatene kan variere mye mellom kvartaler "
+            "fordi store prosjekter inntektsføres etter fremdrift."
+        ),
+        "price": 24.40,
+        "price_date": "11.09.2026",
+        "market_cap": 3.90,
+        "eps_ltm": 0.39,
+        "pe_ltm": 63.2,
+        "fcf_ltm": 363.9,
+        "fcf_yield": 9.3,
+        "roe_ltm": 13.2,
+        "roce": 18.7,
+        "nibd": -388.4,
+        "nibd_ebitda": -3.2,
+        "shares_outstanding": 160_030_000,
+        "q2": {
+            "revenue": 264.9,
+            "growth": -22.5,
+            "ebit": 20.7,
+            "ebit_margin": 7.8,
+            "eps": 0.10,
+            "ocf": 156.1,
+            "fcf": 154.0,
+        },
+        "h1": {
+            "revenue": 443.6,
+            "growth": -21.7,
+            "ebit": 39.5,
+            "ebit_margin": 8.9,
+            "eps": 0.13,
+            "ocf": 151.9,
+            "fcf": 148.0,
+        },
+        "financials": [
+            {
+                "Periode": "2024",
+                "Omsetning": 1033.0,
+                "Vekst": "6%",
+                "EBIT": 199.6,
+                "EBIT-margin": "19%",
+                "EPS": 0.94,
+            },
+            {
+                "Periode": "2025",
+                "Omsetning": 1068.0,
+                "Vekst": "3%",
+                "EBIT": 142.2,
+                "EBIT-margin": "13%",
+                "EPS": 0.84,
+            },
+            {
+                "Periode": "Q1 2026",
+                "Omsetning": 178.7,
+                "Vekst": "-21%",
+                "EBIT": 18.8,
+                "EBIT-margin": "11%",
+                "EPS": 0.03,
+            },
+            {
+                "Periode": "Q2 2026",
+                "Omsetning": 264.9,
+                "Vekst": "-23%",
+                "EBIT": 20.7,
+                "EBIT-margin": "8%",
+                "EPS": 0.10,
+            },
+            {
+                "Periode": "H1 2026",
+                "Omsetning": 443.6,
+                "Vekst": "-22%",
+                "EBIT": 39.5,
+                "EBIT-margin": "9%",
+                "EPS": 0.13,
+            },
+        ],
+        "segments_q2": [
+            {
+                "Segment": "Technology",
+                "Omsetning Q2": 169.0,
+                "Vekst": "-31%",
+                "EBIT": 5.4,
+                "EBIT-margin": "3%",
+            },
+            {
+                "Segment": "Solutions",
+                "Omsetning Q2": 96.0,
+                "Vekst": "-2%",
+                "EBIT": 15.3,
+                "EBIT-margin": "16%",
+            },
+        ],
+        "order_kpis": {
+            "Ordreinngang Q2": "554 MNOK",
+            "Ordrebok Q2": "1 479 MNOK",
+            "Technology backlog": "836 MNOK",
+            "Solutions backlog": "643 MNOK",
+        },
+        "guidance": [
+            "2026: Driftsresultatet ventes fortsatt å bli lavere enn i 2025.",
+            "Ordrebok ved Q2 2026: NOK 1,479 mrd., 58 % høyere enn Q2 2025.",
+            "25 % av ordreboken ventes levert i H2 2026, 29 % i 2027 og 46 % i 2028 eller senere.",
+            "Selskapet uttrykker fortsatt tillit til den langsiktige veksten.",
+        ],
+        "what_follow": [
+            "Ordreinngang og utvikling mot en ordrebok på rundt NOK 2 mrd.",
+            "Konvertering av engineering-avtaler til full produksjon og levering.",
+            "AMP8-kontrakter i Storbritannia frem mot 2030.",
+            "Marginnormalisering i Technology etter svakt H1 2026.",
+            "Lønnsomhet og tilbakevendende inntekter i Solutions / Grønn Vekst.",
+            "Kontantkonvertering, som kan variere betydelig med prosjektmilepæler.",
+        ],
+        "latest_development": (
+            "Ordreboken har styrket seg kraftig gjennom 2026. Etter Q2 har Cambi "
+            "blant annet vunnet en ny biosolidskontrakt i Eidsvoll og en major "
+            "THP-kontrakt i Alexandria, Egypt. Kort sikt preges fortsatt av lavere "
+            "resultatbidrag fra Technology, mens den kommersielle aktiviteten er sterk."
+        ),
+        "news_next_report": "04.11.2026",
+        "news_auto_source": (
+            "Neste automatiseringssteg blir å hente nye saker løpende fra Cambis "
+            "IR-side, Euronext/NewsWeb og utvalgte eksterne kilder."
+        ),
+        "news": [
+            {
+                "Dato": "09.09.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Major THP-kontrakt i Alexandria, Egypt",
+                "Kort oppsummering": (
+                    "Cambi skal levere fire THP-systemer og tilhørende utstyr til "
+                    "Alexandria West renseanlegg. Kontrakten starter med engineering."
+                ),
+                "Betydning for caset": (
+                    "Ny geografisk referanse og kontrakt i kategorien Major (>200 MNOK). "
+                    "Styrker vekstmulighetene i Midtøsten og Nord-Afrika."
+                ),
+                "Kilde": "Euronext / Cambi",
+                "Lenke": "https://live.euronext.com/en/product/equities/NO0010078850-MERK/company-information",
+            },
+            {
+                "Dato": "21.08.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🟡 Relevant",
+                "Hendelse": "Grønn Vekst tildelt Eidsvoll-kontrakt",
+                "Kort oppsummering": (
+                    "Avtale for håndtering av biosolids fra Bårlidalen renseanlegg, "
+                    "med tre faste år og opptil syv ettårige opsjoner."
+                ),
+                "Betydning for caset": (
+                    "Ny tilbakevendende Solutions-inntekt og ytterligere styrking av "
+                    "Grønn Veksts kommunale kontraktsportefølje."
+                ),
+                "Kilde": "Euronext / Cambi",
+                "Lenke": "https://live.euronext.com/en/product/equities/NO0010078850-MERK/company-information",
+            },
+            {
+                "Dato": "18.08.2026",
+                "Kategori": "Resultat",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Q2 2026 – ordrebok opp til 1,479 mrd.",
+                "Kort oppsummering": (
+                    "Omsetning 264,9 MNOK, EBIT 20,7 MNOK, ordreinngang 554 MNOK "
+                    "og operasjonell kontantstrøm 156,1 MNOK."
+                ),
+                "Betydning for caset": (
+                    "Svakere resultat på kort sikt, men vesentlig bedre ordrebok og "
+                    "sterk kontantstrøm fra prosjektmilepæler."
+                ),
+                "Kilde": "Cambi Investor Relations",
+                "Lenke": "https://www.investors.cambi.com/results-and-reports",
+            },
+            {
+                "Dato": "03.07.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🟡 Relevant",
+                "Hendelse": "Ringsend – levetidsforlengelse av THP-anlegg",
+                "Kort oppsummering": (
+                    "Cambi skal modernisere kontrollsystemer og erstatte utstyr på "
+                    "to eldre THP-linjer i Dublin."
+                ),
+                "Betydning for caset": (
+                    "Viser verdien av den installerte basen og potensialet for service, "
+                    "oppgraderinger og levetidsforlengelser."
+                ),
+                "Kilde": "Euronext / Cambi",
+                "Lenke": "https://live.euronext.com/en/products/equities/company-news/2026-07-03-cambi-signs-small-contract-extending-operating-life-two",
+            },
+            {
+                "Dato": "09.06.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Grønn Vekst beholder Bergen Vann-kontrakten",
+                "Kort oppsummering": (
+                    "Fem års fast avtale med tre ettårige opsjoner. Total potensiell "
+                    "verdi er i Cambis Major-kategori, over 200 MNOK."
+                ),
+                "Betydning for caset": (
+                    "Grønn Veksts største kontrakt noensinne og viktig bidrag til "
+                    "langsiktig, tilbakevendende Solutions-backlog."
+                ),
+                "Kilde": "Euronext / Cambi",
+                "Lenke": "https://live.euronext.com/en/products/equities/company-news/2026-06-09-gronn-vekst-retains-major-contract-municipal-biosolids",
+            },
+            {
+                "Dato": "29.04.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Rosedale THP-prosjekt i Auckland",
+                "Kort oppsummering": (
+                    "Engineering-avtale for to THP-systemer. Total prosjektverdi er "
+                    "klassifisert som Large (100–200 MNOK)."
+                ),
+                "Betydning for caset": (
+                    "Strategisk viktig referanse i New Zealand med mulig produksjonsfase "
+                    "etter senere notice to proceed."
+                ),
+                "Kilde": "Euronext / Cambi",
+                "Lenke": "https://live.euronext.com/en/products/equities/company-news/2026-04-29-cambi-signs-contract-thp-rosedale-wastewater-treatment",
+            },
+        ],
+        "upcoming_events": [
+            {
+                "Dato": "16.09.2026",
+                "Hendelse": "Pareto Securities Energy Conference",
+                "Sted": "Oslo, Norge",
+                "Hvorfor følge": "Mulige oppdateringer om marked, pipeline og kapitalallokering."
+            },
+            {
+                "Dato": "04.11.2026",
+                "Hendelse": "Q3 2026",
+                "Sted": "Investor relations",
+                "Hvorfor følge": "Viktig for ordreinngang, backlog, Technology-margin og kontantstrøm."
+            },
+        ],
+        "contracts": [
+            {
+                "Dato": "09.09.2026",
+                "Segment": "Technology",
+                "Kunde/prosjekt": "Alexandria West, Egypt – 4 THP-systemer",
+                "Verdi (MNOK)": 200,
+                "Kategori": "Major, 200+",
+                "Status": "Signert / engineering",
+                "Levering": "Produksjon etter notice to proceed",
+            },
+            {
+                "Dato": "21.08.2026",
+                "Segment": "Solutions",
+                "Kunde/prosjekt": "Eidsvoll – biosolids management",
+                "Verdi (MNOK)": 15,
+                "Kategori": "Small, 15–50",
+                "Status": "Tildelt",
+                "Levering": "Oppstart 01.11.2026",
+            },
+            {
+                "Dato": "03.07.2026",
+                "Segment": "Technology / Services",
+                "Kunde/prosjekt": "Ringsend, Dublin – levetidsforlengelse",
+                "Verdi (MNOK)": 15,
+                "Kategori": "Small, 15–50",
+                "Status": "Signert",
+                "Levering": "2027",
+            },
+            {
+                "Dato": "09.06.2026",
+                "Segment": "Solutions",
+                "Kunde/prosjekt": "Bergen Vann – biosolids management",
+                "Verdi (MNOK)": 200,
+                "Kategori": "Major, 200+",
+                "Status": "Tildelt / igangsatt",
+                "Levering": "5 år + 3 opsjonsår",
+            },
+            {
+                "Dato": "29.04.2026",
+                "Segment": "Technology",
+                "Kunde/prosjekt": "Rosedale, Auckland – 2 THP-systemer",
+                "Verdi (MNOK)": 100,
+                "Kategori": "Large, 100–200",
+                "Status": "Engineering signert",
+                "Levering": "Utstyr 2028 / drift 2030",
+            },
+            {
+                "Dato": "07.04.2026",
+                "Segment": "Technology",
+                "Kunde/prosjekt": "Malad, Mumbai – 2 THP-systemer",
+                "Verdi (MNOK)": 50,
+                "Kategori": "Medium, 50–100",
+                "Status": "Signert",
+                "Levering": "2027",
+            },
+            {
+                "Dato": "06.03.2026",
+                "Segment": "Technology",
+                "Kunde/prosjekt": "Blackburn bioresources hub, UK",
+                "Verdi (MNOK)": 100,
+                "Kategori": "Large, 100–200",
+                "Status": "Signert",
+                "Levering": "Sent 2027 / drift 2028",
+            },
+            {
+                "Dato": "02.03.2026",
+                "Segment": "Technology",
+                "Kunde/prosjekt": "Ellesmere Port bioresources hub, UK",
+                "Verdi (MNOK)": 100,
+                "Kategori": "Large, 100–200",
+                "Status": "Signert",
+                "Levering": "Sent 2027 / drift 2028",
+            },
+        ],
+        "contract_value_metric_label": "Min. kontraktsverdi 2026",
+        "contract_value_caption": (
+            "Summen bruker nedre grense i Cambis annonserte verdikategorier. "
+            "Faktisk kontraktsverdi er derfor høyere enn tallet som vises."
+        ),
+        "opportunities": [
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "Flere AMP8 THP-huber i Storbritannia",
+                "Segment": "Technology",
+                "Sannsynlighet": "Høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Overvåkes",
+                "Neste trigger": "Nye AMP8-tildelinger / engineering-avtaler",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "UK er Cambis sterkeste nærmarked og AMP8-investeringene varer "
+                    "frem mot 2030. Flere hub-prosjekter kan komme."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "Rosedale – notice to proceed til produksjon",
+                "Segment": "Technology",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Engineering pågår",
+                "Neste trigger": "Notice to proceed fra Watercare",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "Totalprosjektet er klassifisert som Large. Produksjon starter først "
+                    "etter senere ordre om å gå videre."
+                ),
+            },
+            {
+                "Prioritet": "🟡 Middels–høy",
+                "Mulighet": "Engineering-prosjekt i Sør-Amerika → full THP-leveranse",
+                "Segment": "Technology",
+                "Sannsynlighet": "Middels",
+                "Est. verdi (MNOK)": None,
+                "Status": "Tidlig fase",
+                "Neste trigger": "Full kontrakt / notice to proceed",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "Cambi opplyste i Q1 at en engineering-avtale var inngått i "
+                    "Sør-Amerika. En full leveranse vil være en ny viktig markedsreferanse."
+                ),
+            },
+            {
+                "Prioritet": "🟡 Middels–høy",
+                "Mulighet": "Flere THP-prosjekter i India",
+                "Segment": "Technology",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Aktiv markedsutvikling",
+                "Neste trigger": "Nye indiske anbud / kontrakter",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "Cambi bygger lokal organisasjon og produksjonskapasitet i India, "
+                    "som kan forbedre konkurransekraft og skalerbarhet."
+                ),
+            },
+            {
+                "Prioritet": "🟡 Middels",
+                "Mulighet": "Nye kommunale biosolidskontrakter i Norge",
+                "Segment": "Solutions",
+                "Sannsynlighet": "Middels",
+                "Est. verdi (MNOK)": None,
+                "Status": "Overvåkes",
+                "Neste trigger": "Nye offentlige anbud",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "Bergen og Eidsvoll viser fortsatt etterspørsel etter Grønn Veksts "
+                    "logistikk- og sluttbehandlingsløsninger."
+                ),
+            },
+        ],
+        "contract_watchlist": [
+            "Flere AMP8-prosjekter i Storbritannia.",
+            "Notice to proceed for Rosedale i New Zealand og Alexandria i Egypt.",
+            "Konvertering av Sør-Amerika-engineering til full kontrakt.",
+            "Nye THP-anbud i India og andre fremvoksende markeder.",
+            "Nye kommunale biosolids- og jordkontrakter for Grønn Vekst.",
+        ],
+        "valuation": {
+            "reference_price": 24.4,
+            "eps_2026": 0.65,
+            "growth_bear": 20.0,
+            "growth_base": 40.0,
+            "growth_bull": 55.0,
+            "pe_bear": 16.0,
+            "pe_base": 20.0,
+            "pe_bull": 24.0,
+            "required_return": 10.0,
+            "target_year": 2028,
+            "dcf_revenue_2026": 1000.0,
+            "dcf_revenue_2030": 2000.0,
+            "dcf_ebit_margin_2026": 12.0,
+            "dcf_ebit_margin_2030": 18.0,
+            "dcf_tax_rate": 22.0,
+            "dcf_conversion": 75.0,
+            "dcf_wacc": 10.0,
+            "dcf_terminal_growth": 3.0,
+            "note": (
+                "Forutsetningene er arbeidsestimater og ikke konsensus. Cambis "
+                "prosjektmiks og arbeidskapital gjør både EPS og FCF volatile fra år til år."
+            )
+        }
     },
 
     "Kitron": {
@@ -879,21 +1329,29 @@ if side == "Dashboard":
 
     st.header("Dashboard")
 
+    detailed_companies = ["NORBIT", "Cambi"]
+
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Selskaper", len(companies))
-    c2.metric("Nye nyheter", len(companies["NORBIT"]["news"]))
+    c2.metric(
+        "Relevante nyheter",
+        sum(len(companies[name]["news"]) for name in detailed_companies)
+    )
     c3.metric("Aksjonærendringer", "0")
-    c4.metric("Annonserte kontrakter", len(companies["NORBIT"]["contracts"]))
+    c4.metric(
+        "Annonserte kontrakter",
+        sum(len(companies[name]["contracts"]) for name in detailed_companies)
+    )
 
     st.divider()
     st.subheader("Selskapsoversikt")
 
     oversikt = pd.DataFrame({
         "Selskap": ["NORBIT", "Cambi", "Kitron", "NOTE", "Protector"],
-        "Kurs": ["162,00", "-", "-", "-", "-"],
-        "EPS LTM": ["7,04", "-", "-", "-", "-"],
-        "P/E LTM": ["23,0x", "-", "-", "-", "-"],
-        "FCF Yield": ["4,6%", "-", "-", "-", "-"],
+        "Kurs": ["162,00", "24,40", "-", "-", "-"],
+        "EPS LTM": ["7,04", "0,39", "-", "-", "-"],
+        "P/E LTM": ["23,0x", "63,2x", "-", "-", "-"],
+        "FCF Yield": ["4,6%", "9,3%", "-", "-", "-"],
         "Status": ["Følg", "Følg", "Følg", "Følg", "Følg"]
     })
 
@@ -901,8 +1359,8 @@ if side == "Dashboard":
 
     st.subheader("Dagens viktigste endringer")
     st.info(
-        "NORBIT er nå lagt inn med faktiske Q2/H1 2026-tall, kontrakter, "
-        "nyheter og foreløpige investeringsmuligheter. Automatisk oppdatering "
+        "NORBIT og Cambi er nå lagt inn med Q2/H1 2026-tall, nyheter, "
+        "kontrakter, verdsettelse og aksjonærmonitor. Automatisk oppdatering "
         "kobles til senere."
     )
 
@@ -918,7 +1376,7 @@ elif side == "Selskaper":
     st.header(selskap)
     st.caption(f"{info['ticker']} | {info['marked']} | {info['sektor']}")
 
-    if selskap != "NORBIT":
+    if selskap not in ("NORBIT", "Cambi"):
         st.info(
             "Strukturen er klar. Dette selskapet fylles med faktiske data "
             "etter at NORBIT-siden er ferdigstilt."
@@ -927,6 +1385,7 @@ elif side == "Selskaper":
         st.write(info["case"])
 
     else:
+        widget_prefix = info["ticker"].lower()
         # Toppnøkkeltall - verdsettelse
         k1, k2, k3 = st.columns(3)
 
@@ -1039,11 +1498,31 @@ elif side == "Selskaper":
                 f"{info['h1']['fcf']:.1f} MNOK".replace(".", ",")
             )
 
+            if "order_kpis" in info:
+                st.subheader("Ordre og backlog")
+                ok1, ok2, ok3, ok4 = st.columns(4)
+                order_items = list(info["order_kpis"].items())
+                for col, (label, value) in zip(
+                    [ok1, ok2, ok3, ok4],
+                    order_items
+                ):
+                    col.metric(label, value)
+
             st.subheader("Balansestyrke og kontantstrøm")
             b1, b2, b3 = st.columns(3)
+            debt_label = (
+                "Netto kontanter"
+                if info["nibd"] < 0
+                else "Netto rentebærende gjeld"
+            )
+            debt_value = (
+                abs(info["nibd"])
+                if info["nibd"] < 0
+                else info["nibd"]
+            )
             b1.metric(
-                "Netto rentebærende gjeld",
-                f"{info['nibd']:.0f} MNOK"
+                debt_label,
+                f"{debt_value:.0f} MNOK"
             )
             b2.metric(
                 "NIBD / EBITDA",
@@ -1069,11 +1548,7 @@ elif side == "Selskaper":
             )
 
             st.subheader("Siste utvikling")
-            st.success(
-                "Sterk H1 2026 med 30 % omsetningsvekst. Connectivity og PIR "
-                "driver veksten, mens Oceans fortsatt har svært høy lønnsomhet. "
-                "Water Linked styrker NORBITs posisjon innen undervannsautonomi."
-            )
+            st.success(info["latest_development"])
 
         # -------------------------------------------------
         # NØKKELTALL
@@ -1147,16 +1622,8 @@ elif side == "Selskaper":
             )
 
             st.subheader("Hva vi følger videre")
-            st.markdown(
-                """
-- Omsetningsvekst mot 2030-målet
-- EBIT-margin mot målintervallet 20–25 %
-- EPS-vekst og kontantkonvertering
-- Utvikling i ROCE
-- Netto gjeld / EBITDA etter oppkjøp
-- Segmentmiks mellom Oceans, Connectivity og PIR
-                """
-            )
+            for item in info["what_follow"]:
+                st.write(f"• {item}")
 
         # -------------------------------------------------
         # AKSJONÆRER
@@ -1164,7 +1631,7 @@ elif side == "Selskaper":
         with tab3:
             render_shareholder_monitor(
                 info,
-                key_prefix="norbit_company",
+                key_prefix=f"{widget_prefix}_company",
             )
 
         # -------------------------------------------------
@@ -1181,7 +1648,7 @@ elif side == "Selskaper":
             n1, n2, n3 = st.columns(3)
             n1.metric("Relevante saker", len(info["news"]))
             n2.metric("Viktige saker", important_count)
-            n3.metric("Neste rapport", "12.11.2026")
+            n3.metric("Neste rapport", info["news_next_report"])
 
             st.caption(
                 "Nyhetsmonitoren skiller mellom resultater, kontrakter, strategi, "
@@ -1213,10 +1680,7 @@ elif side == "Selskaper":
                 hide_index=True
             )
 
-            st.info(
-                "Neste automatiseringssteg blir å hente nye saker løpende fra "
-                "NORBITs IR-side, NewsWeb og utvalgte eksterne kilder."
-            )
+            st.info(info["news_auto_source"])
 
         # -------------------------------------------------
         # KONTRAKTER
@@ -1235,15 +1699,12 @@ elif side == "Selskaper":
             st.subheader("Kontraktsmonitor")
 
             c1, c2, c3, c4 = st.columns(4)
-            c1.metric("Kjent annonsert verdi", f"{known_contract_value:,.0f} MNOK".replace(",", " "))
+            c1.metric(info["contract_value_metric_label"], f"{known_contract_value:,.0f} MNOK".replace(",", " "))
             c2.metric("Annonserte kontrakter", len(info["contracts"]))
             c3.metric("Aktive muligheter", active_opportunities)
             c4.metric("Segmenter overvåket", contract_segments)
 
-            st.caption(
-                "Kjent annonsert verdi summerer bare kontrakter der NORBIT har oppgitt verdi. "
-                "Falcon Eye-kontrakten er derfor ikke inkludert i summen."
-            )
+            st.caption(info["contract_value_caption"])
 
             st.subheader("Annonserte kontrakter")
             df_contracts = pd.DataFrame(info["contracts"])
@@ -1278,14 +1739,8 @@ elif side == "Selskaper":
             )
 
             st.subheader("Hva bør overvåkes nå?")
-            st.markdown(
-                """
-- Nye AUV/ROV-OEM-avtaler etter Water Linked-integrasjonen
-- Nye sikringsprosjekter for havner, energi og kritisk infrastruktur
-- Nye defence & security-produksjonsordre i PIR
-- Nye GNSS OBU-volumordre i Europa
-                """
-            )
+            for item in info["contract_watchlist"]:
+                st.write(f"• {item}")
 
         # -------------------------------------------------
         # VERDSETTELSE
@@ -1307,7 +1762,7 @@ elif side == "Selskaper":
                     min_value=1.0,
                     value=float(info["valuation"]["reference_price"]),
                     step=1.0,
-                    key="norbit_reference_price"
+                    key=f"{widget_prefix}_reference_price"
                 )
 
                 eps_2026 = a2.number_input(
@@ -1315,14 +1770,14 @@ elif side == "Selskaper":
                     min_value=0.1,
                     value=float(info["valuation"]["eps_2026"]),
                     step=0.1,
-                    key="norbit_eps_2026"
+                    key=f"{widget_prefix}_eps_2026"
                 )
 
                 target_year = a3.selectbox(
                     "Målår",
                     [2028, 2029, 2030],
                     index=[2028, 2029, 2030].index(info["valuation"]["target_year"]),
-                    key="norbit_target_year"
+                    key=f"{widget_prefix}_target_year"
                 )
 
                 required_return = a4.number_input(
@@ -1332,7 +1787,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["required_return"]),
                     step=0.5,
                     format="%.1f",
-                    key="norbit_required_return"
+                    key=f"{widget_prefix}_required_return"
                 )
 
                 st.markdown("**EPS-vekst per år**")
@@ -1344,7 +1799,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["growth_bear"]),
                     step=1.0,
                     format="%.1f",
-                    key="norbit_growth_bear"
+                    key=f"{widget_prefix}_growth_bear"
                 )
                 growth_base = g2.number_input(
                     "Base vekst",
@@ -1353,7 +1808,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["growth_base"]),
                     step=1.0,
                     format="%.1f",
-                    key="norbit_growth_base"
+                    key=f"{widget_prefix}_growth_base"
                 )
                 growth_bull = g3.number_input(
                     "Bull vekst",
@@ -1362,7 +1817,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["growth_bull"]),
                     step=1.0,
                     format="%.1f",
-                    key="norbit_growth_bull"
+                    key=f"{widget_prefix}_growth_bull"
                 )
 
                 st.markdown("**P/E i målåret**")
@@ -1373,7 +1828,7 @@ elif side == "Selskaper":
                     max_value=50.0,
                     value=float(info["valuation"]["pe_bear"]),
                     step=1.0,
-                    key="norbit_pe_bear"
+                    key=f"{widget_prefix}_pe_bear"
                 )
                 pe_base = p2.number_input(
                     "Base P/E",
@@ -1381,7 +1836,7 @@ elif side == "Selskaper":
                     max_value=50.0,
                     value=float(info["valuation"]["pe_base"]),
                     step=1.0,
-                    key="norbit_pe_base"
+                    key=f"{widget_prefix}_pe_base"
                 )
                 pe_bull = p3.number_input(
                     "Bull P/E",
@@ -1389,7 +1844,7 @@ elif side == "Selskaper":
                     max_value=60.0,
                     value=float(info["valuation"]["pe_bull"]),
                     step=1.0,
-                    key="norbit_pe_bull"
+                    key=f"{widget_prefix}_pe_bull"
                 )
 
             years = list(range(2026, 2031))
@@ -1592,7 +2047,7 @@ elif side == "Selskaper":
                     min_value=500.0,
                     value=float(info["valuation"]["dcf_revenue_2026"]),
                     step=50.0,
-                    key="norbit_dcf_revenue_2026"
+                    key=f"{widget_prefix}_dcf_revenue_2026"
                 )
 
                 dcf_revenue_2030 = d2.number_input(
@@ -1600,7 +2055,7 @@ elif side == "Selskaper":
                     min_value=500.0,
                     value=float(info["valuation"]["dcf_revenue_2030"]),
                     step=100.0,
-                    key="norbit_dcf_revenue_2030"
+                    key=f"{widget_prefix}_dcf_revenue_2030"
                 )
 
                 dcf_ebit_margin_2026 = d3.number_input(
@@ -1610,7 +2065,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["dcf_ebit_margin_2026"]),
                     step=0.5,
                     format="%.1f",
-                    key="norbit_dcf_ebit_margin_2026"
+                    key=f"{widget_prefix}_dcf_ebit_margin_2026"
                 )
 
                 dcf_ebit_margin_2030 = d4.number_input(
@@ -1620,7 +2075,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["dcf_ebit_margin_2030"]),
                     step=0.5,
                     format="%.1f",
-                    key="norbit_dcf_ebit_margin_2030"
+                    key=f"{widget_prefix}_dcf_ebit_margin_2030"
                 )
 
                 d5, d6, d7, d8 = st.columns(4)
@@ -1632,7 +2087,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["dcf_tax_rate"]),
                     step=0.5,
                     format="%.1f",
-                    key="norbit_dcf_tax_rate"
+                    key=f"{widget_prefix}_dcf_tax_rate"
                 )
 
                 dcf_conversion = d6.number_input(
@@ -1643,7 +2098,7 @@ elif side == "Selskaper":
                     step=1.0,
                     format="%.1f",
                     help="Andel av EBIT etter skatt som omdannes til fri kontantstrøm.",
-                    key="norbit_dcf_conversion"
+                    key=f"{widget_prefix}_dcf_conversion"
                 )
 
                 dcf_wacc = d7.number_input(
@@ -1653,7 +2108,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["dcf_wacc"]),
                     step=0.5,
                     format="%.1f",
-                    key="norbit_dcf_wacc"
+                    key=f"{widget_prefix}_dcf_wacc"
                 )
 
                 dcf_terminal_growth = d8.number_input(
@@ -1663,7 +2118,7 @@ elif side == "Selskaper":
                     value=float(info["valuation"]["dcf_terminal_growth"]),
                     step=0.25,
                     format="%.2f",
-                    key="norbit_dcf_terminal_growth"
+                    key=f"{widget_prefix}_dcf_terminal_growth"
                 )
 
             if dcf_revenue_2030 <= 0 or dcf_revenue_2026 <= 0:
@@ -1878,10 +2333,15 @@ elif side == "Selskaper":
 elif side == "Nøkkeltall":
     st.header("Nøkkeltall")
 
-    norbit = companies["NORBIT"]
-    st.subheader("NORBIT")
+    selskap = st.selectbox(
+        "Velg selskap",
+        ["NORBIT", "Cambi"],
+        key="global_keyfig_company",
+    )
+    info = companies[selskap]
+    st.subheader(selskap)
 
-    df = pd.DataFrame(norbit["financials"])
+    df = pd.DataFrame(info["financials"])
     st.dataframe(df, width="stretch", hide_index=True)
 
 # =========================================================
@@ -1893,15 +2353,15 @@ elif side == "Aksjonærer":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT"],
+        ["NORBIT", "Cambi"],
         key="global_shareholder_company",
     )
 
-    if selskap == "NORBIT":
-        render_shareholder_monitor(
-            companies["NORBIT"],
-            key_prefix="norbit_global",
-        )
+    info = companies[selskap]
+    render_shareholder_monitor(
+        info,
+        key_prefix=f"{info['ticker'].lower()}_global",
+    )
 
 # =========================================================
 # NYHETER
@@ -1910,18 +2370,23 @@ elif side == "Aksjonærer":
 elif side == "Nyheter":
     st.header("Nyhetsmonitor")
 
-    norbit = companies["NORBIT"]
+    selskap = st.selectbox(
+        "Velg selskap",
+        ["NORBIT", "Cambi"],
+        key="global_news_company",
+    )
+    info = companies[selskap]
 
     n1, n2 = st.columns(2)
-    n1.metric("Relevante saker", len(norbit["news"]))
+    n1.metric("Relevante saker", len(info["news"]))
     n2.metric(
         "Viktige saker",
-        sum(1 for item in norbit["news"] if item["Viktighet"].startswith("🔴"))
+        sum(1 for item in info["news"] if item["Viktighet"].startswith("🔴"))
     )
 
-    st.subheader("NORBIT – siste relevante nyheter")
+    st.subheader(f"{selskap} – siste relevante nyheter")
     st.dataframe(
-        pd.DataFrame(norbit["news"])[
+        pd.DataFrame(info["news"])[
             [
                 "Dato",
                 "Kategori",
@@ -1939,7 +2404,7 @@ elif side == "Nyheter":
 
     st.subheader("Kommende hendelser")
     st.dataframe(
-        pd.DataFrame(norbit["upcoming_events"]),
+        pd.DataFrame(info["upcoming_events"]),
         width="stretch",
         hide_index=True
     )
@@ -1951,27 +2416,38 @@ elif side == "Nyheter":
 elif side == "Kontrakter":
     st.header("Kontraktsmonitor")
 
-    norbit = companies["NORBIT"]
+    selskap = st.selectbox(
+        "Velg selskap",
+        ["NORBIT", "Cambi"],
+        key="global_contract_company",
+    )
+    info = companies[selskap]
+
     known_contract_value = sum(
         item["Verdi (MNOK)"]
-        for item in norbit["contracts"]
+        for item in info["contracts"]
         if isinstance(item["Verdi (MNOK)"], (int, float))
     )
 
     c1, c2, c3 = st.columns(3)
-    c1.metric("NORBIT – kjent annonsert verdi", f"{known_contract_value:,.0f} MNOK".replace(",", " "))
-    c2.metric("Annonserte kontrakter", len(norbit["contracts"]))
-    c3.metric("Aktive muligheter", len(norbit["opportunities"]))
+    c1.metric(
+        info["contract_value_metric_label"],
+        f"{known_contract_value:,.0f} MNOK".replace(",", " ")
+    )
+    c2.metric("Annonserte kontrakter", len(info["contracts"]))
+    c3.metric("Aktive muligheter", len(info["opportunities"]))
 
-    st.subheader("NORBIT – annonserte kontrakter")
+    st.caption(info["contract_value_caption"])
+
+    st.subheader(f"{selskap} – annonserte kontrakter")
     st.dataframe(
-        pd.DataFrame(norbit["contracts"]),
+        pd.DataFrame(info["contracts"]),
         width="stretch",
         hide_index=True
     )
 
-    st.subheader("NORBIT – potensielle kontrakter og anbud")
-    df_opp = pd.DataFrame(norbit["opportunities"])
+    st.subheader(f"{selskap} – potensielle kontrakter og anbud")
+    df_opp = pd.DataFrame(info["opportunities"])
     st.dataframe(
         df_opp[
             [
@@ -1989,3 +2465,4 @@ elif side == "Kontrakter":
         width="stretch",
         hide_index=True
     )
+
