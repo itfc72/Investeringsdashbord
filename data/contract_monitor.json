@@ -7,12 +7,13 @@
       "https://peelregion.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/8ae627ed-3da9-44e2-af9d-4a9eddc12809",
       "https://app.govly.com/public/opportunities/16935200"
     ],
-    "status": "Aktivt anbud",
+    "status": "Tildelt / award publisert",
     "next_date": "02.10.2026",
     "date_type": "Tilbudsfrist",
     "last_checked": "15.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": null,
-    "last_change_summary": "Nytt aktivt THP-anbud registrert. Offentlig tilbudsfrist 02.10.2026."
+    "content_hash": "62c4b101c41006aa9be00a4e2f7a542548841fe8b1edc7a1efb9865490ffdb71",
+    "last_change_summary": "Nytt aktivt THP-anbud registrert. Offentlig tilbudsfrist 02.10.2026.",
+    "source_url_used": "https://peelregion.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/8ae627ed-3da9-44e2-af9d-4a9eddc12809"
   }
 }
