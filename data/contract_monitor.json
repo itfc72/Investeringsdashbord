@@ -1,0 +1,18 @@
+{
+  "clarkson_wrrf": {
+    "company": "Cambi",
+    "title": "Clarkson WRRF – Peel Region, Ontario",
+    "source_label": "Region of Peel / Govly",
+    "source_urls": [
+      "https://peelregion.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/8ae627ed-3da9-44e2-af9d-4a9eddc12809",
+      "https://app.govly.com/public/opportunities/16935200"
+    ],
+    "status": "Aktivt anbud",
+    "next_date": "02.10.2026",
+    "date_type": "Tilbudsfrist",
+    "last_checked": "15.09.2026",
+    "last_updated": "15.09.2026",
+    "content_hash": null,
+    "last_change_summary": "Nytt aktivt THP-anbud registrert. Offentlig tilbudsfrist 02.10.2026."
+  }
+}
