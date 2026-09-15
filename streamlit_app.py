@@ -2173,7 +2173,17 @@ if side == "Dashboard":
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Selskaper", len(companies))
-    c2.metric("Nye oppdateringer i dag", len(updates_today))
+
+    with c2:
+        st.metric("Nye oppdateringer i dag", len(updates_today))
+        update_companies = sorted({
+            item["Selskap"]
+            for item in updates_today
+            if item.get("Selskap")
+        })
+        if update_companies:
+            st.caption(f"({', '.join(update_companies)})")
+
     c3.metric("Aksjonærendringer", "0")
     c4.metric(
         "Annonserte kontrakter",
