@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from pathlib import Path
+import json
 
 st.set_page_config(
     page_title="Investeringsdashboard",
@@ -2138,22 +2140,37 @@ side = st.sidebar.radio(
 # DAGLIGE OPPDATERINGER
 # =========================================================
 
-# Denne listen er laget separat fra vanlige nyheter.
-# Senere kan den fylles automatisk av kontrakts-/nyhetsmonitoren.
-daily_updates = [
-    {
-        "Dato": "2026-09-15",
-        "Selskap": "Cambi",
-        "Kategori": "Kontrakt / anbud",
-        "Tittel": "Clarkson WRRF – Peel Region, Ontario",
-        "Oppdatering": (
-            "Nytt aktivt THP-anbud er lagt inn i kontraktsmonitoren. "
-            "Offentlig tilbudsfrist er 02.10.2026."
-        ),
-        "Viktighet": "Høy",
-    },
-]
+DATA_DIR = Path(__file__).resolve().parent / "data"
+DAILY_UPDATES_FILE = DATA_DIR / "daily_updates.json"
+CONTRACT_MONITOR_FILE = DATA_DIR / "contract_monitor.json"
 
+def load_json_file(path, default):
+    try:
+        if path.exists():
+            with path.open("r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return default
+
+daily_updates = load_json_file(
+    DAILY_UPDATES_FILE,
+    [
+        {
+            "Dato": "2026-09-15",
+            "Selskap": "Cambi",
+            "Kategori": "Kontrakt / anbud",
+            "Tittel": "Clarkson WRRF – Peel Region, Ontario",
+            "Oppdatering": (
+                "Nytt aktivt THP-anbud er lagt inn i kontraktsmonitoren. "
+                "Offentlig tilbudsfrist er 02.10.2026."
+            ),
+            "Viktighet": "Høy",
+        }
+    ],
+)
+
+contract_monitor = load_json_file(CONTRACT_MONITOR_FILE, {})
 
 # =========================================================
 # DASHBOARD
@@ -2703,6 +2720,27 @@ elif side == "Selskaper":
 
             st.subheader("Potensielle kontrakter og anbud")
             df_opp = pd.DataFrame(info["opportunities"]).copy()
+
+            # Automatisk kontraktsmonitor kan overstyre faktiske status-/datofelter,
+            # men ikke våre analysefelt som prioritet, sannsynlighet eller kommentar.
+            if selskap == "Cambi" and contract_monitor.get("clarkson_wrrf"):
+                auto = contract_monitor["clarkson_wrrf"]
+                mask = df_opp["Mulighet"].astype(str).str.contains(
+                    "Clarkson WRRF", case=False, na=False
+                )
+                if mask.any():
+                    if auto.get("status"):
+                        df_opp.loc[mask, "Status"] = auto["status"]
+                    if auto.get("next_date"):
+                        df_opp.loc[mask, "Neste dato"] = auto["next_date"]
+                    if auto.get("date_type"):
+                        df_opp.loc[mask, "Dato-type"] = auto["date_type"]
+                    if auto.get("last_checked"):
+                        df_opp.loc[mask, "Sist kontrollert"] = auto["last_checked"]
+                    if auto.get("last_updated"):
+                        df_opp.loc[mask, "Sist oppdatert"] = auto["last_updated"]
+                    if auto.get("source_label"):
+                        df_opp.loc[mask, "Kilde"] = auto["source_label"]
 
             # Felter som kan fylles automatisk etter hvert som overvåkningen bygges ut.
             for optional_col in ["Neste dato", "Dato-type", "Sist kontrollert", "Kilde"]:
@@ -3934,6 +3972,25 @@ elif side == "Kontrakter":
 
     st.subheader(f"{selskap} – potensielle kontrakter og anbud")
     df_opp = pd.DataFrame(info["opportunities"]).copy()
+
+    if selskap == "Cambi" and contract_monitor.get("clarkson_wrrf"):
+        auto = contract_monitor["clarkson_wrrf"]
+        mask = df_opp["Mulighet"].astype(str).str.contains(
+            "Clarkson WRRF", case=False, na=False
+        )
+        if mask.any():
+            if auto.get("status"):
+                df_opp.loc[mask, "Status"] = auto["status"]
+            if auto.get("next_date"):
+                df_opp.loc[mask, "Neste dato"] = auto["next_date"]
+            if auto.get("date_type"):
+                df_opp.loc[mask, "Dato-type"] = auto["date_type"]
+            if auto.get("last_checked"):
+                df_opp.loc[mask, "Sist kontrollert"] = auto["last_checked"]
+            if auto.get("last_updated"):
+                df_opp.loc[mask, "Sist oppdatert"] = auto["last_updated"]
+            if auto.get("source_label"):
+                df_opp.loc[mask, "Kilde"] = auto["source_label"]
 
     for optional_col in ["Neste dato", "Dato-type", "Sist kontrollert", "Kilde"]:
         if optional_col not in df_opp.columns:
