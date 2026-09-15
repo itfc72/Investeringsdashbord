@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 import requests
 from bs4 import BeautifulSoup
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 MONITOR_FILE = DATA_DIR / "contract_monitor.json"
 UPDATES_FILE = DATA_DIR / "daily_updates.json"
