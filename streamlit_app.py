@@ -1185,6 +1185,24 @@ companies = {
         "opportunities": [
             {
                 "Prioritet": "🟢 Høy",
+                "Mulighet": "Clarkson WRRF – Peel Region, Ontario",
+                "Segment": "Technology",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Aktivt anbud",
+                "Neste dato": "02.10.2026",
+                "Dato-type": "Tilbudsfrist",
+                "Neste trigger": "Tilbudsfrist / deretter overvåke award-notice",
+                "Sist oppdatert": "15.09.2026",
+                "Kilde": "Region of Peel – 2026-005P",
+                "Kommentar": (
+                    "Region of Peel har lyst ut pre-purchase av Thermal Hydrolysis "
+                    "Process-utstyr og hjelpekomponenter til Clarkson WRRF biosolids expansion. "
+                    "Dette er en konkret THP-anskaffelse og derfor svært relevant for Cambi."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
                 "Mulighet": "Flere AMP8 THP-huber i Storbritannia",
                 "Segment": "Technology",
                 "Sannsynlighet": "Høy",
@@ -1255,6 +1273,7 @@ companies = {
             },
         ],
         "contract_watchlist": [
+            "Clarkson WRRF / Peel Region: tilbudsfrist 02.10.2026 og deretter award-notice.",
             "Flere AMP8-prosjekter i Storbritannia.",
             "Notice to proceed for Rosedale i New Zealand og Alexandria i Egypt.",
             "Konvertering av Sør-Amerika-engineering til full kontrakt.",
@@ -2235,53 +2254,6 @@ elif side == "Selskaper":
         cashflow_fx_to_share_currency = info.get("cashflow_fx_to_share_currency", 1.0)
         valuation_fx_to_share_currency = info.get("valuation_fx_to_share_currency", 1.0)
 
-        # Toppnøkkeltall - verdsettelse
-        k1, k2, k3 = st.columns(3)
-
-        k1.metric(
-            "Markedsverdi",
-            f"{info['market_cap']:.2f} {billion_unit}".replace(".", ",")
-        )
-        k2.metric(
-            "P/E LTM",
-            f"{info['pe_ltm']:.1f}x".replace(".", ",")
-        )
-        if selskap == "NOTE":
-            k3.metric(
-                "OCF LTM",
-                f"{info['ocf_ltm']:.0f} {million_unit}"
-            )
-        else:
-            k3.metric(
-                "FCF Yield LTM",
-                f"{info['fcf_yield']:.1f}%".replace(".", ",")
-            )
-
-        # Toppnøkkeltall - kvalitet og balanse
-        k4, k5, k6 = st.columns(3)
-
-        k4.metric(
-            "ROE LTM",
-            f"{info['roe_ltm']:.1f}%".replace(".", ",")
-        )
-        k5.metric(
-            "ROCE",
-            f"{info['roce']:.1f}%".replace(".", ",")
-        )
-        leverage_label = (
-            "Netto kontanter / EBITDA"
-            if info["nibd_ebitda"] < 0
-            else "Netto gjeld / EBITDA"
-        )
-        leverage_value = abs(info["nibd_ebitda"])
-
-        k6.metric(
-            leverage_label,
-            f"{leverage_value:.1f}x".replace(".", ",")
-        )
-
-        st.divider()
-
         tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
             [
                 "Oversikt",
@@ -2297,6 +2269,52 @@ elif side == "Selskaper":
         # OVERSIKT
         # -------------------------------------------------
         with tab1:
+            # Selskapsnøkkeltall vises kun på Oversikt.
+            k1, k2, k3 = st.columns(3)
+
+            k1.metric(
+                "Markedsverdi",
+                f"{info['market_cap']:.2f} {billion_unit}".replace(".", ",")
+            )
+            k2.metric(
+                "P/E LTM",
+                f"{info['pe_ltm']:.1f}x".replace(".", ",")
+            )
+            if selskap == "NOTE":
+                k3.metric(
+                    "OCF LTM",
+                    f"{info['ocf_ltm']:.0f} {cashflow_unit}"
+                )
+            else:
+                k3.metric(
+                    "FCF Yield LTM",
+                    f"{info['fcf_yield']:.1f}%".replace(".", ",")
+                )
+
+            k4, k5, k6 = st.columns(3)
+
+            k4.metric(
+                "ROE LTM",
+                f"{info['roe_ltm']:.1f}%".replace(".", ",")
+            )
+            k5.metric(
+                "ROCE",
+                f"{info['roce']:.1f}%".replace(".", ",")
+            )
+            leverage_label = (
+                "Netto kontanter / EBITDA"
+                if info["nibd_ebitda"] < 0
+                else "Netto gjeld / EBITDA"
+            )
+            leverage_value = abs(info["nibd_ebitda"])
+
+            k6.metric(
+                leverage_label,
+                f"{leverage_value:.1f}x".replace(".", ",")
+            )
+
+            st.divider()
+
             st.subheader("Investeringscase")
             st.write(info["case"])
 
@@ -2606,22 +2624,16 @@ elif side == "Selskaper":
                 for item in info["contracts"]
                 if isinstance(item["Verdi (MNOK)"], (int, float))
             )
-            active_opportunities = len(info["opportunities"])
-            contract_segments = len({
-                item["Segment"] for item in info["contracts"] + info["opportunities"]
-            })
 
-            st.subheader("Kontraktsmonitor")
+            st.subheader("Kontrakter og anbud")
 
-            c1, c2, c3, c4 = st.columns(4)
-            c1.metric(info["contract_value_metric_label"], f"{known_contract_value:,.0f} {million_unit}".replace(",", " "))
-            c2.metric("Annonserte kontrakter", len(info["contracts"]))
-            c3.metric("Aktive muligheter", active_opportunities)
-            c4.metric("Segmenter overvåket", contract_segments)
-
+            st.metric(
+                info["contract_value_metric_label"],
+                f"{known_contract_value:,.0f} {million_unit}".replace(",", " ")
+            )
             st.caption(info["contract_value_caption"])
 
-            st.subheader("Annonserte kontrakter")
+            st.subheader("Inngåtte / annonserte kontrakter")
             df_contracts = pd.DataFrame(info["contracts"]).copy()
             if "Verdi (MNOK)" in df_contracts.columns:
                 raw_value_col = "Verdi (MNOK)"
@@ -2634,8 +2646,8 @@ elif side == "Selskaper":
                 else:
                     df_contracts[value_col] = formatted_values
                     df_contracts = df_contracts.drop(columns=[raw_value_col])
-            df_contracts = df_contracts.fillna("–")
 
+            df_contracts = df_contracts.fillna("–")
             contract_display = df_contracts.copy()
             for col in contract_display.columns:
                 contract_display[col] = contract_display[col].map(
@@ -2650,6 +2662,14 @@ elif side == "Selskaper":
 
             st.subheader("Potensielle kontrakter og anbud")
             df_opp = pd.DataFrame(info["opportunities"]).copy()
+
+            # Felter som kan fylles automatisk etter hvert som overvåkningen bygges ut.
+            for optional_col in ["Neste dato", "Dato-type", "Kilde"]:
+                if optional_col not in df_opp.columns:
+                    df_opp[optional_col] = "–"
+                else:
+                    df_opp[optional_col] = df_opp[optional_col].fillna("–")
+
             value_col = f"Est. verdi ({million_unit})"
             if "Est. verdi (MNOK)" in df_opp.columns:
                 raw_est_col = "Est. verdi (MNOK)"
@@ -2661,18 +2681,22 @@ elif side == "Selskaper":
                 else:
                     df_opp[value_col] = formatted_est
                     df_opp = df_opp.drop(columns=[raw_est_col])
+
             df_opp = df_opp.fillna("–")
+
             opp_cols = [
                 "Prioritet",
                 "Mulighet",
-                "Segment",
                 "Sannsynlighet",
                 value_col,
                 "Status",
-                "Neste trigger",
+                "Neste dato",
+                "Dato-type",
                 "Sist oppdatert",
+                "Kilde",
                 "Kommentar",
             ]
+
             opp_display = df_opp[opp_cols].copy()
             for col in opp_display.columns:
                 opp_display[col] = opp_display[col].map(
@@ -2685,14 +2709,15 @@ elif side == "Selskaper":
                 hide_index=True
             )
 
+            st.caption(
+                "Neste dato er offentlig kjent frist eller forventet beslutningsdato. "
+                "Når kun tilbudsfrist er kjent, vises den – ikke en antatt award-dato."
+            )
+
             st.warning(
                 "Potensielle kontrakter/anbud er vår analyse, ikke annonserte ordre. "
                 "Estimert verdi står tom der vi ikke har et forsvarlig offentlig anslag."
             )
-
-            st.subheader("Hva bør overvåkes nå?")
-            for item in info["contract_watchlist"]:
-                st.write(f"• {item}")
 
         # -------------------------------------------------
         # VERDSETTELSE
@@ -3811,7 +3836,7 @@ elif side == "Nyheter":
 # =========================================================
 
 elif side == "Kontrakter":
-    st.header("Kontraktsmonitor")
+    st.header("Kontrakter og anbud")
 
     selskap = st.selectbox(
         "Velg selskap",
@@ -3829,18 +3854,15 @@ elif side == "Kontrakter":
         if isinstance(item["Verdi (MNOK)"], (int, float))
     )
 
-    c1, c2, c3 = st.columns(3)
-    c1.metric(
+    st.metric(
         info["contract_value_metric_label"],
         f"{known_contract_value:,.0f} {million_unit}".replace(",", " ")
     )
-    c2.metric("Annonserte kontrakter", len(info["contracts"]))
-    c3.metric("Aktive muligheter", len(info["opportunities"]))
-
     st.caption(info["contract_value_caption"])
 
-    st.subheader(f"{selskap} – annonserte kontrakter")
+    st.subheader(f"{selskap} – inngåtte / annonserte kontrakter")
     global_contracts = pd.DataFrame(info["contracts"]).copy()
+
     if "Verdi (MNOK)" in global_contracts.columns:
         raw_global_value_col = "Verdi (MNOK)"
         global_contract_value_col = f"Verdi ({million_unit})"
@@ -3852,8 +3874,8 @@ elif side == "Kontrakter":
         else:
             global_contracts[global_contract_value_col] = formatted_global_values
             global_contracts = global_contracts.drop(columns=[raw_global_value_col])
-    global_contracts = global_contracts.fillna("–")
 
+    global_contracts = global_contracts.fillna("–")
     global_contract_display = global_contracts.copy()
     for col in global_contract_display.columns:
         global_contract_display[col] = global_contract_display[col].map(
@@ -3868,6 +3890,13 @@ elif side == "Kontrakter":
 
     st.subheader(f"{selskap} – potensielle kontrakter og anbud")
     df_opp = pd.DataFrame(info["opportunities"]).copy()
+
+    for optional_col in ["Neste dato", "Dato-type", "Kilde"]:
+        if optional_col not in df_opp.columns:
+            df_opp[optional_col] = "–"
+        else:
+            df_opp[optional_col] = df_opp[optional_col].fillna("–")
+
     global_value_col = f"Est. verdi ({million_unit})"
     if "Est. verdi (MNOK)" in df_opp.columns:
         raw_global_est_col = "Est. verdi (MNOK)"
@@ -3879,16 +3908,19 @@ elif side == "Kontrakter":
         else:
             df_opp[global_value_col] = formatted_global_est
             df_opp = df_opp.drop(columns=[raw_global_est_col])
+
     df_opp = df_opp.fillna("–")
+
     global_opp_cols = [
         "Prioritet",
         "Mulighet",
-        "Segment",
         "Sannsynlighet",
         global_value_col,
         "Status",
-        "Neste trigger",
+        "Neste dato",
+        "Dato-type",
         "Sist oppdatert",
+        "Kilde",
         "Kommentar",
     ]
 
@@ -3902,5 +3934,15 @@ elif side == "Kontrakter":
         global_opp_display,
         width="stretch",
         hide_index=True
+    )
+
+    st.caption(
+        "Neste dato er offentlig kjent frist eller forventet beslutningsdato. "
+        "Når bare tilbudsfrist er kjent, vises den – ikke en antatt award-dato."
+    )
+
+    st.warning(
+        "Potensielle kontrakter/anbud er vår analyse, ikke annonserte ordre. "
+        "Estimert verdi står tom der vi ikke har et forsvarlig offentlig anslag."
     )
 
