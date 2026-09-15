@@ -480,6 +480,11 @@ companies = {
         "nibd": 554.7,
         "nibd_ebitda": 0.7,
         "shares_outstanding": 63_981_154,
+        "dashboard_5y": {
+            "revenue_cagr": 32.2,
+            "eps_cagr": 67.5,
+            "fcf_yield_avg": 4.6,
+        },
         "q2": {
             "revenue": 831.6,
             "growth": 22.0,
@@ -873,6 +878,12 @@ companies = {
         "nibd": -388.4,
         "nibd_ebitda": -3.2,
         "shares_outstanding": 160_030_000,
+        "dashboard_5y": {
+            "revenue_cagr": 23.8,
+            # EPS var negativt i deler av perioden; CAGR blir derfor misvisende.
+            "eps_cagr": None,
+            "fcf_yield_avg": 4.2,
+        },
         "q2": {
             "revenue": 264.9,
             "growth": -22.5,
@@ -1337,6 +1348,11 @@ companies = {
         "nibd": 1640.0,
         "nibd_ebitda": 3.3,
         "shares_outstanding": 28_550_000,
+        "dashboard_5y": {
+            "revenue_cagr": 15.3,
+            "eps_cagr": 19.2,
+            "fcf_yield_avg": 4.9,
+        },
         "q2": {
             "revenue": 1175.0,
             "growth": 20.0,
@@ -1676,8 +1692,8 @@ companies = {
             "reference_price": 181.0,
             "eps_2026": 10.10,
             "growth_bear": 8.0,
-            "growth_base": 17.0,
-            "growth_bull": 24.0,
+            "growth_base": 20.0,
+            "growth_bull": 25.0,
             "pe_bear": 15.0,
             "pe_base": 18.0,
             "pe_bull": 22.0,
@@ -1755,16 +1771,65 @@ if side == "Dashboard":
     st.divider()
     st.subheader("Selskapsoversikt")
 
-    oversikt = pd.DataFrame({
-        "Selskap": ["NORBIT", "Cambi", "Kitron", "NOTE", "Protector"],
-        "Kurs": ["162,00", "24,40", "-", "181,00", "-"],
-        "EPS LTM": ["7,04", "0,39", "-", "8,72", "-"],
-        "P/E LTM": ["23,0x", "63,2x", "-", "20,8x", "-"],
-        "FCF Yield": ["4,6%", "9,3%", "-", "–", "-"],
-        "Status": ["Følg", "Følg", "Følg", "Følg", "Følg"]
-    })
+    def dashboard_target_2028(name):
+        info = companies[name]
+        val = info.get("valuation")
+        if not val:
+            return None
+
+        if name == "Cambi":
+            return val["cambi_eps_2028_base"] * val["pe_base"]
+
+        years = val["target_year"] - 2026
+        eps_target = val["eps_2026"] * (1 + val["growth_base"] / 100) ** years
+        return eps_target * val["pe_base"]
+
+    dashboard_rows = []
+
+    for name in ["NORBIT", "Cambi", "Kitron", "NOTE", "Protector"]:
+        info = companies[name]
+        hist = info.get("dashboard_5y")
+
+        if not hist or "price" not in info:
+            dashboard_rows.append({
+                "Selskap": name,
+                "Kurs": "–",
+                "Omsetning CAGR 5Å": "–",
+                "EPS CAGR 5Å": "–",
+                "FCF-yield 5Å snitt": "–",
+                "Kursmål 2028": "–",
+                "Oppside": "–",
+            })
+            continue
+
+        currency = info.get("currency", "NOK")
+        target = dashboard_target_2028(name)
+        upside = ((target / info["price"]) - 1) * 100 if target else None
+
+        dashboard_rows.append({
+            "Selskap": name,
+            "Kurs": f'{info["price"]:.2f} {currency}'.replace(".", ","),
+            "Omsetning CAGR 5Å": f'{hist["revenue_cagr"]:.1f}%'.replace(".", ","),
+            "EPS CAGR 5Å": (
+                f'{hist["eps_cagr"]:.1f}%'.replace(".", ",")
+                if hist["eps_cagr"] is not None
+                else "N/M"
+            ),
+            "FCF-yield 5Å snitt": f'{hist["fcf_yield_avg"]:.1f}%'.replace(".", ","),
+            "Kursmål 2028": f'{target:.0f} {currency}' if target else "–",
+            "Oppside": f'{upside:+.0f}%' if upside is not None else "–",
+        })
+
+    oversikt = pd.DataFrame(dashboard_rows)
 
     st.dataframe(oversikt, width="stretch", hide_index=True)
+
+    st.caption(
+        "CAGR er beregnet fra FY2020 til FY2025. FCF-yield 5Å snitt er "
+        "gjennomsnittet av rapportert årlig FCF-yield for FY2021–FY2025. "
+        "N/M betyr at EPS-CAGR ikke er meningsfull fordi EPS var negativt "
+        "i deler av perioden. Kursmål 2028 er vårt base-scenario."
+    )
 
     st.subheader("Dagens viktigste endringer")
     st.info(
