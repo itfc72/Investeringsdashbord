@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 st.set_page_config(
     page_title="Investeringsdashboard",
@@ -1194,6 +1196,7 @@ companies = {
                 "Dato-type": "Tilbudsfrist",
                 "Neste trigger": "Tilbudsfrist / deretter overvåke award-notice",
                 "Sist oppdatert": "15.09.2026",
+                "Sist kontrollert": "15.09.2026",
                 "Kilde": "Region of Peel – 2026-005P",
                 "Kommentar": (
                     "Region of Peel har lyst ut pre-purchase av Thermal Hydrolysis "
@@ -2132,6 +2135,27 @@ side = st.sidebar.radio(
 )
 
 # =========================================================
+# DAGLIGE OPPDATERINGER
+# =========================================================
+
+# Denne listen er laget separat fra vanlige nyheter.
+# Senere kan den fylles automatisk av kontrakts-/nyhetsmonitoren.
+daily_updates = [
+    {
+        "Dato": "2026-09-15",
+        "Selskap": "Cambi",
+        "Kategori": "Kontrakt / anbud",
+        "Tittel": "Clarkson WRRF – Peel Region, Ontario",
+        "Oppdatering": (
+            "Nytt aktivt THP-anbud er lagt inn i kontraktsmonitoren. "
+            "Offentlig tilbudsfrist er 02.10.2026."
+        ),
+        "Viktighet": "Høy",
+    },
+]
+
+
+# =========================================================
 # DASHBOARD
 # =========================================================
 
@@ -2141,12 +2165,15 @@ if side == "Dashboard":
 
     detailed_companies = ["NORBIT", "Cambi", "Kitron", "NOTE"]
 
+    oslo_today = datetime.now(ZoneInfo("Europe/Oslo")).date().isoformat()
+    updates_today = [
+        item for item in daily_updates
+        if item.get("Dato") == oslo_today
+    ]
+
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Selskaper", len(companies))
-    c2.metric(
-        "Relevante nyheter",
-        sum(len(companies[name]["news"]) for name in detailed_companies)
-    )
+    c2.metric("Nye oppdateringer i dag", len(updates_today))
     c3.metric("Aksjonærendringer", "0")
     c4.metric(
         "Annonserte kontrakter",
@@ -2217,11 +2244,15 @@ if side == "Dashboard":
     )
 
     st.subheader("Dagens viktigste endringer")
-    st.info(
-        "NORBIT, Cambi, Kitron og NOTE er nå lagt inn med Q2/H1 2026-tall, nyheter, "
-        "kontrakter, verdsettelse og aksjonærmonitor. Automatisk oppdatering "
-        "kobles til senere."
-    )
+
+    if updates_today:
+        for item in updates_today:
+            st.info(
+                f"**{item['Selskap']} – {item['Tittel']}**\n\n"
+                f"{item['Oppdatering']}"
+            )
+    else:
+        st.info("Ingen nye vesentlige oppdateringer i dag.")
 
 # =========================================================
 # SELSKAPER
@@ -2664,7 +2695,7 @@ elif side == "Selskaper":
             df_opp = pd.DataFrame(info["opportunities"]).copy()
 
             # Felter som kan fylles automatisk etter hvert som overvåkningen bygges ut.
-            for optional_col in ["Neste dato", "Dato-type", "Kilde"]:
+            for optional_col in ["Neste dato", "Dato-type", "Sist kontrollert", "Kilde"]:
                 if optional_col not in df_opp.columns:
                     df_opp[optional_col] = "–"
                 else:
@@ -2693,6 +2724,7 @@ elif side == "Selskaper":
                 "Neste dato",
                 "Dato-type",
                 "Sist oppdatert",
+                "Sist kontrollert",
                 "Kilde",
                 "Kommentar",
             ]
@@ -2711,7 +2743,9 @@ elif side == "Selskaper":
 
             st.caption(
                 "Neste dato er offentlig kjent frist eller forventet beslutningsdato. "
-                "Når kun tilbudsfrist er kjent, vises den – ikke en antatt award-dato."
+                "Når kun tilbudsfrist er kjent, vises den – ikke en antatt award-dato. "
+                "Sist kontrollert viser når kilden sist ble sjekket; Sist oppdatert endres "
+                "bare når selve saken har fått ny informasjon."
             )
 
             st.warning(
@@ -3891,7 +3925,7 @@ elif side == "Kontrakter":
     st.subheader(f"{selskap} – potensielle kontrakter og anbud")
     df_opp = pd.DataFrame(info["opportunities"]).copy()
 
-    for optional_col in ["Neste dato", "Dato-type", "Kilde"]:
+    for optional_col in ["Neste dato", "Dato-type", "Sist kontrollert", "Kilde"]:
         if optional_col not in df_opp.columns:
             df_opp[optional_col] = "–"
         else:
@@ -3920,6 +3954,7 @@ elif side == "Kontrakter":
         "Neste dato",
         "Dato-type",
         "Sist oppdatert",
+        "Sist kontrollert",
         "Kilde",
         "Kommentar",
     ]
@@ -3938,7 +3973,9 @@ elif side == "Kontrakter":
 
     st.caption(
         "Neste dato er offentlig kjent frist eller forventet beslutningsdato. "
-        "Når bare tilbudsfrist er kjent, vises den – ikke en antatt award-dato."
+        "Når bare tilbudsfrist er kjent, vises den – ikke en antatt award-dato. "
+        "Sist kontrollert viser når kilden sist ble sjekket; Sist oppdatert endres "
+        "bare når selve saken har fått ny informasjon."
     )
 
     st.warning(
