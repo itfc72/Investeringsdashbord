@@ -2624,11 +2624,16 @@ elif side == "Selskaper":
             st.subheader("Annonserte kontrakter")
             df_contracts = pd.DataFrame(info["contracts"]).copy()
             if "Verdi (MNOK)" in df_contracts.columns:
+                raw_value_col = "Verdi (MNOK)"
                 value_col = f"Verdi ({million_unit})"
-                df_contracts[value_col] = df_contracts["Verdi (MNOK)"].map(
+                formatted_values = df_contracts[raw_value_col].map(
                     lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
                 )
-                df_contracts = df_contracts.drop(columns=["Verdi (MNOK)"])
+                if value_col == raw_value_col:
+                    df_contracts[raw_value_col] = formatted_values
+                else:
+                    df_contracts[value_col] = formatted_values
+                    df_contracts = df_contracts.drop(columns=[raw_value_col])
             df_contracts = df_contracts.fillna("–")
 
             contract_display = df_contracts.copy()
@@ -2647,10 +2652,15 @@ elif side == "Selskaper":
             df_opp = pd.DataFrame(info["opportunities"]).copy()
             value_col = f"Est. verdi ({million_unit})"
             if "Est. verdi (MNOK)" in df_opp.columns:
-                df_opp[value_col] = df_opp["Est. verdi (MNOK)"].map(
+                raw_est_col = "Est. verdi (MNOK)"
+                formatted_est = df_opp[raw_est_col].map(
                     lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
                 )
-                df_opp = df_opp.drop(columns=["Est. verdi (MNOK)"])
+                if value_col == raw_est_col:
+                    df_opp[raw_est_col] = formatted_est
+                else:
+                    df_opp[value_col] = formatted_est
+                    df_opp = df_opp.drop(columns=[raw_est_col])
             df_opp = df_opp.fillna("–")
             opp_cols = [
                 "Prioritet",
@@ -3832,11 +3842,16 @@ elif side == "Kontrakter":
     st.subheader(f"{selskap} – annonserte kontrakter")
     global_contracts = pd.DataFrame(info["contracts"]).copy()
     if "Verdi (MNOK)" in global_contracts.columns:
+        raw_global_value_col = "Verdi (MNOK)"
         global_contract_value_col = f"Verdi ({million_unit})"
-        global_contracts[global_contract_value_col] = global_contracts["Verdi (MNOK)"].map(
+        formatted_global_values = global_contracts[raw_global_value_col].map(
             lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
         )
-        global_contracts = global_contracts.drop(columns=["Verdi (MNOK)"])
+        if global_contract_value_col == raw_global_value_col:
+            global_contracts[raw_global_value_col] = formatted_global_values
+        else:
+            global_contracts[global_contract_value_col] = formatted_global_values
+            global_contracts = global_contracts.drop(columns=[raw_global_value_col])
     global_contracts = global_contracts.fillna("–")
 
     global_contract_display = global_contracts.copy()
@@ -3855,10 +3870,15 @@ elif side == "Kontrakter":
     df_opp = pd.DataFrame(info["opportunities"]).copy()
     global_value_col = f"Est. verdi ({million_unit})"
     if "Est. verdi (MNOK)" in df_opp.columns:
-        df_opp[global_value_col] = df_opp["Est. verdi (MNOK)"].map(
+        raw_global_est_col = "Est. verdi (MNOK)"
+        formatted_global_est = df_opp[raw_global_est_col].map(
             lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
         )
-        df_opp = df_opp.drop(columns=["Est. verdi (MNOK)"])
+        if global_value_col == raw_global_est_col:
+            df_opp[raw_global_est_col] = formatted_global_est
+        else:
+            df_opp[global_value_col] = formatted_global_est
+            df_opp = df_opp.drop(columns=[raw_global_est_col])
     df_opp = df_opp.fillna("–")
     global_opp_cols = [
         "Prioritet",
