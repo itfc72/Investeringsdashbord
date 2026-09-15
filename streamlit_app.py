@@ -1316,8 +1316,374 @@ companies = {
     "Kitron": {
         "ticker": "KIT",
         "marked": "Oslo Børs",
-        "sektor": "EMS / Elektronikk",
-        "case": "Kommer i neste steg."
+        "sektor": "EMS / Elektronikk / Defence & Aerospace",
+        "currency": "NOK",
+        "financial_currency": "EUR",
+        "cashflow_unit": "MEUR",
+        "cashflow_fx_to_share_currency": 11.6,
+        "valuation_fx_to_share_currency": 11.6,
+        "case": (
+            "Kitron er et skandinavisk EMS-selskap med produksjon i Europa, USA og Asia. "
+            "Investeringscaset bygger på sterk strukturell vekst innen Defence & Aerospace, "
+            "regionalisering av forsyningskjeder, høyere aktivitet innen elektrifisering og "
+            "datasentre, samt bedre skala og kapitalutnyttelse. DeltaNordic/Kitron Eltech "
+            "styrker forsvarsposisjonen ytterligere. Viktigste risikoer er komponentmangel, "
+            "høyere verdsettelse etter sterk kursoppgang og gjennomføring av rask kapasitetsvekst."
+        ),
+        "price": 93.70,
+        "price_date": "14.09.2026",
+        "market_cap": 20.49,
+        "eps_ltm": 3.61,
+        "pe_ltm": 25.9,
+        "fcf_ltm": 102.9,
+        "fcf_yield": 5.6,
+        "ocf_ltm": 114.3,
+        "ocf_yield_ltm": 6.3,
+        "roe_ltm": 23.8,
+        "roce": 18.3,
+        "nibd": 30.5,
+        "nibd_ebitda": 0.29,
+        "shares_outstanding": 218_702_471,
+        "dashboard_5y": {
+            "revenue_cagr": 14.4,
+            "eps_cagr": 15.4,
+            "fcf_yield_avg": 4.7,
+        },
+        "q2": {
+            "revenue": 295.7,
+            "growth": 71.7,
+            "ebit": 28.3,
+            "ebit_margin": 9.6,
+            "eps": 0.10,
+            "ocf": 47.1,
+            "fcf": 41.3,
+        },
+        "h1": {
+            "revenue": 568.4,
+            "growth": 68.7,
+            "ebit": 53.9,
+            "ebit_margin": 9.5,
+            "eps": 0.19,
+            "ocf": 52.1,
+            "fcf": -21.1,
+        },
+        "cashflow_note": (
+            "H1 fri kontantstrøm er påvirket av oppkjøpet av DeltaNordic/Kitron Eltech. "
+            "Operasjonell kontantstrøm var EUR 52,1m i H1 og EUR 47,1m i Q2. "
+            "LTM FCF brukes som et mer representativt mål på løpende kontantgenerering."
+        ),
+        "financials": [
+            {
+                "Periode": "2024",
+                "Omsetning": 647.2,
+                "Vekst": "-17%",
+                "EBIT": 48.0,
+                "EBIT-margin": "7,4%",
+                "EPS": 0.14,
+            },
+            {
+                "Periode": "2025",
+                "Omsetning": 738.3,
+                "Vekst": "14%",
+                "EBIT": 64.5,
+                "EBIT-margin": "8,7%",
+                "EPS": 0.22,
+            },
+            {
+                "Periode": "Q1 2026",
+                "Omsetning": 272.7,
+                "Vekst": "66%",
+                "EBIT": 25.6,
+                "EBIT-margin": "9,4%",
+                "EPS": 0.09,
+            },
+            {
+                "Periode": "Q2 2026",
+                "Omsetning": 295.7,
+                "Vekst": "72%",
+                "EBIT": 28.3,
+                "EBIT-margin": "9,6%",
+                "EPS": 0.10,
+            },
+            {
+                "Periode": "H1 2026",
+                "Omsetning": 568.4,
+                "Vekst": "69%",
+                "EBIT": 53.9,
+                "EBIT-margin": "9,5%",
+                "EPS": 0.19,
+            },
+        ],
+        "segments_q2": [
+            {
+                "Segment": "Defence & Aerospace",
+                "Omsetning Q2 (MEUR)": 154.2,
+                "Vekst": "+234%",
+                "Kommentar": "Klart største vekstmotor; missiler, luftvern, ubemannede systemer og forsvarselektronikk.",
+            },
+            {
+                "Segment": "Electrification",
+                "Omsetning Q2 (MEUR)": 47.2,
+                "Vekst": "+7%",
+                "Kommentar": "Støttes av kraftnett, power conversion og datasenterrelatert etterspørsel.",
+            },
+            {
+                "Segment": "Industry",
+                "Omsetning Q2 (MEUR)": 45.5,
+                "Vekst": "+13%",
+                "Kommentar": "Bedre ordreinngang; AI/datasenter trekker også gjennom underleverandørkjeden.",
+            },
+            {
+                "Segment": "Connectivity",
+                "Omsetning Q2 (MEUR)": 35.1,
+                "Vekst": "+18%",
+                "Kommentar": "Sensorer, IoT og 5G bidrar til ny vekstfase.",
+            },
+            {
+                "Segment": "Medical Devices",
+                "Omsetning Q2 (MEUR)": 13.7,
+                "Vekst": "+15%",
+                "Kommentar": "Bred vekst innen diagnostikk og avansert medisinsk utstyr.",
+            },
+        ],
+        "order_kpis": {
+            "Ordrebok Q2": "794 MEUR",
+            "Ordreinngang Q2": "284 MEUR",
+            "Defence backlog": "473 MEUR",
+            "ROOC Q2": "39%",
+        },
+        "guidance": [
+            "2026: Omsetning EUR 1,05–1,15 mrd.",
+            "2026: EBIT EUR 97–112m.",
+            "Guidingen ble oppjustert 24. august 2026 etter sterk etterspørsel og bedre komponentvisibilitet.",
+            "Q3 2026 rapporteres 22. oktober 2026.",
+            "Defence & Aerospace er den klart viktigste vekstmotoren.",
+        ],
+        "what_follow": [
+            "Konvertering av ordrebok på EUR 794m til omsetning og resultat.",
+            "EBIT-margin mot 10 % og videre skalaeffekter.",
+            "Defence & Aerospace-backlog på EUR 473m og nye programvinn.",
+            "Komponenttilgang i H2 og eventuell fortsatt oppjustering av guiding.",
+            "Kontantstrøm, arbeidskapital og kapitaldisiplin etter DeltaNordic-oppkjøpet.",
+            "Kapasitetsutnyttelse i Longum, Sverige og ny planlagt fabrikk i Horsens.",
+        ],
+        "latest_development": (
+            "Kitron oppjusterte 2026-guidingen 24. august til EUR 1,05–1,15 mrd. "
+            "i omsetning og EUR 97–112m i EBIT. Longum-fabrikken ble åpnet 25. august, "
+            "og 1. september annonserte selskapet planer om ny fabrikk i Horsens, Danmark."
+        ),
+        "news_next_report": "22.10.2026",
+        "news_auto_source": (
+            "Neste automatiseringssteg blir å hente nye saker løpende fra Kitrons IR-side, "
+            "NewsWeb og utvalgte eksterne kilder."
+        ),
+        "news": [
+            {
+                "Dato": "01.09.2026",
+                "Kategori": "Kapasitet",
+                "Viktighet": "🟡 Relevant",
+                "Hendelse": "Ny fabrikk planlegges i Horsens, Danmark",
+                "Kort oppsummering": (
+                    "Kitron planlegger en ny fabrikk for å møte forventet vekst og økt "
+                    "etterspørsel etter lokal produksjon og industrialisering."
+                ),
+                "Betydning for caset": (
+                    "Bekrefter høy etterspørsel og at selskapet investerer foran videre vekst."
+                ),
+                "Kilde": "Kitron Investor Relations",
+                "Lenke": "https://www.kitron.com/",
+            },
+            {
+                "Dato": "25.08.2026",
+                "Kategori": "Kapasitet",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Longum-fabrikken åpnet",
+                "Kort oppsummering": (
+                    "Ny produksjonskapasitet utenfor Arendal er offisielt åpnet, "
+                    "med særlig relevans for sterk forsvarsetterspørsel."
+                ),
+                "Betydning for caset": (
+                    "Øker norsk kapasitet og reduserer risikoen for at produksjonskapasitet "
+                    "blir en flaskehals i forsvarsveksten."
+                ),
+                "Kilde": "Kitron Investor Relations",
+                "Lenke": "https://www.kitron.com/",
+            },
+            {
+                "Dato": "24.08.2026",
+                "Kategori": "Guiding",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "2026-guiding oppjustert",
+                "Kort oppsummering": (
+                    "Omsetningsguiding økt til EUR 1,05–1,15 mrd. og EBIT til EUR 97–112m."
+                ),
+                "Betydning for caset": (
+                    "Sterkere etterspørsel og bedre forsyningskjedevisibilitet enn ved Q2."
+                ),
+                "Kilde": "Kitron Investor Relations",
+                "Lenke": "https://www.kitron.com/",
+            },
+            {
+                "Dato": "10.07.2026",
+                "Kategori": "Resultat",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Q2 2026 – rekordresultat",
+                "Kort oppsummering": (
+                    "Omsetning EUR 295,7m (+72 %), EBIT EUR 28,3m og EBIT-margin 9,6 %. "
+                    "Ordreboken steg 56 % til EUR 794,3m."
+                ),
+                "Betydning for caset": (
+                    "Bekrefter kraftig resultatvekst, særlig innen Defence & Aerospace."
+                ),
+                "Kilde": "Kitron Q2 2026",
+                "Lenke": "https://www.kitron.com/",
+            },
+            {
+                "Dato": "09.04.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "EUR 42m Defence/Aerospace-ordre",
+                "Kort oppsummering": (
+                    "Produksjon og levering av systemer til en lagdelt forsvarsarkitektur. "
+                    "Leveranser er planlagt i 2026."
+                ),
+                "Betydning for caset": (
+                    "Synliggjør Kitrons direkte eksponering mot europeisk luftvern og forsvarsteknologi."
+                ),
+                "Kilde": "Kitron Investor Relations",
+                "Lenke": "https://www.kitron.com/",
+            },
+        ],
+        "upcoming_events": [
+            {
+                "Dato": "12–14.10.2026",
+                "Hendelse": "AUSA 2026",
+                "Sted": "Washington, USA",
+                "Hvorfor følge": "Stor forsvarsmesse og relevant for nye Defence/Aerospace-kunder og programmer.",
+            },
+            {
+                "Dato": "22.10.2026",
+                "Hendelse": "Q3 2026",
+                "Sted": "Investor relations",
+                "Hvorfor følge": "Viktig test av oppjustert guiding, margin, ordrebok og komponenttilgang.",
+            },
+        ],
+        "contracts": [
+            {
+                "Dato": "09.04.2026",
+                "Segment": "Defence & Aerospace",
+                "Kunde/prosjekt": "Layered defence architecture",
+                "Verdi (MNOK)": 42,
+                "Status": "Tildelt",
+                "Levering": "2026",
+            },
+        ],
+        "opportunities": [
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "Nye Defence & Aerospace-programmer",
+                "Segment": "Defence & Aerospace",
+                "Sannsynlighet": "Høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Aktiv pipeline",
+                "Neste trigger": "Nye programvinn / ordreannonseringer",
+                "Sist oppdatert": "15.09.2026",
+                "Kommentar": (
+                    "Defence-backloggen er EUR 473m. Nye kunder og programmer inkluderer "
+                    "autonomous defence, ruggedized edge computing og quantum security."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "Videre skalering av nye forsvarsteknologikunder",
+                "Segment": "Defence & Aerospace",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Ramping",
+                "Neste trigger": "Konvertering fra utvikling/industrialisering til serieproduksjon",
+                "Sist oppdatert": "15.09.2026",
+                "Kommentar": (
+                    "Kitron fikk syv nye 'new defence tech'-kunder i 2025, og flere programmer "
+                    "er fortsatt i tidlige industrialiseringsfaser."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "Datasenter og kraftinfrastruktur",
+                "Segment": "Electrification / Industry",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Voksende etterspørsel",
+                "Neste trigger": "Nye større ordre og videre kapasitetsutvidelser",
+                "Sist oppdatert": "15.09.2026",
+                "Kommentar": (
+                    "AI-datasentre driver etterspørsel etter power infrastructure, "
+                    "energistyring og avanserte industrielle systemer."
+                ),
+            },
+            {
+                "Prioritet": "🟡 Middels–høy",
+                "Mulighet": "Connectivity / 5G og Industrial IoT",
+                "Segment": "Connectivity",
+                "Sannsynlighet": "Middels",
+                "Est. verdi (MNOK)": None,
+                "Status": "Ny vekstfase",
+                "Neste trigger": "Større programvinn eller backlog-vekst",
+                "Sist oppdatert": "15.09.2026",
+                "Kommentar": "Ny kundeaktivitet innen 5G, sensorer og AI-enabled industrial IoT.",
+            },
+            {
+                "Prioritet": "🟡 Middels",
+                "Mulighet": "Kitron Eltech / DeltaNordic kryssalg",
+                "Segment": "Defence / Industry",
+                "Sannsynlighet": "Middels",
+                "Est. verdi (MNOK)": None,
+                "Status": "Integrasjon",
+                "Neste trigger": "Nye felles kundeprogrammer",
+                "Sist oppdatert": "15.09.2026",
+                "Kommentar": (
+                    "Oppkjøpet tilfører sterke relasjoner innen forsvar, mining og infrastruktur."
+                ),
+            },
+        ],
+        "contract_value_metric_label": "Kjent kontraktsverdi 2026",
+        "contract_value_caption": (
+            "Kjent verdi inkluderer den annonserte Defence/Aerospace-ordren på EUR 42m. "
+            "Mange Kitron-programmer ligger under selskapets terskel for børsmelding og "
+            "inngår derfor i ordrebok/pipeline uten separat offentlig kontraktsverdi."
+        ),
+        "contract_watchlist": [
+            "Nye Defence & Aerospace-ordre knyttet til missiler, luftvern og ubemannede systemer.",
+            "Konvertering av Defence-backlog på EUR 473m til produksjon.",
+            "Nye programmer innen datasenter, power infrastructure og electrification.",
+            "Kryssalg og nye ordre via Kitron Eltech/DeltaNordic.",
+            "Kapasitetsutnyttelse i Longum, Sverige og planlagt Horsens-fabrikk.",
+        ],
+        "valuation": {
+            "reference_price": 93.70,
+            "eps_2026": 4.40,
+            "growth_bear": 10.0,
+            "growth_base": 20.0,
+            "growth_bull": 25.0,
+            "pe_bear": 15.0,
+            "pe_base": 18.0,
+            "pe_bull": 22.0,
+            "required_return": 10.0,
+            "target_year": 2028,
+            "dcf_revenue_2026": 1100.0,
+            "dcf_revenue_2030": 2000.0,
+            "dcf_ebit_margin_2026": 9.5,
+            "dcf_ebit_margin_2030": 12.0,
+            "dcf_tax_rate": 20.6,
+            "dcf_conversion": 80.0,
+            "dcf_wacc": 9.5,
+            "dcf_terminal_growth": 3.0,
+            "note": (
+                "Forutsetningene er arbeidsestimater, ikke konsensus. EPS 2026E er satt "
+                "nær konsensus om lag EUR 0,38 per aksje omregnet til NOK. DCF-en beregnes "
+                "i EUR og konverteres til NOK per aksje."
+            ),
+        },
     },
 
     "NOTE": {
@@ -1754,7 +2120,7 @@ if side == "Dashboard":
 
     st.header("Dashboard")
 
-    detailed_companies = ["NORBIT", "Cambi", "NOTE"]
+    detailed_companies = ["NORBIT", "Cambi", "Kitron", "NOTE"]
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Selskaper", len(companies))
@@ -1833,7 +2199,7 @@ if side == "Dashboard":
 
     st.subheader("Dagens viktigste endringer")
     st.info(
-        "NORBIT, Cambi og NOTE er nå lagt inn med Q2/H1 2026-tall, nyheter, "
+        "NORBIT, Cambi, Kitron og NOTE er nå lagt inn med Q2/H1 2026-tall, nyheter, "
         "kontrakter, verdsettelse og aksjonærmonitor. Automatisk oppdatering "
         "kobles til senere."
     )
@@ -1850,7 +2216,7 @@ elif side == "Selskaper":
     st.header(selskap)
     st.caption(f"{info['ticker']} | {info['marked']} | {info['sektor']}")
 
-    if selskap not in ("NORBIT", "Cambi", "NOTE"):
+    if selskap not in ("NORBIT", "Cambi", "Kitron", "NOTE"):
         st.info(
             "Strukturen er klar. Dette selskapet fylles med faktiske data "
             "etter at NORBIT-siden er ferdigstilt."
@@ -1861,8 +2227,13 @@ elif side == "Selskaper":
     else:
         widget_prefix = info["ticker"].lower()
         currency = info.get("currency", "NOK")
-        million_unit = f"M{currency}"
+        financial_currency = info.get("financial_currency", currency)
+        million_unit = f"M{financial_currency}"
+        cashflow_unit = info.get("cashflow_unit", million_unit)
         billion_unit = f"mrd. {currency}"
+        financial_billion_unit = f"mrd. {financial_currency}"
+        cashflow_fx_to_share_currency = info.get("cashflow_fx_to_share_currency", 1.0)
+        valuation_fx_to_share_currency = info.get("valuation_fx_to_share_currency", 1.0)
 
         # Toppnøkkeltall - verdsettelse
         k1, k2, k3 = st.columns(3)
@@ -1956,7 +2327,7 @@ elif side == "Selskaper":
             )
             q6.metric(
                 "CF etter investeringer" if selskap == "NOTE" else "FCF",
-                f"{info['q2']['fcf']:.1f} {million_unit}".replace(".", ",")
+                f"{info['q2']['fcf']:.1f} {cashflow_unit}".replace(".", ",")
             )
 
             st.subheader("H1 2026")
@@ -1986,7 +2357,7 @@ elif side == "Selskaper":
             )
             h6.metric(
                 "CF etter investeringer" if selskap == "NOTE" else "FCF",
-                f"{info['h1']['fcf']:.1f} {million_unit}".replace(".", ",")
+                f"{info['h1']['fcf']:.1f} {cashflow_unit}".replace(".", ",")
             )
 
             if "order_kpis" in info:
@@ -2034,7 +2405,7 @@ elif side == "Selskaper":
             else:
                 b3.metric(
                     "FCF LTM",
-                    f"{info['fcf_ltm']:.0f} {million_unit}"
+                    f"{info['fcf_ltm']:.0f} {cashflow_unit}"
                 )
 
             st.subheader("Selskapets guiding")
@@ -2097,11 +2468,11 @@ elif side == "Selskaper":
                 cf1, cf2, cf3 = st.columns(3)
                 cf1.metric(
                     "OCF Q2",
-                    f"{info['q2']['ocf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['q2']['ocf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf2.metric(
                     "OCF H1",
-                    f"{info['h1']['ocf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['h1']['ocf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf3.metric(
                     "OCF LTM",
@@ -2111,11 +2482,11 @@ elif side == "Selskaper":
                 cf4, cf5, cf6 = st.columns(3)
                 cf4.metric(
                     "CF etter investeringer Q2",
-                    f"{info['q2']['fcf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['q2']['fcf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf5.metric(
                     "CF etter investeringer H1",
-                    f"{info['h1']['fcf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['h1']['fcf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf6.metric(
                     "OCF Yield LTM",
@@ -2132,25 +2503,25 @@ elif side == "Selskaper":
                 cf1, cf2, cf3 = st.columns(3)
                 cf1.metric(
                     "FCF Q2",
-                    f"{info['q2']['fcf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['q2']['fcf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf2.metric(
                     "FCF H1",
-                    f"{info['h1']['fcf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['h1']['fcf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf3.metric(
                     "FCF LTM",
-                    f"{info['fcf_ltm']:.0f} {million_unit}"
+                    f"{info['fcf_ltm']:.0f} {cashflow_unit}"
                 )
 
                 cf4, cf5, cf6 = st.columns(3)
                 cf4.metric(
                     "OCF Q2",
-                    f"{info['q2']['ocf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['q2']['ocf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf5.metric(
                     "OCF H1",
-                    f"{info['h1']['ocf']:.1f} {million_unit}".replace(".", ",")
+                    f"{info['h1']['ocf']:.1f} {cashflow_unit}".replace(".", ",")
                 )
                 cf6.metric(
                     "FCF Yield LTM",
@@ -3013,6 +3384,7 @@ elif side == "Selskaper":
             else:
                 fcf_per_share = (
                     info["fcf_ltm"] * 1_000_000 / info["shares_outstanding"]
+                    * cashflow_fx_to_share_currency
                 )
                 f1.metric(
                     "FCF per aksje LTM",
@@ -3199,6 +3571,7 @@ elif side == "Selskaper":
 
                 dcf_value_per_share = (
                     equity_value * 1_000_000 / info["shares_outstanding"]
+                    * valuation_fx_to_share_currency
                 )
 
                 dcf_mos = (
@@ -3225,7 +3598,7 @@ elif side == "Selskaper":
 
                 x3.metric(
                     "Enterprise value",
-                    f"{enterprise_value / 1000:.2f} {billion_unit}".replace(".", ",")
+                    f"{enterprise_value / 1000:.2f} {financial_billion_unit}".replace(".", ",")
                 )
 
                 x4.metric(
@@ -3318,6 +3691,7 @@ elif side == "Selskaper":
 
                         per_share = (
                             eq * 1_000_000 / info["shares_outstanding"]
+                            * valuation_fx_to_share_currency
                         )
 
                         row[f"g {tg:.1f}%".replace(".", ",")] = (
@@ -3348,7 +3722,7 @@ elif side == "Nøkkeltall":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi", "NOTE"],
+        ["NORBIT", "Cambi", "Kitron", "NOTE"],
         key="global_keyfig_company",
     )
     info = companies[selskap]
@@ -3366,7 +3740,7 @@ elif side == "Aksjonærer":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi", "NOTE"],
+        ["NORBIT", "Cambi", "Kitron", "NOTE"],
         key="global_shareholder_company",
     )
 
@@ -3385,7 +3759,7 @@ elif side == "Nyheter":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi", "NOTE"],
+        ["NORBIT", "Cambi", "Kitron", "NOTE"],
         key="global_news_company",
     )
     info = companies[selskap]
@@ -3431,12 +3805,13 @@ elif side == "Kontrakter":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi", "NOTE"],
+        ["NORBIT", "Cambi", "Kitron", "NOTE"],
         key="global_contract_company",
     )
     info = companies[selskap]
     currency = info.get("currency", "NOK")
-    million_unit = f"M{currency}"
+    financial_currency = info.get("financial_currency", currency)
+    million_unit = f"M{financial_currency}"
 
     known_contract_value = sum(
         item["Verdi (MNOK)"]
