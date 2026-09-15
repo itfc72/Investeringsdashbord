@@ -1312,8 +1312,391 @@ companies = {
     "NOTE": {
         "ticker": "NOTE",
         "marked": "Nasdaq Stockholm",
-        "sektor": "EMS / Elektronikk",
-        "case": "Kommer i neste steg."
+        "sektor": "EMS / Elektronikk / Defence",
+        "currency": "SEK",
+        "case": (
+            "NOTE er en europeisk EMS-partner som produserer avanserte PCBA-er, "
+            "subassemblies og komplette box-build-løsninger. Investeringscaset bygger "
+            "på regionalisering av elektronikkproduksjon, sterk vekst innen Security & "
+            "Defence, økt kapasitet i Norden og Storbritannia, samt oppkjøpene av STI "
+            "og Kasdon. NOTE har også fått en ny inngang mot AI-datasentre. De viktigste "
+            "risikofaktorene er høyere gjeld etter STI-oppkjøpet, komponentmangel og "
+            "svakere kontantstrøm når arbeidskapital bygges opp."
+        ),
+        "price": 181.00,
+        "price_date": "11.09.2026",
+        "market_cap": 5.17,
+        "eps_ltm": 8.72,
+        "pe_ltm": 20.8,
+        "fcf_ltm": 183.4,
+        "fcf_yield": 3.6,
+        "ocf_ltm": 189.0,
+        "ocf_yield_ltm": 3.7,
+        "roe_ltm": 14.8,
+        "roce": 13.1,
+        "nibd": 1640.0,
+        "nibd_ebitda": 3.3,
+        "shares_outstanding": 28_550_000,
+        "q2": {
+            "revenue": 1175.0,
+            "growth": 20.0,
+            "ebit": 90.0,
+            "ebit_margin": 7.7,
+            "eps": 1.95,
+            "ocf": -34.0,
+            "fcf": -34.0,
+        },
+        "h1": {
+            "revenue": 2137.0,
+            "growth": 8.0,
+            "ebit": 174.0,
+            "ebit_margin": 8.1,
+            "eps": 3.78,
+            "ocf": 12.0,
+            "fcf": -810.0,
+        },
+        "cashflow_note": (
+            "H1 totalt kontantstrøm etter investeringer på -810 MSEK er kraftig påvirket "
+            "av oppkjøpet av STI. Justert operasjonell kontantstrøm var +12 MSEK i H1. "
+            "LTM operasjonell kontantstrøm er beregnet til ca. 189 MSEK."
+        ),
+        "financials": [
+            {
+                "Periode": "2024",
+                "Omsetning": 3901.0,
+                "Vekst": "-8%",
+                "EBIT": 352.0,
+                "EBIT-margin": "9,0%",
+                "EPS": 8.61,
+            },
+            {
+                "Periode": "2025",
+                "Omsetning": 3814.0,
+                "Vekst": "-2%",
+                "EBIT": 381.0,
+                "EBIT-margin": "10,0%",
+                "EPS": 9.89,
+            },
+            {
+                "Periode": "Q1 2026",
+                "Omsetning": 962.0,
+                "Vekst": "-4%",
+                "EBIT": 84.0,
+                "EBIT-margin": "8,7%",
+                "EPS": 1.83,
+            },
+            {
+                "Periode": "Q2 2026",
+                "Omsetning": 1175.0,
+                "Vekst": "20%",
+                "EBIT": 90.0,
+                "EBIT-margin": "7,7%",
+                "EPS": 1.95,
+            },
+            {
+                "Periode": "H1 2026",
+                "Omsetning": 2137.0,
+                "Vekst": "8%",
+                "EBIT": 174.0,
+                "EBIT-margin": "8,1%",
+                "EPS": 3.78,
+            },
+        ],
+        "segments_q2": [
+            {
+                "Segment": "Security & Defence",
+                "Utvikling Q2": "Sterk vekst",
+                "Kommentar": (
+                    "STI og Kasdon bidrar betydelig, samtidig som NOTE rapporterer "
+                    "god organisk vekst i segmentet."
+                ),
+            },
+            {
+                "Segment": "Industrial",
+                "Utvikling Q2": "God vekst",
+                "Kommentar": "Største kundesegment og positiv organisk utvikling.",
+            },
+            {
+                "Segment": "Communications",
+                "Utvikling Q2": "Bedring",
+                "Kommentar": (
+                    "Svært sterk ordrebok, men komponentmangel begrenser leveranser. "
+                    "Ledelsen forventer vekst fra Q3."
+                ),
+            },
+            {
+                "Segment": "GreenTech",
+                "Utvikling Q2": "Stabil / svak",
+                "Kommentar": "Rundt 13 % av salget; foreløpig ingen tydelig veksttrend.",
+            },
+            {
+                "Segment": "Medtech",
+                "Utvikling Q2": "Svak",
+                "Kommentar": (
+                    "Lavere volumer fra største kunden, men sammenligningstallene "
+                    "blir gradvis lettere fra Q3."
+                ),
+            },
+        ],
+        "order_kpis": {
+            "Ordrebok inneværende år": "+11% YoY LFL",
+            "Q2 omsetning": "1 175 MSEK",
+            "Justert EBIT-margin Q2": "9,6%",
+            "Egenkapitalandel Q2": "37%",
+        },
+        "guidance": [
+            "2026: Driftsmargin forventes i intervallet 9,5–10,5 %.",
+            "Andre halvår: gradvis økende organisk vekst, i tillegg til STI-volumer.",
+            "STI ventes å bidra med om lag SEK 550–600m i resten av 2026.",
+            "Selskapet forventer fortsatt sterk operasjonell kontantstrøm for helåret 2026.",
+            "Ordreboken for inneværende år var 11 % høyere enn året før ved utgangen av Q2, like-for-like.",
+        ],
+        "what_follow": [
+            "Organisk vekst i H2 2026 og hvor raskt Communications normaliseres.",
+            "Utviklingen i underliggende EBIT-margin mot 9,5–10,5 %-målet.",
+            "Security & Defence-vekst og nye programmer via STI og Kasdon.",
+            "Arbeidskapital og bedring i operasjonell kontantstrøm i H2.",
+            "Netto gjeld / EBITDA etter det store STI-oppkjøpet.",
+            "Oppskalering av AI-datasenterkunden fra Q1 2027.",
+        ],
+        "latest_development": (
+            "NOTE vant 3. september en Security & Defence-kontrakt på rundt 160 MSEK "
+            "over tre år. Tidligere i sommer fikk selskapet en ny AI-datasenterkunde "
+            "med potensial for en årlig omsetningsrate rundt 100 MSEK i 2028. "
+            "Q2 ga rekordomsetning på 1 175 MSEK."
+        ),
+        "news_next_report": "23.10.2026",
+        "news_auto_source": (
+            "Neste automatiseringssteg blir å hente nye saker løpende fra NOTEs "
+            "IR-side, Nasdaq Stockholm og utvalgte eksterne kilder."
+        ),
+        "news": [
+            {
+                "Dato": "03.09.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Security & Defence-kontrakt på ca. 160 MSEK",
+                "Kort oppsummering": (
+                    "Europeisk forsvarskunde har tildelt NOTE en avtale med estimert "
+                    "ordeverdi på rundt 160 MSEK over tre år."
+                ),
+                "Betydning for caset": (
+                    "Bekrefter den sterke etterspørselen innen europeisk forsvar og "
+                    "styrker sannsynligheten for flere langsiktige produksjonsprogrammer."
+                ),
+                "Kilde": "NOTE Investor Relations",
+                "Lenke": "https://www.note-ems.com/en/press-release/note-has-been-awarded-a-security-and-defence-contract-worth-approximately-sek-160-million/",
+            },
+            {
+                "Dato": "15.07.2026",
+                "Kategori": "Resultat",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Q2 2026 – rekordomsetning",
+                "Kort oppsummering": (
+                    "Omsetning 1 175 MSEK (+20 %), justert EBIT-margin 9,6 % og "
+                    "EPS 1,95 SEK. Ordreboken for inneværende år var 11 % høyere YoY LFL."
+                ),
+                "Betydning for caset": (
+                    "Oppkjøpene leverer som ventet, men svak kontantstrøm og "
+                    "komponentmangel er viktige kortsiktige risikofaktorer."
+                ),
+                "Kilde": "NOTE Investor Relations",
+                "Lenke": "https://www.note-ems.com/en/press-release/notes-to-the-interim-report-for-q2-2026-2/",
+            },
+            {
+                "Dato": "08.07.2026",
+                "Kategori": "Kontrakt",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Ny kunde innen AI-datasenterhardware",
+                "Kort oppsummering": (
+                    "Produksjon starter i Q1 2027 og kan nå en årlig omsetningsrate "
+                    "på rundt 100 MSEK i 2028."
+                ),
+                "Betydning for caset": (
+                    "Gir NOTE eksponering mot et nytt strukturelt vekstområde og "
+                    "viser konkurransekraft innen avansert PCBA og box-build."
+                ),
+                "Kilde": "NOTE Investor Relations",
+                "Lenke": "https://www.note-ems.com/en/press-release/note-wins-a-new-client-in-the-field-of-ai-data-centre-hardware/",
+            },
+            {
+                "Dato": "27.05.2026",
+                "Kategori": "Kapasitet",
+                "Viktighet": "🟡 Relevant",
+                "Hendelse": "Ny moderne fabrikk i Torsby åpnet",
+                "Kort oppsummering": (
+                    "Den nye fabrikken dobler produksjonskapasiteten i Torsby og "
+                    "er tilpasset større og mer komplekse oppdrag."
+                ),
+                "Betydning for caset": (
+                    "Øker kapasiteten for lokal europeisk produksjon, særlig relevant "
+                    "for forsvar og andre kritiske sektorer."
+                ),
+                "Kilde": "NOTE Investor Relations",
+                "Lenke": "https://www.note-ems.com/en/press-news/",
+            },
+            {
+                "Dato": "20.03.2026",
+                "Kategori": "M&A",
+                "Viktighet": "🔴 Viktig",
+                "Hendelse": "Oppkjøp av STI",
+                "Kort oppsummering": (
+                    "NOTE kjøpte britiske STI, en ledende EMS-partner for forsvarsindustrien. "
+                    "STI ventes å omsette for rundt 750 MSEK i 2026."
+                ),
+                "Betydning for caset": (
+                    "Transformativt oppkjøp som gjør NOTE til en større europeisk "
+                    "underleverandør innen forsvar, men øker også gjelden betydelig."
+                ),
+                "Kilde": "NOTE Investor Relations",
+                "Lenke": "https://www.note-ems.com/en/press-release/note-strengthens-its-defence-position-through-the-acquisition-of-sti-the-uks-leading-ems-partner-to-the-defence-industry-confirms-outlook-for-2026-and-provides-outlook-for-q1/",
+            },
+        ],
+        "upcoming_events": [
+            {
+                "Dato": "23.10.2026",
+                "Hendelse": "Q3 2026",
+                "Sted": "Investor relations",
+                "Hvorfor følge": (
+                    "Viktig for organisk vekst i H2, arbeidskapital, cash flow, "
+                    "STI-integrasjon og marginutvikling."
+                ),
+            },
+            {
+                "Dato": "Q1 2027",
+                "Hendelse": "AI-datasenter – produksjonsstart",
+                "Sted": "NOTE-produksjon",
+                "Hvorfor følge": "Første produksjonsfase for den nye AI-datasenterkunden.",
+            },
+        ],
+        "contracts": [
+            {
+                "Dato": "03.09.2026",
+                "Segment": "Security & Defence",
+                "Kunde/prosjekt": "Europeisk forsvarskunde",
+                "Verdi (MNOK)": 160,
+                "Status": "Tildelt",
+                "Levering": "Over 3 år",
+            },
+            {
+                "Dato": "08.07.2026",
+                "Segment": "AI Data Centre",
+                "Kunde/prosjekt": "Ny kunde – avansert datasenterhardware",
+                "Verdi (MNOK)": None,
+                "Status": "Avtale signert",
+                "Levering": "Start Q1 2027; ~100 MSEK annualisert i 2028",
+            },
+        ],
+        "opportunities": [
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "Flere Security & Defence-produksjonsprogrammer",
+                "Segment": "Security & Defence",
+                "Sannsynlighet": "Høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Aktiv pipeline",
+                "Neste trigger": "Nye industrialiseringsprosjekter konverteres til serieproduksjon",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "NOTE opplyser at flere utviklings- og industrialiseringsprosjekter "
+                    "kan utvikle seg til langsiktige produksjonsprogrammer."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "AI-datasenter – høyere volum og nye produkter",
+                "Segment": "AI Data Centre",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": 100,
+                "Status": "Ramping planlagt",
+                "Neste trigger": "Produksjonsstart Q1 2027 og volumøkning gjennom 2027",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "Avtalen har potensial til rundt 100 MSEK i annualisert omsetning "
+                    "i 2028 og kan bli større dersom kundens AI-infrastruktur vokser videre."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
+                "Mulighet": "Kryssalg via STI og Kasdon",
+                "Segment": "Security & Defence",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Overvåkes",
+                "Neste trigger": "Nye ordre fra eksisterende defence primes/OEM-er",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "STI tilfører relasjoner til store globale forsvarskunder på tvers "
+                    "av luft, land, cyber og marine."
+                ),
+            },
+            {
+                "Prioritet": "🟡 Middels–høy",
+                "Mulighet": "Communications – konvertering av sterk ordrebok",
+                "Segment": "Communications",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Komponentbegrenset",
+                "Neste trigger": "Bedre komponenttilgang og vekst fra Q3",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "Ledelsen beskriver ordreboken som svært sterk. Bedre tilgang på "
+                    "halvledere kan utløse utsatte leveranser."
+                ),
+            },
+            {
+                "Prioritet": "🟡 Middels",
+                "Mulighet": "Større oppdrag gjennom Torsby-kapasiteten",
+                "Segment": "Industrial / Defence",
+                "Sannsynlighet": "Middels",
+                "Est. verdi (MNOK)": None,
+                "Status": "Kapasitet tilgjengelig",
+                "Neste trigger": "Nye større og komplekse kundeprogrammer",
+                "Sist oppdatert": "14.09.2026",
+                "Kommentar": (
+                    "Ny Torsby-fabrikk dobler produksjonskapasiteten og styrker lokal "
+                    "produksjon for kunder med høye krav til forsyningssikkerhet."
+                ),
+            },
+        ],
+        "contract_value_metric_label": "Kjent kontraktsverdi 2026",
+        "contract_value_caption": (
+            "Den kjente verdien inkluderer forsvarskontrakten på ca. 160 MSEK. "
+            "AI-datasenteravtalen har ikke oppgitt total kontraktsverdi; selskapet har "
+            "kun oppgitt potensial for rundt 100 MSEK i annualisert omsetning i 2028."
+        ),
+        "contract_watchlist": [
+            "Nye Security & Defence-programmer og konvertering fra industrialisering til serieproduksjon.",
+            "AI-datasenterkunden: produksjonsstart Q1 2027 og volumramp gjennom 2027–2028.",
+            "Nye ordre via STI og Kasdons etablerte forsvarskunder.",
+            "Bedre komponenttilgang og realisering av Communications-ordreboken.",
+            "Utnyttelse av den økte Torsby-kapasiteten.",
+        ],
+        "valuation": {
+            "reference_price": 181.0,
+            "eps_2026": 10.10,
+            "growth_bear": 8.0,
+            "growth_base": 17.0,
+            "growth_bull": 24.0,
+            "pe_bear": 15.0,
+            "pe_base": 18.0,
+            "pe_bull": 22.0,
+            "required_return": 10.0,
+            "target_year": 2028,
+            "dcf_revenue_2026": 4630.0,
+            "dcf_revenue_2030": 7500.0,
+            "dcf_ebit_margin_2026": 10.0,
+            "dcf_ebit_margin_2030": 11.5,
+            "dcf_tax_rate": 20.6,
+            "dcf_conversion": 80.0,
+            "dcf_wacc": 9.5,
+            "dcf_terminal_growth": 3.0,
+            "note": (
+                "Forutsetningene er arbeidsestimater og ikke konsensus. NOTE har "
+                "høyere gjeld etter STI-oppkjøpet og kortsiktig svak cash conversion, "
+                "mens Security & Defence og oppkjøpt vekst trekker i positiv retning."
+            ),
+        },
     },
 
     "Protector": {
@@ -1355,7 +1738,7 @@ if side == "Dashboard":
 
     st.header("Dashboard")
 
-    detailed_companies = ["NORBIT", "Cambi"]
+    detailed_companies = ["NORBIT", "Cambi", "NOTE"]
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Selskaper", len(companies))
@@ -1374,10 +1757,10 @@ if side == "Dashboard":
 
     oversikt = pd.DataFrame({
         "Selskap": ["NORBIT", "Cambi", "Kitron", "NOTE", "Protector"],
-        "Kurs": ["162,00", "24,40", "-", "-", "-"],
-        "EPS LTM": ["7,04", "0,39", "-", "-", "-"],
-        "P/E LTM": ["23,0x", "63,2x", "-", "-", "-"],
-        "FCF Yield": ["4,6%", "9,3%", "-", "-", "-"],
+        "Kurs": ["162,00", "24,40", "-", "181,00", "-"],
+        "EPS LTM": ["7,04", "0,39", "-", "8,72", "-"],
+        "P/E LTM": ["23,0x", "63,2x", "-", "20,8x", "-"],
+        "FCF Yield": ["4,6%", "9,3%", "-", "–", "-"],
         "Status": ["Følg", "Følg", "Følg", "Følg", "Følg"]
     })
 
@@ -1385,7 +1768,7 @@ if side == "Dashboard":
 
     st.subheader("Dagens viktigste endringer")
     st.info(
-        "NORBIT og Cambi er nå lagt inn med Q2/H1 2026-tall, nyheter, "
+        "NORBIT, Cambi og NOTE er nå lagt inn med Q2/H1 2026-tall, nyheter, "
         "kontrakter, verdsettelse og aksjonærmonitor. Automatisk oppdatering "
         "kobles til senere."
     )
@@ -1402,7 +1785,7 @@ elif side == "Selskaper":
     st.header(selskap)
     st.caption(f"{info['ticker']} | {info['marked']} | {info['sektor']}")
 
-    if selskap not in ("NORBIT", "Cambi"):
+    if selskap not in ("NORBIT", "Cambi", "NOTE"):
         st.info(
             "Strukturen er klar. Dette selskapet fylles med faktiske data "
             "etter at NORBIT-siden er ferdigstilt."
@@ -1412,21 +1795,31 @@ elif side == "Selskaper":
 
     else:
         widget_prefix = info["ticker"].lower()
+        currency = info.get("currency", "NOK")
+        million_unit = f"M{currency}"
+        billion_unit = f"mrd. {currency}"
+
         # Toppnøkkeltall - verdsettelse
         k1, k2, k3 = st.columns(3)
 
         k1.metric(
             "Markedsverdi",
-            f"{info['market_cap']:.2f} mrd. NOK".replace(".", ",")
+            f"{info['market_cap']:.2f} {billion_unit}".replace(".", ",")
         )
         k2.metric(
             "P/E LTM",
             f"{info['pe_ltm']:.1f}x".replace(".", ",")
         )
-        k3.metric(
-            "FCF Yield LTM",
-            f"{info['fcf_yield']:.1f}%".replace(".", ",")
-        )
+        if selskap == "NOTE":
+            k3.metric(
+                "OCF LTM",
+                f"{info['ocf_ltm']:.0f} {million_unit}"
+            )
+        else:
+            k3.metric(
+                "FCF Yield LTM",
+                f"{info['fcf_yield']:.1f}%".replace(".", ",")
+            )
 
         # Toppnøkkeltall - kvalitet og balanse
         k4, k5, k6 = st.columns(3)
@@ -1476,7 +1869,7 @@ elif side == "Selskaper":
             q1, q2, q3 = st.columns(3)
             q1.metric(
                 "Omsetning",
-                f"{info['q2']['revenue']:.1f} MNOK".replace(".", ",")
+                f"{info['q2']['revenue']:.1f} {million_unit}".replace(".", ",")
             )
             q2.metric(
                 "Vekst",
@@ -1490,15 +1883,15 @@ elif side == "Selskaper":
             q4, q5, q6 = st.columns(3)
             q4.metric(
                 "EBIT",
-                f"{info['q2']['ebit']:.1f} MNOK".replace(".", ",")
+                f"{info['q2']['ebit']:.1f} {million_unit}".replace(".", ",")
             )
             q5.metric(
                 "EPS",
                 f"{info['q2']['eps']:.2f}".replace(".", ",")
             )
             q6.metric(
-                "FCF",
-                f"{info['q2']['fcf']:.1f} MNOK".replace(".", ",")
+                "CF etter investeringer" if selskap == "NOTE" else "FCF",
+                f"{info['q2']['fcf']:.1f} {million_unit}".replace(".", ",")
             )
 
             st.subheader("H1 2026")
@@ -1506,7 +1899,7 @@ elif side == "Selskaper":
             h1, h2, h3 = st.columns(3)
             h1.metric(
                 "Omsetning",
-                f"{info['h1']['revenue']:,.1f} MNOK".replace(",", " ").replace(".", ",")
+                f"{info['h1']['revenue']:,.1f} {million_unit}".replace(",", " ").replace(".", ",")
             )
             h2.metric(
                 "Vekst",
@@ -1520,15 +1913,15 @@ elif side == "Selskaper":
             h4, h5, h6 = st.columns(3)
             h4.metric(
                 "EBIT",
-                f"{info['h1']['ebit']:.1f} MNOK".replace(".", ",")
+                f"{info['h1']['ebit']:.1f} {million_unit}".replace(".", ",")
             )
             h5.metric(
                 "EPS",
                 f"{info['h1']['eps']:.2f}".replace(".", ",")
             )
             h6.metric(
-                "FCF",
-                f"{info['h1']['fcf']:.1f} MNOK".replace(".", ",")
+                "CF etter investeringer" if selskap == "NOTE" else "FCF",
+                f"{info['h1']['fcf']:.1f} {million_unit}".replace(".", ",")
             )
 
             if "order_kpis" in info:
@@ -1555,7 +1948,7 @@ elif side == "Selskaper":
             )
             b1.metric(
                 debt_label,
-                f"{debt_value:.0f} MNOK"
+                f"{debt_value:.0f} {million_unit}"
             )
             balance_leverage_label = (
                 "Netto kontanter / EBITDA"
@@ -1568,10 +1961,16 @@ elif side == "Selskaper":
                 balance_leverage_label,
                 f"{balance_leverage_value:.1f}x".replace(".", ",")
             )
-            b3.metric(
-                "FCF LTM",
-                f"{info['fcf_ltm']:.0f} MNOK"
-            )
+            if selskap == "NOTE":
+                b3.metric(
+                    "OCF LTM",
+                    f"{info['ocf_ltm']:.0f} {million_unit}"
+                )
+            else:
+                b3.metric(
+                    "FCF LTM",
+                    f"{info['fcf_ltm']:.0f} {million_unit}"
+                )
 
             st.subheader("Selskapets guiding")
             for item in info["guidance"]:
@@ -1600,9 +1999,9 @@ elif side == "Selskaper":
             for row in info["financials"]:
                 key_rows.append({
                     "Periode": row["Periode"],
-                    "Omsetning (MNOK)": row["Omsetning"],
+                    f"Omsetning ({million_unit})": row["Omsetning"],
                     "Vekst": row["Vekst"],
-                    "EBIT (MNOK)": row["EBIT"],
+                    f"EBIT ({million_unit})": row["EBIT"],
                     "EBIT-margin": row["EBIT-margin"],
                     "EPS": row["EPS"],
                 })
@@ -1628,38 +2027,78 @@ elif side == "Selskaper":
             )
 
             st.subheader("Kontantstrøm")
-            cf1, cf2, cf3 = st.columns(3)
-            cf1.metric(
-                "FCF Q2",
-                f"{info['q2']['fcf']:.1f} MNOK".replace(".", ",")
-            )
-            cf2.metric(
-                "FCF H1",
-                f"{info['h1']['fcf']:.1f} MNOK".replace(".", ",")
-            )
-            cf3.metric(
-                "FCF LTM",
-                f"{info['fcf_ltm']:.0f} MNOK"
-            )
 
-            cf4, cf5, cf6 = st.columns(3)
-            cf4.metric(
-                "OCF Q2",
-                f"{info['q2']['ocf']:.1f} MNOK".replace(".", ",")
-            )
-            cf5.metric(
-                "OCF H1",
-                f"{info['h1']['ocf']:.1f} MNOK".replace(".", ",")
-            )
-            cf6.metric(
-                "FCF Yield LTM",
-                f"{info['fcf_yield']:.1f}%".replace(".", ",")
-            )
+            if selskap == "NOTE":
+                cf1, cf2, cf3 = st.columns(3)
+                cf1.metric(
+                    "OCF Q2",
+                    f"{info['q2']['ocf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf2.metric(
+                    "OCF H1",
+                    f"{info['h1']['ocf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf3.metric(
+                    "OCF LTM",
+                    f"{info['ocf_ltm']:.0f} {million_unit}"
+                )
 
-            st.caption(
-                "FCF = kontantstrøm fra drift minus investeringer i driftsmidler "
-                "og immaterielle eiendeler."
-            )
+                cf4, cf5, cf6 = st.columns(3)
+                cf4.metric(
+                    "CF etter investeringer Q2",
+                    f"{info['q2']['fcf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf5.metric(
+                    "CF etter investeringer H1",
+                    f"{info['h1']['fcf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf6.metric(
+                    "OCF Yield LTM",
+                    f"{info['ocf_yield_ltm']:.1f}%".replace(".", ",")
+                )
+
+                st.caption(
+                    "NOTE rapporterer operasjonell kontantstrøm justert for "
+                    "sammenligningsforstyrrende poster separat fra totalt kontantstrøm "
+                    "etter investeringer. H1-tallet etter investeringer inkluderer "
+                    "store oppkjøpsrelaterte utbetalinger."
+                )
+            else:
+                cf1, cf2, cf3 = st.columns(3)
+                cf1.metric(
+                    "FCF Q2",
+                    f"{info['q2']['fcf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf2.metric(
+                    "FCF H1",
+                    f"{info['h1']['fcf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf3.metric(
+                    "FCF LTM",
+                    f"{info['fcf_ltm']:.0f} {million_unit}"
+                )
+
+                cf4, cf5, cf6 = st.columns(3)
+                cf4.metric(
+                    "OCF Q2",
+                    f"{info['q2']['ocf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf5.metric(
+                    "OCF H1",
+                    f"{info['h1']['ocf']:.1f} {million_unit}".replace(".", ",")
+                )
+                cf6.metric(
+                    "FCF Yield LTM",
+                    f"{info['fcf_yield']:.1f}%".replace(".", ",")
+                )
+
+                st.caption(
+                    "FCF = kontantstrøm fra drift minus investeringer i driftsmidler "
+                    "og immaterielle eiendeler."
+                )
+
+            if info.get("cashflow_note"):
+                st.caption(info["cashflow_note"])
 
             st.subheader("Hva vi følger videre")
             for item in info["what_follow"]:
@@ -1739,7 +2178,7 @@ elif side == "Selskaper":
             st.subheader("Kontraktsmonitor")
 
             c1, c2, c3, c4 = st.columns(4)
-            c1.metric(info["contract_value_metric_label"], f"{known_contract_value:,.0f} MNOK".replace(",", " "))
+            c1.metric(info["contract_value_metric_label"], f"{known_contract_value:,.0f} {million_unit}".replace(",", " "))
             c2.metric("Annonserte kontrakter", len(info["contracts"]))
             c3.metric("Aktive muligheter", active_opportunities)
             c4.metric("Segmenter overvåket", contract_segments)
@@ -1747,28 +2186,55 @@ elif side == "Selskaper":
             st.caption(info["contract_value_caption"])
 
             st.subheader("Annonserte kontrakter")
-            df_contracts = pd.DataFrame(info["contracts"])
+            df_contracts = pd.DataFrame(info["contracts"]).copy()
+            if "Verdi (MNOK)" in df_contracts.columns:
+                value_col = f"Verdi ({million_unit})"
+                df_contracts[value_col] = df_contracts["Verdi (MNOK)"].map(
+                    lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
+                )
+                df_contracts = df_contracts.drop(columns=["Verdi (MNOK)"])
+            df_contracts = df_contracts.fillna("–")
+
+            contract_display = df_contracts.copy()
+            for col in contract_display.columns:
+                contract_display[col] = contract_display[col].map(
+                    lambda x: "–" if pd.isna(x) else str(x)
+                )
+
             st.dataframe(
-                df_contracts,
+                contract_display,
                 width="stretch",
                 hide_index=True
             )
 
             st.subheader("Potensielle kontrakter og anbud")
-            df_opp = pd.DataFrame(info["opportunities"]).fillna("–")
+            df_opp = pd.DataFrame(info["opportunities"]).copy()
+            value_col = f"Est. verdi ({million_unit})"
+            if "Est. verdi (MNOK)" in df_opp.columns:
+                df_opp[value_col] = df_opp["Est. verdi (MNOK)"].map(
+                    lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
+                )
+                df_opp = df_opp.drop(columns=["Est. verdi (MNOK)"])
+            df_opp = df_opp.fillna("–")
             opp_cols = [
                 "Prioritet",
                 "Mulighet",
                 "Segment",
                 "Sannsynlighet",
-                "Est. verdi (MNOK)",
+                value_col,
                 "Status",
                 "Neste trigger",
                 "Sist oppdatert",
                 "Kommentar",
             ]
+            opp_display = df_opp[opp_cols].copy()
+            for col in opp_display.columns:
+                opp_display[col] = opp_display[col].map(
+                    lambda x: "–" if pd.isna(x) else str(x)
+                )
+
             st.dataframe(
-                df_opp[opp_cols],
+                opp_display,
                 width="stretch",
                 hide_index=True
             )
@@ -1798,7 +2264,7 @@ elif side == "Selskaper":
                 top1, top2 = st.columns(2)
 
                 reference_price = top1.number_input(
-                    "Dagens kurs / referansekurs (NOK)",
+                    f"Dagens kurs / referansekurs ({currency})",
                     min_value=1.0,
                     value=float(info["valuation"]["reference_price"]),
                     step=0.5,
@@ -1830,7 +2296,7 @@ elif side == "Selskaper":
                         key="cambi_bear_eps_2026"
                     )
                     bear_rev_2027 = st.number_input(
-                        "Omsetning 2027E (MNOK)",
+                        f"Omsetning 2027E ({million_unit})",
                         min_value=100.0,
                         value=float(info["valuation"]["cambi_revenue_2027_bear"]),
                         step=50.0,
@@ -1854,7 +2320,7 @@ elif side == "Selskaper":
                         key="cambi_bear_eps_2027"
                     )
                     bear_rev_2028 = st.number_input(
-                        "Omsetning 2028E (MNOK)",
+                        f"Omsetning 2028E ({million_unit})",
                         min_value=100.0,
                         value=float(info["valuation"]["cambi_revenue_2028_bear"]),
                         step=50.0,
@@ -1897,7 +2363,7 @@ elif side == "Selskaper":
                         key="cambi_base_eps_2026"
                     )
                     base_rev_2027 = st.number_input(
-                        "Omsetning 2027E (MNOK)",
+                        f"Omsetning 2027E ({million_unit})",
                         min_value=100.0,
                         value=float(info["valuation"]["cambi_revenue_2027_base"]),
                         step=50.0,
@@ -1921,7 +2387,7 @@ elif side == "Selskaper":
                         key="cambi_base_eps_2027"
                     )
                     base_rev_2028 = st.number_input(
-                        "Omsetning 2028E (MNOK)",
+                        f"Omsetning 2028E ({million_unit})",
                         min_value=100.0,
                         value=float(info["valuation"]["cambi_revenue_2028_base"]),
                         step=50.0,
@@ -1964,7 +2430,7 @@ elif side == "Selskaper":
                         key="cambi_bull_eps_2026"
                     )
                     bull_rev_2027 = st.number_input(
-                        "Omsetning 2027E (MNOK)",
+                        f"Omsetning 2027E ({million_unit})",
                         min_value=100.0,
                         value=float(info["valuation"]["cambi_revenue_2027_bull"]),
                         step=50.0,
@@ -1988,7 +2454,7 @@ elif side == "Selskaper":
                         key="cambi_bull_eps_2027"
                     )
                     bull_rev_2028 = st.number_input(
-                        "Omsetning 2028E (MNOK)",
+                        f"Omsetning 2028E ({million_unit})",
                         min_value=100.0,
                         value=float(info["valuation"]["cambi_revenue_2028_bull"]),
                         step=50.0,
@@ -2047,9 +2513,9 @@ elif side == "Selskaper":
                 st.subheader("Estimert kurs i 2028")
 
                 v1, v2, v3 = st.columns(3)
-                v1.metric("🔴 Bear", f"{bear_value:.0f} NOK")
-                v2.metric("🟡 Base", f"{base_value:.0f} NOK")
-                v3.metric("🟢 Bull", f"{bull_value:.0f} NOK")
+                v1.metric("🔴 Bear", f"{bear_value:.0f} {currency}")
+                v2.metric("🟡 Base", f"{base_value:.0f} {currency}")
+                v3.metric("🟢 Bull", f"{bull_value:.0f} {currency}")
 
                 st.subheader("Forventet avkastning fra referansekurs")
 
@@ -2061,7 +2527,7 @@ elif side == "Selskaper":
                     st.write(f"Årlig avkastning (CAGR): **{bear_cagr:+.1f}%**")
                     st.write(
                         f"Nåverdi ved {required_return:.1f}% krav: "
-                        f"**{bear_pv:.0f} NOK**"
+                        f"**{bear_pv:.0f} {currency}**"
                     )
 
                 with r2:
@@ -2070,7 +2536,7 @@ elif side == "Selskaper":
                     st.write(f"Årlig avkastning (CAGR): **{base_cagr:+.1f}%**")
                     st.write(
                         f"Nåverdi ved {required_return:.1f}% krav: "
-                        f"**{base_pv:.0f} NOK**"
+                        f"**{base_pv:.0f} {currency}**"
                     )
 
                 with r3:
@@ -2079,7 +2545,7 @@ elif side == "Selskaper":
                     st.write(f"Årlig avkastning (CAGR): **{bull_cagr:+.1f}%**")
                     st.write(
                         f"Nåverdi ved {required_return:.1f}% krav: "
-                        f"**{bull_pv:.0f} NOK**"
+                        f"**{bull_pv:.0f} {currency}**"
                     )
 
                 st.subheader("Margin of safety mot nåverdi")
@@ -2186,7 +2652,7 @@ elif side == "Selskaper":
                             "Total avkastning": f"{total_return:+.0f}%",
                             "CAGR p.a.": f"{cagr:+.1f}%",
                             f"Nåverdi @ {required_return:.1f}%": (
-                                f"{present_value:.0f} NOK"
+                                f"{present_value:.0f} {currency}"
                             ),
                             "Margin of safety": f"{margin_of_safety:+.0f}%",
                         }
@@ -2217,7 +2683,7 @@ elif side == "Selskaper":
                     a1, a2, a3, a4 = st.columns(4)
 
                     reference_price = a1.number_input(
-                        "Dagens kurs / referansekurs (NOK)",
+                        f"Dagens kurs / referansekurs ({currency})",
                         min_value=1.0,
                         value=float(info["valuation"]["reference_price"]),
                         step=1.0,
@@ -2352,9 +2818,9 @@ elif side == "Selskaper":
                 st.subheader(f"Estimert kurs i {target_year}")
 
                 v1, v2, v3 = st.columns(3)
-                v1.metric("🔴 Bear", f"{bear_value:.0f} NOK")
-                v2.metric("🟡 Base", f"{base_value:.0f} NOK")
-                v3.metric("🟢 Bull", f"{bull_value:.0f} NOK")
+                v1.metric("🔴 Bear", f"{bear_value:.0f} {currency}")
+                v2.metric("🟡 Base", f"{base_value:.0f} {currency}")
+                v3.metric("🟢 Bull", f"{bull_value:.0f} {currency}")
 
                 st.subheader("Forventet avkastning fra referansekurs")
 
@@ -2366,7 +2832,7 @@ elif side == "Selskaper":
                     st.write(f"Årlig avkastning (CAGR): **{bear_cagr:+.1f}%**")
                     st.write(
                         f"Nåverdi ved {required_return:.1f}% krav: "
-                        f"**{bear_pv:.0f} NOK**"
+                        f"**{bear_pv:.0f} {currency}**"
                     )
 
                 with r2:
@@ -2375,7 +2841,7 @@ elif side == "Selskaper":
                     st.write(f"Årlig avkastning (CAGR): **{base_cagr:+.1f}%**")
                     st.write(
                         f"Nåverdi ved {required_return:.1f}% krav: "
-                        f"**{base_pv:.0f} NOK**"
+                        f"**{base_pv:.0f} {currency}**"
                     )
 
                 with r3:
@@ -2384,7 +2850,7 @@ elif side == "Selskaper":
                     st.write(f"Årlig avkastning (CAGR): **{bull_cagr:+.1f}%**")
                     st.write(
                         f"Nåverdi ved {required_return:.1f}% krav: "
-                        f"**{bull_pv:.0f} NOK**"
+                        f"**{bull_pv:.0f} {currency}**"
                     )
 
                 st.caption(
@@ -2450,7 +2916,7 @@ elif side == "Selskaper":
                             f"Kursmål {target_year}": f"{target_value:.0f} NOK",
                             "Total avkastning": f"{total_return:+.0f}%",
                             "CAGR p.a.": f"{cagr:+.1f}%",
-                            f"Nåverdi @ {required_return:.1f}%": f"{present_value:.0f} NOK",
+                            f"Nåverdi @ {required_return:.1f}%": f"{present_value:.0f} {currency}",
                             "Margin of safety": f"{margin_of_safety:+.0f}%",
                         }
                     )
@@ -2465,19 +2931,33 @@ elif side == "Selskaper":
 
             st.subheader("Kontantstrømbasert sjekk")
 
-            fcf_per_share = (
-                info["fcf_ltm"] * 1_000_000 / info["shares_outstanding"]
-            )
-
             f1, f2, f3 = st.columns(3)
-            f1.metric(
-                "FCF per aksje LTM",
-                f"{fcf_per_share:.2f} NOK".replace(".", ",")
-            )
-            f2.metric(
-                "FCF Yield LTM",
-                f"{info['fcf_yield']:.1f}%".replace(".", ",")
-            )
+
+            if selskap == "NOTE":
+                ocf_per_share = (
+                    info["ocf_ltm"] * 1_000_000 / info["shares_outstanding"]
+                )
+                f1.metric(
+                    "OCF per aksje LTM",
+                    f"{ocf_per_share:.2f} {currency}".replace(".", ",")
+                )
+                f2.metric(
+                    "OCF Yield LTM",
+                    f"{info['ocf_yield_ltm']:.1f}%".replace(".", ",")
+                )
+            else:
+                fcf_per_share = (
+                    info["fcf_ltm"] * 1_000_000 / info["shares_outstanding"]
+                )
+                f1.metric(
+                    "FCF per aksje LTM",
+                    f"{fcf_per_share:.2f} {currency}".replace(".", ",")
+                )
+                f2.metric(
+                    "FCF Yield LTM",
+                    f"{info['fcf_yield']:.1f}%".replace(".", ",")
+                )
+
             f3.metric(
                 "P/E LTM",
                 f"{info['pe_ltm']:.1f}x".replace(".", ",")
@@ -2502,7 +2982,7 @@ elif side == "Selskaper":
                 d1, d2, d3, d4 = st.columns(4)
 
                 dcf_revenue_2026 = d1.number_input(
-                    "Omsetning 2026E (MNOK)",
+                    f"Omsetning 2026E ({million_unit})",
                     min_value=500.0,
                     value=float(info["valuation"]["dcf_revenue_2026"]),
                     step=50.0,
@@ -2510,7 +2990,7 @@ elif side == "Selskaper":
                 )
 
                 dcf_revenue_2030 = d2.number_input(
-                    "Omsetning 2030E (MNOK)",
+                    f"Omsetning 2030E ({million_unit})",
                     min_value=500.0,
                     value=float(info["valuation"]["dcf_revenue_2030"]),
                     step=100.0,
@@ -2670,7 +3150,7 @@ elif side == "Selskaper":
 
                 x1.metric(
                     "DCF-verdi per aksje",
-                    f"{dcf_value_per_share:.0f} NOK"
+                    f"{dcf_value_per_share:.0f} {currency}"
                 )
 
                 x2.metric(
@@ -2680,7 +3160,7 @@ elif side == "Selskaper":
 
                 x3.metric(
                     "Enterprise value",
-                    f"{enterprise_value / 1000:.2f} mrd. NOK".replace(".", ",")
+                    f"{enterprise_value / 1000:.2f} {billion_unit}".replace(".", ",")
                 )
 
                 x4.metric(
@@ -2705,8 +3185,17 @@ elif side == "Selskaper":
                         lambda x: f"{x:,.0f}".replace(",", " ")
                     )
 
+                dcf_display = dcf_table.rename(
+                    columns={
+                        "Omsetning (MNOK)": f"Omsetning ({million_unit})",
+                        "EBIT (MNOK)": f"EBIT ({million_unit})",
+                        "NOPAT (MNOK)": f"NOPAT ({million_unit})",
+                        "FCFF (MNOK)": f"FCFF ({million_unit})",
+                    }
+                )
+
                 st.dataframe(
-                    dcf_table,
+                    dcf_display,
                     width="stretch",
                     hide_index=True
                 )
@@ -2767,7 +3256,7 @@ elif side == "Selskaper":
                         )
 
                         row[f"g {tg:.1f}%".replace(".", ",")] = (
-                            f"{per_share:.0f} NOK"
+                            f"{per_share:.0f} {currency}"
                         )
 
                     sensitivity_rows.append(row)
@@ -2794,7 +3283,7 @@ elif side == "Nøkkeltall":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi"],
+        ["NORBIT", "Cambi", "NOTE"],
         key="global_keyfig_company",
     )
     info = companies[selskap]
@@ -2812,7 +3301,7 @@ elif side == "Aksjonærer":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi"],
+        ["NORBIT", "Cambi", "NOTE"],
         key="global_shareholder_company",
     )
 
@@ -2831,7 +3320,7 @@ elif side == "Nyheter":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi"],
+        ["NORBIT", "Cambi", "NOTE"],
         key="global_news_company",
     )
     info = companies[selskap]
@@ -2877,10 +3366,12 @@ elif side == "Kontrakter":
 
     selskap = st.selectbox(
         "Velg selskap",
-        ["NORBIT", "Cambi"],
+        ["NORBIT", "Cambi", "NOTE"],
         key="global_contract_company",
     )
     info = companies[selskap]
+    currency = info.get("currency", "NOK")
+    million_unit = f"M{currency}"
 
     known_contract_value = sum(
         item["Verdi (MNOK)"]
@@ -2891,7 +3382,7 @@ elif side == "Kontrakter":
     c1, c2, c3 = st.columns(3)
     c1.metric(
         info["contract_value_metric_label"],
-        f"{known_contract_value:,.0f} MNOK".replace(",", " ")
+        f"{known_contract_value:,.0f} {million_unit}".replace(",", " ")
     )
     c2.metric("Annonserte kontrakter", len(info["contracts"]))
     c3.metric("Aktive muligheter", len(info["opportunities"]))
@@ -2899,28 +3390,56 @@ elif side == "Kontrakter":
     st.caption(info["contract_value_caption"])
 
     st.subheader(f"{selskap} – annonserte kontrakter")
+    global_contracts = pd.DataFrame(info["contracts"]).copy()
+    if "Verdi (MNOK)" in global_contracts.columns:
+        global_contract_value_col = f"Verdi ({million_unit})"
+        global_contracts[global_contract_value_col] = global_contracts["Verdi (MNOK)"].map(
+            lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
+        )
+        global_contracts = global_contracts.drop(columns=["Verdi (MNOK)"])
+    global_contracts = global_contracts.fillna("–")
+
+    global_contract_display = global_contracts.copy()
+    for col in global_contract_display.columns:
+        global_contract_display[col] = global_contract_display[col].map(
+            lambda x: "–" if pd.isna(x) else str(x)
+        )
+
     st.dataframe(
-        pd.DataFrame(info["contracts"]),
+        global_contract_display,
         width="stretch",
         hide_index=True
     )
 
     st.subheader(f"{selskap} – potensielle kontrakter og anbud")
-    df_opp = pd.DataFrame(info["opportunities"]).fillna("–")
+    df_opp = pd.DataFrame(info["opportunities"]).copy()
+    global_value_col = f"Est. verdi ({million_unit})"
+    if "Est. verdi (MNOK)" in df_opp.columns:
+        df_opp[global_value_col] = df_opp["Est. verdi (MNOK)"].map(
+            lambda x: "–" if pd.isna(x) else f"{x:,.0f}".replace(",", " ")
+        )
+        df_opp = df_opp.drop(columns=["Est. verdi (MNOK)"])
+    df_opp = df_opp.fillna("–")
+    global_opp_cols = [
+        "Prioritet",
+        "Mulighet",
+        "Segment",
+        "Sannsynlighet",
+        global_value_col,
+        "Status",
+        "Neste trigger",
+        "Sist oppdatert",
+        "Kommentar",
+    ]
+
+    global_opp_display = df_opp[global_opp_cols].copy()
+    for col in global_opp_display.columns:
+        global_opp_display[col] = global_opp_display[col].map(
+            lambda x: "–" if pd.isna(x) else str(x)
+        )
+
     st.dataframe(
-        df_opp[
-            [
-                "Prioritet",
-                "Mulighet",
-                "Segment",
-                "Sannsynlighet",
-                "Est. verdi (MNOK)",
-                "Status",
-                "Neste trigger",
-                "Sist oppdatert",
-                "Kommentar",
-            ]
-        ],
+        global_opp_display,
         width="stretch",
         hide_index=True
     )
