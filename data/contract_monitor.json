@@ -14,12 +14,14 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "16.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "c4d58d3ab8e8f84ce3b2a52b6b070377c87dff24626a855c860226a0b3880fe5",
+    "content_hash": "f7abfaeaac967c57b08ad899bcff544360379242ff73efa57824835f121e062f",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
       "https://groundintel.ca/tenders"
-    ]
+    ],
+    "last_source_change": "16.09.2026",
+    "review_note": "Kildene for Clarkson WRRF – Peel Region, Ontario er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "rosedale_ntp": {
     "company": "Cambi",
@@ -60,7 +62,11 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": null,
-    "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat."
+    "content_hash": "7cb91bd0f649ba5b94478f8cf32a9fd99fef0c9826f4c42e36ef2edca2bfa2a1",
+    "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
+    "source_urls_used": [
+      "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
+      "https://www.find-tender.service.gov.uk/procurement/ocds-h6vhtk-055934"
+    ]
   }
 }
