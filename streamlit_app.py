@@ -4,6 +4,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from pathlib import Path
 import json
+import re
 
 st.set_page_config(
     page_title="Investeringsdashboard",
@@ -2723,10 +2724,14 @@ elif side == "Selskaper":
 
             # Automatisk kontraktsmonitor kan overstyre faktiske status-/datofelter,
             # men ikke våre analysefelt som prioritet, sannsynlighet eller kommentar.
-            if selskap == "Cambi" and contract_monitor.get("clarkson_wrrf"):
-                auto = contract_monitor["clarkson_wrrf"]
+            for auto in contract_monitor.values():
+                if auto.get("company") != selskap:
+                    continue
+                match_text = auto.get("opportunity_match") or auto.get("title")
+                if not match_text:
+                    continue
                 mask = df_opp["Mulighet"].astype(str).str.contains(
-                    "Clarkson WRRF", case=False, na=False
+                    re.escape(match_text), case=False, na=False, regex=True
                 )
                 if mask.any():
                     if auto.get("status"):
@@ -3973,10 +3978,14 @@ elif side == "Kontrakter":
     st.subheader(f"{selskap} – potensielle kontrakter og anbud")
     df_opp = pd.DataFrame(info["opportunities"]).copy()
 
-    if selskap == "Cambi" and contract_monitor.get("clarkson_wrrf"):
-        auto = contract_monitor["clarkson_wrrf"]
+    for auto in contract_monitor.values():
+        if auto.get("company") != selskap:
+            continue
+        match_text = auto.get("opportunity_match") or auto.get("title")
+        if not match_text:
+            continue
         mask = df_opp["Mulighet"].astype(str).str.contains(
-            "Clarkson WRRF", case=False, na=False
+            re.escape(match_text), case=False, na=False, regex=True
         )
         if mask.any():
             if auto.get("status"):

@@ -22,10 +22,11 @@ TODAY_ISO = datetime.now(OSLO).date().isoformat()
 
 HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (compatible; InvestmentDashboardMonitor/1.0; "
+        "Mozilla/5.0 (compatible; InvestmentDashboardMonitor/1.1; "
         "+https://github.com/itfc72/Investeringsdashboard)"
     )
 }
+
 
 def load_json(path: Path, default):
     if not path.exists():
@@ -33,10 +34,12 @@ def load_json(path: Path, default):
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
+
 def save_json(path: Path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
+
 
 def fetch_text(url: str) -> str:
     r = requests.get(url, timeout=30, headers=HEADERS)
@@ -47,19 +50,34 @@ def fetch_text(url: str) -> str:
     text = " ".join(soup.stripped_strings)
     return re.sub(r"\s+", " ", text).strip()
 
+
+def fetch_all_sources(urls):
+    parts = []
+    used_urls = []
+    errors = []
+    for url in urls:
+        try:
+            text = fetch_text(url)
+            if text and len(text) > 200:
+                parts.append(f"SOURCE {url}: {text}")
+                used_urls.append(url)
+        except Exception as e:
+            errors.append(f"{url}: {e}")
+    return "\n".join(parts), used_urls, errors
+
+
 def normalized_hash(text: str) -> str:
-    # Ignore trivial whitespace changes.
     normalized = re.sub(r"\s+", " ", text).strip().lower()
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
+
 def extract_deadline(text: str) -> tuple[str | None, str | None]:
-    # Supports common English date formats and ISO-like dates.
     patterns = [
-        r"(?:closing|close|deadline|submission|bid due|response deadline)[^0-9A-Za-z]{0,40}"
+        r"(?:closing|close|deadline|submission|bid due|response deadline|respond by)[^0-9A-Za-z]{0,40}"
         r"((?:\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}))",
-        r"(?:closing|close|deadline|submission|bid due|response deadline)[^0-9A-Za-z]{0,40}"
+        r"(?:closing|close|deadline|submission|bid due|response deadline|respond by)[^0-9A-Za-z]{0,40}"
         r"((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4})",
-        r"(?:closing|close|deadline|submission|bid due|response deadline)[^0-9]{0,40}"
+        r"(?:closing|close|deadline|submission|bid due|response deadline|respond by)[^0-9]{0,40}"
         r"(\d{4}-\d{2}-\d{2})",
     ]
     for p in patterns:
@@ -72,17 +90,13 @@ def extract_deadline(text: str) -> tuple[str | None, str | None]:
                     return dt.strftime("%d.%m.%Y"), "Tilbudsfrist"
                 except ValueError:
                     pass
-    # Keep known Clarkson date if the page still contains Oct 2 2026.
     if re.search(r"(2\s+October\s+2026|October\s+2,?\s+2026|2026-10-02)", text, re.I):
         return "02.10.2026", "Tilbudsfrist"
     return None, None
 
-def extract_status(text: str) -> str | None:
-    """
-    Conservative status parser.
-    Never treats generic phrases like 'award notices available' as an award.
-    Only explicit status wording for the opportunity is accepted.
-    """
+
+def extract_tender_status(text: str) -> str | None:
+    """Conservative tender parser: only explicit status wording counts."""
     low = re.sub(r"\s+", " ", text).lower()
 
     explicit_award = [
@@ -123,8 +137,40 @@ def extract_status(text: str) -> str | None:
 
     return None
 
+
+def extract_rosedale_status(text: str) -> str | None:
+    """
+    Rosedale-specific parser.
+    Generic wording that manufacturing is expected after a later NTP does NOT count.
+    Only explicit evidence that NTP/production has actually started changes status.
+    """
+    low = re.sub(r"\s+", " ", text).lower()
+
+    explicit_started = [
+        r"notice to proceed has been issued",
+        r"notice to proceed was issued",
+        r"cambi has received (?:the )?notice to proceed",
+        r"received (?:the )?notice to proceed",
+        r"manufacturing has commenced",
+        r"manufacturing has started",
+        r"production has commenced",
+        r"production has started",
+        r"equipment manufacturing has begun",
+    ]
+    if any(re.search(p, low, flags=re.I) for p in explicit_started):
+        return "NTP mottatt / produksjon igangsatt"
+
+    explicit_cancel = [
+        r"rosedale.{0,120}(?:cancelled|canceled)",
+        r"(?:cancelled|canceled).{0,120}rosedale",
+    ]
+    if any(re.search(p, low, flags=re.I) for p in explicit_cancel):
+        return "Kansellert / stoppet"
+
+    return None
+
+
 def add_daily_update(updates, company, title, summary, importance="Høy"):
-    # Avoid duplicate same-day messages with same title+summary.
     key = (TODAY_ISO, company, title, summary)
     existing = {
         (x.get("Dato"), x.get("Selskap"), x.get("Tittel"), x.get("Oppdatering"))
@@ -140,102 +186,101 @@ def add_daily_update(updates, company, title, summary, importance="Høy"):
             "Viktighet": importance,
         })
 
-def main():
-    monitor = load_json(MONITOR_FILE, {})
-    updates = load_json(UPDATES_FILE, [])
-    item = monitor.get("clarkson_wrrf")
-    if not item:
-        print("Clarkson monitor not configured.")
-        return 0
 
-    text = None
-    used_url = None
-    errors = []
-    for url in item.get("source_urls", []):
-        try:
-            candidate = fetch_text(url)
-            if candidate and len(candidate) > 200:
-                text = candidate
-                used_url = url
-                break
-        except Exception as e:
-            errors.append(f"{url}: {e}")
-
+def process_item(key, item, updates):
+    text, used_urls, errors = fetch_all_sources(item.get("source_urls", []))
     item["last_checked"] = TODAY
 
     if not text:
-        item["check_error"] = " | ".join(errors)[:1000]
-        monitor["clarkson_wrrf"] = item
-        save_json(MONITOR_FILE, monitor)
-        print("Could not fetch Clarkson sources; last_checked updated.")
-        return 0
+        item["check_error"] = " | ".join(errors)[:1500]
+        print(f"{key}: no sources could be fetched.")
+        return item
 
     new_hash = normalized_hash(text)
     old_hash = item.get("content_hash")
-    deadline, date_type = extract_deadline(text)
-    status = extract_status(text)
-
     changed_fields = []
 
-    if deadline and deadline != item.get("next_date"):
-        changed_fields.append(f"frist {item.get('next_date', '–')} → {deadline}")
-        item["next_date"] = deadline
-        item["date_type"] = date_type or item.get("date_type")
+    monitor_type = item.get("monitor_type", "tender")
 
-    if status and status != item.get("status"):
-        changed_fields.append(f"status {item.get('status', '–')} → {status}")
-        item["status"] = status
+    if monitor_type == "tender":
+        deadline, date_type = extract_deadline(text)
+        status = extract_tender_status(text)
 
-    # First successful run establishes baseline without generating a false alert.
+        if deadline and deadline != item.get("next_date"):
+            changed_fields.append(f"frist {item.get('next_date', '–')} → {deadline}")
+            item["next_date"] = deadline
+            item["date_type"] = date_type or item.get("date_type")
+
+        if status and status != item.get("status"):
+            changed_fields.append(f"status {item.get('status', '–')} → {status}")
+            item["status"] = status
+
+    elif monitor_type == "rosedale_ntp":
+        status = extract_rosedale_status(text)
+        if status and status != item.get("status"):
+            changed_fields.append(f"status {item.get('status', '–')} → {status}")
+            item["status"] = status
+
+    # First successful run establishes a baseline and must not alert.
     if old_hash is None:
         item["content_hash"] = new_hash
-        item["source_url_used"] = used_url
+        item["source_urls_used"] = used_urls
         item.pop("check_error", None)
-        monitor["clarkson_wrrf"] = item
-        save_json(MONITOR_FILE, monitor)
-        print("Clarkson baseline established.")
-        return 0
+        print(f"{key}: baseline established.")
+        return item
 
     page_changed = old_hash != new_hash
 
     if changed_fields:
-        summary = "Clarkson WRRF er oppdatert: " + "; ".join(changed_fields) + "."
+        summary = f"{item['title']} er oppdatert: " + "; ".join(changed_fields) + "."
         item["last_updated"] = TODAY
         item["last_change_summary"] = summary
-        add_daily_update(updates, "Cambi", item["title"], summary)
+        add_daily_update(updates, item.get("company", ""), item["title"], summary)
     elif page_changed:
-        # Flag page change without inventing semantic details.
         summary = (
-            "Kilden for Clarkson WRRF er endret siden forrige kontroll. "
-            "Ingen sikker endring i frist eller status kunne leses automatisk; bør gjennomgås."
+            f"Kildene for {item['title']} er endret siden forrige kontroll. "
+            "Ingen sikker status-/datoendring kunne leses automatisk; bør gjennomgås."
         )
         item["last_updated"] = TODAY
         item["last_change_summary"] = summary
-        add_daily_update(updates, "Cambi", item["title"], summary, importance="Middels")
+        add_daily_update(
+            updates,
+            item.get("company", ""),
+            item["title"],
+            summary,
+            importance="Middels",
+        )
 
     item["content_hash"] = new_hash
-    item["source_url_used"] = used_url
+    item["source_urls_used"] = used_urls
     item.pop("check_error", None)
-    monitor["clarkson_wrrf"] = item
+    print(f"{key}: completed.")
+    return item
 
-    # Keep only recent daily updates to avoid an ever-growing file.
-    def parse_iso(x):
-        try:
-            return datetime.fromisoformat(x.get("Dato", "")).date()
-        except Exception:
-            return None
 
+def main():
+    monitor = load_json(MONITOR_FILE, {})
+    updates = load_json(UPDATES_FILE, [])
+
+    for key, item in list(monitor.items()):
+        monitor[key] = process_item(key, item, updates)
+
+    # Keep only recent daily updates.
     today_date = datetime.now(OSLO).date()
     recent = []
     for x in updates:
-        d = parse_iso(x)
+        try:
+            d = datetime.fromisoformat(x.get("Dato", "")).date()
+        except Exception:
+            d = None
         if d is None or (today_date - d).days <= 45:
             recent.append(x)
 
     save_json(MONITOR_FILE, monitor)
     save_json(UPDATES_FILE, recent)
-    print("Clarkson monitor completed.")
+    print("Contract monitor completed.")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

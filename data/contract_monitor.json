@@ -2,6 +2,8 @@
   "clarkson_wrrf": {
     "company": "Cambi",
     "title": "Clarkson WRRF – Peel Region, Ontario",
+    "opportunity_match": "Clarkson WRRF",
+    "monitor_type": "tender",
     "source_label": "Region of Peel tender 2026-005P / Govly",
     "source_urls": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -14,6 +16,27 @@
     "last_updated": "15.09.2026",
     "content_hash": "550eec2a9e213c6ca93a73b9d0d0b59c8acf4d5cc5ed91b0e84164982f05f8d5",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
-    "source_url_used": "https://app.govly.com/public/opportunities/16935200"
+    "source_urls_used": [
+      "https://app.govly.com/public/opportunities/16935200"
+    ]
+  },
+  "rosedale_ntp": {
+    "company": "Cambi",
+    "title": "Rosedale – notice to proceed til produksjon",
+    "opportunity_match": "Rosedale – notice to proceed",
+    "monitor_type": "rosedale_ntp",
+    "source_label": "Cambi / Watercare / NZ GETS",
+    "source_urls": [
+      "https://www.cambi.com/customer-stories/auckland-rosedale",
+      "https://www.watercare.co.nz/home/about-us/latest-news-and-media/Thermal-hydrolysis-on-the-way-for-Rosedale",
+      "https://www.gets.govt.nz/WSL/ExternalTenderDetails.htm?id=33776591"
+    ],
+    "status": "Engineering pågår",
+    "next_date": "Ikke offentlig",
+    "date_type": "Notice to proceed",
+    "last_checked": "16.09.2026",
+    "last_updated": "16.09.2026",
+    "content_hash": null,
+    "last_change_summary": "Engineeringfasen er i gang. Cambi opplyste 29.04.2026 at produksjon starter etter en senere notice to proceed og tidligst 12 måneder etter kontraktsinngåelsen."
   }
 }
