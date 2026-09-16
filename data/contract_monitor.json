@@ -67,8 +67,27 @@
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
       "https://www.find-tender.service.gov.uk/procurement/ocds-h6vhtk-055934"
-    ],
+        ],
     "last_source_change": "16.09.2026",
     "review_note": "Kildene for Beckton STW THP Upgrade – Thames Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
-  }
-}
+  },
+"daldowie_west_central": {
+  "company": "Cambi",
+ 
+  "title": "West Central Bio-Resource / Daldowie – Scottish Water",
+  "opportunity_match": "West Central Bio-Resource / Daldowie",
+  "monitor_type": "daldowie_project",
+  "source_label": "Scottish Water / Find a Tender – SW25/CDC/1477",
+  "source_urls": [
+    "https://www.scottishwater.co.uk/In-Your-Area/Investments-in-Your-Area/211124-Daldowie-Bioresources",
+    "https://www.scottishwater.co.uk/about-us/news-and-views/2026/08/060826-daldowie-info-event",
+    "https://www.find-tender.service.gov.uk/Notice/031884-2024"
+  ],
+  "status": "Cambi teknologileverandør / designfase",
+  "next_date": "04.2027",
+  "date_type": "Planlagt byggestart",
+  "last_checked": "16.09.2026",
+  "last_updated": "16.09.2026",
+  "content_hash": null,
+  "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat."
+}}

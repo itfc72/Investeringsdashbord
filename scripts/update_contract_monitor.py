@@ -224,6 +224,88 @@ def extract_beckton_update(text: str) -> tuple[str | None, str | None, str | Non
 
     return "Planlagt anskaffelse / overvåkes", None, None
 
+
+def extract_daldowie_update(text: str) -> tuple[str | None, str | None, str | None]:
+    """
+    Conservative Daldowie / West Central parser.
+    Only explicit project milestones change status.
+    Generic page edits do not create a dashboard alert.
+    """
+    low = re.sub(r"\s+", " ", text).lower()
+
+    positions = []
+    for marker in (
+        "west central bio-resource",
+        "daldowie",
+        "sw25/cdc/1477",
+    ):
+        pos = low.find(marker)
+        if pos >= 0:
+            positions.append(pos)
+
+    if not positions:
+        return None, None, None
+
+    pos = min(positions)
+    window = low[max(0, pos - 1000): pos + 7000]
+
+    # Explicit Cambi commercial award / contract.
+    cambicontract = [
+        r"contract (?:has been )?awarded to cambi",
+        r"contract awarded to cambi",
+        r"cambi has signed (?:a|the) contract",
+        r"cambi (?:has been|was) awarded (?:a|the) contract",
+    ]
+    if any(re.search(p, window, flags=re.I) for p in cambicontract):
+        return "Cambi-kontrakt annonsert", None, None
+
+    # Construction milestone.
+    construction = [
+        r"construction has commenced",
+        r"construction has started",
+        r"construction work has commenced",
+        r"construction work has started",
+        r"work has started on (?:the )?new bioresource",
+    ]
+    if any(re.search(p, window, flags=re.I) for p in construction):
+        return "Bygging igangsatt", None, None
+
+    # Planning milestone.
+    planning = [
+        r"planning application has been submitted",
+        r"planning application was submitted",
+        r"submitted (?:a|the) planning application",
+    ]
+    if any(re.search(p, window, flags=re.I) for p in planning):
+        return "Planleggingssøknad sendt / designfase", None, None
+
+    # Site risk / change.
+    site_change = [
+        r"daldowie (?:has become|is) unfeasible",
+        r"alternative greenfield location",
+        r"preferred location has changed",
+    ]
+    if any(re.search(p, window, flags=re.I) for p in site_change):
+        # Only change if the wording is in a context indicating an actual change,
+        # not merely the original procurement's contingency wording.
+        if re.search(
+            r"(?:daldowie has become unfeasible|preferred location has changed)",
+            window,
+            flags=re.I,
+        ):
+            return "Lokasjon under revurdering", None, None
+
+    # Current official baseline: Cambi is the designated technology provider / engaged in design.
+    baseline = [
+        r"designated technology provider.{0,80}cambi",
+        r"engaging with the aad technology provider cambi",
+        r"thermal hydrolysis aad cambi technology",
+    ]
+    if any(re.search(p, window, flags=re.I) for p in baseline):
+        return "Cambi teknologileverandør / designfase", "04.2027", "Planlagt byggestart"
+
+    return None, None, None
+
 def add_daily_update(updates, company, title, summary, importance="Høy"):
     key = (TODAY_ISO, company, title, summary)
     existing = {
@@ -277,6 +359,18 @@ def process_item(key, item, updates):
 
     elif monitor_type == "beckton_pipeline":
         status, next_date, date_type = extract_beckton_update(text)
+
+        if status and status != item.get("status"):
+            changed_fields.append(f"status {item.get('status', '–')} → {status}")
+            item["status"] = status
+
+        if next_date and next_date != item.get("next_date"):
+            changed_fields.append(f"dato {item.get('next_date', '–')} → {next_date}")
+            item["next_date"] = next_date
+            item["date_type"] = date_type or item.get("date_type")
+
+    elif monitor_type == "daldowie_project":
+        status, next_date, date_type = extract_daldowie_update(text)
 
         if status and status != item.get("status"):
             changed_fields.append(f"status {item.get('status', '–')} → {status}")

@@ -1228,6 +1228,26 @@ companies = {
             },
             {
                 "Prioritet": "🟢 Høy",
+                "Mulighet": "West Central Bio-Resource / Daldowie – Scottish Water",
+                "Segment": "Technology",
+                "Sannsynlighet": "Høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Cambi teknologileverandør / designfase",
+                "Neste dato": "04.2027",
+                "Dato-type": "Planlagt byggestart",
+                "Neste trigger": "Planleggingssøknad / Gate 80 / Phase 2 / Cambi-kontrakt",
+                "Sist oppdatert": "16.09.2026",
+                "Sist kontrollert": "16.09.2026",
+                "Kilde": "Scottish Water / Find a Tender – SW25/CDC/1477",
+                "Kommentar": (
+                    "Scottish Water har valgt Daldowie som foretrukket lokasjon og beskriver "
+                    "Cambi som designated technology provider i designfasen. Total prosjektverdi "
+                    "er oppgitt til £265–415m; dette er totalprosjektet og ikke et verdiestimat "
+                    "for Cambis leveranse."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
                 "Mulighet": "Flere AMP8 THP-huber i Storbritannia",
                 "Segment": "Technology",
                 "Sannsynlighet": "Høy",
@@ -1300,6 +1320,7 @@ companies = {
         "contract_watchlist": [
             "Clarkson WRRF / Peel Region: tilbudsfrist 02.10.2026 og deretter award-notice.",
             "Beckton S39830: overvåke live tender notice, leverandørvalg og endringer i indikativ tidsplan.",
+            "Daldowie / West Central: planleggingssøknad, Gate 80, Phase 2 og eventuell Cambi-kontrakt.",
             "Flere AMP8-prosjekter i Storbritannia.",
             "Notice to proceed for Rosedale i New Zealand og Alexandria i Egypt.",
             "Konvertering av Sør-Amerika-engineering til full kontrakt.",
