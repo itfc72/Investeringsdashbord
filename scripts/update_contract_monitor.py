@@ -235,20 +235,17 @@ def process_item(key, item, updates):
         summary = f"{item['title']} er oppdatert: " + "; ".join(changed_fields) + "."
         item["last_updated"] = TODAY
         item["last_change_summary"] = summary
+        item.pop("review_note", None)
+        item.pop("last_source_change", None)
         add_daily_update(updates, item.get("company", ""), item["title"], summary)
     elif page_changed:
-        summary = (
-            f"Kildene for {item['title']} er endret siden forrige kontroll. "
-            "Ingen sikker status-/datoendring kunne leses automatisk; bør gjennomgås."
-        )
-        item["last_updated"] = TODAY
-        item["last_change_summary"] = summary
-        add_daily_update(
-            updates,
-            item.get("company", ""),
-            item["title"],
-            summary,
-            importance="Middels",
+        # A raw webpage/hash change is not enough to count as a real investment update.
+        # Record it for later review, but do not change last_updated and do not create
+        # a homepage alert unless status/date/NTP changed explicitly.
+        item["last_source_change"] = TODAY
+        item["review_note"] = (
+            f"Kildene for {item['title']} er endret siden forrige kontroll, "
+            "men ingen sikker status-/datoendring ble funnet automatisk."
         )
 
     item["content_hash"] = new_hash
