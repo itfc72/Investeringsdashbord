@@ -1269,6 +1269,25 @@ companies = {
             },
             {
                 "Prioritet": "🟢 Høy",
+                "Mulighet": "Roundhill STW THP – Severn Trent",
+                "Segment": "Technology",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Planlagt AMP8 THP-anlegg / overvåkes",
+                "Neste dato": "Ikke offentlig",
+                "Dato-type": "Neste procurement-steg",
+                "Neste trigger": "UK4 tender notice / planning / UK6 award / leverandørvalg",
+                "Sist oppdatert": "16.09.2026",
+                "Sist kontrollert": "16.09.2026",
+                "Kilde": "Severn Trent PR24 – SVE4.34 Bioresources Botex+",
+                "Kommentar": (
+                    "Severn Trent opplyser i PR24-materialet at AMP8-planen inkluderer to nye "
+                    "THP-anlegg ved Netheridge og Roundhill, samt utvidelser ved Wanlip og Derby. "
+                    "Ingen offentlig Cambi-tildeling er identifisert."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
                 "Mulighet": "Flere AMP8 THP-huber i Storbritannia",
                 "Segment": "Technology",
                 "Sannsynlighet": "Høy",
@@ -1343,6 +1362,7 @@ companies = {
             "Beckton S39830: overvåke live tender notice, leverandørvalg og endringer i indikativ tidsplan.",
             "Daldowie / West Central: planleggingssøknad, Gate 80, Phase 2 og eventuell Cambi-kontrakt.",
             "Netheridge: UK4 tender notice, UK6 award notice og leverandørvalg.",
+            "Roundhill: UK4 tender notice, planlegging/tillatelser, UK6 award og leverandørvalg.",
             "Flere AMP8-prosjekter i Storbritannia.",
             "Notice to proceed for Rosedale i New Zealand og Alexandria i Egypt.",
             "Konvertering av Sør-Amerika-engineering til full kontrakt.",

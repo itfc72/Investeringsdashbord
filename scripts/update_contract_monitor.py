@@ -356,6 +356,61 @@ def extract_netheridge_update(text: str) -> tuple[str | None, str | None, str | 
 
     return None, None, None
 
+
+def extract_roundhill_update(text: str) -> tuple[str | None, str | None, str | None]:
+    """
+    Conservative Roundhill THP parser.
+    Baseline is Severn Trent's AMP8 plan identifying Roundhill as a new THP site.
+    Only explicit Roundhill-specific procurement milestones create status changes.
+    """
+    low = re.sub(r"\s+", " ", text).lower()
+
+    positions = []
+    for marker in (
+        "roundhill",
+        "roundhill sewage treatment works",
+        "roundhill stw",
+    ):
+        pos = low.find(marker)
+        if pos >= 0:
+            positions.append(pos)
+
+    if not positions:
+        return None, None, None
+
+    pos = min(positions)
+    window = low[max(0, pos - 1500): pos + 10000]
+
+    # Explicit award / supplier selection.
+    if re.search(r"\buk6\s*:\s*contract award notice\b", window, flags=re.I):
+        return "Tildelt / award publisert", None, None
+    if re.search(r"\bcontract award(?:ed)?\b", window, flags=re.I) and re.search(
+        r"\broundhill\b", window, flags=re.I
+    ):
+        return "Tildelt / award publisert", None, None
+
+    # Explicit live tender.
+    if re.search(r"\buk4\s*:\s*tender notice\b", window, flags=re.I):
+        deadline, date_type = extract_deadline(window)
+        if deadline:
+            return "Aktivt anbud", deadline, date_type or "Tilbudsfrist"
+        return "Aktivt anbud", None, None
+
+    # Planning / permitting milestones.
+    if re.search(r"\bplanning application (?:has been |was )?submitted\b", window, flags=re.I):
+        return "Planlegging / søknad sendt", None, "Planleggingsmilepæl"
+
+    # Verified Severn Trent AMP8 baseline.
+    baseline_patterns = [
+        r"two new thp sites at netheridge and roundhill",
+        r"new thp sites at netheridge and roundhill",
+        r"creating two new thp sites at netheridge and roundhill",
+    ]
+    if any(re.search(p, window, flags=re.I) for p in baseline_patterns):
+        return "Planlagt AMP8 THP-anlegg / overvåkes", None, "Neste procurement-steg"
+
+    return None, None, None
+
 def add_daily_update(updates, company, title, summary, importance="Høy"):
     key = (TODAY_ISO, company, title, summary)
     existing = {
@@ -475,6 +530,20 @@ def process_item(key, item, updates):
 
     elif monitor_type == "netheridge_tender":
         status, next_date, date_type = extract_netheridge_update(text)
+
+        if status and status != item.get("status"):
+            changed_fields.append(f"status {item.get('status', '–')} → {status}")
+            item["status"] = status
+
+        if next_date and next_date != item.get("next_date"):
+            changed_fields.append(f"dato {item.get('next_date', '–')} → {next_date}")
+            item["next_date"] = next_date
+
+        if date_type:
+            item["date_type"] = date_type
+
+    elif monitor_type == "roundhill_pipeline":
+        status, next_date, date_type = extract_roundhill_update(text)
 
         if status and status != item.get("status"):
             changed_fields.append(f"status {item.get('status', '–')} → {status}")

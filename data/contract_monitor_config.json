@@ -80,5 +80,22 @@
     "initial_date_type": "Neste procurement-steg",
     "initial_last_updated": "16.09.2026",
     "initial_last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg."
+  },
+  "roundhill_thp": {
+    "company": "Cambi",
+    "title": "Roundhill STW THP – Severn Trent",
+    "opportunity_match": "Roundhill STW THP",
+    "monitor_type": "roundhill_pipeline",
+    "source_label": "Severn Trent PR24 / Environment Agency",
+    "source_urls": [
+      "https://www.stwater.co.uk/content/dam/stw/about_us/pr24-response/totex/sve4-34-bioresources-botex-plus-cost-assessment.pdf",
+      "https://www.severntrent.com/sustainability/bioresources/treatment/",
+      "https://www.gov.uk/government/publications/dy7-6px-severn-trent-water-limited-environmental-issued-eprkb3701fka001"
+    ],
+    "initial_status": "Planlagt AMP8 THP-anlegg / overvåkes",
+    "initial_next_date": "Ikke offentlig",
+    "initial_date_type": "Neste procurement-steg",
+    "initial_last_updated": "16.09.2026",
+    "initial_last_change_summary": "Severn Trent opplyser i PR24-materialet at AMP8-planen inkluderer to nye THP-anlegg ved Netheridge og Roundhill, samt utvidelser ved Wanlip og Derby. Roundhill har et gjeldende miljøtillatelsesgrunnlag for sludge treatment, men ingen offentlig UK4 tender eller UK6 award for det nye THP-anlegget er identifisert."
   }
 }
