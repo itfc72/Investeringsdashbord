@@ -2202,9 +2202,6 @@ companies = {
 # =========================================================
 
 st.title("📊 Investeringsdashboard")
-st.caption(
-    "Selskaper • nøkkeltall • aksjonærer • nyheter • kontrakter • verdsettelse"
-)
 
 st.sidebar.title("Meny")
 
@@ -2370,6 +2367,18 @@ if side == "Dashboard":
 # =========================================================
 
 elif side == "Selskaper":
+
+    # Litt mindre tall på selskapssidene for et mer kompakt uttrykk.
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stMetricValue"] {
+            font-size: 1.85rem !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
     selskap = st.selectbox("Velg selskap", list(companies.keys()))
     info = companies[selskap]
@@ -2571,16 +2580,6 @@ elif side == "Selskaper":
             st.subheader("Selskapets guiding")
             for item in info["guidance"]:
                 st.write(f"• {item}")
-
-            st.subheader("Vår vurdering")
-            v1, v2, v3 = st.columns(3)
-            v1.metric("2026E EPS – arbeidsestimat", f"{info['valuation']['eps_2026']:.2f}".replace(".", ","))
-            v2.metric("Base EPS-vekst", f"{info['valuation']['growth_base']:.0f}%")
-            v3.metric("Base P/E", f"{info['valuation']['pe_base']:.0f}x")
-            st.caption(
-                "Dynamisk bear/base/bull-verdsettelse ligger under fanen Verdsettelse. "
-                + info["valuation"]["note"]
-            )
 
             st.subheader("Siste utvikling")
             st.success(info["latest_development"])
