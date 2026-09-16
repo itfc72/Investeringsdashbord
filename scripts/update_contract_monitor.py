@@ -78,16 +78,49 @@ def extract_deadline(text: str) -> tuple[str | None, str | None]:
     return None, None
 
 def extract_status(text: str) -> str | None:
-    low = text.lower()
-    # Conservative wording: never infer an award winner from a vague page.
-    if any(x in low for x in ["award notice", "contract awarded", "awarded to"]):
+    """
+    Conservative status parser.
+    Never treats generic phrases like 'award notices available' as an award.
+    Only explicit status wording for the opportunity is accepted.
+    """
+    low = re.sub(r"\s+", " ", text).lower()
+
+    explicit_award = [
+        r"bid status\s*[:\-]\s*awarded\b",
+        r"opportunity status\s*[:\-]\s*awarded\b",
+        r"contract status\s*[:\-]\s*awarded\b",
+        r"awarded vendor\s*[:\-]",
+        r"awarded to\s+[a-z0-9]",
+    ]
+    if any(re.search(p, low, flags=re.I) for p in explicit_award):
         return "Tildelt / award publisert"
-    if any(x in low for x in ["cancelled", "canceled", "tender cancelled", "opportunity cancelled"]):
+
+    explicit_cancel = [
+        r"bid status\s*[:\-]\s*cancelled\b",
+        r"bid status\s*[:\-]\s*canceled\b",
+        r"opportunity status\s*[:\-]\s*cancelled\b",
+        r"opportunity status\s*[:\-]\s*canceled\b",
+    ]
+    if any(re.search(p, low, flags=re.I) for p in explicit_cancel):
         return "Kansellert"
-    if any(x in low for x in ["closed", "submission closed", "bidding closed"]):
+
+    explicit_closed = [
+        r"bid status\s*[:\-]\s*closed\b",
+        r"opportunity status\s*[:\-]\s*closed\b",
+        r"submission status\s*[:\-]\s*closed\b",
+    ]
+    if any(re.search(p, low, flags=re.I) for p in explicit_closed):
         return "Tilbud lukket / avventer tildeling"
-    if any(x in low for x in ["open", "active", "accepting bids", "submission deadline"]):
+
+    explicit_open = [
+        r"bid status\s*[:\-]\s*open\b",
+        r"opportunity status\s*[:\-]\s*open\b",
+        r"respond by\s+",
+        r"submission deadline\s+",
+    ]
+    if any(re.search(p, low, flags=re.I) for p in explicit_open):
         return "Aktivt anbud"
+
     return None
 
 def add_daily_update(updates, company, title, summary, importance="Høy"):
