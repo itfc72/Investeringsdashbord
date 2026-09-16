@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "16.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "8bb62da110d480b9886ecc0a101845e09d222540741dab75574847633ee84ddf",
+    "content_hash": "64fd9e00cdac1ab6acd93e5d70b8fb67280f3a0b6c667f8dfe774d050c93ac9f",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "3f085c12a2f483cb73af3c1539d96969552cc3e1cef03d5dea412abc589ec3d1",
+    "content_hash": "e32dfc3388e826754ea9f3c51b02aa30ebc38903a1008f95d3322b0b8ff8ba3c",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "1c82a3c29f80652a551c32cf51ba2772986b78bbe3ed5f2ea10f14ed27fd767d",
+    "content_hash": "24f538614f9f098547e2bc7fb02a910d4b76ea7d72f91f3122ca9f6aba6615f3",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,11 +110,13 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "ed15a0a04993c3e0df91bda6291c3dbebcd2be17e50efd19c3860c1e7eab1bbb",
+    "content_hash": "88966ecc8fa20b34d933d05fb64b57ce567860d52ad9bfd61d5ddcf63c0a8a2e",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
       "https://www.sell2wales.gov.wales/search/show/search_view.aspx?ID=MAY514386&catID="
-    ]
+    ],
+    "last_source_change": "16.09.2026",
+    "review_note": "Kildene for Netheridge STW THP – Severn Trent er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   }
 }
