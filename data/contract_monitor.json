@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "d88ceaa0046bbb75b24960635dda3ce7fb18d9266baee8cbae5e794c3ad827fa",
+    "content_hash": "8974cb15f1bfbefa3937d9feea720bc1e87532bb5dedbd69c156001b19c6091b",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,10 +87,12 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "1f44aac1831af0299d4de150134084c87c8c577c37c842235390fe335268ece6",
+    "content_hash": "dfb1e54212626b356a2f7082f1c3fc8ca578df2a937d6879b992946aac9d1f66",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
-    ]
+    ],
+    "last_source_change": "16.09.2026",
+    "review_note": "Kildene for West Central Bio-Resource / Daldowie – Scottish Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   }
 }
