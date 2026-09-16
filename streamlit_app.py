@@ -1209,6 +1209,25 @@ companies = {
             },
             {
                 "Prioritet": "🟢 Høy",
+                "Mulighet": "Beckton STW THP Upgrade – Thames Water",
+                "Segment": "Technology",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Planlagt anskaffelse / overvåkes",
+                "Neste dato": "01.12.2026",
+                "Dato-type": "Indikativ kontraktstildeling",
+                "Neste trigger": "Live tender notice / leverandørvalg / oppdatert Thames Water-pipeline",
+                "Sist oppdatert": "16.09.2026",
+                "Sist kontrollert": "16.09.2026",
+                "Kilde": "Thames Water – S39830 / Find a Tender",
+                "Kommentar": (
+                    "Thames Water beskriver S39830 som en oppgradering med én ny THP-enhet "
+                    "og oppgradering av eksisterende THP. Total indikativ prosjektverdi er "
+                    "£130m eks. mva.; dette er totalprosjektet og ikke et verdiestimat for Cambi."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
                 "Mulighet": "Flere AMP8 THP-huber i Storbritannia",
                 "Segment": "Technology",
                 "Sannsynlighet": "Høy",
@@ -1280,6 +1299,7 @@ companies = {
         ],
         "contract_watchlist": [
             "Clarkson WRRF / Peel Region: tilbudsfrist 02.10.2026 og deretter award-notice.",
+            "Beckton S39830: overvåke live tender notice, leverandørvalg og endringer i indikativ tidsplan.",
             "Flere AMP8-prosjekter i Storbritannia.",
             "Notice to proceed for Rosedale i New Zealand og Alexandria i Egypt.",
             "Konvertering av Sør-Amerika-engineering til full kontrakt.",

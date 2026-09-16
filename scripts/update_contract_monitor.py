@@ -170,6 +170,60 @@ def extract_rosedale_status(text: str) -> str | None:
     return None
 
 
+
+def extract_beckton_update(text: str) -> tuple[str | None, str | None, str | None]:
+    """
+    Conservative Beckton parser.
+    Only changes status when a Beckton/S39830-specific notice is explicit.
+    Also reads the indicative award date from Thames Water's pipeline row when possible.
+    """
+    low = re.sub(r"\s+", " ", text).lower()
+
+    positions = []
+    for marker in ("s39830", "beckton stw thp upgrade"):
+        pos = low.find(marker)
+        if pos >= 0:
+            positions.append(pos)
+
+    if not positions:
+        return None, None, None
+
+    pos = min(positions)
+    window = low[max(0, pos - 700): pos + 3500]
+
+    # Specific live tender / award signals only.
+    if re.search(r"\buk6\s*:\s*contract award notice\b", window, flags=re.I) or re.search(
+        r"\bawarded to\s+[a-z0-9]", window, flags=re.I
+    ):
+        return "Tildelt / award publisert", None, None
+
+    if re.search(r"\buk4\s*:\s*tender notice\b", window, flags=re.I) or re.search(
+        r"\bsubmission deadline\b", window, flags=re.I
+    ):
+        deadline, _ = extract_deadline(window)
+        if deadline:
+            return "Aktivt anbud", deadline, "Tilbudsfrist"
+        return "Aktivt anbud", None, None
+
+    # Thames Water pipeline row: the second date is the indicative contract award date.
+    date_tokens = re.findall(
+        r"\b\d{1,2}-(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-\d{4}\b",
+        window,
+        flags=re.I,
+    )
+    if len(date_tokens) >= 2:
+        try:
+            award_dt = datetime.strptime(date_tokens[1], "%d-%b-%Y")
+            return (
+                "Planlagt anskaffelse / overvåkes",
+                award_dt.strftime("%d.%m.%Y"),
+                "Indikativ kontraktstildeling",
+            )
+        except ValueError:
+            pass
+
+    return "Planlagt anskaffelse / overvåkes", None, None
+
 def add_daily_update(updates, company, title, summary, importance="Høy"):
     key = (TODAY_ISO, company, title, summary)
     existing = {
@@ -220,6 +274,18 @@ def process_item(key, item, updates):
         if status and status != item.get("status"):
             changed_fields.append(f"status {item.get('status', '–')} → {status}")
             item["status"] = status
+
+    elif monitor_type == "beckton_pipeline":
+        status, next_date, date_type = extract_beckton_update(text)
+
+        if status and status != item.get("status"):
+            changed_fields.append(f"status {item.get('status', '–')} → {status}")
+            item["status"] = status
+
+        if next_date and next_date != item.get("next_date"):
+            changed_fields.append(f"dato {item.get('next_date', '–')} → {next_date}")
+            item["next_date"] = next_date
+            item["date_type"] = date_type or item.get("date_type")
 
     # First successful run establishes a baseline and must not alert.
     if old_hash is None:

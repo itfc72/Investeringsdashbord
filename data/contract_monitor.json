@@ -13,9 +13,9 @@
     "next_date": "02.10.2026",
     "date_type": "Tilbudsfrist",
     "last_checked": "16.09.2026",
-    "last_updated": "16.09.2026",
+    "last_updated": "15.09.2026",
     "content_hash": "c4d58d3ab8e8f84ce3b2a52b6b070377c87dff24626a855c860226a0b3880fe5",
-    "last_change_summary": "Kildene for Clarkson WRRF – Peel Region, Ontario er endret siden forrige kontroll. Ingen sikker status-/datoendring kunne leses automatisk; bør gjennomgås.",
+    "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
       "https://groundintel.ca/tenders"
@@ -44,5 +44,23 @@
       "https://www.watercare.co.nz/home/about-us/latest-news-and-media/Thermal-hydrolysis-on-the-way-for-Rosedale",
       "https://www.gets.govt.nz/WSL/ExternalTenderDetails.htm?id=33776591"
     ]
+  },
+  "beckton_thp": {
+    "company": "Cambi",
+    "title": "Beckton STW THP Upgrade – Thames Water",
+    "opportunity_match": "Beckton STW THP Upgrade",
+    "monitor_type": "beckton_pipeline",
+    "source_label": "Thames Water – S39830 / Find a Tender",
+    "source_urls": [
+      "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
+      "https://www.find-tender.service.gov.uk/procurement/ocds-h6vhtk-055934"
+    ],
+    "status": "Planlagt anskaffelse / overvåkes",
+    "next_date": "01.12.2026",
+    "date_type": "Indikativ kontraktstildeling",
+    "last_checked": "16.09.2026",
+    "last_updated": "16.09.2026",
+    "content_hash": null,
+    "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat."
   }
 }
