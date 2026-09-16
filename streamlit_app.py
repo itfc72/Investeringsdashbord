@@ -1372,12 +1372,13 @@ companies = {
         "valuation": {
             "reference_price": 24.4,
             "eps_2026": 0.65,
-            "growth_bear": 30.1,
-            "growth_base": 51.9,
+            "growth_bear": 30.0,
+            "growth_base": 52.0,
             "growth_bull": 71.0,
             "pe_bear": 16.0,
             "pe_base": 20.0,
             "pe_bull": 24.0,
+            "max_pe_underway": 40.0,
             "required_return": 10.0,
             "target_year": 2028,
 
@@ -3323,7 +3324,7 @@ elif side == "Selskaper":
                     a1, a2, a3, a4 = st.columns(4)
 
                     reference_price = a1.number_input(
-                        f"Dagens kurs / referansekurs ({currency})",
+                        "Dagens kurs",
                         min_value=1.0,
                         value=float(info["valuation"]["reference_price"]),
                         step=1.0,
@@ -3361,27 +3362,27 @@ elif side == "Selskaper":
                         "Bear vekst",
                         min_value=-20.0,
                         max_value=100.0,
-                        value=float(info["valuation"]["growth_bear"]),
+                        value=float(round(info["valuation"]["growth_bear"])),
                         step=1.0,
-                        format="%.1f",
+                        format="%.0f",
                         key=f"{widget_prefix}_growth_bear"
                     )
                     growth_base = g2.number_input(
                         "Base vekst",
                         min_value=-20.0,
                         max_value=100.0,
-                        value=float(info["valuation"]["growth_base"]),
+                        value=float(round(info["valuation"]["growth_base"])),
                         step=1.0,
-                        format="%.1f",
+                        format="%.0f",
                         key=f"{widget_prefix}_growth_base"
                     )
                     growth_bull = g3.number_input(
                         "Bull vekst",
                         min_value=-20.0,
-                        max_value=60.0,
-                        value=float(info["valuation"]["growth_bull"]),
+                        max_value=100.0,
+                        value=float(round(info["valuation"]["growth_bull"])),
                         step=1.0,
-                        format="%.1f",
+                        format="%.0f",
                         key=f"{widget_prefix}_growth_bull"
                     )
 
@@ -3391,24 +3392,27 @@ elif side == "Selskaper":
                         "Bear P/E",
                         min_value=5.0,
                         max_value=50.0,
-                        value=float(info["valuation"]["pe_bear"]),
+                        value=float(round(info["valuation"]["pe_bear"])),
                         step=1.0,
+                        format="%.0f",
                         key=f"{widget_prefix}_pe_bear"
                     )
                     pe_base = p2.number_input(
                         "Base P/E",
                         min_value=5.0,
                         max_value=50.0,
-                        value=float(info["valuation"]["pe_base"]),
+                        value=float(round(info["valuation"]["pe_base"])),
                         step=1.0,
+                        format="%.0f",
                         key=f"{widget_prefix}_pe_base"
                     )
                     pe_bull = p3.number_input(
                         "Bull P/E",
                         min_value=5.0,
                         max_value=60.0,
-                        value=float(info["valuation"]["pe_bull"]),
+                        value=float(round(info["valuation"]["pe_bull"])),
                         step=1.0,
+                        format="%.0f",
                         key=f"{widget_prefix}_pe_bull"
                     )
 
@@ -3431,22 +3435,24 @@ elif side == "Selskaper":
                     buy_level = s2.number_input(
                         f"Kjøpsnivå ({currency})",
                         min_value=0.0,
-                        value=float(info["valuation"].get(
+                        value=float(round(info["valuation"].get(
                             "buy_level",
-                            round(reference_price * 0.90, 1)
-                        )),
+                            reference_price * 0.90
+                        ))),
                         step=1.0,
+                        format="%.0f",
                         key=f"{widget_prefix}_buy_level"
                     )
 
                     sell_level = s3.number_input(
                         f"Reduser/salgsnivå ({currency})",
                         min_value=0.0,
-                        value=float(info["valuation"].get(
+                        value=float(round(info["valuation"].get(
                             "sell_level",
-                            round(strategy_base_value_2028 * 1.30, 1)
-                        )),
+                            strategy_base_value_2028 * 1.30
+                        ))),
                         step=1.0,
+                        format="%.0f",
                         key=f"{widget_prefix}_sell_level"
                     )
 
@@ -3454,12 +3460,12 @@ elif side == "Selskaper":
                         "Maks P/E underveis",
                         min_value=5.0,
                         max_value=100.0,
-                        value=float(info["valuation"].get(
+                        value=float(round(info["valuation"].get(
                             "max_pe_underway",
                             pe_bull + 15.0
-                        )),
+                        ))),
                         step=1.0,
-                        format="%.1f",
+                        format="%.0f",
                         key=f"{widget_prefix}_max_pe_underway"
                     )
 
