@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "e32dfc3388e826754ea9f3c51b02aa30ebc38903a1008f95d3322b0b8ff8ba3c",
+    "content_hash": "06ed8cc964d0e89291d1326978acb705adc6a9d8ac6f51160149b2ca49ba4a62",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "24f538614f9f098547e2bc7fb02a910d4b76ea7d72f91f3122ca9f6aba6615f3",
+    "content_hash": "767558d0e333024dac10fcf67eb2ffb968ef77a6ef7364750dfbe54cceeb80d3",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "88966ecc8fa20b34d933d05fb64b57ce567860d52ad9bfd61d5ddcf63c0a8a2e",
+    "content_hash": "641a5c79faec0379b0135329db0e8137906ab30d82b5a459c61dc14f5ad15b9b",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -118,5 +118,29 @@
     ],
     "last_source_change": "16.09.2026",
     "review_note": "Kildene for Netheridge STW THP – Severn Trent er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
+  },
+  "roundhill_thp": {
+    "company": "Cambi",
+    "title": "Roundhill STW THP – Severn Trent",
+    "opportunity_match": "Roundhill STW THP",
+    "monitor_type": "roundhill_pipeline",
+    "source_label": "Severn Trent PR24 / Environment Agency",
+    "source_urls": [
+      "https://www.stwater.co.uk/content/dam/stw/about_us/pr24-response/totex/sve4-34-bioresources-botex-plus-cost-assessment.pdf",
+      "https://www.severntrent.com/sustainability/bioresources/treatment/",
+      "https://www.gov.uk/government/publications/dy7-6px-severn-trent-water-limited-environmental-issued-eprkb3701fka001"
+    ],
+    "status": "Planlagt AMP8 THP-anlegg / overvåkes",
+    "next_date": "Ikke offentlig",
+    "date_type": "Neste procurement-steg",
+    "last_updated": "16.09.2026",
+    "last_change_summary": "Severn Trent opplyser i PR24-materialet at AMP8-planen inkluderer to nye THP-anlegg ved Netheridge og Roundhill, samt utvidelser ved Wanlip og Derby. Roundhill har et gjeldende miljøtillatelsesgrunnlag for sludge treatment, men ingen offentlig UK4 tender eller UK6 award for det nye THP-anlegget er identifisert.",
+    "content_hash": "dd534965fb84949d39f4116411e26decee3bb9a2ce4f4d14bba477ca966b56a6",
+    "last_checked": "16.09.2026",
+    "source_urls_used": [
+      "https://www.stwater.co.uk/content/dam/stw/about_us/pr24-response/totex/sve4-34-bioresources-botex-plus-cost-assessment.pdf",
+      "https://www.severntrent.com/sustainability/bioresources/treatment/",
+      "https://www.gov.uk/government/publications/dy7-6px-severn-trent-water-limited-environmental-issued-eprkb3701fka001"
+    ]
   }
 }
