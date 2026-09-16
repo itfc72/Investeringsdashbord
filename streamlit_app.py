@@ -1372,9 +1372,9 @@ companies = {
         "valuation": {
             "reference_price": 24.4,
             "eps_2026": 0.65,
-            "growth_bear": 20.0,
-            "growth_base": 40.0,
-            "growth_bull": 55.0,
+            "growth_bear": 30.1,
+            "growth_base": 51.9,
+            "growth_bull": 71.0,
             "pe_bear": 16.0,
             "pe_base": 20.0,
             "pe_bull": 24.0,
@@ -2892,7 +2892,7 @@ elif side == "Selskaper":
         # VERDSETTELSE
         # -------------------------------------------------
         with tab6:
-            if selskap == "Cambi":
+            if selskap == "Cambi" and info["valuation"].get("use_direct_estimates", False):
                 st.subheader("Dynamisk verdsettelse – direkte estimater")
 
                 st.caption(
@@ -3360,7 +3360,7 @@ elif side == "Selskaper":
                     growth_bear = g1.number_input(
                         "Bear vekst",
                         min_value=-20.0,
-                        max_value=50.0,
+                        max_value=100.0,
                         value=float(info["valuation"]["growth_bear"]),
                         step=1.0,
                         format="%.1f",
@@ -3369,7 +3369,7 @@ elif side == "Selskaper":
                     growth_base = g2.number_input(
                         "Base vekst",
                         min_value=-20.0,
-                        max_value=50.0,
+                        max_value=100.0,
                         value=float(info["valuation"]["growth_base"]),
                         step=1.0,
                         format="%.1f",
@@ -3410,6 +3410,68 @@ elif side == "Selskaper":
                         value=float(info["valuation"]["pe_bull"]),
                         step=1.0,
                         key=f"{widget_prefix}_pe_bull"
+                    )
+
+                    # Egne arbeidsnivåer på vei mot 2028.
+                    # Disse endrer ikke selve bear/base/bull-verdsettelsen over.
+                    st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
+                    strategy_eps_2028_default = (
+                        eps_2026 * (1 + growth_base / 100) ** 2
+                    )
+                    strategy_base_value_2028 = strategy_eps_2028_default * pe_base
+
+                    s1, s2, s3, s4 = st.columns(4)
+
+                    strategy_eps_2028 = float(strategy_eps_2028_default)
+                    s1.metric(
+                        "EPS 2028E – vårt scenario",
+                        f"{strategy_eps_2028:.2f}".replace(".", ",")
+                    )
+
+                    buy_level = s2.number_input(
+                        f"Kjøpsnivå ({currency})",
+                        min_value=0.0,
+                        value=float(info["valuation"].get(
+                            "buy_level",
+                            round(reference_price * 0.90, 1)
+                        )),
+                        step=1.0,
+                        key=f"{widget_prefix}_buy_level"
+                    )
+
+                    sell_level = s3.number_input(
+                        f"Reduser/salgsnivå ({currency})",
+                        min_value=0.0,
+                        value=float(info["valuation"].get(
+                            "sell_level",
+                            round(strategy_base_value_2028 * 1.30, 1)
+                        )),
+                        step=1.0,
+                        key=f"{widget_prefix}_sell_level"
+                    )
+
+                    max_pe_underway = s4.number_input(
+                        "Maks P/E underveis",
+                        min_value=5.0,
+                        max_value=100.0,
+                        value=float(info["valuation"].get(
+                            "max_pe_underway",
+                            pe_bull + 15.0
+                        )),
+                        step=1.0,
+                        format="%.1f",
+                        key=f"{widget_prefix}_max_pe_underway"
+                    )
+
+                    buy_pe_2028 = buy_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0
+                    sell_pe_2028 = sell_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0
+
+                    st.caption(
+                        f"Arbeidsnivåer: kjøp/øk ved kurs ≤ {buy_level:.0f} {currency}. "
+                        f"Reduser deler av beholdningen ved kurs ≥ {sell_level:.0f} {currency} "
+                        f"når P/E samtidig er rundt {max_pe_underway:.0f}x eller høyere. "
+                        f"Med vårt beregnede EPS 2028E på {strategy_eps_2028:.2f} tilsvarer nivåene "
+                        f"ca. {buy_pe_2028:.1f}x / {sell_pe_2028:.1f}x mot 2028E EPS."
                     )
 
                 years = list(range(2026, 2031))
