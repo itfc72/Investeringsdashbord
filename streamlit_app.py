@@ -1248,6 +1248,27 @@ companies = {
             },
             {
                 "Prioritet": "🟢 Høy",
+                "Mulighet": "Netheridge STW THP – Severn Trent",
+                "Segment": "Technology",
+                "Sannsynlighet": "Middels–høy",
+                "Est. verdi (MNOK)": None,
+                "Status": "Preliminary market engagement / avventer tender",
+                "Neste dato": "Ikke offentlig",
+                "Dato-type": "Neste procurement-steg",
+                "Neste trigger": "UK4 tender notice / UK6 award / leverandørvalg",
+                "Sist oppdatert": "16.09.2026",
+                "Sist kontrollert": "16.09.2026",
+                "Kilde": "Find a Tender 2025/S 000-022304 – OCID ocds-h6vhtk-051607",
+                "Kommentar": (
+                    "Severn Trent har gjennomført preliminary market engagement for levering, "
+                    "installasjon og commissioning av et THP-system ved Netheridge STW. "
+                    "Offentlig dokumentasjon angir levering tidlig 2027, installasjon innen "
+                    "midten av 2027 og commissioning innen utgangen av 2027. "
+                    "Ingen offentlig Cambi-tildeling er identifisert."
+                ),
+            },
+            {
+                "Prioritet": "🟢 Høy",
                 "Mulighet": "Flere AMP8 THP-huber i Storbritannia",
                 "Segment": "Technology",
                 "Sannsynlighet": "Høy",
@@ -1321,6 +1342,7 @@ companies = {
             "Clarkson WRRF / Peel Region: tilbudsfrist 02.10.2026 og deretter award-notice.",
             "Beckton S39830: overvåke live tender notice, leverandørvalg og endringer i indikativ tidsplan.",
             "Daldowie / West Central: planleggingssøknad, Gate 80, Phase 2 og eventuell Cambi-kontrakt.",
+            "Netheridge: UK4 tender notice, UK6 award notice og leverandørvalg.",
             "Flere AMP8-prosjekter i Storbritannia.",
             "Notice to proceed for Rosedale i New Zealand og Alexandria i Egypt.",
             "Konvertering av Sør-Amerika-engineering til full kontrakt.",

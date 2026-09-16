@@ -94,5 +94,23 @@
     ],
     "last_source_change": "16.09.2026",
     "review_note": "Kildene for West Central Bio-Resource / Daldowie – Scottish Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
+  },
+  "netheridge_thp": {
+    "company": "Cambi",
+    "title": "Netheridge STW THP – Severn Trent",
+    "opportunity_match": "Netheridge STW THP",
+    "monitor_type": "netheridge_tender",
+    "source_label": "Find a Tender 2025/S 000-022304 / Sell2Wales – ocds-h6vhtk-051607",
+    "source_urls": [
+      "https://www.find-tender.service.gov.uk/Notice/022304-2025",
+      "https://www.sell2wales.gov.wales/search/show/search_view.aspx?ID=MAY514386&catID="
+    ],
+    "status": "Preliminary market engagement / avventer tender",
+    "next_date": "Ikke offentlig",
+    "date_type": "Neste procurement-steg",
+    "last_checked": "16.09.2026",
+    "last_updated": "16.09.2026",
+    "content_hash": null,
+    "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg."
   }
 }

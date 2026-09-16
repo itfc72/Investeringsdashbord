@@ -306,6 +306,55 @@ def extract_daldowie_update(text: str) -> tuple[str | None, str | None, str | No
 
     return None, None, None
 
+
+def extract_netheridge_update(text: str) -> tuple[str | None, str | None, str | None]:
+    """
+    Conservative Netheridge THP parser.
+    Only Netheridge/OCID-specific procurement milestones change status.
+    Generic source-page edits do not create a dashboard alert.
+    """
+    low = re.sub(r"\s+", " ", text).lower()
+
+    positions = []
+    for marker in (
+        "netheridge stw",
+        "ocds-h6vhtk-051607",
+        "2025/s 000-022304",
+    ):
+        pos = low.find(marker)
+        if pos >= 0:
+            positions.append(pos)
+
+    if not positions:
+        return None, None, None
+
+    pos = min(positions)
+    window = low[max(0, pos - 1200): pos + 9000]
+
+    # Award is only accepted on an explicit UK6 / contract-award signal.
+    if re.search(r"\buk6\s*:\s*contract award notice\b", window, flags=re.I):
+        return "Tildelt / award publisert", None, None
+    if re.search(r"\bcontract award notice\b", window, flags=re.I) and re.search(
+        r"\bnetheridge\b", window, flags=re.I
+    ):
+        return "Tildelt / award publisert", None, None
+
+    # Live tender step.
+    if re.search(r"\buk4\s*:\s*tender notice\b", window, flags=re.I):
+        deadline, date_type = extract_deadline(window)
+        if deadline:
+            return "Aktivt anbud", deadline, date_type or "Tilbudsfrist"
+        return "Aktivt anbud", None, None
+
+    # Current verified baseline.
+    if (
+        re.search(r"\buk2\s*:\s*preliminary market engagement notice\b", window, flags=re.I)
+        or "preliminary market engagement" in window
+    ):
+        return "Preliminary market engagement / avventer tender", None, "Neste procurement-steg"
+
+    return None, None, None
+
 def add_daily_update(updates, company, title, summary, importance="Høy"):
     key = (TODAY_ISO, company, title, summary)
     existing = {
@@ -380,6 +429,20 @@ def process_item(key, item, updates):
             changed_fields.append(f"dato {item.get('next_date', '–')} → {next_date}")
             item["next_date"] = next_date
             item["date_type"] = date_type or item.get("date_type")
+
+    elif monitor_type == "netheridge_tender":
+        status, next_date, date_type = extract_netheridge_update(text)
+
+        if status and status != item.get("status"):
+            changed_fields.append(f"status {item.get('status', '–')} → {status}")
+            item["status"] = status
+
+        if next_date and next_date != item.get("next_date"):
+            changed_fields.append(f"dato {item.get('next_date', '–')} → {next_date}")
+            item["next_date"] = next_date
+
+        if date_type:
+            item["date_type"] = date_type
 
     # First successful run establishes a baseline and must not alert.
     if old_hash is None:
