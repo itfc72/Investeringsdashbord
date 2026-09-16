@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
+CONFIG_FILE = DATA_DIR / "contract_monitor_config.json"
 MONITOR_FILE = DATA_DIR / "contract_monitor.json"
 UPDATES_FILE = DATA_DIR / "daily_updates.json"
 
@@ -372,6 +373,48 @@ def add_daily_update(updates, company, title, summary, importance="Høy"):
         })
 
 
+
+STATIC_CONFIG_KEYS = (
+    "company",
+    "title",
+    "opportunity_match",
+    "monitor_type",
+    "source_label",
+    "source_urls",
+)
+
+
+def merge_config_and_state(config_item: dict, state_item: dict) -> dict:
+    """
+    The config file is the source of truth for stable monitor definitions.
+    contract_monitor.json is bot-managed runtime state.
+
+    This separation means humans can add/edit monitors in the config without
+    conflicting with the bot's frequent hash/status commits.
+    """
+    item = dict(state_item or {})
+
+    # Static fields always come from config.
+    for key in STATIC_CONFIG_KEYS:
+        if key in config_item:
+            item[key] = config_item[key]
+
+    # Initial values are used only when the monitor has no runtime value yet.
+    defaults = {
+        "status": config_item.get("initial_status"),
+        "next_date": config_item.get("initial_next_date"),
+        "date_type": config_item.get("initial_date_type"),
+        "last_updated": config_item.get("initial_last_updated"),
+        "last_change_summary": config_item.get("initial_last_change_summary"),
+    }
+    for key, value in defaults.items():
+        if key not in item and value is not None:
+            item[key] = value
+
+    # A brand-new monitor should establish its hash baseline silently.
+    item.setdefault("content_hash", None)
+    return item
+
 def process_item(key, item, updates):
     text, used_urls, errors = fetch_all_sources(item.get("source_urls", []))
     item["last_checked"] = TODAY
@@ -479,11 +522,21 @@ def process_item(key, item, updates):
 
 
 def main():
+    config = load_json(CONFIG_FILE, {})
     monitor = load_json(MONITOR_FILE, {})
     updates = load_json(UPDATES_FILE, [])
 
-    for key, item in list(monitor.items()):
-        monitor[key] = process_item(key, item, updates)
+    if config:
+        # Process only monitors defined in the static config.
+        # Existing runtime entries are preserved, so migration is non-destructive.
+        for key, config_item in config.items():
+            item = merge_config_and_state(config_item, monitor.get(key, {}))
+            monitor[key] = process_item(key, item, updates)
+    else:
+        # Backwards-compatible fallback while v6.7.0 is being introduced.
+        print("contract_monitor_config.json not found; using legacy monitor file.")
+        for key, item in list(monitor.items()):
+            monitor[key] = process_item(key, item, updates)
 
     # Keep only recent daily updates.
     today_date = datetime.now(OSLO).date()
@@ -496,6 +549,8 @@ def main():
         if d is None or (today_date - d).days <= 45:
             recent.append(x)
 
+    # Only runtime state and daily updates are bot-managed.
+    # The config file is deliberately never written here.
     save_json(MONITOR_FILE, monitor)
     save_json(UPDATES_FILE, recent)
     print("Contract monitor completed.")
