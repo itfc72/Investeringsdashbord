@@ -62,11 +62,13 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "16.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "7cb91bd0f649ba5b94478f8cf32a9fd99fef0c9826f4c42e36ef2edca2bfa2a1",
+    "content_hash": "2dc54906133de958d493bb9124c64f91786859ec1fba255fef3a11e6941db580",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
       "https://www.find-tender.service.gov.uk/procurement/ocds-h6vhtk-055934"
-    ]
+    ],
+    "last_source_change": "16.09.2026",
+    "review_note": "Kildene for Beckton STW THP Upgrade – Thames Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   }
 }
