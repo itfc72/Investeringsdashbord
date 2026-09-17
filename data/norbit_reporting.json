@@ -1,0 +1,149 @@
+{
+  "source_note": "Historiske års- og kvartalstall er hentet fra NORBITs publiserte års- og kvartalsrapporter. Beløp er i MNOK dersom ikke annet er oppgitt.",
+  "annual": [
+    {
+      "År": 2021,
+      "Omsetning": 787.8,
+      "Vekst": 27.0,
+      "EBITDA": 142.6,
+      "EBITDA-margin": 18.0,
+      "EBIT": 73.5,
+      "EBIT-margin": 9.0,
+      "Resultat": 47.9,
+      "EPS": 0.83,
+      "OCF": 47.7,
+      "FCF": null,
+      "NIBD / EBITDA": 1.7
+    },
+    {
+      "År": 2022,
+      "Omsetning": 1167.5,
+      "Vekst": 48.0,
+      "EBITDA": 235.3,
+      "EBITDA-margin": 20.0,
+      "EBIT": 148.8,
+      "EBIT-margin": 13.0,
+      "Resultat": 106.7,
+      "EPS": 1.82,
+      "OCF": 85.7,
+      "FCF": null,
+      "NIBD / EBITDA": 1.4
+    },
+    {
+      "År": 2023,
+      "Omsetning": 1518.9,
+      "Vekst": 30.0,
+      "EBITDA": 391.8,
+      "EBITDA-margin": 26.0,
+      "EBIT": 284.2,
+      "EBIT-margin": 19.0,
+      "Resultat": 185.3,
+      "EPS": 3.1,
+      "OCF": 345.7,
+      "FCF": null,
+      "NIBD / EBITDA": 0.5
+    },
+    {
+      "År": 2024,
+      "Omsetning": 1751.4,
+      "Vekst": 15.0,
+      "EBITDA": 474.0,
+      "EBITDA-margin": 27.0,
+      "EBIT": 341.7,
+      "EBIT-margin": 20.0,
+      "Resultat": 243.3,
+      "EPS": 3.93,
+      "OCF": 430.9,
+      "FCF": null,
+      "NIBD / EBITDA": 0.7
+    },
+    {
+      "År": 2025,
+      "Omsetning": 2502.5,
+      "Vekst": 43.0,
+      "EBITDA": 712.2,
+      "EBITDA-margin": 28.0,
+      "EBIT": 555.4,
+      "EBIT-margin": 22.0,
+      "Resultat": 404.3,
+      "EPS": 6.32,
+      "OCF": 500.6,
+      "FCF": null,
+      "NIBD / EBITDA": 0.8
+    }
+  ],
+  "quarterly": [
+    {
+      "Periode": "Q1 2025",
+      "Omsetning": 521.7,
+      "Vekst YoY": 29.0,
+      "EBIT": 127.4,
+      "EBIT-margin": 24.0,
+      "EPS": 1.4,
+      "OCF": null,
+      "FCF": null,
+      "NIBD / EBITDA": null,
+      "Resultat": null
+    },
+    {
+      "Periode": "Q2 2025",
+      "Omsetning": 684.4,
+      "Vekst YoY": 63.0,
+      "EBIT": 174.2,
+      "EBIT-margin": 25.0,
+      "EPS": 2.06,
+      "OCF": null,
+      "FCF": null,
+      "NIBD / EBITDA": null,
+      "Resultat": null
+    },
+    {
+      "Periode": "Q3 2025",
+      "Omsetning": 505.4,
+      "Vekst YoY": 36.0,
+      "EBIT": 75.4,
+      "EBIT-margin": 15.0,
+      "EPS": 0.81,
+      "OCF": null,
+      "FCF": null,
+      "NIBD / EBITDA": null,
+      "Resultat": null
+    },
+    {
+      "Periode": "Q4 2025",
+      "Omsetning": 791.1,
+      "Vekst YoY": 42.0,
+      "EBIT": 178.4,
+      "EBIT-margin": 23.0,
+      "EPS": 2.05,
+      "OCF": null,
+      "FCF": null,
+      "NIBD / EBITDA": 0.8,
+      "Resultat": null
+    },
+    {
+      "Periode": "Q1 2026",
+      "Omsetning": 732.1,
+      "Vekst YoY": 40.0,
+      "EBIT": 155.9,
+      "EBIT-margin": 21.0,
+      "Resultat": null,
+      "EPS": 1.73,
+      "OCF": 212.6,
+      "FCF": 156.2,
+      "NIBD / EBITDA": null
+    },
+    {
+      "Periode": "Q2 2026",
+      "Omsetning": 831.6,
+      "Vekst YoY": 21.50789012273524,
+      "EBIT": 205.2,
+      "EBIT-margin": 24.675324675324674,
+      "Resultat": 157.1,
+      "EPS": 2.45,
+      "OCF": 275.2,
+      "FCF": 219.4,
+      "NIBD / EBITDA": 0.7
+    }
+  ]
+}
