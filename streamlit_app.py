@@ -4729,10 +4729,10 @@ def _github_reporting_config():
     if not token or not repo:
         return None
     return {
-        "token": str(token),
-        "repo": str(repo),
-        "branch": str(_secret("GITHUB_BRANCH", "main")),
-        "path": str(_secret("GITHUB_REPORTING_PATH", "data/norbit_reporting.json")),
+        "token": str(token).strip(),
+        "repo": str(repo).strip().strip("/"),
+        "branch": str(_secret("GITHUB_BRANCH", "main")).strip(),
+        "path": str(_secret("GITHUB_REPORTING_PATH", "data/norbit_reporting.json")).strip().lstrip("/"),
     }
 
 
@@ -4769,10 +4769,10 @@ def _github_valuation_config():
     if not token or not repo:
         return None
     return {
-        "token": str(token),
-        "repo": str(repo),
-        "branch": str(_secret("GITHUB_BRANCH", "main")),
-        "path": str(_secret("GITHUB_VALUATION_PATH", "data/valuation_settings.json")),
+        "token": str(token).strip(),
+        "repo": str(repo).strip().strip("/"),
+        "branch": str(_secret("GITHUB_BRANCH", "main")).strip(),
+        "path": str(_secret("GITHUB_VALUATION_PATH", "data/valuation_settings.json")).strip().lstrip("/"),
     }
 
 
@@ -4828,9 +4828,37 @@ def _save_valuation_to_github(settings, config, commit_message):
             message = json.loads(detail).get("message", detail)
         except Exception:
             message = ""
-        return False, f"GitHub-lagring av verdsettelse feilet (HTTP {exc.code}){': ' + message if message else '.'}"
+        accepted = exc.headers.get("X-Accepted-GitHub-Permissions", "") if getattr(exc, "headers", None) else ""
+        context = f"repo={config['repo']} · branch={config['branch']} · fil={config['path']}"
+        perm = f" · forventet tillatelse: {accepted}" if accepted else ""
+        return False, (
+            f"GitHub-lagring av verdsettelse feilet (HTTP {exc.code})"
+            f"{': ' + message if message else '.'} {context}{perm}"
+        )
     except Exception as exc:
         return False, f"GitHub-lagring av verdsettelse feilet: {exc}"
+
+
+def _test_github_valuation_connection(config):
+    """Sikker diagnostikk: tester repo, branch og fil uten å vise tokenet."""
+    results = []
+    repo_url = f"https://api.github.com/repos/{config['repo']}"
+    branch_q = urllib.parse.quote(config["branch"], safe="")
+    branch_url = f"https://api.github.com/repos/{config['repo']}/branches/{branch_q}"
+    path_q = urllib.parse.quote(config["path"], safe="/")
+    file_url = f"https://api.github.com/repos/{config['repo']}/contents/{path_q}?ref={branch_q}"
+
+    for label, url in [("Repository", repo_url), ("Branch", branch_url), ("Verdsettelsesfil", file_url)]:
+        try:
+            _github_request("GET", url, config["token"])
+            results.append((label, True, "OK"))
+        except urllib.error.HTTPError as exc:
+            accepted = exc.headers.get("X-Accepted-GitHub-Permissions", "") if getattr(exc, "headers", None) else ""
+            extra = f"; tillatelse: {accepted}" if accepted else ""
+            results.append((label, False, f"HTTP {exc.code}{extra}"))
+        except Exception as exc:
+            results.append((label, False, str(exc)))
+    return results
 
 
 def load_valuation_settings_data(force_reload=False):
@@ -5005,6 +5033,22 @@ def render_valuation_save_controls(company_name):
 
     source = st.session_state.get("valuation_settings_source", "Innebygde standardverdier")
     c2.caption(f"Permanent kilde: {source}")
+
+    if config:
+        with st.expander("GitHub-tilkobling – test ved lagringsfeil", expanded=False):
+            st.caption(
+                f"Repository: {config['repo']} · Branch: {config['branch']} · Fil: {config['path']}"
+            )
+            if st.button(
+                "Test GitHub-tilkobling",
+                key=f"test_github_valuation_{re.sub(r'[^a-z0-9]+', '_', company_name.lower())}",
+            ):
+                results = _test_github_valuation_connection(config)
+                for label, ok, detail in results:
+                    if ok:
+                        st.success(f"{label}: {detail}")
+                    else:
+                        st.error(f"{label}: {detail}")
 
 
 # Legg lagrede verdsettelsesforutsetninger inn i selskapenes standarddata før
