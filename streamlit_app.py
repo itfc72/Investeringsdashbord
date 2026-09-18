@@ -469,6 +469,103 @@ def metric_with_yoy(container, label, value, yoy_text):
         container.caption(f"({yoy_text})")
 
 
+def _eps_growth_text(current, previous):
+    """Formatér EPS-vekst. N/M brukes når prosentvekst ikke er meningsfull."""
+    try:
+        current = float(current)
+        previous = float(previous)
+    except (TypeError, ValueError):
+        return "–"
+
+    if previous <= 0 or current < 0:
+        return "N/M"
+    if previous == 0:
+        return "N/M"
+
+    growth = (current / previous - 1.0) * 100.0
+    return f"{growth:+.0f}%"
+
+
+def _extract_eps_yoy_text(yoy_text):
+    """Hent prosenttallet fra eksisterende YoY-tekst, ellers marker som N/M/ukjent."""
+    if not yoy_text:
+        return "–"
+    txt = str(yoy_text)
+    match = re.search(r"([+-]?\d+(?:[.,]\d+)?)%", txt)
+    if match:
+        value = match.group(1).replace(",", ".")
+        try:
+            return f"{float(value):+.0f}%"
+        except ValueError:
+            pass
+    if "fra " in txt.lower() or "n/m" in txt.lower():
+        return "N/M"
+    return "–"
+
+
+def add_eps_growth_after_column(df, eps_col, growth_col="EPS vekst"):
+    """Legg sekvensiell EPS-vekst rett etter EPS-kolonnen i en årsserie."""
+    if eps_col not in df.columns or growth_col in df.columns:
+        return df
+
+    raw = pd.to_numeric(df[eps_col], errors="coerce").tolist()
+    growth = ["–"]
+    for i in range(1, len(raw)):
+        growth.append(_eps_growth_text(raw[i], raw[i - 1]))
+
+    insert_at = df.columns.get_loc(eps_col) + 1
+    df.insert(insert_at, growth_col, growth)
+    return df
+
+
+def _parse_yoy_percent(yoy_text):
+    """Returner YoY-prosent som tall, eller None når teksten ikke har en ren prosent."""
+    if not yoy_text:
+        return None
+    txt = str(yoy_text)
+    if "fra " in txt.lower() or "n/m" in txt.lower():
+        return None
+    match = re.search(r"([+-]?\d+(?:[.,]\d+)?)%", txt)
+    if not match:
+        return None
+    try:
+        return float(match.group(1).replace(",", "."))
+    except ValueError:
+        return None
+
+
+def _derive_q1_eps_growth(h1_eps, q2_eps, h1_yoy_text, q2_yoy_text):
+    """Utled Q1 YoY fra rapportert H1 og Q2 når begge YoY-prosentene finnes."""
+    h1_growth = _parse_yoy_percent(h1_yoy_text)
+    q2_growth = _parse_yoy_percent(q2_yoy_text)
+    if h1_growth is None or q2_growth is None:
+        return "N/M"
+
+    try:
+        h1_eps = float(h1_eps)
+        q2_eps = float(q2_eps)
+        q1_eps = h1_eps - q2_eps
+        h1_prev = h1_eps / (1.0 + h1_growth / 100.0)
+        q2_prev = q2_eps / (1.0 + q2_growth / 100.0)
+        q1_prev = h1_prev - q2_prev
+    except (TypeError, ValueError, ZeroDivisionError):
+        return "–"
+
+    return _eps_growth_text(q1_eps, q1_prev)
+
+
+def _fmt_table_number(value, decimals=1):
+    """Kort norsk tallformat for nøkkeltallstabeller."""
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return "–"
+    return f"{float(value):,.{decimals}f}".replace(",", " ").replace(".", ",")
+
+
+def _recent_table(rows):
+    """Lag standardisert tabell for Q1/Q2/H1."""
+    return pd.DataFrame(rows)
+
+
 # =========================================================
 # DATA
 # =========================================================
@@ -2270,6 +2367,306 @@ companies = {
         },
     },
 
+    "LINK Mobility": {'ticker': 'LINK',
+     'marked': 'Oslo Børs',
+     'sektor': 'Teknologi / CPaaS / Messaging',
+     'case': 'LINK Mobility er en ledende europeisk CPaaS-aktør med SMS, RCS, WhatsApp og andre digitale kommunikasjonskanaler. '
+             'Investeringscaset bygger på en gradvis retur til organisk bruttoresultatvekst, sterk kontantgenerering, rask vekst i '
+             'høyere-margin CPaaS/OTT-løsninger og disiplinert bolt-on M&A. Viktige risikofaktorer er svakere organisk vekst hos enkelte store '
+             'kunder, oppkjøpsintegrasjon og gjeld.',
+     'price': 23.7,
+     'price_date': '17.09.2026',
+     'market_cap': 6.75,
+     'eps_ltm': 0.62,
+     'pe_ltm': 37.9,
+     'fcf_ltm': 732.0,
+     'fcf_yield': 10.9,
+     'roe_ltm': 3.3,
+     'roce': 5.2,
+     'nibd': 2070.2,
+     'nibd_ebitda': 1.9,
+     'shares_outstanding': 285000000,
+     'dashboard_5y': {'revenue_cagr': 12.6, 'eps_cagr': None, 'fcf_yield_avg': 10.9, 'ebit_margin_avg': 1.5},
+     'q2': {'revenue': 2050.5, 'growth': 17.0, 'ebit': 122.6, 'ebit_margin': 6.0, 'eps': 0.36, 'ocf': 192.0, 'fcf': 146.0},
+     'q2_yoy': {'revenue': '+17% mot i fjor',
+                'ocf': 'Sterk kontantstrøm – 192 MNOK',
+                'ebit_margin': '+2,1 pp mot i fjor',
+                'ebit': '+79% mot i fjor',
+                'eps': 'N/M – fra svakt negativt til positivt',
+                'fcf': '146 MNOK etter capex'},
+     'h1': {'revenue': 4055.1, 'growth': 19.0, 'ebit': 233.5, 'ebit_margin': 5.8, 'eps': 0.64, 'ocf': 301.0, 'fcf': 208.0},
+     'h1_yoy': {'revenue': '+19% mot i fjor',
+                'ocf': '301 MNOK H1',
+                'ebit_margin': '+1,0 pp mot i fjor',
+                'ebit': '+43% mot i fjor',
+                'eps': '+433% mot i fjor',
+                'fcf': '208 MNOK etter capex'},
+     '_eps_growth_by_period': {'2024': '+274%', '2025': '-67%', 'Q1 2026': '+115%', 'Q2 2026': 'N/M', 'H1 2026': '+433%'},
+     'financials': [{'Periode': '2024', 'Omsetning': 6993.8, 'Vekst': '11%', 'EBIT': 264.6, 'EBIT-margin': '3,8%', 'EPS': 0.86},
+                    {'Periode': '2025', 'Omsetning': 7083.1, 'Vekst': '1%', 'EBIT': 317.2, 'EBIT-margin': '4,5%', 'EPS': 0.28},
+                    {'Periode': 'Q1 2026', 'Omsetning': 2004.6, 'Vekst': '21%', 'EBIT': 112.7, 'EBIT-margin': '5,6%', 'EPS': 0.28},
+                    {'Periode': 'Q2 2026', 'Omsetning': 2050.5, 'Vekst': '17%', 'EBIT': 122.6, 'EBIT-margin': '6,0%', 'EPS': 0.36},
+                    {'Periode': 'H1 2026', 'Omsetning': 4055.1, 'Vekst': '19%', 'EBIT': 233.5, 'EBIT-margin': '5,8%', 'EPS': 0.64}],
+     'segments_q2': [{'Segment': 'Northern Europe', 'Omsetning Q2': 402.7, 'Bruttoresultat Q2': 103.1, 'Adj. EBITDA Q2': 62.5},
+                     {'Segment': 'Central Europe', 'Omsetning Q2': 539.6, 'Bruttoresultat Q2': 146.1, 'Adj. EBITDA Q2': 105.3},
+                     {'Segment': 'Western Europe', 'Omsetning Q2': 430.2, 'Bruttoresultat Q2': 104.2, 'Adj. EBITDA Q2': 51.4},
+                     {'Segment': 'Rest of the World', 'Omsetning Q2': 279.7, 'Bruttoresultat Q2': 76.9, 'Adj. EBITDA Q2': 67.3},
+                     {'Segment': 'Global Messaging', 'Omsetning Q2': 398.3, 'Bruttoresultat Q2': 61.3, 'Adj. EBITDA Q2': 42.8}],
+     'order_kpis': {'Kontraktsvinn Q2': '53 MNOK',
+                    'Kontraktsvinn LTM': '184 MNOK',
+                    'Net retention': '101%',
+                    'NIBD / proforma adj. EBITDA': '1,9x'},
+     'guidance': ['H2 2026: organisk bruttoresultatvekst ventes i midt- til høyt ensifret område.',
+                  'Organisk vekst støttes av rekordhøye kontraktsvinn og rask vekst i RCS/WhatsApp.',
+                  'Capex ventes lavere i 2026 enn i 2025, samtidig som investeringer flyttes mot AI-aktiverte løsninger.',
+                  'Kapitalallokering prioriterer tilbakekjøp og målrettede bolt-on-oppkjøp når avkastningen er attraktiv.'],
+     'what_follow': ['Om organisk bruttoresultatvekst akselererer videre i H2 2026.',
+                     'Konvertering av rekordhøye kontraktsvinn til faktisk gross profit og EBITDA.',
+                     'RCS/WhatsApp/AI-miks og effekten på marginer.',
+                     'Net retention og utviklingen hos de få store kundene som har trukket veksten ned.',
+                     'Netto gjeld og disiplin ved videre M&A og tilbakekjøp.'],
+     'latest_development': 'Q2 2026 markerte retur til positiv organisk bruttoresultatvekst på 2 %. Omsetningen steg 17 % til 2 050 MNOK, '
+                           'justert EBITDA nådde rekordhøye 272 MNOK og kontraktsvinn ble rekordhøye 53 MNOK. I september kjøpte LINK også '
+                           'spanske Interactive og meldte et viktig RCS-milepæl i Sverige.',
+     'news_next_report': '04.11.2026',
+     'news_auto_source': 'Nyheter følges via LINK Mobility Investor Relations, NewsWeb og relevante markeds-/bransjekilder.',
+     'news': [{'Dato': '17.09.2026',
+               'Kategori': 'Produkt / marked',
+               'Viktighet': '🟡 Relevant',
+               'Hendelse': 'RCS Business Messaging-milepæl i Sverige',
+               'Kort oppsummering': 'LINK meldte et viktig steg for RCS Business Messaging i Sverige.',
+               'Betydning for caset': 'Støtter strukturell vekst i høyere-margin CPaaS/OTT-kanaler.',
+               'Kilde': 'LINK Investor Relations',
+               'Lenke': 'https://www.linkmobility.com/investors/company-disclosures'},
+              {'Dato': '11.09.2026',
+               'Kategori': 'M&A',
+               'Viktighet': '🟡 Relevant',
+               'Hendelse': 'Oppkjøp av spanske Interactive',
+               'Kort oppsummering': 'LINK kjøpte Interactive 3G S.L. i Spania som nytt bolt-on-oppkjøp.',
+               'Betydning for caset': 'Utvider lokal posisjon og passer inn i strategien med selektiv konsolidering.',
+               'Kilde': 'LINK Investor Relations',
+               'Lenke': 'https://www.linkmobility.com/investors/company-disclosures'},
+              {'Dato': '19.08.2026',
+               'Kategori': 'Resultat',
+               'Viktighet': '🔴 Viktig',
+               'Hendelse': 'Q2 2026 – organisk vekst tilbake',
+               'Kort oppsummering': 'Omsetning 2 050 MNOK, organisk bruttoresultatvekst +2 %, adj. EBITDA 272 MNOK og OCF 192 MNOK.',
+               'Betydning for caset': 'Viktig bekreftelse på at den organiske veksten bunner ut og at kontantgenereringen er sterk.',
+               'Kilde': 'LINK Investor Relations',
+               'Lenke': 'https://www.linkmobility.com/investors/company-disclosures/680128'}],
+     'upcoming_events': [{'Dato': '04.11.2026',
+                          'Hendelse': 'Q3 2026',
+                          'Sted': 'Investor Relations',
+                          'Hvorfor følge': 'Tester H2-guidingen, organisk gross profit-vekst, kontraktsramp og kapitalallokering.'},
+                         {'Dato': '11.02.2027',
+                          'Hendelse': 'Q4 2026',
+                          'Sted': 'Investor Relations',
+                          'Hvorfor følge': 'Helårsfasit på organisk vending, marginer og kontantstrøm.'}],
+     'contracts': [],
+     'opportunities': [{'Prioritet': '🟢 Høy',
+                        'Mulighet': 'Ramping av rekordhøye kontraktsvinn',
+                        'Sannsynlighet': 'Høy',
+                        'Est. verdi (MNOK)': None,
+                        'Status': 'Implementering / ramp',
+                        'Sist oppdatert': '18.09.2026',
+                        'Kommentar': 'Q2-kontraktsvinn var rekordhøye 53 MNOK, og LTM-kontraktsvinn var 184 MNOK. Effekten ventes gradvis inn '
+                                     'i gross profit.'},
+                       {'Prioritet': '🟢 Høy',
+                        'Mulighet': 'RCS, WhatsApp og AI-aktiverte kundedialogløsninger',
+                        'Sannsynlighet': 'Middels–høy',
+                        'Est. verdi (MNOK)': None,
+                        'Status': 'Strukturell vekst',
+                        'Sist oppdatert': '18.09.2026',
+                        'Kommentar': 'OTT-volumer vokser raskt og har bedre marginprofil enn tradisjonell SMS.'},
+                       {'Prioritet': '🟡 Middels',
+                        'Mulighet': 'Videre bolt-on M&A',
+                        'Sannsynlighet': 'Middels',
+                        'Est. verdi (MNOK)': None,
+                        'Status': 'Aktiv pipeline',
+                        'Sist oppdatert': '18.09.2026',
+                        'Kommentar': 'LINK kombinerer tilbakekjøp med selektive oppkjøp når prising og avkastning er attraktiv.'}],
+     'contract_value_metric_label': 'Kjent annonsert kontraktsverdi',
+     'contract_value_caption': 'LINK rapporterer normalt nye kontraktsvinn som annualisert gross profit/kommersiell verdi, ikke full '
+                               'kontraktsverdi. Derfor summeres ikke Q2-kontraktsvinnene som tradisjonell ordrebok her.',
+     'contract_watchlist': ['Ramping av Q1/Q2-kontraktsvinn inn i gross profit.',
+                            'Store RCS/WhatsApp/AI-kontrakter og nye enterprise-kunder.',
+                            'Bolt-on-oppkjøp i Europa og nye markeder.'],
+     'valuation': {'reference_price': 23.7,
+                   'eps_2026': 1.06,
+                   'growth_bear': 15.0,
+                   'growth_base': 30.0,
+                   'growth_bull': 40.0,
+                   'pe_bear': 14.0,
+                   'pe_base': 17.0,
+                   'pe_bull': 20.0,
+                   'required_return': 10.0,
+                   'target_year': 2028,
+                   'buy_level': 21.0,
+                   'sell_level': 38.0,
+                   'max_pe_underway': 30.0,
+                   'note': 'Arbeidsestimater. Base legger til grunn sterk EPS-normalisering når organisk gross profit og kontraktsramp bedres, '
+                           'men uten å bruke dagens høye LTM P/E som målmultippel.'}},
+
+    "Endúr": {'ticker': 'ENDUR',
+     'marked': 'Oslo Børs',
+     'sektor': 'Infrastruktur / Marine / Akvakultur',
+     'case': 'Endúr er et nordisk industrikonsern med hovedvekt på infrastruktur, marine tjenester og landbasert akvakultur. Investeringscaset '
+             'bygger på sterk ordrebok, strukturell etterspørsel etter rehabilitering av kritisk infrastruktur, høy aktivitet i norske bygg- '
+             'og samferdselsmarkeder og en aktiv, men målrettet M&A-strategi. Risikoen ligger særlig i prosjektgjennomføring, arbeidskapital, '
+             'oppkjøpsintegrasjon og svingninger i større akvakulturprosjekter.',
+     'price': 102.6,
+     'price_date': '17.09.2026',
+     'market_cap': 5.19,
+     'eps_ltm': 3.94,
+     'pe_ltm': 25.7,
+     'fcf_ltm': 577.0,
+     'fcf_yield': 11.1,
+     'roe_ltm': 8.6,
+     'roce': 9.7,
+     'nibd': 390.1,
+     'nibd_ebitda': 0.8,
+     'shares_outstanding': 51336423,
+     'dashboard_5y': {'revenue_cagr': 80.1, 'eps_cagr': None, 'fcf_yield_avg': 11.1, 'ebit_margin_avg': 4.8},
+     'q2': {'revenue': 2038.8, 'growth': 21.0, 'ebit': 108.2, 'ebit_margin': 5.3, 'eps': 1.25, 'ocf': 21.8, 'fcf': 8.3},
+     'q2_yoy': {'revenue': '+21% mot i fjor',
+                'ocf': '21,8 MNOK mot 105,6 MNOK',
+                'ebit_margin': '+0,6 pp mot i fjor',
+                'ebit': '+37% mot i fjor',
+                'eps': '+49% mot i fjor',
+                'fcf': '8,3 MNOK etter capex'},
+     'h1': {'revenue': 3783.6, 'growth': 48.0, 'ebit': 163.0, 'ebit_margin': 4.3, 'eps': 1.94, 'ocf': -37.3, 'fcf': -70.1},
+     'h1_yoy': {'revenue': '+48% rapportert; +17% pro forma',
+                'ocf': '-37,3 MNOK mot +359,1 MNOK',
+                'ebit_margin': '+0,3 pp mot i fjor',
+                'ebit': '+61% mot i fjor',
+                'eps': '+185% mot i fjor',
+                'fcf': 'Negativ pga. arbeidskapital og M&A'},
+     '_eps_growth_by_period': {'2024': 'N/M', '2025': '+137%', 'Q1 2026': 'N/M', 'Q2 2026': '+49%', 'H1 2026': '+185%'},
+     'financials': [{'Periode': '2024', 'Omsetning': 2787.4, 'Vekst': '41%', 'EBIT': 146.7, 'EBIT-margin': '5,3%', 'EPS': 1.18},
+                    {'Periode': '2025', 'Omsetning': 6416.5, 'Vekst': '130%', 'EBIT': 322.0, 'EBIT-margin': '5,0%', 'EPS': 2.8},
+                    {'Periode': 'Q1 2026', 'Omsetning': 1744.7, 'Vekst': '13% pro forma', 'EBIT': 54.8, 'EBIT-margin': '3,1%', 'EPS': 0.68},
+                    {'Periode': 'Q2 2026', 'Omsetning': 2038.8, 'Vekst': '21%', 'EBIT': 108.2, 'EBIT-margin': '5,3%', 'EPS': 1.25},
+                    {'Periode': 'H1 2026', 'Omsetning': 3783.6, 'Vekst': '48%', 'EBIT': 163.0, 'EBIT-margin': '4,3%', 'EPS': 1.94}],
+     'segments_q2': [{'Segment': 'Rehabilitation & Intersections',
+                      'Omsetning Q2': 621.4,
+                      'Vekst': '38%',
+                      'EBITA': 56.0,
+                      'EBITA-margin': '9,0%'},
+                     {'Segment': 'Ports & Marine', 'Omsetning Q2': 465.0, 'Vekst': '14%', 'EBITA': 33.6, 'EBITA-margin': '7,2%'},
+                     {'Segment': 'Construction', 'Omsetning Q2': 623.1, 'Vekst': '15%', 'EBITA': 38.6, 'EBITA-margin': '6,2%'},
+                     {'Segment': 'Aquaculture & Maritime Industry',
+                      'Omsetning Q2': 324.6,
+                      'Vekst': '9%',
+                      'EBITA': 16.5,
+                      'EBITA-margin': '5,1%'}],
+     'order_kpis': {'Ordrebok': '8,5 mrd. NOK',
+                    'Ordreinngang Q2': '2,3 mrd. NOK',
+                    'Dekning resten av 2026': '3,25 mrd. NOK',
+                    'Dekning 2027': '3,28 mrd. NOK'},
+     'guidance': ['Selskapet opplever høy anbudsaktivitet og stor mengde utestående tilbud i kjernemarkedene.',
+                  'Ordreboken på 8,5 mrd. NOK gir god dekning for resten av 2026 og 2027.',
+                  'Nasjonal transportplan, forsvarsinvesteringer og vedlikeholdsetterslep støtter langsiktig infrastrukturaktivitet.',
+                  'Landbasert akvakultur har positiv langsiktig etterspørsel, men timing på større prosjekter som Salfjord er viktig.'],
+     'what_follow': ['Konvertering av ordrebok og marginutvikling i de fire segmentene.',
+                     'Arbeidskapital og kontantstrøm etter svak H1 cash conversion.',
+                     'Salfjord og andre større akvakulturprosjekter som ikke ligger i ordreboken.',
+                     'Integrasjon av Enviro, Engelsen Total, Wimo og øvrige bolt-on-oppkjøp.',
+                     'Anbudsaktivitet innen rehabilitering, kaier, vann/avløp og bygg.'],
+     'latest_development': 'Q2 2026 ga 2 039 MNOK i omsetning (+21 %) og 135 MNOK i EBITA, et nytt kvartalsrekordnivå. Ordreinngangen var 2,3 '
+                           'mrd. NOK og ordreboken steg til 8,5 mrd. NOK. Samtidig var H1-kontantstrømmen svak på grunn av arbeidskapital, '
+                           'prosjektmilepæler og M&A.',
+     'news_next_report': '12.11.2026',
+     'news_auto_source': 'Nyheter følges via Endúr Investor Relations, NewsWeb og relevante anbuds-/infrastrukturkilder.',
+     'news': [{'Dato': '20.08.2026',
+               'Kategori': 'Resultat',
+               'Viktighet': '🔴 Viktig',
+               'Hendelse': 'Q2/H1 2026 – rekordhøy EBITA',
+               'Kort oppsummering': 'Q2-omsetning 2 038,8 MNOK, EBITA 135 MNOK og ordrebok 8,5 mrd. NOK.',
+               'Betydning for caset': 'Bekrefter sterk vekst og bedre operasjonell lønnsomhet, men kontantstrøm/arbeidskapital må '
+                                      'normaliseres.',
+               'Kilde': 'Endúr Investor Relations',
+               'Lenke': 'https://endur.no/q2-h1-2026-financial-results/'},
+              {'Dato': '06.07.2026',
+               'Kategori': 'Kontrakt',
+               'Viktighet': '🟡 Relevant',
+               'Hendelse': 'Nova Water Solutions – Kopervik renseanlegg',
+               'Kort oppsummering': 'Nova Water Solutions ble tildelt M1-kontrakten på ca. 78 MNOK.',
+               'Betydning for caset': 'Styrker posisjonen innen vann- og avløpsinfrastruktur og gir langsiktig aktivitet frem mot 2029.',
+               'Kilde': 'Endúr Investor Relations',
+               'Lenke': 'https://endur.no/contract-award-nova-water-solutions/'},
+              {'Dato': '02.07.2026',
+               'Kategori': 'M&A',
+               'Viktighet': '🟡 Relevant',
+               'Hendelse': 'Oppkjøpet av Wimo fullført',
+               'Kort oppsummering': 'Endúr fullførte oppkjøpet av Wimo, som styrker spesialistkapasiteten i infrastruktursektoren.',
+               'Betydning for caset': 'Viderefører konsolideringsstrategien, men øker også kravene til integrasjon og arbeidskapitalstyring.',
+               'Kilde': 'Endúr Investor Relations',
+               'Lenke': 'https://endur.no/news/'}],
+     'upcoming_events': [{'Dato': '12.11.2026',
+                          'Hendelse': 'Q3 2026',
+                          'Sted': 'Investor Relations',
+                          'Hvorfor følge': 'Kontantstrøm, arbeidskapital, marginer, ordrebok og integrasjon av oppkjøp.'},
+                         {'Dato': '25.02.2027',
+                          'Hendelse': 'Q4 2026',
+                          'Sted': 'Investor Relations',
+                          'Hvorfor følge': 'Helårsfasit på kontantkonvertering og ordredekning inn i 2027.'}],
+     'contracts': [{'Dato': 'Q2 2026',
+                    'Segment': 'Construction',
+                    'Kunde/prosjekt': 'Trivium-prosjektet',
+                    'Verdi (MNOK)': 1250,
+                    'Status': 'Tildelt',
+                    'Levering': 'Ordrebok / gjennomføring fremover'},
+                   {'Dato': '06.07.2026',
+                    'Segment': 'Water & Wastewater',
+                    'Kunde/prosjekt': 'Kopervik renseanlegg – M1',
+                    'Verdi (MNOK)': 78,
+                    'Status': 'Tildelt',
+                    'Levering': 'Oppstart 2026; ferdigstillelse 2029'}],
+     'opportunities': [{'Prioritet': '🟢 Høy',
+                        'Mulighet': 'Salfjord – landbasert akvakultur',
+                        'Sannsynlighet': 'Middels',
+                        'Est. verdi (MNOK)': None,
+                        'Status': 'Avventer endelig investeringsbeslutning',
+                        'Sist oppdatert': '18.09.2026',
+                        'Kommentar': 'Salfjord er ikke inkludert i rapportert ordrebok og kan bli en betydelig ny ordre hvis prosjektet '
+                                     'besluttes.'},
+                       {'Prioritet': '🟢 Høy',
+                        'Mulighet': 'Nye rehabiliterings- og infrastrukturprosjekter',
+                        'Sannsynlighet': 'Middels–høy',
+                        'Est. verdi (MNOK)': None,
+                        'Status': 'Høy anbudsaktivitet',
+                        'Sist oppdatert': '18.09.2026',
+                        'Kommentar': 'Vedlikeholdsetterslep, NTP og offentlige investeringer gir et bredt anbudsgrunnlag.'},
+                       {'Prioritet': '🟡 Middels–høy',
+                        'Mulighet': 'Forsvarsrelatert infrastruktur og marine oppdrag',
+                        'Sannsynlighet': 'Middels',
+                        'Est. verdi (MNOK)': None,
+                        'Status': 'Markedsmulighet',
+                        'Sist oppdatert': '18.09.2026',
+                        'Kommentar': 'Økte forsvarsbudsjetter kan gi flere oppdrag innen marine, kaier og kritisk infrastruktur.'}],
+     'contract_value_metric_label': 'Kjent kontraktsverdi i utvalgte annonserte ordre',
+     'contract_value_caption': 'Viser kjente verdier på utvalgte større kontrakter. Endúrs samlede ordrebok var 8,5 mrd. NOK ved utgangen av '
+                               'Q2 2026 og er langt større enn summen av de enkelte kontraktene vist her.',
+     'contract_watchlist': ['Salfjord og øvrige akvakulturprosjekter utenfor dagens backlog.',
+                            'Større rehabiliteringsprosjekter og offentlige anbud.',
+                            'Vann/avløp via Nova Water Solutions og nye kommunale prosjekter.',
+                            'Forsvars- og marineinfrastruktur.'],
+     'valuation': {'reference_price': 102.6,
+                   'eps_2026': 5.6,
+                   'growth_bear': 5.0,
+                   'growth_base': 10.0,
+                   'growth_bull': 15.0,
+                   'pe_bear': 13.0,
+                   'pe_base': 16.0,
+                   'pe_bull': 19.0,
+                   'required_return': 10.0,
+                   'target_year': 2028,
+                   'buy_level': 90.0,
+                   'sell_level': 140.0,
+                   'max_pe_underway': 25.0,
+                   'note': 'Arbeidsestimater. Base legger til grunn moderat EPS-vekst fra et høyt 2026-nivå og en normalisert P/E på 16x. M&A '
+                           'og backlog gir oppside, mens cash conversion og prosjekt-/integrasjonsrisiko trekker motsatt vei.'}},
+
     "Protector": {
         "ticker": "PROT",
         "marked": "Oslo Børs",
@@ -3649,6 +4046,14 @@ VALUATION_HISTORY = {
         "growth_text": "Omsetning CAGR 5 år 15,3% | EPS CAGR 5 år 19,2%",
         "pe_text": "P/E snitt 5 år 20,7x | siste år 18,4x",
     },
+    "Endúr": {
+        "growth_text": "Omsetning CAGR 3 år ca. 80,1% (M&A-drevet) | EPS CAGR N/M pga. tapsår og store scope-endringer",
+        "pe_text": "Historisk P/E N/M – 2023 tapsår og store M&A/scope-endringer | siste år ca. 33,0x",
+    },
+    "LINK Mobility": {
+        "growth_text": "Omsetning CAGR 4 år 12,6% | EPS CAGR N/M pga. tapsår/resultatsvingninger",
+        "pe_text": "Historisk P/E N/M – tapsår og store porteføljeendringer | LTM ca. 37,9x",
+    },
     "Protector": {
         "growth_text": "Premie-/omsetningsvekst CAGR 5 år 20,7% | EPS CAGR 5 år 21,5%",
         "pe_text": "P/E snitt 5 år 12,2x | siste år 16,5x",
@@ -3674,7 +4079,7 @@ VALUATION_HISTORY = {
         "pe_text": "P/E snitt 3 år 15,8x | siste år 17,0x",
     },
     "Vend": {
-        "growth_text": "3-års CAGR N/M pga. store portefølje- og scope-endringer",
+        "growth_text": "Omsetning CAGR 3 år N/M pga. store portefølje- og scope-endringer | EPS CAGR 3 år N/M pga. store portefølje- og scope-endringer",
         "pe_text": "Historisk P/E N/M pga. Adevinta-effekter og scope-endringer",
     },
     "Selvaag Bolig": {
@@ -3687,11 +4092,384 @@ VALUATION_HISTORY = {
     },
 }
 
+# Omsetnings-/driftsvekst som scenarioforutsetninger i Verdsettelse.
+# Fra v6.27.0 kobles veksten sammen med operativ margin og driver dermed EPS/kursmål.
+# Historisk CAGR vises under feltene som referanse.
+REVENUE_GROWTH_DEFAULTS = {
+    "NORBIT": {"bear": 10.0, "base": 20.0, "bull": 28.0},
+    "Cambi": {"bear": 10.0, "base": 20.0, "bull": 30.0},
+    "Kitron": {"bear": 6.0, "base": 12.0, "bull": 18.0},
+    "NOTE": {"bear": 5.0, "base": 12.0, "bull": 18.0},
+    "Endúr": {"bear": 5.0, "base": 15.0, "bull": 25.0},
+    "LINK Mobility": {"bear": 3.0, "base": 8.0, "bull": 13.0},
+    "Protector": {"bear": 8.0, "base": 15.0, "bull": 20.0},
+    "B2 Impact": {"bear": 0.0, "base": 4.0, "bull": 8.0},
+    "Byggmax": {"bear": -5.0, "base": 3.0, "bull": 8.0},
+    "Bakkafrost": {"bear": 2.0, "base": 8.0, "bull": 14.0},
+    "Nordic Semiconductor": {"bear": 8.0, "base": 18.0, "bull": 28.0},
+    "SATS": {"bear": 5.0, "base": 9.0, "bull": 13.0},
+    "Vend": {"bear": 0.0, "base": 5.0, "bull": 10.0},
+    "Selvaag Bolig": {"bear": -5.0, "base": 5.0, "bull": 15.0},
+    "Storebrand": {"bear": 4.0, "base": 8.0, "bull": 12.0},
+}
+
+
+def _revenue_growth_defaults(company_name):
+    return REVENUE_GROWTH_DEFAULTS.get(
+        company_name, {"bear": 0.0, "base": 5.0, "bull": 10.0}
+    )
+
+
+def _operating_margin_model(company_name):
+    """
+    Returner (baseline_margin_2026, etikett) for den operative lønnsomhetsdriveren.
+    For vanlige selskaper brukes EBIT-margin. For finans/andre forretningsmodeller
+    brukes nærmeste operative margin som passer vekstdriveren i modellen.
+    """
+    info = companies[company_name]
+
+    if company_name in {"NORBIT", "Cambi", "Kitron", "NOTE", "LINK Mobility", "Endúr"}:
+        return float(info["h1"]["ebit_margin"]), "EBIT-margin 2028"
+
+    if company_name == "Protector":
+        q2 = info["protector"]["q2"]
+        margin = q2["insurance_service_result"] / q2["insurance_revenue"] * 100
+        return float(margin), "Insurance service-margin 2028"
+
+    if company_name == "B2 Impact":
+        h1 = info["b2"]["h1"]
+        margin = h1["adj_ebit"] / h1["cash_collections"] * 100
+        return float(margin), "Adj. EBIT / cash collections 2028"
+
+    if company_name == "Byggmax":
+        return float(info["byggmax"]["h1"]["ebit_margin"]), "EBIT-margin 2028"
+
+    if company_name == "Bakkafrost":
+        annual = info["bakkafrost"]["annual"]
+        margin = float(annual[-1]["Operasjonell EBIT-margin"])
+        return margin, "Operasjonell EBIT-margin 2028"
+
+    if company_name == "Nordic Semiconductor":
+        h1 = info["nordicsemi"]["h1"]
+        margin = h1["ebit"] / h1["revenue"] * 100
+        return float(margin), "EBIT-margin 2028"
+
+    if company_name == "SATS":
+        return float(info["sats"]["h1"]["ebit_margin"]), "EBIT-margin 2028"
+
+    if company_name == "Vend":
+        return float(info["vend"]["h1"]["ebitda_margin"]), "EBITDA-margin 2028"
+
+    if company_name == "Selvaag Bolig":
+        return float(info["selvaag"]["h1"]["adj_ebitda_margin"]), "Just. EBITDA-margin 2028"
+
+    if company_name == "Storebrand":
+        stb = info["storebrand"]
+        # AUM er vekstdriveren på Storebrand. Bruk annualisert driftsresultat/AUM
+        # som en enkel lønnsomhetsfaktor i modellen.
+        aum_mnok = float(stb["q2"]["aum"]) * 1000.0
+        margin = (float(stb["h1"]["operating_profit"]) * 2.0) / aum_mnok * 100.0
+        return float(margin), "Driftsresultat / AUM 2028"
+
+    return 10.0, "Driftsmargin 2028"
+
+
+def _operating_margin_defaults(company_name, values=None):
+    """
+    Kalibrer standard margin-scenarier fra den tidligere EPS-modellen, men behold
+    en økonomisk logisk scenariorekkefølge: Bear <= Base <= Bull.
+
+    Base beholdes som kalibreringsanker. Dersom den gamle kalibreringen ga en
+    Bear-margin over Base eller en Bull-margin under Base, klemmes den til Base.
+    Omsetningsveksten gjør fortsatt at Bear/Base/Bull kan gi ulike EPS-baner selv
+    når to av marginene er like.
+    """
+    baseline, _ = _operating_margin_model(company_name)
+    values = values or {}
+    rev_defaults = _revenue_growth_defaults(company_name)
+
+    raw = {}
+    for scenario in ("bear", "base", "bull"):
+        old_eps_growth = float(values.get(f"growth_{scenario}", 0.0))
+        rev_growth = float(values.get(f"revenue_growth_{scenario}", rev_defaults[scenario]))
+        rev_factor = max(0.01, 1.0 + rev_growth / 100.0)
+        eps_factor = max(0.01, 1.0 + old_eps_growth / 100.0)
+        raw[scenario] = max(0.01, baseline * (eps_factor / rev_factor) ** 2)
+
+    base = raw["base"]
+    return {
+        "bear": min(raw["bear"], base),
+        "base": base,
+        "bull": max(raw["bull"], base),
+    }
+
+
+def _scenario_eps_from_revenue_margin(company_name, eps_2026, scenario, periods=2):
+    """
+    EPS = EPS_2026 × omsetningsfaktor × endring i operativ margin.
+    Dette holder skatt, finansiering og aksjeantall konstant som en enkel
+    arbeidsmodell, mens omsetning og margin blir de eksplisitte driverne.
+    """
+    v = get_effective_valuation(company_name)
+    baseline = float(v.get("operating_margin_baseline", _operating_margin_model(company_name)[0]))
+    baseline = max(abs(baseline), 0.01)
+
+    revenue_growth = float(v[f"revenue_growth_{scenario}"])
+    target_margin = float(v[f"operating_margin_{scenario}"])
+
+    revenue_factor = (1.0 + revenue_growth / 100.0) ** periods
+    margin_factor = target_margin / baseline
+    return float(eps_2026) * revenue_factor * margin_factor
+
+
+def _implied_eps_cagr(eps_start, eps_end, periods=2):
+    if eps_start is None or eps_end is None or eps_start <= 0 or eps_end <= 0 or periods <= 0:
+        return None
+    return ((eps_end / eps_start) ** (1.0 / periods) - 1.0) * 100.0
+
+
+# Konsensus EPS (2027E/2028E) som vises diskret under vårt 2028-scenario.
+# Oppdatert 18.09.2026. Markedsestimatene er fra MarketScreener, med unntak av
+# Storebrand der vi bruker selskapets publiserte Cash EPS-konsensus for å være
+# direkte sammenlignbar med vår Cash EPS-modell.
+CONSENSUS_EPS = {
+    "NORBIT": {"eps_2027": 9.678, "eps_2028": 11.13, "currency": "NOK"},
+    "Cambi": {"eps_2027": 1.726, "eps_2028": 2.232, "currency": "NOK"},
+    # MarketScreener rapporterer Kitron-estimatene i EUR. Dashboardet verdsetter
+    # aksjen i NOK, derfor er estimatene omregnet med samme arbeidskurs (11,6).
+    "Kitron": {"eps_2027": 0.4564 * 11.6, "eps_2028": 0.5462 * 11.6, "currency": "NOK", "note": "EUR-konsensus omregnet med 11,6 NOK/EUR"},
+    "NOTE": {"eps_2027": 13.69, "eps_2028": 15.42, "currency": "SEK"},
+    "Endúr": {"eps_2027": 6.68, "eps_2028": 7.74, "currency": "NOK"},
+    "LINK Mobility": {"eps_2027": 1.45, "eps_2028": 1.84, "currency": "NOK"},
+    "Protector": {"eps_2027": 28.58, "eps_2028": 30.41, "currency": "NOK"},
+    "B2 Impact": {"eps_2027": 2.43, "eps_2028": 2.51, "currency": "NOK"},
+    "Byggmax": {"eps_2027": 4.75, "eps_2028": 5.31, "currency": "SEK"},
+    "Bakkafrost": {"eps_2027": 22.9, "eps_2028": 28.4, "currency": "DKK"},
+    "Nordic Semiconductor": {"eps_2027": 4.871, "eps_2028": 6.999, "currency": "NOK"},
+    "SATS": {"eps_2027": 3.406, "eps_2028": 3.994, "currency": "NOK"},
+    "Vend": {"eps_2027": 10.57, "eps_2028": 12.79, "currency": "NOK", "note": "rapportert EPS; ikke direkte sammenlignbar med justert EPS"},
+    "Selvaag Bolig": {"eps_2027": 3.13, "eps_2028": 3.69, "currency": "NOK"},
+    "Storebrand": {"eps_2027": 13.08, "eps_2028": 14.46, "currency": "NOK", "note": "Cash EPS-konsensus"},
+}
+
+
+def _fmt_consensus_eps(value):
+    if value is None:
+        return "–"
+    # To desimaler er mest lesbart i denne kompakte konteksten.
+    return f"{float(value):.2f}".replace(".", ",")
+
+
+def render_consensus_eps(company_name, container):
+    """Vis 2027E/2028E konsensus i liten grå tekst under vår EPS 2028E."""
+    data = CONSENSUS_EPS.get(company_name)
+    if not data:
+        return
+    currency = data.get("currency", "")
+    note = data.get("note")
+    txt = (
+        f"(Konsensus EPS: 2027E {_fmt_consensus_eps(data.get('eps_2027'))} {currency} | "
+        f"2028E {_fmt_consensus_eps(data.get('eps_2028'))} {currency}"
+    )
+    if note:
+        txt += f"; {note}"
+    txt += ")"
+    container.markdown(
+        f"<div style='font-size:0.74rem;color:#8a8f98;margin-top:-0.45rem;margin-bottom:0.25rem;line-height:1.25;'>{txt}</div>",
+        unsafe_allow_html=True,
+    )
+
+
+# Session-state-nøkler for alle verdsettelsesfanene. Disse gjør at en endring
+# slår gjennom i Gode kjøp umiddelbart, også før den er lagret permanent.
+VALUATION_WIDGET_KEYS = {
+    "NORBIT": {"prefix": "norbt", "generic": True},
+    "Cambi": {"prefix": "cambi", "generic": True},
+    "Kitron": {"prefix": "kit", "generic": True},
+    "NOTE": {"prefix": "note", "generic": True},
+    "Endúr": {"prefix": "endur", "generic": True},
+    "LINK Mobility": {"prefix": "link", "generic": True},
+    "B2 Impact": {"prefix": "b2"},
+    "Protector": {"prefix": "prot"},
+    "Byggmax": {"prefix": "bmax"},
+    "Bakkafrost": {"prefix": "bakka"},
+    "Nordic Semiconductor": {"prefix": "nod"},
+    "SATS": {"prefix": "sats"},
+    "Vend": {"prefix": "vend"},
+    "Selvaag Bolig": {"prefix": "sbo"},
+    "Storebrand": {"prefix": "stb"},
+}
+
+SPECIAL_VALUATION_NESTED_KEYS = {
+    "Protector": "protector",
+    "Byggmax": "byggmax",
+    "Bakkafrost": "bakkafrost",
+    "Nordic Semiconductor": "nordicsemi",
+    "SATS": "sats",
+    "Vend": "vend",
+    "Selvaag Bolig": "selvaag",
+    "Storebrand": "storebrand",
+}
+
+
+def _base_valuation_snapshot(company_name):
+    """Normaliser verdsettelsesdata fra de ulike selskapsstrukturene."""
+    info = companies[company_name]
+
+    if company_name == "B2 Impact":
+        nested = info["b2"]
+        v = copy.deepcopy(nested["valuation"])
+        return {
+            "reference_price": float(nested["reference_price"]),
+            "eps_2026": float(v["eps_2026"]),
+            "growth_bear": float(v["growth_bear"]),
+            "growth_base": float(v["growth_base"]),
+            "growth_bull": float(v["growth_bull"]),
+            "revenue_growth_bear": float(v.get("revenue_growth_bear", _revenue_growth_defaults(company_name)["bear"])),
+            "revenue_growth_base": float(v.get("revenue_growth_base", _revenue_growth_defaults(company_name)["base"])),
+            "revenue_growth_bull": float(v.get("revenue_growth_bull", _revenue_growth_defaults(company_name)["bull"])),
+            "operating_margin_baseline": float(v.get("operating_margin_baseline", _operating_margin_model(company_name)[0])),
+            "operating_margin_bear": float(v.get("operating_margin_bear", _operating_margin_defaults(company_name, v)["bear"])),
+            "operating_margin_base": float(v.get("operating_margin_base", _operating_margin_defaults(company_name, v)["base"])),
+            "operating_margin_bull": float(v.get("operating_margin_bull", _operating_margin_defaults(company_name, v)["bull"])),
+            "pe_bear": float(v["pe_bear"]),
+            "pe_base": float(v["pe_base"]),
+            "pe_bull": float(v["pe_bull"]),
+            "required_return": float(v.get("required_return", 10.0)),
+            "target_year": int(v.get("target_year", 2028)),
+            "buy_level": float(v.get("buy_level", nested["reference_price"] * 0.9)),
+            "sell_level": float(v.get("sell_level", nested["reference_price"] * 1.3)),
+            "max_pe_underway": float(v.get("max_pe_underway", v["pe_bull"] + 5)),
+        }
+
+    v = copy.deepcopy(info.get("valuation", {}))
+    nested_key = SPECIAL_VALUATION_NESTED_KEYS.get(company_name)
+    nested = info.get(nested_key, {}) if nested_key else {}
+    ref = v.get("reference_price", nested.get("reference_price"))
+    eps = v.get("eps_2026", v.get("adj_eps_2026"))
+    result = {
+        "reference_price": float(ref) if ref is not None else None,
+        "eps_2026": float(eps) if eps is not None else None,
+        "growth_bear": float(v.get("growth_bear", 0.0)),
+        "growth_base": float(v.get("growth_base", 0.0)),
+        "growth_bull": float(v.get("growth_bull", 0.0)),
+        "revenue_growth_bear": float(v.get("revenue_growth_bear", _revenue_growth_defaults(company_name)["bear"])),
+        "revenue_growth_base": float(v.get("revenue_growth_base", _revenue_growth_defaults(company_name)["base"])),
+        "revenue_growth_bull": float(v.get("revenue_growth_bull", _revenue_growth_defaults(company_name)["bull"])),
+        "operating_margin_baseline": float(v.get("operating_margin_baseline", _operating_margin_model(company_name)[0])),
+        "operating_margin_bear": float(v.get("operating_margin_bear", _operating_margin_defaults(company_name, v)["bear"])),
+        "operating_margin_base": float(v.get("operating_margin_base", _operating_margin_defaults(company_name, v)["base"])),
+        "operating_margin_bull": float(v.get("operating_margin_bull", _operating_margin_defaults(company_name, v)["bull"])),
+        "pe_bear": float(v.get("pe_bear", 0.0)),
+        "pe_base": float(v.get("pe_base", 0.0)),
+        "pe_bull": float(v.get("pe_bull", 0.0)),
+        "required_return": float(v.get("required_return", 10.0)),
+        "target_year": int(v.get("target_year", 2028)),
+        "buy_level": float(v.get("buy_level", nested.get("buy_level", (ref or 0) * 0.9))),
+        "sell_level": float(v.get("sell_level", nested.get("sell_level", (ref or 0) * 1.3))),
+        "max_pe_underway": float(v.get("max_pe_underway", nested.get("max_pe_underway", v.get("pe_bull", 0) + 5))),
+    }
+    if company_name == "Vend":
+        result["adevinta_per_share"] = float(nested.get("adevinta_per_share", 0.0))
+    return result
+
+
+def _live_valuation_overrides(company_name):
+    """Hent verdier brukeren har endret i aktive Streamlit-widgets."""
+    spec = VALUATION_WIDGET_KEYS.get(company_name)
+    if not spec:
+        return {}
+    prefix = spec["prefix"]
+    live = {}
+
+    if spec.get("generic"):
+        mapping = {
+            "reference_price": f"{prefix}_reference_price",
+            "eps_2026": f"{prefix}_eps_2026",
+            "target_year": f"{prefix}_target_year",
+            "required_return": f"{prefix}_required_return",
+            "growth_bear": f"{prefix}_growth_bear",
+            "growth_base": f"{prefix}_growth_base",
+            "growth_bull": f"{prefix}_growth_bull",
+            "revenue_growth_bear": f"{prefix}_revenue_growth_bear",
+            "revenue_growth_base": f"{prefix}_revenue_growth_base",
+            "revenue_growth_bull": f"{prefix}_revenue_growth_bull",
+            "operating_margin_bear": f"{prefix}_operating_margin_bear",
+            "operating_margin_base": f"{prefix}_operating_margin_base",
+            "operating_margin_bull": f"{prefix}_operating_margin_bull",
+            "pe_bear": f"{prefix}_pe_bear",
+            "pe_base": f"{prefix}_pe_base",
+            "pe_bull": f"{prefix}_pe_bull",
+            "buy_level": f"{prefix}_buy_level",
+            "sell_level": f"{prefix}_sell_level",
+            "max_pe_underway": f"{prefix}_max_pe_underway",
+        }
+    else:
+        mapping = {
+            "reference_price": f"{prefix}_ref_price",
+            "eps_2026": f"{prefix}_eps_2026",
+            "required_return": f"{prefix}_required_return",
+            "growth_bear": f"{prefix}_gb",
+            "growth_base": f"{prefix}_gbase",
+            "growth_bull": f"{prefix}_gbull",
+            "revenue_growth_bear": f"{prefix}_rgb",
+            "revenue_growth_base": f"{prefix}_rgbase",
+            "revenue_growth_bull": f"{prefix}_rgbull",
+            "operating_margin_bear": f"{prefix}_omb",
+            "operating_margin_base": f"{prefix}_ombase",
+            "operating_margin_bull": f"{prefix}_ombull",
+            "pe_bear": f"{prefix}_peb",
+            "pe_base": f"{prefix}_pebase",
+            "pe_bull": f"{prefix}_pebull",
+            "buy_level": f"{prefix}_buy",
+            "sell_level": f"{prefix}_sell",
+            "max_pe_underway": f"{prefix}_maxpe",
+        }
+        if company_name == "Vend":
+            mapping["adevinta_per_share"] = "vend_adevinta_per_share"
+
+    for field, key in mapping.items():
+        if key in st.session_state and st.session_state[key] is not None:
+            live[field] = st.session_state[key]
+    return live
+
+
+def _remember_live_valuation(company_name):
+    """Kopier aktive widgetverdier til varig session-state før widgetene forsvinner ved sideskifte."""
+    live = _live_valuation_overrides(company_name)
+    if not live:
+        return
+    working = st.session_state.setdefault("valuation_working_overrides", {})
+    current = dict(working.get(company_name, {}))
+    current.update(live)
+    working[company_name] = current
+
+
+def get_effective_valuation(company_name):
+    """Lagret verdsettelse + arbeidsendringer i nettleserøkten + aktive widgetverdier."""
+    values = _base_valuation_snapshot(company_name)
+    working = st.session_state.get("valuation_working_overrides", {}).get(company_name, {})
+    values.update(working)
+    values.update(_live_valuation_overrides(company_name))
+    return values
+
 
 def render_valuation_history_context(company_name, section):
     hist = VALUATION_HISTORY.get(company_name, {})
-    key = "growth_text" if section == "growth" else "pe_text"
-    txt = hist.get(key)
+    if section == "pe":
+        txt = hist.get("pe_text")
+    else:
+        growth_txt = hist.get("growth_text")
+        txt = growth_txt
+        if growth_txt and "|" in growth_txt:
+            parts = [part.strip() for part in growth_txt.split("|", 1)]
+            if section == "revenue":
+                txt = parts[0]
+            elif section == "eps":
+                txt = parts[1]
+        elif section == "eps" and company_name == "Vend":
+            txt = "EPS CAGR N/M pga. store portefølje- og scope-endringer"
+
     if txt:
         st.markdown(
             f"<div style='font-size:0.78rem;color:#8a8f98;margin-top:-0.35rem;margin-bottom:0.35rem;'>"
@@ -3700,15 +4478,129 @@ def render_valuation_history_context(company_name, section):
         )
 
 
+def render_revenue_growth_inputs(company_name):
+    """Felles Bear/Base/Bull for omsetnings-/driftsvekst på Verdsettelse."""
+    spec = VALUATION_WIDGET_KEYS.get(company_name)
+    if not spec:
+        return
+
+    values = get_effective_valuation(company_name)
+    prefix = spec["prefix"]
+    if spec.get("generic"):
+        keys = (
+            f"{prefix}_revenue_growth_bear",
+            f"{prefix}_revenue_growth_base",
+            f"{prefix}_revenue_growth_bull",
+        )
+    else:
+        keys = (f"{prefix}_rgb", f"{prefix}_rgbase", f"{prefix}_rgbull")
+
+    if company_name == "Protector":
+        title = "Premie-/omsetningsvekst per år"
+    elif company_name == "Storebrand":
+        title = "AUM-vekst per år"
+    else:
+        title = "Omsetningsvekst per år"
+
+    st.markdown(f"**{title}**")
+    render_valuation_history_context(company_name, "revenue")
+    r1, r2, r3 = st.columns(3)
+    r1.number_input(
+        "Bear vekst", min_value=-50.0, max_value=100.0,
+        value=float(values["revenue_growth_bear"]), step=1.0, format="%.0f", key=keys[0]
+    )
+    r2.number_input(
+        "Base vekst", min_value=-50.0, max_value=100.0,
+        value=float(values["revenue_growth_base"]), step=1.0, format="%.0f", key=keys[1]
+    )
+    r3.number_input(
+        "Bull vekst", min_value=-50.0, max_value=100.0,
+        value=float(values["revenue_growth_bull"]), step=1.0, format="%.0f", key=keys[2]
+    )
+
+
+
+def render_margin_and_implied_eps(company_name, eps_2026, periods=2):
+    """Vis lønnsomhetsdriver og beregnet EPS-vekst. Returnerer EPS og implisert CAGR."""
+    spec = VALUATION_WIDGET_KEYS.get(company_name)
+    values = get_effective_valuation(company_name)
+    prefix = spec["prefix"]
+
+    if spec.get("generic"):
+        keys = (
+            f"{prefix}_operating_margin_bear",
+            f"{prefix}_operating_margin_base",
+            f"{prefix}_operating_margin_bull",
+        )
+    else:
+        keys = (f"{prefix}_omb", f"{prefix}_ombase", f"{prefix}_ombull")
+
+    baseline, title = _operating_margin_model(company_name)
+    baseline = float(values.get("operating_margin_baseline", baseline))
+
+    # Normaliser både lagrede verdier og aktive widgetverdier slik at scenariene
+    # alltid følger Bear <= Base <= Bull. Dette hindrer f.eks. at Bull-marginen
+    # blir lavere enn Base-marginen bare for å treffe et gammelt kursmål.
+    bear_margin = float(values["operating_margin_bear"])
+    base_margin = max(float(values["operating_margin_base"]), bear_margin)
+    bull_margin = max(float(values["operating_margin_bull"]), base_margin)
+
+    if keys[0] in st.session_state:
+        bear_margin = float(st.session_state[keys[0]])
+    if keys[1] in st.session_state:
+        base_margin = max(float(st.session_state[keys[1]]), bear_margin)
+        st.session_state[keys[1]] = base_margin
+    else:
+        base_margin = max(base_margin, bear_margin)
+    if keys[2] in st.session_state:
+        bull_margin = max(float(st.session_state[keys[2]]), base_margin)
+        st.session_state[keys[2]] = bull_margin
+    else:
+        bull_margin = max(bull_margin, base_margin)
+
+    st.markdown(f"**{title}**")
+    st.caption(
+        f"Referansemargin 2026: {baseline:.1f}%".replace(".", ",")
+        + ". EPS beregnes fra omsetningsvekst × endring i denne marginen. "
+        + "Scenarioene holdes automatisk i rekkefølgen Bear ≤ Base ≤ Bull."
+    )
+    m1, m2, m3 = st.columns(3)
+    m1.number_input(
+        "Bear margin", min_value=0.0, max_value=100.0,
+        value=bear_margin, step=0.1, format="%.1f", key=keys[0]
+    )
+    m2.number_input(
+        "Base margin", min_value=0.0, max_value=100.0,
+        value=base_margin, step=0.1, format="%.1f", key=keys[1]
+    )
+    m3.number_input(
+        "Bull margin", min_value=0.0, max_value=100.0,
+        value=bull_margin, step=0.1, format="%.1f", key=keys[2]
+    )
+
+    # Hent verdiene på nytt etter at widgetene er rendret.
+    eps_bear = _scenario_eps_from_revenue_margin(company_name, eps_2026, "bear", periods)
+    eps_base = _scenario_eps_from_revenue_margin(company_name, eps_2026, "base", periods)
+    eps_bull = _scenario_eps_from_revenue_margin(company_name, eps_2026, "bull", periods)
+
+    g_bear = _implied_eps_cagr(eps_2026, eps_bear, periods)
+    g_base = _implied_eps_cagr(eps_2026, eps_base, periods)
+    g_bull = _implied_eps_cagr(eps_2026, eps_bull, periods)
+
+    st.markdown("**Implisert EPS-vekst per år**")
+    render_valuation_history_context(company_name, "eps")
+    e1, e2, e3 = st.columns(3)
+    e1.metric("Bear EPS-vekst", "N/M" if g_bear is None else f"{g_bear:.1f}%".replace(".", ","))
+    e2.metric("Base EPS-vekst", "N/M" if g_base is None else f"{g_base:.1f}%".replace(".", ","))
+    e3.metric("Bull EPS-vekst", "N/M" if g_bull is None else f"{g_bull:.1f}%".replace(".", ","))
+
+    return eps_bear, eps_base, eps_bull, g_bear or 0.0, g_base or 0.0, g_bull or 0.0
+
+
+
 def get_reference_price(company_name):
-    info = companies[company_name]
-    val = info.get("valuation", {})
-    if "reference_price" in val:
-        return float(val["reference_price"])
-    for value in info.values():
-        if isinstance(value, dict) and "reference_price" in value:
-            return float(value["reference_price"])
-    return None
+    value = get_effective_valuation(company_name).get("reference_price")
+    return float(value) if value is not None else None
 
 
 def get_reference_price_date(company_name):
@@ -3719,55 +4611,42 @@ def get_reference_price_date(company_name):
     for value in info.values():
         if isinstance(value, dict) and "reference_price_date" in value:
             return value["reference_price_date"]
-    return "16.09.2026"
+    return info.get("price_date", "16.09.2026")
 
 
 def get_valuation_targets_2028(company_name):
-    info = companies[company_name]
-
-    if company_name == "B2 Impact":
-        v = info["b2"]["valuation"]
-        eps_bear = v["eps_2026"] * (1 + v["growth_bear"] / 100) ** 2
-        eps_base = v["eps_2026"] * (1 + v["growth_base"] / 100) ** 2
-        eps_bull = v["eps_2026"] * (1 + v["growth_bull"] / 100) ** 2
-        return (
-            eps_bear * v["pe_bear"],
-            eps_base * v["pe_base"],
-            eps_bull * v["pe_bull"],
-        )
-
-    v = info.get("valuation")
-    if not v:
+    """Bear/base/bull 2028 fra samme aktive forutsetninger som Verdsettelse-siden."""
+    v = get_effective_valuation(company_name)
+    eps_2026 = v.get("eps_2026")
+    if eps_2026 is None:
         return (None, None, None)
 
-    if company_name == "Cambi":
+    # Cambi kan senere settes til direkte EPS-scenarier. Standard er samme
+    # omsetnings-/marginmodellen som den synlige Verdsettelse-fanen, slik at Gode kjøp
+    # alltid samsvarer med det brukeren faktisk har valgt.
+    company_val = companies[company_name].get("valuation", {})
+    if company_name == "Cambi" and company_val.get("use_direct_estimates", False):
         return (
-            v["cambi_eps_2028_bear"] * v["pe_bear"],
-            v["cambi_eps_2028_base"] * v["pe_base"],
-            v["cambi_eps_2028_bull"] * v["pe_bull"],
+            float(company_val["cambi_eps_2028_bear"]) * float(v["pe_bear"]),
+            float(company_val["cambi_eps_2028_base"]) * float(v["pe_base"]),
+            float(company_val["cambi_eps_2028_bull"]) * float(v["pe_bull"]),
         )
+
+    eps_bear = _scenario_eps_from_revenue_margin(company_name, eps_2026, "bear", 2)
+    eps_base = _scenario_eps_from_revenue_margin(company_name, eps_2026, "base", 2)
+    eps_bull = _scenario_eps_from_revenue_margin(company_name, eps_2026, "bull", 2)
+
+    bear = eps_bear * float(v["pe_bear"])
+    base = eps_base * float(v["pe_base"])
+    bull = eps_bull * float(v["pe_bull"])
 
     if company_name == "Vend":
-        eps_bear = v["adj_eps_2026"] * (1 + v["growth_bear"] / 100) ** 2
-        eps_base = v["adj_eps_2026"] * (1 + v["growth_base"] / 100) ** 2
-        eps_bull = v["adj_eps_2026"] * (1 + v["growth_bull"] / 100) ** 2
-        adevinta = float(info["vend"].get("adevinta_per_share", 0.0))
-        return (
-            eps_bear * v["pe_bear"] + adevinta,
-            eps_base * v["pe_base"] + adevinta,
-            eps_bull * v["pe_bull"] + adevinta,
-        )
+        adevinta = float(v.get("adevinta_per_share", 0.0))
+        bear += adevinta
+        base += adevinta
+        bull += adevinta
 
-    eps_key = "eps_2026"
-    eps_2026 = float(v[eps_key])
-    eps_bear = eps_2026 * (1 + v["growth_bear"] / 100) ** 2
-    eps_base = eps_2026 * (1 + v["growth_base"] / 100) ** 2
-    eps_bull = eps_2026 * (1 + v["growth_bull"] / 100) ** 2
-    return (
-        eps_bear * v["pe_bear"],
-        eps_base * v["pe_base"],
-        eps_bull * v["pe_bull"],
-    )
+    return (bear, base, bull)
 
 
 # =========================================================
@@ -3876,6 +4755,263 @@ def _github_request(method, url, token, payload=None):
     with urllib.request.urlopen(req, timeout=20) as response:
         body = response.read().decode("utf-8")
         return json.loads(body) if body else {}
+
+
+# =========================================================
+# SENTRAL VERDSETTELSE – PERSISTENT GITHUB-LAGRING
+# =========================================================
+VALUATION_SETTINGS_FILE = DATA_DIR / "valuation_settings.json"
+
+
+def _github_valuation_config():
+    token = _secret("GITHUB_TOKEN")
+    repo = _secret("GITHUB_REPO")
+    if not token or not repo:
+        return None
+    return {
+        "token": str(token),
+        "repo": str(repo),
+        "branch": str(_secret("GITHUB_BRANCH", "main")),
+        "path": str(_secret("GITHUB_VALUATION_PATH", "data/valuation_settings.json")),
+    }
+
+
+def _load_valuation_from_github(config):
+    path = urllib.parse.quote(config["path"], safe="/")
+    branch = urllib.parse.quote(config["branch"], safe="")
+    url = f"https://api.github.com/repos/{config['repo']}/contents/{path}?ref={branch}"
+    try:
+        meta = _github_request("GET", url, config["token"])
+        encoded = meta.get("content", "").replace("\n", "")
+        if not encoded:
+            return None, "Verdsettelsesfilen finnes, men inneholder ingen data."
+        raw = base64.b64decode(encoded).decode("utf-8")
+        return json.loads(raw), None
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            return None, None
+        return None, f"GitHub svarte med HTTP {exc.code} ved lasting av verdsettelse."
+    except Exception as exc:
+        return None, f"Kunne ikke lese verdsettelsesdata fra GitHub: {exc}"
+
+
+def _save_valuation_to_github(settings, config, commit_message):
+    path = urllib.parse.quote(config["path"], safe="/")
+    branch = urllib.parse.quote(config["branch"], safe="")
+    get_url = f"https://api.github.com/repos/{config['repo']}/contents/{path}?ref={branch}"
+    put_url = f"https://api.github.com/repos/{config['repo']}/contents/{path}"
+    sha = None
+    try:
+        current = _github_request("GET", get_url, config["token"])
+        sha = current.get("sha")
+    except urllib.error.HTTPError as exc:
+        if exc.code != 404:
+            return False, f"Kunne ikke lese eksisterende verdsettelsesfil (HTTP {exc.code})."
+    except Exception as exc:
+        return False, f"Kunne ikke kontakte GitHub før lagring: {exc}"
+
+    content = json.dumps(settings, ensure_ascii=False, indent=2).encode("utf-8")
+    payload = {
+        "message": commit_message,
+        "content": base64.b64encode(content).decode("ascii"),
+        "branch": config["branch"],
+    }
+    if sha:
+        payload["sha"] = sha
+
+    try:
+        _github_request("PUT", put_url, config["token"], payload)
+        return True, "Verdsettelsen er lagret permanent i GitHub."
+    except urllib.error.HTTPError as exc:
+        try:
+            detail = exc.read().decode("utf-8")
+            message = json.loads(detail).get("message", detail)
+        except Exception:
+            message = ""
+        return False, f"GitHub-lagring av verdsettelse feilet (HTTP {exc.code}){': ' + message if message else '.'}"
+    except Exception as exc:
+        return False, f"GitHub-lagring av verdsettelse feilet: {exc}"
+
+
+def load_valuation_settings_data(force_reload=False):
+    """Last permanente scenarioforutsetninger én gang per Streamlit-økt."""
+    if force_reload:
+        st.session_state.pop("valuation_settings_data", None)
+
+    if "valuation_settings_data" not in st.session_state:
+        loaded = None
+        source = "Innebygde standardverdier"
+        warning = None
+        config = _github_valuation_config()
+
+        if config:
+            loaded, warning = _load_valuation_from_github(config)
+            if loaded is not None:
+                source = f"GitHub · {config['repo']} · {config['branch']}"
+
+        if loaded is None:
+            local = load_json_file(VALUATION_SETTINGS_FILE, None)
+            if local is not None:
+                loaded = local
+                source = "Lokal verdsettelsesfil (utvikling)"
+            else:
+                loaded = {"companies": {}}
+
+        loaded.setdefault("companies", {})
+        st.session_state["valuation_settings_data"] = loaded
+        st.session_state["valuation_settings_source"] = source
+        st.session_state["valuation_settings_warning"] = warning
+
+    return st.session_state["valuation_settings_data"]
+
+
+def _apply_valuation_override(company_name, values):
+    """Legg et normalisert lagret scenario tilbake i selskapets eksisterende struktur."""
+    if not values or company_name not in companies:
+        return
+    info = companies[company_name]
+
+    if company_name == "B2 Impact":
+        nested = info["b2"]
+        v = nested["valuation"]
+        nested["reference_price"] = float(values.get("reference_price", nested["reference_price"]))
+        for field in ["eps_2026", "growth_bear", "growth_base", "growth_bull", "revenue_growth_bear", "revenue_growth_base", "revenue_growth_bull", "operating_margin_baseline", "operating_margin_bear", "operating_margin_base", "operating_margin_bull", "pe_bear", "pe_base", "pe_bull", "buy_level", "sell_level", "max_pe_underway", "required_return", "target_year"]:
+            if field in values:
+                v[field] = values[field]
+        return
+
+    v = info.setdefault("valuation", {})
+    if company_name == "Vend":
+        if "eps_2026" in values:
+            v["adj_eps_2026"] = values["eps_2026"]
+    elif "eps_2026" in values:
+        v["eps_2026"] = values["eps_2026"]
+
+    for field in ["growth_bear", "growth_base", "growth_bull", "revenue_growth_bear", "revenue_growth_base", "revenue_growth_bull", "operating_margin_baseline", "operating_margin_bear", "operating_margin_base", "operating_margin_bull", "pe_bear", "pe_base", "pe_bull", "required_return", "target_year"]:
+        if field in values:
+            v[field] = values[field]
+
+    nested_key = SPECIAL_VALUATION_NESTED_KEYS.get(company_name)
+    if nested_key:
+        nested = info[nested_key]
+        for field in ["reference_price", "buy_level", "sell_level", "max_pe_underway"]:
+            if field in values:
+                nested[field] = values[field]
+        if company_name == "Vend" and "adevinta_per_share" in values:
+            nested["adevinta_per_share"] = values["adevinta_per_share"]
+    else:
+        for field in ["reference_price", "buy_level", "sell_level", "max_pe_underway"]:
+            if field in values:
+                v[field] = values[field]
+
+
+def apply_saved_valuation_settings():
+    settings = load_valuation_settings_data()
+    for company_name, values in settings.get("companies", {}).items():
+        _apply_valuation_override(company_name, values)
+
+
+def apply_working_valuation_settings():
+    """Legg ikke-lagrede arbeidsendringer tilbake i modellens standarddata ved hver rerun."""
+    for company_name, values in st.session_state.get("valuation_working_overrides", {}).items():
+        _apply_valuation_override(company_name, values)
+
+
+def save_current_valuation(company_name):
+    """Lagre de aktive widgetverdiene sentralt, lokalt eller i GitHub."""
+    values = get_effective_valuation(company_name)
+    # Sørg for vanlige Python-typer før JSON-serialisering.
+    clean = {}
+    for key, value in values.items():
+        if value is None:
+            clean[key] = None
+        elif key == "target_year":
+            clean[key] = int(value)
+        elif isinstance(value, (int, float)):
+            clean[key] = float(value)
+        else:
+            try:
+                clean[key] = float(value)
+            except Exception:
+                clean[key] = value
+
+    settings = copy.deepcopy(load_valuation_settings_data())
+    settings.setdefault("companies", {})[company_name] = clean
+    settings["updated_at"] = datetime.now(ZoneInfo("Europe/Oslo")).isoformat(timespec="seconds")
+
+    config = _github_valuation_config()
+    if config:
+        ok, message = _save_valuation_to_github(
+            settings, config, f"Oppdater verdsettelse – {company_name}"
+        )
+        if not ok:
+            return False, message
+        st.session_state["valuation_settings_source"] = f"GitHub · {config['repo']} · {config['branch']}"
+    else:
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        with VALUATION_SETTINGS_FILE.open("w", encoding="utf-8") as f:
+            json.dump(settings, f, ensure_ascii=False, indent=2)
+        message = "Verdsettelsen er lagret lokalt i Codespaces (testmodus)."
+        st.session_state["valuation_settings_source"] = "Lokal verdsettelsesfil (utvikling)"
+
+    st.session_state["valuation_settings_data"] = settings
+    st.session_state.setdefault("valuation_working_overrides", {})[company_name] = dict(clean)
+    _apply_valuation_override(company_name, clean)
+    return True, message
+
+
+def render_valuation_save_controls(company_name):
+    """Felles lagreknapp for alle selskapers Verdsettelse-fane."""
+    # Widgettilstand slettes av Streamlit når Verdsettelse-fanen ikke rendres.
+    # Speil derfor verdiene til en egen session-state som overlever navigasjon
+    # mellom Selskaper og Gode kjøp, også før brukeren trykker Lagre.
+    _remember_live_valuation(company_name)
+
+    st.caption(
+        "Endringer brukes med én gang på Gode kjøp i denne nettleserøkten. "
+        "Trykk Lagre verdsettelse for å gjøre dem permanente."
+    )
+
+    config = _github_valuation_config()
+    admin_pin = _secret("REPORTING_ADMIN_PIN")
+    can_save = True
+
+    if config and admin_pin:
+        entered_pin = st.text_input(
+            "PIN for å lagre verdsettelse",
+            type="password",
+            key="valuation_admin_pin",
+            help="Samme PIN som brukes for Rapportering. PIN-en ligger bare i Streamlit Secrets.",
+        )
+        can_save = entered_pin == str(admin_pin)
+        if entered_pin and not can_save:
+            st.error("Feil PIN.")
+    elif config and not admin_pin:
+        can_save = False
+        st.warning("REPORTING_ADMIN_PIN mangler i Streamlit Secrets. Permanent lagring er låst.")
+
+    c1, c2 = st.columns([1, 2])
+    if c1.button(
+        "💾 Lagre verdsettelse",
+        key=f"save_valuation_{re.sub(r'[^a-z0-9]+', '_', company_name.lower())}",
+        type="primary",
+        disabled=not can_save,
+    ):
+        ok, message = save_current_valuation(company_name)
+        if ok:
+            st.success(message)
+        else:
+            st.error(message)
+
+    source = st.session_state.get("valuation_settings_source", "Innebygde standardverdier")
+    c2.caption(f"Permanent kilde: {source}")
+
+
+# Legg lagrede verdsettelsesforutsetninger inn i selskapenes standarddata før
+# Dashboard/Gode kjøp/Selskapssidene rendres. Deretter legges eventuelle
+# ikke-lagrede arbeidsendringer i denne nettleserøkten oppå de lagrede verdiene.
+apply_saved_valuation_settings()
+apply_working_valuation_settings()
 
 
 def _load_reporting_from_github(config):
@@ -4171,6 +5307,36 @@ def prepare_norbit_info(base_info, report):
             "EPS": info["h1"]["eps"],
         })
     info["financials"] = financials
+
+    # EPS-vekst per synlig periode fra hele rapporteringsdatabasen.
+    # Dette gjør at første synlige år/kvartal også får YoY når sammenligningsperioden
+    # finnes i databasen, selv om den ikke vises i selve Nøkkeltall-tabellen.
+    eps_growth_by_period = {}
+    annual_by_year = {int(r.get("År")): r for r in annual if r.get("År") is not None}
+    for year_key, row in annual_by_year.items():
+        prev_row = annual_by_year.get(year_key - 1)
+        if prev_row is not None:
+            eps_growth_by_period[str(year_key)] = _eps_growth_text(
+                row.get("EPS"), prev_row.get("EPS")
+            )
+
+    for row in quarterly:
+        parts_q = _quarter_parts(row.get("Periode"))
+        if not parts_q:
+            continue
+        q_year, q_num = parts_q
+        prev_row = _find_quarter(report, q_year - 1, q_num)
+        if prev_row is not None:
+            eps_growth_by_period[str(row.get("Periode"))] = _eps_growth_text(
+                row.get("EPS"), prev_row.get("EPS")
+            )
+
+    if "_ytd_label" in info:
+        ytd_eps_growth = _extract_eps_yoy_text(info.get("h1_yoy", {}).get("eps"))
+        if ytd_eps_growth != "–":
+            eps_growth_by_period[info["_ytd_label"]] = ytd_eps_growth
+
+    info["_eps_growth_by_period"] = eps_growth_by_period
     return info
 
 
@@ -4201,7 +5367,7 @@ if side == "Dashboard":
 
     st.header("Dashboard")
 
-    detailed_companies = ["NORBIT", "Cambi", "Kitron", "NOTE"]
+    detailed_companies = ["Cambi", "Endúr", "Kitron", "LINK Mobility", "NORBIT", "NOTE"]
 
     oslo_today = datetime.now(ZoneInfo("Europe/Oslo")).date().isoformat()
     updates_today = [
@@ -4237,21 +5403,10 @@ if side == "Dashboard":
 
     dashboard_rows = []
 
-    dashboard_company_order = [
-        "NORBIT",
-        "Cambi",
-        "Kitron",
-        "NOTE",
-        "Protector",
-        "B2 Impact",
-        "Byggmax",
-        "Bakkafrost",
-        "Nordic Semiconductor",
-        "SATS",
-        "Vend",
-        "Selvaag Bolig",
-        "Storebrand",
-    ]
+    dashboard_company_order = sorted(
+        companies.keys(),
+        key=lambda x: x.casefold().replace("ú", "u"),
+    )
 
     for name in dashboard_company_order:
         info = companies[name]
@@ -4290,7 +5445,7 @@ if side == "Dashboard":
                 if eps_cagr is not None
                 else (
                     "N/M"
-                    if name in ["Cambi", "Nordic Semiconductor", "SATS", "Vend", "Storebrand"]
+                    if name in ["Cambi", "Endúr", "LINK Mobility", "Nordic Semiconductor", "SATS", "Vend", "Storebrand"]
                     else "–"
                 )
             ),
@@ -4323,7 +5478,7 @@ if side == "Dashboard":
     st.dataframe(oversikt, width="stretch", hide_index=True, height=500)
 
     st.caption(
-        "CAGR er normalt FY2020–FY2025; øvrige 5Å-snitt gjelder FY2021–FY2025. "
+        "CAGR bruker normalt 5 år, og kortere historikk der sammenlignbare 5 år ikke finnes. "
         "Kolonnene bruker relevante nøkkeltall for hvert selskap. For Protector vises "
         "combined ratio (CR), for B2 Impact netto gjeld / Cash EBITDA, for Selvaag Bolig "
         "verdi under bygging, og for Storebrand ROE, AUM-vekst og Solvens II. "
@@ -4352,11 +5507,10 @@ elif side == "Gode kjøp":
         "Kursene under er redigerbare slik at siden kan oppdateres raskt hver dag."
     )
 
-    good_buy_order = [
-        "NORBIT", "Cambi", "Kitron", "NOTE", "Protector", "B2 Impact",
-        "Byggmax", "Bakkafrost", "Nordic Semiconductor", "SATS", "Vend",
-        "Selvaag Bolig", "Storebrand",
-    ]
+    good_buy_order = sorted(
+        companies.keys(),
+        key=lambda x: x.casefold().replace("ú", "u"),
+    )
 
     price_rows = []
     for name in good_buy_order:
@@ -4481,7 +5635,7 @@ elif side == "Selskaper":
         unsafe_allow_html=True,
     )
 
-    selskap = st.selectbox("Velg selskap", list(companies.keys()))
+    selskap = st.selectbox("Velg selskap", sorted(companies.keys(), key=lambda x: x.casefold().replace("ú", "u")))
     info = companies[selskap]
 
     st.header(selskap)
@@ -4538,6 +5692,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(b2["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "Adj. EPS")
             annual_df["Cash collections"] = annual_df["Cash collections"].map(lambda x: f"{x:,.0f}".replace(",", " "))
             annual_df["Cash EBITDA"] = annual_df["Cash EBITDA"].map(lambda x: f"{x:,.0f}".replace(",", " "))
             annual_df["Adj. EPS"] = annual_df["Adj. EPS"].map(lambda x: f"{x:.2f}".replace(".", ","))
@@ -4545,6 +5700,43 @@ elif side == "Selskaper":
             annual_df["ERC"] = annual_df["ERC"].map(lambda x: f"{x:.1f} mrd.".replace(".", ","))
             annual_df["Leverage"] = annual_df["Leverage"].map(lambda x: f"{x:.1f}x".replace(".", ","))
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            b2_q1_eps = b2["h1"]["eps"] - b2["q2"]["eps"]
+            b2_q1_growth = _derive_q1_eps_growth(
+                b2["h1"]["eps"], b2["q2"]["eps"],
+                b2["h1_yoy"]["eps"], b2["q2_yoy"]["eps"],
+            )
+            b2_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Cash collections (MNOK)": b2["h1"]["cash_collections"] - b2["q2"]["cash_collections"],
+                    "Cash EBITDA (MNOK)": b2["h1"]["cash_ebitda"] - b2["q2"]["cash_ebitda"],
+                    "Adj. EBIT (MNOK)": b2["h1"]["adj_ebit"] - b2["q2"]["adj_ebit"],
+                    "Adj. EPS": b2_q1_eps,
+                    "EPS vekst": b2_q1_growth,
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Cash collections (MNOK)": b2["q2"]["cash_collections"],
+                    "Cash EBITDA (MNOK)": b2["q2"]["cash_ebitda"],
+                    "Adj. EBIT (MNOK)": b2["q2"]["adj_ebit"],
+                    "Adj. EPS": b2["q2"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(b2["q2_yoy"]["eps"]),
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Cash collections (MNOK)": b2["h1"]["cash_collections"],
+                    "Cash EBITDA (MNOK)": b2["h1"]["cash_ebitda"],
+                    "Adj. EBIT (MNOK)": b2["h1"]["adj_ebit"],
+                    "Adj. EPS": b2["h1"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(b2["h1_yoy"]["eps"]),
+                },
+            ])
+            for col in ["Cash collections (MNOK)", "Cash EBITDA (MNOK)", "Adj. EBIT (MNOK)"]:
+                b2_recent[col] = b2_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            b2_recent["Adj. EPS"] = b2_recent["Adj. EPS"].map(lambda x: _fmt_table_number(x, 2))
+            st.dataframe(b2_recent, width="stretch", hide_index=True)
 
             st.subheader("2026-mål")
             targets = pd.DataFrame([
@@ -4584,7 +5776,7 @@ elif side == "Selskaper":
             st.subheader("Dynamisk verdsettelse")
             st.caption(
                 "EPS 2026E bruker selskapets minimumsmål på 2,25 NOK. "
-                "Vekst og P/E under er våre justerbare scenarioforutsetninger."
+                "Omsetningsvekst, operativ margin og P/E under er våre justerbare scenarioforutsetninger."
             )
 
             v = b2["valuation"]
@@ -4609,19 +5801,17 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="b2_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input("Bear vekst", value=float(v["growth_bear"]), step=1.0, format="%.0f", key="b2_gb")
-            gbase = g2.number_input("Base vekst", value=float(v["growth_base"]), step=1.0, format="%.0f", key="b2_gbase")
-            gbull = g3.number_input("Bull vekst", value=float(v["growth_bull"]), step=1.0, format="%.0f", key="b2_gbull")
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
+            )
 
             st.markdown("**P/E i målåret**")
             render_valuation_history_context(selskap, "pe")
@@ -4641,9 +5831,11 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input("Kjøpsnivå (NOK)", value=float(v["buy_level"]), step=1.0, format="%.0f", key="b2_buy")
             sell_level = s3.number_input("Reduser/salgsnivå (NOK)", value=float(v["sell_level"]), step=1.0, format="%.0f", key="b2_sell")
             max_pe = s4.number_input("Maks P/E underveis", value=float(v["max_pe_underway"]), step=1.0, format="%.0f", key="b2_maxpe")
+            render_valuation_save_controls(selskap)
 
             st.subheader("Estimert kurs i 2028")
             r1, r2, r3 = st.columns(3)
@@ -4753,6 +5945,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(prot["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "EPS")
             annual_df["Premieinntekter"] = annual_df["Premieinntekter"].map(
                 lambda x: f"{x:,.0f}".replace(",", " ")
             )
@@ -4773,6 +5966,45 @@ elif side == "Selskaper":
                 lambda x: f"{x:.0f}%"
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            prot_q1_eps = prot["h1"]["eps"] - prot["q2"]["eps"]
+            prot_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Bruttopremie (MNOK)": prot["h1"]["gwp"] - prot["q2"]["gwp"],
+                    "Forsikringsresultat (MNOK)": prot["h1"]["insurance_service_result"] - prot["q2"]["insurance_service_result"],
+                    "Combined ratio": "84,9%",
+                    "Resultat (MNOK)": prot["h1"]["profit"] - prot["q2"]["profit"],
+                    "EPS": prot_q1_eps,
+                    "EPS vekst": _derive_q1_eps_growth(
+                        prot["h1"]["eps"], prot["q2"]["eps"],
+                        prot["h1_yoy"]["eps"], prot["q2_yoy"]["eps"],
+                    ),
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Bruttopremie (MNOK)": prot["q2"]["gwp"],
+                    "Forsikringsresultat (MNOK)": prot["q2"]["insurance_service_result"],
+                    "Combined ratio": f"{prot['q2']['combined_ratio']:.1f}%".replace(".", ","),
+                    "Resultat (MNOK)": prot["q2"]["profit"],
+                    "EPS": prot["q2"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(prot["q2_yoy"]["eps"]),
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Bruttopremie (MNOK)": prot["h1"]["gwp"],
+                    "Forsikringsresultat (MNOK)": prot["h1"]["insurance_service_result"],
+                    "Combined ratio": f"{prot['h1']['combined_ratio']:.1f}%".replace(".", ","),
+                    "Resultat (MNOK)": prot["h1"]["profit"],
+                    "EPS": prot["h1"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(prot["h1_yoy"]["eps"]),
+                },
+            ])
+            for col in ["Bruttopremie (MNOK)", "Forsikringsresultat (MNOK)", "Resultat (MNOK)"]:
+                prot_recent[col] = prot_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            prot_recent["EPS"] = prot_recent["EPS"].map(lambda x: _fmt_table_number(x, 1))
+            st.dataframe(prot_recent, width="stretch", hide_index=True)
 
             st.subheader("Selskapets finansielle mål")
             target_df = pd.DataFrame([
@@ -4809,7 +6041,7 @@ elif side == "Selskaper":
         with tab5:
             st.subheader("Dynamisk verdsettelse")
             st.caption(
-                "EPS 2026E er konsensusestimat. Vekst og P/E er våre justerbare "
+                "EPS 2026E er konsensusestimat. Omsetningsvekst, operativ margin og P/E er våre justerbare "
                 "scenarioforutsetninger."
             )
 
@@ -4836,27 +6068,16 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="prot_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input(
-                "Bear vekst", value=float(v["growth_bear"]),
-                step=1.0, format="%.0f", key="prot_gb"
-            )
-            gbase = g2.number_input(
-                "Base vekst", value=float(v["growth_base"]),
-                step=1.0, format="%.0f", key="prot_gbase"
-            )
-            gbull = g3.number_input(
-                "Bull vekst", value=float(v["growth_bull"]),
-                step=1.0, format="%.0f", key="prot_gbull"
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
             )
 
             st.markdown("**P/E i målåret**")
@@ -4886,6 +6107,7 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input(
                 "Kjøpsnivå (NOK)", value=float(prot["buy_level"]),
                 step=5.0, format="%.0f", key="prot_buy"
@@ -4898,6 +6120,7 @@ elif side == "Selskaper":
                 "Maks P/E underveis", value=float(prot["max_pe_underway"]),
                 step=1.0, format="%.0f", key="prot_maxpe"
             )
+            render_valuation_save_controls(selskap)
 
             target_year = 2028
             years_to_target = target_year - 2026
@@ -5137,6 +6360,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(bmax["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "EPS")
             annual_df["Omsetning"] = annual_df["Omsetning"].map(
                 lambda x: f"{x:,.0f}".replace(",", " ")
             )
@@ -5159,6 +6383,46 @@ elif side == "Selskaper":
                 lambda x: f"{x:.2f}".replace(".", ",")
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            bmax_q1_revenue = bmax["h1"]["revenue"] - bmax["q2"]["revenue"]
+            bmax_q1_ebit = bmax["h1"]["ebit"] - bmax["q2"]["ebit"]
+            bmax_q1_eps = bmax["h1"]["eps"] - bmax["q2"]["eps"]
+            bmax_q1_ocf = bmax["h1"]["ocf"] - bmax["q2"]["ocf"]
+            bmax_q1_margin = (bmax_q1_ebit / bmax_q1_revenue * 100) if bmax_q1_revenue else None
+            bmax_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Omsetning (MSEK)": bmax_q1_revenue,
+                    "EBIT (MSEK)": bmax_q1_ebit,
+                    "EBIT-margin": f"{bmax_q1_margin:.1f}%".replace(".", ","),
+                    "EPS": bmax_q1_eps,
+                    "EPS vekst": "N/M",
+                    "OCF (MSEK)": bmax_q1_ocf,
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Omsetning (MSEK)": bmax["q2"]["revenue"],
+                    "EBIT (MSEK)": bmax["q2"]["ebit"],
+                    "EBIT-margin": f"{bmax['q2']['ebit_margin']:.1f}%".replace(".", ","),
+                    "EPS": bmax["q2"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(bmax["q2_yoy"]["eps"]),
+                    "OCF (MSEK)": bmax["q2"]["ocf"],
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Omsetning (MSEK)": bmax["h1"]["revenue"],
+                    "EBIT (MSEK)": bmax["h1"]["ebit"],
+                    "EBIT-margin": f"{bmax['h1']['ebit_margin']:.1f}%".replace(".", ","),
+                    "EPS": bmax["h1"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(bmax["h1_yoy"]["eps"]),
+                    "OCF (MSEK)": bmax["h1"]["ocf"],
+                },
+            ])
+            for col in ["Omsetning (MSEK)", "EBIT (MSEK)", "OCF (MSEK)"]:
+                bmax_recent[col] = bmax_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            bmax_recent["EPS"] = bmax_recent["EPS"].map(lambda x: _fmt_table_number(x, 2))
+            st.dataframe(bmax_recent, width="stretch", hide_index=True)
 
             st.subheader("Selskapets finansielle mål")
             target_df = pd.DataFrame([
@@ -5196,7 +6460,7 @@ elif side == "Selskaper":
         with tab5:
             st.subheader("Dynamisk verdsettelse")
             st.caption(
-                "EPS 2026E er konsensusestimat. Vekst og P/E er våre justerbare "
+                "EPS 2026E er konsensusestimat. Omsetningsvekst, operativ margin og P/E er våre justerbare "
                 "scenarioforutsetninger."
             )
 
@@ -5223,27 +6487,16 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="bmax_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input(
-                "Bear vekst", value=float(v["growth_bear"]),
-                step=1.0, format="%.0f", key="bmax_gb"
-            )
-            gbase = g2.number_input(
-                "Base vekst", value=float(v["growth_base"]),
-                step=1.0, format="%.0f", key="bmax_gbase"
-            )
-            gbull = g3.number_input(
-                "Bull vekst", value=float(v["growth_bull"]),
-                step=1.0, format="%.0f", key="bmax_gbull"
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
             )
 
             st.markdown("**P/E i målåret**")
@@ -5273,6 +6526,7 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input(
                 "Kjøpsnivå (SEK)", value=float(bmax["buy_level"]),
                 step=1.0, format="%.0f", key="bmax_buy"
@@ -5285,6 +6539,7 @@ elif side == "Selskaper":
                 "Maks P/E underveis", value=float(bmax["max_pe_underway"]),
                 step=1.0, format="%.0f", key="bmax_maxpe"
             )
+            render_valuation_save_controls(selskap)
 
             target_year = 2028
             years_to_target = target_year - 2026
@@ -5509,6 +6764,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(bakka["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "EPS DKK", "EPS vekst")
             annual_df["Omsetning"] = annual_df["Omsetning"].map(
                 lambda x: f"{x:,.0f}".replace(",", " ")
             )
@@ -5528,6 +6784,42 @@ elif side == "Selskaper":
                 lambda x: f"{x:.2f}".replace(".", ",")
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            bakka_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Omsetning (MDKK)": 2114,
+                    "Operasjonell EBIT (MDKK)": 544,
+                    "Slaktevolum (tonn)": 31337,
+                    "Adj. EPS DKK": 5.16,
+                    "EPS vekst": "+18%",
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Omsetning (MDKK)": 1826,
+                    "Operasjonell EBIT (MDKK)": bakka["q2"]["operational_ebit"],
+                    "Slaktevolum (tonn)": bakka["q2"]["harvest"],
+                    "Adj. EPS DKK": 4.39,
+                    "EPS vekst": "N/M",
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Omsetning (MDKK)": 3940,
+                    "Operasjonell EBIT (MDKK)": bakka["h1"]["operational_ebit"],
+                    "Slaktevolum (tonn)": bakka["h1"]["harvest"],
+                    "Adj. EPS DKK": 9.55,
+                    "EPS vekst": "+123%",
+                },
+            ])
+            for col in ["Omsetning (MDKK)", "Operasjonell EBIT (MDKK)", "Slaktevolum (tonn)"]:
+                bakka_recent[col] = bakka_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            bakka_recent["Adj. EPS DKK"] = bakka_recent["Adj. EPS DKK"].map(lambda x: _fmt_table_number(x, 2))
+            st.dataframe(bakka_recent, width="stretch", hide_index=True)
+            st.caption(
+                "Kvartals-EPS er justert EPS. Q2 2026 gikk fra negativ justert EPS i Q2 2025 "
+                "til positiv EPS og vises derfor som N/M."
+            )
 
             st.subheader("2026-guiding og finansielle mål")
             target_df = pd.DataFrame([
@@ -5566,7 +6858,7 @@ elif side == "Selskaper":
             st.subheader("Dynamisk verdsettelse")
             st.caption(
                 "EPS 2026E er satt til ca. 14,90 NOK, basert på konsensus 10,32 DKK "
-                "omregnet med DKK/NOK 1,4432 per 16.09.2026. Vekst og P/E er våre "
+                "omregnet med DKK/NOK 1,4432 per 16.09.2026. Omsetningsvekst, operativ margin og P/E er våre "
                 "justerbare scenarioforutsetninger."
             )
 
@@ -5593,27 +6885,16 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="bakka_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input(
-                "Bear vekst", value=float(v["growth_bear"]),
-                step=1.0, format="%.0f", key="bakka_gb"
-            )
-            gbase = g2.number_input(
-                "Base vekst", value=float(v["growth_base"]),
-                step=1.0, format="%.0f", key="bakka_gbase"
-            )
-            gbull = g3.number_input(
-                "Bull vekst", value=float(v["growth_bull"]),
-                step=1.0, format="%.0f", key="bakka_gbull"
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
             )
 
             st.markdown("**P/E i målåret**")
@@ -5643,6 +6924,7 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input(
                 "Kjøpsnivå (NOK)", value=float(bakka["buy_level"]),
                 step=5.0, format="%.0f", key="bakka_buy"
@@ -5655,6 +6937,7 @@ elif side == "Selskaper":
                 "Maks P/E underveis", value=float(bakka["max_pe_underway"]),
                 step=1.0, format="%.0f", key="bakka_maxpe"
             )
+            render_valuation_save_controls(selskap)
 
             target_year = 2028
             years_to_target = target_year - 2026
@@ -5867,6 +7150,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(nod["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "EPS USD", "EPS vekst")
             for col in ["Omsetning USDm", "EBIT USDm", "OCF USDm", "Kontanter USDm"]:
                 annual_df[col] = annual_df[col].map(
                     lambda x: f"{x:,.1f}".replace(",", " ").replace(".", ",")
@@ -5881,6 +7165,46 @@ elif side == "Selskaper":
                 lambda x: f"{x:.3f}".replace(".", ",")
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            nod_q1_revenue = nod["h1"]["revenue"] - nod["q2"]["revenue"]
+            nod_q1_ebit = nod["h1"]["ebit"] - nod["q2"]["ebit"]
+            nod_q1_eps = nod["h1"]["eps_usd"] - nod["q2"]["eps_usd"]
+            nod_q1_ocf = nod["h1"]["ocf"] - nod["q2"]["ocf"]
+            nod_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Omsetning (MUSD)": nod_q1_revenue,
+                    "EBIT (MUSD)": nod_q1_ebit,
+                    "EPS USD": nod_q1_eps,
+                    "EPS vekst": _derive_q1_eps_growth(
+                        nod["h1"]["eps_usd"], nod["q2"]["eps_usd"],
+                        nod["h1_yoy"]["eps_usd"], nod["q2_yoy"]["eps_usd"],
+                    ),
+                    "OCF (MUSD)": nod_q1_ocf,
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Omsetning (MUSD)": nod["q2"]["revenue"],
+                    "EBIT (MUSD)": nod["q2"]["ebit"],
+                    "EPS USD": nod["q2"]["eps_usd"],
+                    "EPS vekst": _extract_eps_yoy_text(nod["q2_yoy"]["eps_usd"]),
+                    "OCF (MUSD)": nod["q2"]["ocf"],
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Omsetning (MUSD)": nod["h1"]["revenue"],
+                    "EBIT (MUSD)": nod["h1"]["ebit"],
+                    "EPS USD": nod["h1"]["eps_usd"],
+                    "EPS vekst": _extract_eps_yoy_text(nod["h1_yoy"]["eps_usd"]),
+                    "OCF (MUSD)": nod["h1"]["ocf"],
+                },
+            ])
+            for col in ["Omsetning (MUSD)", "EBIT (MUSD)", "OCF (MUSD)"]:
+                nod_recent[col] = nod_recent[col].map(lambda x: _fmt_table_number(x, 1))
+            nod_recent["EPS USD"] = nod_recent["EPS USD"].map(lambda x: _fmt_table_number(x, 3))
+            st.dataframe(nod_recent, width="stretch", hide_index=True)
+            st.caption("Q1 EPS-vekst er utledet fra rapportert H1- og Q2-utvikling; høy prosent skyldes svært lav EPS-base i Q1 2025.")
 
             st.subheader("Langsiktige finansielle mål")
             target_df = pd.DataFrame([
@@ -5918,7 +7242,7 @@ elif side == "Selskaper":
             st.subheader("Dynamisk verdsettelse")
             st.caption(
                 "EPS 2026E er satt til ca. 2,83 NOK, basert på konsensus nettoresultat "
-                "og dagens aksjeantall. Vekst og P/E er våre justerbare scenarioforutsetninger."
+                "og dagens aksjeantall. Omsetningsvekst, operativ margin og P/E er våre justerbare scenarioforutsetninger."
             )
 
             v = info["valuation"]
@@ -5944,27 +7268,16 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="nod_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input(
-                "Bear vekst", value=float(v["growth_bear"]),
-                step=1.0, format="%.0f", key="nod_gb"
-            )
-            gbase = g2.number_input(
-                "Base vekst", value=float(v["growth_base"]),
-                step=1.0, format="%.0f", key="nod_gbase"
-            )
-            gbull = g3.number_input(
-                "Bull vekst", value=float(v["growth_bull"]),
-                step=1.0, format="%.0f", key="nod_gbull"
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
             )
 
             st.markdown("**P/E i målåret**")
@@ -5994,6 +7307,7 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input(
                 "Kjøpsnivå (NOK)", value=float(nod["buy_level"]),
                 step=5.0, format="%.0f", key="nod_buy"
@@ -6006,6 +7320,7 @@ elif side == "Selskaper":
                 "Maks P/E underveis", value=float(nod["max_pe_underway"]),
                 step=1.0, format="%.0f", key="nod_maxpe"
             )
+            render_valuation_save_controls(selskap)
 
             target_year = 2028
             years_to_target = target_year - 2026
@@ -6218,6 +7533,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(sats["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "EPS")
             for col in [
                 "Omsetning",
                 "EBITDA før IFRS 16",
@@ -6241,6 +7557,45 @@ elif side == "Selskaper":
                 lambda x: f"{x:.1f}x".replace(".", ",")
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            sats_q1_revenue = sats["h1"]["revenue"] - sats["q2"]["revenue"]
+            sats_q1_ebit = sats["h1"]["ebit_pre_ifrs16"] - sats["q2"]["ebit_pre_ifrs16"]
+            sats_q1_eps = sats["h1"]["eps"] - sats["q2"]["eps"]
+            sats_q1_fcf = sats["h1"]["fcf"] - sats["q2"]["fcf"]
+            sats_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Omsetning (MNOK)": sats_q1_revenue,
+                    "EBIT før IFRS 16 (MNOK)": sats_q1_ebit,
+                    "EPS": sats_q1_eps,
+                    "EPS vekst": _derive_q1_eps_growth(
+                        sats["h1"]["eps"], sats["q2"]["eps"],
+                        sats["h1_yoy"]["eps"], sats["q2_yoy"]["eps"],
+                    ),
+                    "FCF (MNOK)": sats_q1_fcf,
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Omsetning (MNOK)": sats["q2"]["revenue"],
+                    "EBIT før IFRS 16 (MNOK)": sats["q2"]["ebit_pre_ifrs16"],
+                    "EPS": sats["q2"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(sats["q2_yoy"]["eps"]),
+                    "FCF (MNOK)": sats["q2"]["fcf"],
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Omsetning (MNOK)": sats["h1"]["revenue"],
+                    "EBIT før IFRS 16 (MNOK)": sats["h1"]["ebit_pre_ifrs16"],
+                    "EPS": sats["h1"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(sats["h1_yoy"]["eps"]),
+                    "FCF (MNOK)": sats["h1"]["fcf"],
+                },
+            ])
+            for col in ["Omsetning (MNOK)", "EBIT før IFRS 16 (MNOK)", "FCF (MNOK)"]:
+                sats_recent[col] = sats_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            sats_recent["EPS"] = sats_recent["EPS"].map(lambda x: _fmt_table_number(x, 2))
+            st.dataframe(sats_recent, width="stretch", hide_index=True)
 
             st.subheader("Vekstambisjoner og kapitalallokering")
             target_df = pd.DataFrame([
@@ -6280,7 +7635,7 @@ elif side == "Selskaper":
             st.subheader("Dynamisk verdsettelse")
             st.caption(
                 "EPS 2026E er satt til ca. 2,88 NOK, basert på siste konsensus for "
-                "2026-nettoresultat og dagens aksjeantall. Vekst og P/E er våre "
+                "2026-nettoresultat og dagens aksjeantall. Omsetningsvekst, operativ margin og P/E er våre "
                 "justerbare scenarioforutsetninger."
             )
 
@@ -6307,27 +7662,16 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="sats_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input(
-                "Bear vekst", value=float(v["growth_bear"]),
-                step=1.0, format="%.0f", key="sats_gb"
-            )
-            gbase = g2.number_input(
-                "Base vekst", value=float(v["growth_base"]),
-                step=1.0, format="%.0f", key="sats_gbase"
-            )
-            gbull = g3.number_input(
-                "Bull vekst", value=float(v["growth_bull"]),
-                step=1.0, format="%.0f", key="sats_gbull"
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
             )
 
             st.markdown("**P/E i målåret**")
@@ -6357,6 +7701,7 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input(
                 "Kjøpsnivå (NOK)", value=float(sats["buy_level"]),
                 step=1.0, format="%.0f", key="sats_buy"
@@ -6369,6 +7714,7 @@ elif side == "Selskaper":
                 "Maks P/E underveis", value=float(sats["max_pe_underway"]),
                 step=1.0, format="%.0f", key="sats_maxpe"
             )
+            render_valuation_save_controls(selskap)
 
             target_year = 2028
             years_to_target = target_year - 2026
@@ -6603,6 +7949,9 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(vend["annual"]).copy()
+            vend_annual_adj_eps = {"2024": 28.21, "2025": -2.58}
+            annual_df["Adj. EPS videreført"] = annual_df["Periode"].astype(str).map(vend_annual_adj_eps)
+            annual_df = add_eps_growth_after_column(annual_df, "Adj. EPS videreført", "EPS vekst")
             for col in ["Omsetning", "EBITDA", "FCF"]:
                 annual_df[col] = annual_df[col].map(
                     lambda x: f"{x:,.0f}".replace(",", " ")
@@ -6610,10 +7959,62 @@ elif side == "Selskaper":
             annual_df["EBITDA-margin"] = annual_df["EBITDA-margin"].map(
                 lambda x: f"{x:.1f}%".replace(".", ",")
             )
+            annual_df["Adj. EPS videreført"] = annual_df["Adj. EPS videreført"].map(
+                lambda x: f"{x:.2f}".replace(".", ",")
+            )
             annual_df["Utbytte"] = annual_df["Utbytte"].map(
                 lambda x: f"{x:.2f}".replace(".", ",")
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            vend_q1_revenue = vend["h1"]["revenue"] - vend["q2"]["revenue"]
+            vend_q1_ebitda = vend["h1"]["ebitda"] - vend["q2"]["ebitda"]
+            vend_q1_eps = vend["h1"]["adj_eps"] - vend["q2"]["adj_eps"]
+            vend_q1_fcf = vend["h1"]["fcf"] - vend["q2"]["fcf"]
+            vend_q1_margin = (vend_q1_ebitda / vend_q1_revenue * 100) if vend_q1_revenue else None
+            vend_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Omsetning (MNOK)": vend_q1_revenue,
+                    "EBITDA (MNOK)": vend_q1_ebitda,
+                    "EBITDA-margin": f"{vend_q1_margin:.1f}%".replace(".", ","),
+                    "Adj. EPS videreført": vend_q1_eps,
+                    "EPS vekst": _derive_q1_eps_growth(
+                        vend["h1"]["adj_eps"], vend["q2"]["adj_eps"],
+                        vend["h1_yoy"]["adj_eps"], vend["q2_yoy"]["adj_eps"],
+                    ),
+                    "FCF (MNOK)": vend_q1_fcf,
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Omsetning (MNOK)": vend["q2"]["revenue"],
+                    "EBITDA (MNOK)": vend["q2"]["ebitda"],
+                    "EBITDA-margin": f"{vend['q2']['ebitda_margin']:.1f}%".replace(".", ","),
+                    "Adj. EPS videreført": vend["q2"]["adj_eps"],
+                    "EPS vekst": _extract_eps_yoy_text(vend["q2_yoy"]["adj_eps"]),
+                    "FCF (MNOK)": vend["q2"]["fcf"],
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Omsetning (MNOK)": vend["h1"]["revenue"],
+                    "EBITDA (MNOK)": vend["h1"]["ebitda"],
+                    "EBITDA-margin": f"{vend['h1']['ebitda_margin']:.1f}%".replace(".", ","),
+                    "Adj. EPS videreført": vend["h1"]["adj_eps"],
+                    "EPS vekst": _extract_eps_yoy_text(vend["h1_yoy"]["adj_eps"]),
+                    "FCF (MNOK)": vend["h1"]["fcf"],
+                },
+            ])
+            for col in ["Omsetning (MNOK)", "EBITDA (MNOK)", "FCF (MNOK)"]:
+                vend_recent[col] = vend_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            vend_recent["Adj. EPS videreført"] = vend_recent["Adj. EPS videreført"].map(
+                lambda x: _fmt_table_number(x, 2)
+            )
+            st.dataframe(vend_recent, width="stretch", hide_index=True)
+            st.caption(
+                "EPS er justert EPS fra videreført virksomhet, slik at Adevinta- og "
+                "engangseffekter ikke forstyrrer driftsutviklingen."
+            )
 
             st.subheader("2026-prioriteringer og kapitalallokering")
             target_df = pd.DataFrame([
@@ -6682,27 +8083,16 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="vend_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år – kjernevirksomhet**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input(
-                "Bear vekst", value=float(v["growth_bear"]),
-                step=1.0, format="%.0f", key="vend_gb"
-            )
-            gbase = g2.number_input(
-                "Base vekst", value=float(v["growth_base"]),
-                step=1.0, format="%.0f", key="vend_gbase"
-            )
-            gbull = g3.number_input(
-                "Bull vekst", value=float(v["growth_bull"]),
-                step=1.0, format="%.0f", key="vend_gbull"
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
             )
 
             st.markdown("**P/E i målåret – kjernevirksomhet**")
@@ -6728,6 +8118,7 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("Adj. EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input(
                 "Kjøpsnivå (NOK)", value=float(vend["buy_level"]),
                 step=5.0, format="%.0f", key="vend_buy"
@@ -6749,6 +8140,7 @@ elif side == "Selskaper":
                 format="%.0f",
                 key="vend_adevinta_per_share",
             )
+            render_valuation_save_controls(selskap)
             st.caption(
                 "Utgangspunktet 36 NOK per aksje tilsvarer omtrent 7,2 mrd. NOK fordelt "
                 "på rundt 200 mill. utestående Vend-aksjer etter egne aksjer."
@@ -7004,6 +8396,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(sbo["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "EPS")
             for col in ["Omsetning", "EBIT", "Solgte boliger", "Overleverte boliger", "Under bygging", "Tomtebank"]:
                 annual_df[col] = annual_df[col].map(
                     lambda x: f"{x:,.0f}".replace(",", " ")
@@ -7018,6 +8411,51 @@ elif side == "Selskaper":
                 lambda x: f"{x:.2f}".replace(".", ",")
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+
+            st.subheader("2026 – kvartal/H1")
+            sbo_q1_revenue = sbo["h1"]["revenue"] - sbo["q2"]["revenue"]
+            sbo_q1_ebitda = sbo["h1"]["adj_ebitda"] - sbo["q2"]["adj_ebitda"]
+            sbo_q1_eps = sbo["h1"]["eps"] - sbo["q2"]["eps"]
+            sbo_q1_units_sold = sbo["h1"]["units_sold"] - sbo["q2"]["units_sold"]
+            sbo_q1_ocf = sbo["h1"]["ocf"] - sbo["q2"]["ocf"]
+            sbo_q1_margin = (sbo_q1_ebitda / sbo_q1_revenue * 100) if sbo_q1_revenue else None
+            sbo_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Omsetning (MNOK)": sbo_q1_revenue,
+                    "Just. EBITDA (MNOK)": sbo_q1_ebitda,
+                    "EBITDA-margin": f"{sbo_q1_margin:.1f}%".replace(".", ","),
+                    "EPS": sbo_q1_eps,
+                    "EPS vekst": "N/M",
+                    "Solgte boliger": sbo_q1_units_sold,
+                    "OCF (MNOK)": sbo_q1_ocf,
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Omsetning (MNOK)": sbo["q2"]["revenue"],
+                    "Just. EBITDA (MNOK)": sbo["q2"]["adj_ebitda"],
+                    "EBITDA-margin": f"{sbo['q2']['adj_ebitda_margin']:.1f}%".replace(".", ","),
+                    "EPS": sbo["q2"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(sbo["q2_yoy"]["eps"]),
+                    "Solgte boliger": sbo["q2"]["units_sold"],
+                    "OCF (MNOK)": sbo["q2"]["ocf"],
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Omsetning (MNOK)": sbo["h1"]["revenue"],
+                    "Just. EBITDA (MNOK)": sbo["h1"]["adj_ebitda"],
+                    "EBITDA-margin": f"{sbo['h1']['adj_ebitda_margin']:.1f}%".replace(".", ","),
+                    "EPS": sbo["h1"]["eps"],
+                    "EPS vekst": _extract_eps_yoy_text(sbo["h1_yoy"]["eps"]),
+                    "Solgte boliger": sbo["h1"]["units_sold"],
+                    "OCF (MNOK)": sbo["h1"]["ocf"],
+                },
+            ])
+            for col in ["Omsetning (MNOK)", "Just. EBITDA (MNOK)", "Solgte boliger", "OCF (MNOK)"]:
+                sbo_recent[col] = sbo_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            sbo_recent["EPS"] = sbo_recent["EPS"].map(lambda x: _fmt_table_number(x, 2))
+            st.dataframe(sbo_recent, width="stretch", hide_index=True)
+            st.caption("EPS-vekst vises som N/M når sammenligningsperioden har negativ eller nær null EPS.")
 
             st.subheader("Mål og prosjektstyring")
             target_df = pd.DataFrame([
@@ -7058,7 +8496,7 @@ elif side == "Selskaper":
             st.caption(
                 "EPS 2026E er satt til 2,73 NOK basert på siste tilgjengelige analytikerkonsensus. "
                 "Boligutvikling er syklisk, så EPS og multipler kan variere mye mellom år. "
-                "Vekst og P/E er derfor justerbare scenarioforutsetninger."
+                "Omsetningsvekst, operativ margin og P/E er derfor justerbare scenarioforutsetninger."
             )
 
             v = info["valuation"]
@@ -7084,27 +8522,16 @@ elif side == "Selskaper":
                 "Avkastningskrav",
                 min_value=0.0,
                 max_value=30.0,
-                value=10.0,
+                value=float(v.get("required_return", 10.0)),
                 step=1.0,
                 format="%.0f",
                 key="sbo_required_return",
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input(
-                "Bear vekst", value=float(v["growth_bear"]),
-                step=1.0, format="%.0f", key="sbo_gb"
-            )
-            gbase = g2.number_input(
-                "Base vekst", value=float(v["growth_base"]),
-                step=1.0, format="%.0f", key="sbo_gbase"
-            )
-            gbull = g3.number_input(
-                "Bull vekst", value=float(v["growth_bull"]),
-                step=1.0, format="%.0f", key="sbo_gbull"
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
             )
 
             st.markdown("**P/E i målåret**")
@@ -7134,6 +8561,7 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input(
                 "Kjøpsnivå (NOK)", value=float(sbo["buy_level"]),
                 step=1.0, format="%.0f", key="sbo_buy"
@@ -7146,6 +8574,7 @@ elif side == "Selskaper":
                 "Maks P/E underveis", value=float(sbo["max_pe_underway"]),
                 step=1.0, format="%.0f", key="sbo_maxpe"
             )
+            render_valuation_save_controls(selskap)
 
             target_year = 2028
             years_to_target = target_year - 2026
@@ -7337,6 +8766,7 @@ elif side == "Selskaper":
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(stb["annual"]).copy()
+            annual_df = add_eps_growth_after_column(annual_df, "Cash EPS", "EPS vekst")
             for col in ["Konsernresultat", "Driftsresultat", "AUM mrd."]:
                 annual_df[col] = annual_df[col].map(lambda x: f"{x:,.0f}".replace(",", " "))
             annual_df["Cash EPS"] = annual_df["Cash EPS"].map(lambda x: f"{x:.2f}".replace(".", ","))
@@ -7349,6 +8779,45 @@ elif side == "Selskaper":
                 "Konsernresultatet i 2024 inkluderte en gevinst på 1 047 MNOK fra salget "
                 "av Storebrand Helseforsikring."
             )
+
+            st.subheader("2026 – kvartal/H1")
+            stb_q1_group_profit = stb["h1"]["group_profit"] - stb["q2"]["group_profit"]
+            stb_q1_operating_profit = stb["h1"]["operating_profit"] - stb["q2"]["operating_profit"]
+            stb_q1_eps = stb["h1"]["cash_eps"] - stb["q2"]["cash_eps"]
+            stb_q1_insurance = stb["h1"]["insurance_result"] - stb["q2"]["insurance_result"]
+            stb_recent = _recent_table([
+                {
+                    "Periode": "Q1 2026",
+                    "Konsernresultat (MNOK)": stb_q1_group_profit,
+                    "Driftsresultat (MNOK)": stb_q1_operating_profit,
+                    "Cash EPS": stb_q1_eps,
+                    "EPS vekst": _derive_q1_eps_growth(
+                        stb["h1"]["cash_eps"], stb["q2"]["cash_eps"],
+                        stb["h1_yoy"]["cash_eps"], stb["q2_yoy"]["cash_eps"],
+                    ),
+                    "Forsikringsresultat (MNOK)": stb_q1_insurance,
+                },
+                {
+                    "Periode": "Q2 2026",
+                    "Konsernresultat (MNOK)": stb["q2"]["group_profit"],
+                    "Driftsresultat (MNOK)": stb["q2"]["operating_profit"],
+                    "Cash EPS": stb["q2"]["cash_eps"],
+                    "EPS vekst": _extract_eps_yoy_text(stb["q2_yoy"]["cash_eps"]),
+                    "Forsikringsresultat (MNOK)": stb["q2"]["insurance_result"],
+                },
+                {
+                    "Periode": "H1 2026",
+                    "Konsernresultat (MNOK)": stb["h1"]["group_profit"],
+                    "Driftsresultat (MNOK)": stb["h1"]["operating_profit"],
+                    "Cash EPS": stb["h1"]["cash_eps"],
+                    "EPS vekst": _extract_eps_yoy_text(stb["h1_yoy"]["cash_eps"]),
+                    "Forsikringsresultat (MNOK)": stb["h1"]["insurance_result"],
+                },
+            ])
+            for col in ["Konsernresultat (MNOK)", "Driftsresultat (MNOK)", "Forsikringsresultat (MNOK)"]:
+                stb_recent[col] = stb_recent[col].map(lambda x: _fmt_table_number(x, 0))
+            stb_recent["Cash EPS"] = stb_recent["Cash EPS"].map(lambda x: _fmt_table_number(x, 2))
+            st.dataframe(stb_recent, width="stretch", hide_index=True)
 
             st.subheader("2028-mål og kapitalallokering")
             target_df = pd.DataFrame([
@@ -7403,19 +8872,14 @@ elif side == "Selskaper":
             )
             required_return = c2.number_input(
                 "Avkastningskrav", min_value=0.0, max_value=30.0,
-                value=10.0, step=1.0, format="%.0f", key="stb_required_return"
+                value=float(v.get("required_return", 10.0)), step=1.0, format="%.0f", key="stb_required_return"
             )
             c3.metric("Målår", "2028")
 
-            st.markdown("**EPS-vekst per år**")
-            render_valuation_history_context(selskap, "growth")
-            g1, g2, g3 = st.columns(3)
-            gb = g1.number_input("Bear vekst", value=float(v["growth_bear"]),
-                                 step=1.0, format="%.0f", key="stb_gb")
-            gbase = g2.number_input("Base vekst", value=float(v["growth_base"]),
-                                    step=1.0, format="%.0f", key="stb_gbase")
-            gbull = g3.number_input("Bull vekst", value=float(v["growth_bull"]),
-                                    step=1.0, format="%.0f", key="stb_gbull")
+            render_revenue_growth_inputs(selskap)
+            eps_bear, eps_base, eps_bull, gb, gbase, gbull = render_margin_and_implied_eps(
+                selskap, eps_2026, periods=2
+            )
 
             st.markdown("**P/E i målåret**")
             render_valuation_history_context(selskap, "pe")
@@ -7437,12 +8901,14 @@ elif side == "Selskaper":
             st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("Cash EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
+            render_consensus_eps(selskap, s1)
             buy_level = s2.number_input("Kjøpsnivå (NOK)", value=float(stb["buy_level"]),
                                         step=5.0, format="%.0f", key="stb_buy")
             sell_level = s3.number_input("Reduser/salgsnivå (NOK)", value=float(stb["sell_level"]),
                                          step=5.0, format="%.0f", key="stb_sell")
             max_pe = s4.number_input("Maks P/E underveis", value=float(stb["max_pe_underway"]),
                                      step=1.0, format="%.0f", key="stb_maxpe")
+            render_valuation_save_controls(selskap)
 
             years_to_target = 2
 
@@ -7545,7 +9011,7 @@ elif side == "Selskaper":
                 f"{max_pe:.0f}x eller høyere."
             )
 
-    elif selskap not in ("NORBIT", "Cambi", "Kitron", "NOTE"):
+    elif selskap not in ("NORBIT", "Cambi", "Endúr", "Kitron", "LINK Mobility", "NOTE"):
         st.info(
             "Strukturen er klar. Dette selskapet fylles med faktiske data "
             "etter hvert som vi kvalitetssikrer nøkkeltallene."
@@ -7784,7 +9250,43 @@ elif side == "Selskaper":
             st.subheader("Nøkkeltall – utvikling")
 
             key_rows = []
+            annual_eps_by_year = {
+                str(row["Periode"]): row.get("EPS")
+                for row in info["financials"]
+                if str(row.get("Periode", "")).isdigit()
+            }
+            latest_period = info.get("_latest_period", "Q2 2026")
+            ytd_period = info.get("_ytd_label", "H1 2026")
+
+            eps_growth_overrides = info.get("_eps_growth_by_period", {})
+
             for row in info["financials"]:
+                period = str(row["Periode"])
+                eps_growth = eps_growth_overrides.get(period, "–")
+
+                if eps_growth == "–" and period.isdigit():
+                    prev_eps = annual_eps_by_year.get(str(int(period) - 1))
+                    if prev_eps is not None:
+                        eps_growth = _eps_growth_text(row.get("EPS"), prev_eps)
+                elif eps_growth == "–" and period.startswith("Q1 "):
+                    eps_lookup = {
+                        str(item["Periode"]): item.get("EPS")
+                        for item in info["financials"]
+                    }
+                    q2_eps = eps_lookup.get(latest_period)
+                    h1_eps = eps_lookup.get(ytd_period)
+                    if q2_eps is not None and h1_eps is not None:
+                        eps_growth = _derive_q1_eps_growth(
+                            h1_eps,
+                            q2_eps,
+                            info.get("h1_yoy", {}).get("eps"),
+                            info.get("q2_yoy", {}).get("eps"),
+                        )
+                elif eps_growth == "–" and period == latest_period:
+                    eps_growth = _extract_eps_yoy_text(info.get("q2_yoy", {}).get("eps"))
+                elif eps_growth == "–" and period == ytd_period:
+                    eps_growth = _extract_eps_yoy_text(info.get("h1_yoy", {}).get("eps"))
+
                 key_rows.append({
                     "Periode": row["Periode"],
                     f"Omsetning ({million_unit})": row["Omsetning"],
@@ -7792,18 +9294,40 @@ elif side == "Selskaper":
                     f"EBIT ({million_unit})": row["EBIT"],
                     "EBIT-margin": row["EBIT-margin"],
                     "EPS": row["EPS"],
+                    "EPS vekst": eps_growth,
                 })
 
             df_fin = pd.DataFrame(key_rows)
-            st.dataframe(
-                df_fin,
-                width="stretch",
-                hide_index=True
-            )
+
+            # Samme struktur som på de øvrige selskapssidene: helår for seg,
+            # og inneværende års kvartals-/H1-tall i en egen tabell.
+            annual_mask = df_fin["Periode"].astype(str).str.fullmatch(r"\d{4}")
+            df_annual = df_fin.loc[annual_mask].copy()
+            df_recent = df_fin.loc[~annual_mask].copy()
+
+            st.subheader("Årsutvikling")
+            if not df_annual.empty:
+                st.dataframe(
+                    df_annual,
+                    width="stretch",
+                    hide_index=True
+                )
+            else:
+                st.caption("Ingen helårstall registrert.")
+
+            st.subheader("2026 – kvartal/H1")
+            if not df_recent.empty:
+                st.dataframe(
+                    df_recent,
+                    width="stretch",
+                    hide_index=True
+                )
+            else:
+                st.caption("Ingen kvartalstall registrert.")
 
             st.caption(
-                "Års- og kvartalstall vises samlet for rask sammenligning. "
-                "Neste steg blir å legge inn 2026E–2028E som egne estimatkolonner."
+                "Helår og kvartal/H1 vises separat for enklere sammenligning. "
+                "EPS-vekst sammenlignes mot tilsvarende periode året før når datagrunnlaget finnes."
             )
 
             st.subheader("Segmentdata – Q2 2026 (sist registrert)")
@@ -8548,35 +10072,9 @@ elif side == "Selskaper":
                         key=f"{widget_prefix}_required_return"
                     )
 
-                    st.markdown("**EPS-vekst per år**")
-                    render_valuation_history_context(selskap, "growth")
-                    g1, g2, g3 = st.columns(3)
-                    growth_bear = g1.number_input(
-                        "Bear vekst",
-                        min_value=-20.0,
-                        max_value=100.0,
-                        value=float(round(info["valuation"]["growth_bear"])),
-                        step=1.0,
-                        format="%.0f",
-                        key=f"{widget_prefix}_growth_bear"
-                    )
-                    growth_base = g2.number_input(
-                        "Base vekst",
-                        min_value=-20.0,
-                        max_value=100.0,
-                        value=float(round(info["valuation"]["growth_base"])),
-                        step=1.0,
-                        format="%.0f",
-                        key=f"{widget_prefix}_growth_base"
-                    )
-                    growth_bull = g3.number_input(
-                        "Bull vekst",
-                        min_value=-20.0,
-                        max_value=100.0,
-                        value=float(round(info["valuation"]["growth_bull"])),
-                        step=1.0,
-                        format="%.0f",
-                        key=f"{widget_prefix}_growth_bull"
+                    render_revenue_growth_inputs(selskap)
+                    eps_bear, eps_base, eps_bull, growth_bear, growth_base, growth_bull = render_margin_and_implied_eps(
+                        selskap, eps_2026, periods=2
                     )
 
                     st.markdown("**P/E i målåret**")
@@ -8613,9 +10111,7 @@ elif side == "Selskaper":
                     # Egne arbeidsnivåer på vei mot 2028.
                     # Disse endrer ikke selve bear/base/bull-verdsettelsen over.
                     st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-                    strategy_eps_2028_default = (
-                        eps_2026 * (1 + growth_base / 100) ** 2
-                    )
+                    strategy_eps_2028_default = eps_base
                     strategy_base_value_2028 = strategy_eps_2028_default * pe_base
 
                     s1, s2, s3, s4 = st.columns(4)
@@ -8625,6 +10121,7 @@ elif side == "Selskaper":
                         "EPS 2028E – vårt scenario",
                         f"{strategy_eps_2028:.2f}".replace(".", ",")
                     )
+                    render_consensus_eps(selskap, s1)
 
                     buy_level = s2.number_input(
                         f"Kjøpsnivå ({currency})",
@@ -8662,6 +10159,7 @@ elif side == "Selskaper":
                         format="%.0f",
                         key=f"{widget_prefix}_max_pe_underway"
                     )
+                    render_valuation_save_controls(selskap)
 
                     buy_pe_2028 = buy_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0
                     sell_pe_2028 = sell_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0

@@ -1,0 +1,20 @@
+{
+  "companies": {
+    "NORBIT": {
+      "reference_price": 162.0,
+      "eps_2026": 8.0,
+      "growth_bear": 7.0,
+      "growth_base": 20.0,
+      "growth_bull": 24.0,
+      "pe_bear": 17.0,
+      "pe_base": 21.0,
+      "pe_bull": 25.0,
+      "required_return": 10.0,
+      "target_year": 2028,
+      "buy_level": 146.0,
+      "sell_level": 299.0,
+      "max_pe_underway": 40.0
+    }
+  },
+  "updated_at": "2026-09-18T11:45:39+02:00"
+}
