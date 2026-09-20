@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "20.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "eb08c5c3a4019730c3c5b97d90d93bd1407b8c7221cb4b0ff258e9994e978128",
+    "content_hash": "a95ff522d392f5e649ad48117c436f40a30f3beeb6808cf6f9eb555dd077d0ea",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "20.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "770aedec125f799c9719c2c355e78cc18eb63192821897ccb733f64095ddca07",
+    "content_hash": "4ac829de5db27880bff35d33d1569ae48446525d32c0a976b0b04e65c1165a58",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "20.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "d6200219a427479def10ba033a68c78c9ee7bd1b7029c65127564f1e19d533e2",
+    "content_hash": "32c460026e8cefd8622a01ef37ebf1d99f83075fc35911d810131de8ac4baa82",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
