@@ -14,13 +14,12 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "21.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "1792f9a6f284c7e2524e616c313cd40b8e26dd1a856631d90773a056e78cbeec",
+    "content_hash": "494addc0b1781f77d057d7a6119954389bd1311894f551bddcaa38fe6fbc36ee",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
-      "https://app.govly.com/public/opportunities/16935200",
-      "https://groundintel.ca/tenders"
+      "https://app.govly.com/public/opportunities/16935200"
     ],
-    "last_source_change": "20.09.2026",
+    "last_source_change": "21.09.2026",
     "review_note": "Kildene for Clarkson WRRF – Peel Region, Ontario er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "rosedale_ntp": {
@@ -62,7 +61,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "21.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "7cf1f9cdc258770630a8e03b5b46b57d35717db86e79ebf035b64eff98a198fc",
+    "content_hash": "c5fceac69b5b90088175630b4ab540d118835e0c59b27c97e36df2d3cb00f6d8",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +86,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "21.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "8e1c05e86d361fc20f0547e6806678f6a4d0e0ba2d7ca6b8f245a356eaf35979",
+    "content_hash": "3e123de24c61bc3c2490bf8e4ad215bb396a2627e287acd9014a2a5a2e2243c4",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +109,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "21.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "3692f37459abd31dc6c21c2737fec9003ea63af23ba9ca35eb746757ff7b5535",
+    "content_hash": "61036be423dd38a8d1c8ff90b0035a44d49f9dc79028ab08e10bfef494db2192",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
