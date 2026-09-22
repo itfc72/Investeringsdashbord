@@ -477,6 +477,8 @@ def _eps_growth_text(current, previous):
     except (TypeError, ValueError):
         return "–"
 
+    if pd.isna(current) or pd.isna(previous):
+        return "–"
     if previous <= 0 or current < 0:
         return "N/M"
     if previous == 0:
@@ -561,10 +563,327 @@ def _fmt_table_number(value, decimals=1):
     return f"{float(value):,.{decimals}f}".replace(",", " ").replace(".", ",")
 
 
+def _fmt_pct_or_dash(value, decimals=1):
+    if value is None or pd.isna(value):
+        return "–"
+    return f"{float(value):.{decimals}f}%".replace(".", ",")
+
+
+def _fmt_x_or_dash(value, decimals=1):
+    if value is None or pd.isna(value):
+        return "–"
+    return f"{float(value):.{decimals}f}x".replace(".", ",")
+
+
+def _fmt_bn_or_dash(value, decimals=1):
+    if value is None or pd.isna(value):
+        return "–"
+    return f"{float(value):.{decimals}f} mrd.".replace(".", ",")
+
+
+def _fmt_members_or_dash(value):
+    if value is None or pd.isna(value):
+        return "–"
+    return f"{float(value):.0f} 000"
+
+
 def _recent_table(rows):
     """Lag standardisert tabell for Q1/Q2/H1."""
     return pd.DataFrame(rows)
 
+
+
+# =========================================================
+# OVERSIKT V2 – SELSKAP, BRANSJE OG KONKURRENTBILDE
+# =========================================================
+
+OVERVIEW_V2 = {
+    "B2 Impact": {
+        "status": [("ERC", "28,9 mrd. NOK"), ("Leverage", "2,1x"), ("EPS-mål 2026", "2,25 NOK")],
+        "company": "B2 Impact kjøper hovedsakelig misligholdte og usikrede låneporteføljer fra banker og finansinstitusjoner og krever dem inn over mange år. Selskapet kombinerer egne porteføljer med servicing for tredjeparter og joint ventures.",
+        "industry": "Verdiskapingen i NPL-markedet kommer fra riktig kjøpspris, presis modellering av fremtidige innbetalinger, effektiv innkreving og billig finansiering. Bankenes kapitalkrav og behov for å rydde misligholdte lån skaper et strukturelt tilbud av porteføljer.",
+        "position": "B2 er en bred pan-europeisk aktør med stor eksponering mot usikret gjeld. Axactor er den mest direkte nordiske børsnoterte konkurrenten, mens Intrum og Hoist er større europeiske referanseaktører. B2s viktigste relative styrker er geografisk spredning, lokal innkrevingskompetanse og et stort historisk datagrunnlag for prising.",
+        "growth": ["Høyere porteføljeinvesteringer øker fremtidige cash collections og EPS.", "Collection performance over plan kan gi positive revalueringer.", "Lavere finansieringskostnad gir direkte utslag på nettoresultatet.", "Automatisering og AI kan redusere kostnaden per innkrevd krone."],
+        "risks": ["For høy pris på nye porteføljer.", "Lavere innkreving enn modellert.", "Høyere finansieringskostnad eller svakere kapitaltilgang.", "Strengere regulering av inkasso og forbrukerbeskyttelse."],
+        "watch": ["ERC og investeringer", "Collection performance", "Leverage", "Finansieringskostnad", "EPS/ROE"],
+        "peer_note": "Inkasso/NPL sammenlignes best på cash collections/inntekter, leverage og collection performance fremfor vanlig EBIT-margin.",
+        "peers": [
+            {"Selskap":"B2 Impact","2025 størrelse":"Cash collections 6,2 mrd. NOK","Vekst":"EPS CAGR 5 år 4,5%","Lønnsomhet":"Cash EBITDA 4,7 mrd. NOK","Bal./risiko":"Leverage 2,1x","Bransje-KPI":"ERC 28,8 mrd."},
+            {"Selskap":"Axactor","2025 størrelse":"Revenue €258m","Vekst":"Omstilling / kapitalreset","Lønnsomhet":"EBITDA €133m","Bal./risiko":"ca. 2,3x pro forma","Bransje-KPI":"NPL collection perf. 102%"},
+            {"Selskap":"Intrum","2025 størrelse":"Income SEK 17,0 mrd.","Vekst":"Kapitallett omstilling","Lønnsomhet":"Cash EBITDA SEK 5,3 mrd.","Bal./risiko":"Leverage 4,8x","Bransje-KPI":"20 markeder"},
+        ],
+    },
+    "Bakkafrost": {
+        "status": [("Omsetning 2025", "7,0 mrd. DKK"), ("Slaktevolum", "106,8k tonn"), ("Op. EBIT-margin", "12,7%")],
+        "company": "Bakkafrost er en vertikalt integrert lakseprodusent med oppdrett på Færøyene og i Skottland, samt fôr, slakteri og videreforedling. Færøyene er den viktigste lønnsomhetsmotoren.",
+        "industry": "Lakseoppdrett er biologisk og prisdrevet. Inntjeningen påvirkes av laksepris, slaktevolum, fôrkost, dødelighet, lus, kvalitet og regulering. Begrenset global tilbudsvekst gjør kostnadsposisjon og biologi spesielt viktig.",
+        "position": "Bakkafrost er langt mindre enn Mowi og SalMar, men har en sterk integrert posisjon og historisk god biologi på Færøyene. Skottland er forbedringscaset. Mowi har størst global skala, mens SalMar ofte brukes som nordisk referanse for kostnad og biologisk kvalitet.",
+        "growth": ["Høyere slaktevolum fra investeringer i smolt og kapasitet.", "Bedre biologi og lavere kost/kg i Skottland.", "Mer videreforedling og vertikal integrasjon kan stabilisere marginene.", "Normalisering i laksepris etter perioder med høy tilbudsvekst."],
+        "risks": ["Biologiske hendelser og sykdom.", "Lav laksepris eller høy fôrkost.", "Svakere utvikling i Skottland.", "Regulatoriske skatter og produksjonsbegrensninger."],
+        "watch": ["Slaktevolum", "Op. EBIT/kg", "Kost/kg", "Superior-andel", "Skottland-margin"],
+        "peer_note": "For oppdrett er slaktevolum og operasjonell EBIT-margin/EBIT per kg viktigere enn vanlig EPS-CAGR alene.",
+        "peers": [
+            {"Selskap":"Bakkafrost","Omsetning 2025":"DKK 7,0 mrd.","Omsetning CAGR":"5 år 8,5%","Margin":"Op. EBIT snitt 17,5%","EPS CAGR":"5 år -14,0%","Bransje-KPI":"106,8k tonn"},
+            {"Selskap":"Mowi","Omsetning 2025":"€5,73 mrd.","Omsetning CAGR":"ca. 8%","Margin":"Op. EBIT 12,7% i 2025","EPS CAGR":"Syklisk / N/M","Bransje-KPI":"559k tonn"},
+            {"Selskap":"SalMar","Omsetning 2025":"NOK 27,4 mrd.","Omsetning CAGR":"ca. tosifret","Margin":"Op. EBIT 14,1% i 2025","EPS CAGR":"Syklisk / N/M","Bransje-KPI":"284,5k tonn"},
+            {"Selskap":"Lerøy","Omsetning 2025":"NOK 34,4 mrd.","Omsetning CAGR":"4 år ca. 10,4%","Margin":"Op. EBIT 7,3% i 2025","EPS CAGR":"N/M pga. skatt/syklikalitet","Bransje-KPI":"Integrert sjømat"},
+        ],
+    },
+    "Byggmax": {
+        "status": [("Omsetning 2025", "SEK 6,1 mrd."), ("EBITA-margin", "5,9%"), ("Netto gjeld", "SEK 354m")],
+        "company": "Byggmax er en nordisk lavpriskjede for byggevarer rettet mot gjør-det-selv-kunder. Modellen bygger på et smalt, høyroterende sortiment, enkle butikker og høy prisbevissthet.",
+        "industry": "Byggevarehandel følger boligaktivitet, renovering, renter og husholdningenes kjøpekraft. Lagerstyring, bruttofortjeneste og kostnadsdisiplin er avgjørende fordi marginene er lave.",
+        "position": "Byggmax er mindre enn brede europeiske aktører som Hornbach og Kesko, men har en tydelig lavprisprofil i Norden. Konkurransen kommer også fra Bauhaus, K-Rauta og lokale byggevarekjeder.",
+        "growth": ["Normalisering i nordisk oppussing og boligmarked.", "Bedre butikkproduktivitet og sortimentsstyring.", "Høyere bruttomargin ved bedre miks og mindre kampanjetrykk.", "Lav gjeld gir rom for utbytte og selektiv vekst."],
+        "risks": ["Svak boligaktivitet og forbrukertillit.", "Prispress fra store kjeder.", "Vær og sesongvariasjon.", "Feil lagerbeholdning i et syklisk marked."],
+        "watch": ["Like-for-like salg", "Bruttomargin", "EBITA-margin", "Lager", "Netto gjeld"],
+        "peer_note": "Margin og like-for-like-salg er viktigere enn høy absolutt vekst i denne bransjen.",
+        "peers": [
+            {"Selskap":"Byggmax","Omsetning 2025":"SEK 6,1 mrd.","Omsetning CAGR":"5 år -2,1%","EBIT-margin":"5 år 5,4%","EPS CAGR":"5 år -24,8%","Bransje-KPI":"LFL +3,4% 2025"},
+            {"Selskap":"Hornbach","Omsetning 2025/26":"€6,43 mrd.","Omsetning CAGR":"5 år ca. 3,4%","EBIT-margin":"5 år ca. 4,7%","EPS CAGR":"ca. lav ensifret","Bransje-KPI":"Adj. EBIT 4,1%"},
+            {"Selskap":"Kesko","Omsetning 2025":"€12,47 mrd.","Omsetning CAGR":"4 år ca. 2,5%","EBIT-margin":"5 år ca. 6,1%","EPS CAGR":"4 år ca. -7%","Bransje-KPI":"B2B/B2C + food mix"},
+        ],
+    },
+    "Cambi": {
+        "status": [("Omsetning 2025", "1,07 mrd. NOK"), ("Ordrebok Q2 26", "1,48 mrd. NOK"), ("5y omsetning CAGR", "23,8%")],
+        "company": "Cambi leverer termisk hydrolyse (THP) til renseanlegg og biosolidsbehandling. Selskapet tjener på prosjektleveranser, service og den voksende Solutions-virksomheten rundt organisk avfall og slam.",
+        "industry": "Markedet drives av strengere miljøkrav, behov for mer biogass, kapasitetsutvidelser ved renseanlegg og bedre håndtering av biosolids. Store prosjekter gjør kvartalene ujevne.",
+        "position": "Cambi er en global nisjeleder innen THP. Det finnes få rene børsnoterte direkte konkurrenter; Xylem og Veolia Water Technologies er større vann-/avløpsteknologiselskaper og fungerer mest som brede referanser, ikke rene THP-peers.",
+        "growth": ["AMP8 i Storbritannia og nye europeiske biosolidsprosjekter.", "Flere THP-referanser i India, New Zealand, Midtøsten og Nord-Amerika.", "Større installert base gir mer service og oppgraderinger.", "Høyere backlog kan gi betydelig operasjonell gearing når prosjektene inntektsføres."],
+        "risks": ["Prosjektforsinkelser og ujevn inntektsføring.", "Lav margin i enkelte teknologiprosjekter.", "Kunde- og anbudsrisiko.", "Arbeidskapital kan svinge kraftig mellom milepæler."],
+        "watch": ["Ordreinngang", "Backlog", "Technology-margin", "Service/Solutions", "Konvertering av engineering til full ordre"],
+        "peer_note": "Cambi har ingen god børsnotert pure-play peer. Xylem og Veolia Water Technologies brukes derfor kun som brede vann-teknologireferanser.",
+        "peers": [
+            {"Selskap":"Cambi","Omsetning 2025":"NOK 1,07 mrd.","Omsetning CAGR":"5 år 23,8%","EBIT-margin":"5 år 11,7%","EPS CAGR":"N/M","Bransje-KPI":"THP / backlog"},
+            {"Selskap":"Xylem","Omsetning 2025":"$9,04 mrd.","Omsetning CAGR":"ca. 15% inkl. M&A","EBIT-margin":"2025 13,5% / adj. 17,8%","EPS CAGR":"ca. tosifret","Bransje-KPI":"Global water tech"},
+            {"Selskap":"Veolia Water Tech","Omsetning 2025":"€4,95 mrd.","Omsetning CAGR":"Ikke separat 5y","EBIT-margin":"Ikke separat oppgitt","EPS CAGR":"Ikke separat","Bransje-KPI":"+3,6% LFL vekst"},
+        ],
+    },
+    "Endúr": {
+        "status": [("Omsetning 2025", "6,4 mrd. NOK"), ("EBIT-margin 2025", "5,0%"), ("Ordrebok", "8,5 mrd. NOK")],
+        "company": "Endúr er et industrielt konsern innen marine infrastruktur, verft/service og akvakultur. Veksten er kommet både organisk og gjennom oppkjøp, og konsernet har bygget en stor ordrebok.",
+        "industry": "Aktiviteten drives av vedlikeholdsbehov i maritim sektor, forsvar/offshore, oppgraderinger av infrastruktur og investeringer i akvakultur. Prosjektgjennomføring og kapasitetsutnyttelse bestemmer marginene.",
+        "position": "Endúr er bredere enn rene akvakulturteknologiselskaper. AKVA group er relevant i oppdrettsteknologi, mens Nekkar er en mindre maritim teknologireferanse. Direkte peers varierer derfor mellom segmentene.",
+        "growth": ["Stor ordrebok gir god omsetningsdekning.", "Kryssalg og integrasjon av oppkjøpte selskaper.", "Forsvar, havbruk og maritim infrastruktur har strukturell investeringsvekst.", "Marginløft ved høyere kapasitetsutnyttelse og bedre prosjektmiks."],
+        "risks": ["Prosjektoverskridelser.", "Integrasjonsrisiko etter oppkjøp.", "Arbeidskapital og garantiforpliktelser.", "Syklisk aktivitet i enkelte maritime markeder."],
+        "watch": ["Ordreinngang", "Backlog", "EBITA-margin", "Cash conversion", "Netto gjeld"],
+        "peer_note": "Endúr har flere ulike segmenter; AKVA group og Nekkar er relevante del-peers, men ikke perfekte konsernpeers.",
+        "peers": [
+            {"Selskap":"Endúr","Omsetning 2025":"NOK 6,4 mrd.","Omsetning CAGR":"3 år / M&A-drevet 80,1%","EBIT-margin":"5 år 4,8%","EPS CAGR":"N/M","Bransje-KPI":"Backlog 8,5 mrd."},
+            {"Selskap":"AKVA group","Omsetning 2025":"NOK 4,4 mrd.","Omsetning CAGR":"4 år ca. 9%","EBIT-margin":"2025 6,3%","EPS CAGR":"N/M","Bransje-KPI":"Sea/Land/Digital"},
+            {"Selskap":"Nekkar","Omsetning 2025":"NOK 0,57 mrd.","Omsetning CAGR":"5 år ca. 10%","EBIT-margin":"2025 svak / EBITDA nær 0","EPS CAGR":"N/M","Bransje-KPI":"Netto kontant"},
+        ],
+    },
+    "Kitron": {
+        "status": [("Omsetning 2025", "€738m"), ("EBIT-margin 2025", "8,7%"), ("5y EPS CAGR", "15,4%")],
+        "company": "Kitron er en nordisk EMS-leverandør som produserer elektronikk og komplette systemer for kunder innen forsvar, industri, medisinsk teknologi, elektrifisering og connectivity. Kundene outsourcer design, industrialisering, innkjøp og produksjon.",
+        "industry": "EMS-markedet drives av outsourcing, nearshoring, kortere forsyningskjeder og høyere elektronikkinnhold i produkter. Skala, kundemiks, fabrikkutnyttelse og innkjøpskraft bestemmer marginen.",
+        "position": "Kitron ligger mellom NOTE og de største europeiske EMS-aktørene i størrelse. NOTE, Incap og Scanfil er de mest relevante børsnoterte nordiske sammenligningene. Kitron har en større forsvars-/aerospaceeksponering enn mange peers og bredere fabrikkfotavtrykk enn NOTE.",
+        "growth": ["Økende forsvarsbudsjetter og mer elektronikk i forsvarssystemer.", "Nearshoring fra Asia til Europa/Nord-Amerika.", "Skalafordeler når nye fabrikker fylles.", "M&A og økt share-of-wallet hos eksisterende kunder."],
+        "risks": ["Kundekonsentrasjon.", "Volatil komponentetterspørsel.", "Prispress i EMS-kontrakter.", "For høy kapasitet hvis industrisyklusen svekkes."],
+        "watch": ["Ordrebok", "Forsvarsandel", "Organisk vekst", "EBIT-margin", "Netto gjeld/EBITDA"],
+        "peer_note": "EMS-peers er relativt sammenlignbare. Tabellen bruker 2025 omsetning og siste tilgjengelige historiske periode; Incap/Scanfil rapporterer i EUR.",
+        "peers": [
+            {"Selskap":"Kitron","Omsetning 2025":"€738m","Omsetning CAGR":"5 år 14,4%","EBIT-margin":"5 år 7,7%","EPS CAGR":"5 år 15,4%","Bransje-KPI":"Forsvar + industrimiks"},
+            {"Selskap":"NOTE","Omsetning 2025":"SEK 3,81 mrd.","Omsetning CAGR":"5 år 15,3%","EBIT-margin":"5 år 9,6%","EPS CAGR":"5 år 19,2%","Bransje-KPI":"Høy margin / Norden-UK"},
+            {"Selskap":"Incap","Omsetning 2025":"€214,6m","Omsetning CAGR":"5 år ca. 15,0%","EBIT-margin":"5 år ca. 13,5%","EPS CAGR":"5 år ca. 3,3%","Bransje-KPI":"Netto kontant / høy margin"},
+            {"Selskap":"Scanfil","Omsetning 2025":"€797m","Omsetning CAGR":"4 år ca. 3,5%","EBIT-margin":"5 år ca. 6,6%","EPS CAGR":"4 år ca. 8,2%","Bransje-KPI":"Stor industriell skala"},
+        ],
+    },
+    "LINK Mobility": {
+        "status": [("Omsetning 2025", "7,1 mrd. NOK"), ("EBITDA-margin", "11,6%"), ("Meldinger", ">23 mrd.")],
+        "company": "LINK Mobility leverer CPaaS og mobilmeldinger for bedrifter: SMS, RCS, WhatsApp, e-post og automatisert kundedialog. Forretningsmodellen kombinerer høy meldingsvolum med programvare og mer verdifulle OTT-kanaler.",
+        "industry": "CPaaS vokser med digital kundekommunikasjon, autentisering, RCS/OTT og automatisering. Bruttomargin og produktmiks er viktigere enn ren omsetning fordi pass-through trafikk kan gi store inntekter med lav margin.",
+        "position": "LINK er mindre enn Sinch, men har sterk europeisk posisjon og høy lokal markedsandel i flere land. Sinch er den viktigste børsnoterte nordiske globale peer; CM.com er en mindre europeisk CPaaS-peer.",
+        "growth": ["RCS og OTT gir høyere verdi per melding.", "Kryssalg av software/automation til eksisterende kundebase.", "M&A i nye geografier.", "Operasjonell gearing når bruttoresultatet vokser raskere enn kostbasen."],
+        "risks": ["Prispress i SMS-trafikk.", "Teleoperatørkostnader.", "Integrasjon av oppkjøp.", "Store kunder kan flytte trafikk mellom leverandører."],
+        "watch": ["Organisk bruttoresultatvekst", "Adj. EBITDA-margin", "Kontraktsvinn", "RCS/OTT-andel", "Netto gjeld"],
+        "peer_note": "For CPaaS er gross profit og justert EBITDA mer informative enn ren omsetning.",
+        "peers": [
+            {"Selskap":"LINK Mobility","Omsetning 2025":"NOK 7,1 mrd.","Omsetning CAGR":"5 år 12,6%","Margin":"EBIT snitt 1,5% / EBITDA 11,6% 2025","EPS CAGR":"N/M","Bransje-KPI":"GP CAGR 2022–25 ca. 13%"},
+            {"Selskap":"Sinch","Omsetning 2025":"SEK 27,1 mrd.","Omsetning CAGR":"M&A-drevet / lav org. vekst","Margin":"Adj. EBITDA 13,3%","EPS CAGR":"N/M","Bransje-KPI":"GP SEK 9,4 mrd."},
+            {"Selskap":"CM.com","Omsetning 2025":"€259m","Omsetning CAGR":"Moderat / negativ 2025","Margin":"Adj. EBITDA €19,8m","EPS CAGR":"N/M","Bransje-KPI":"9,1 mrd. meldinger"},
+        ],
+    },
+    "NORBIT": {
+        "status": [("Omsetning 2025", "2,50 mrd. NOK"), ("EBIT-margin 2025", "22%"), ("5y EPS CAGR", "67,5%")],
+        "company": "NORBIT utvikler sensorer, sonar, GNSS/ITS og elektronikkprodukter. Oceans er teknologikjernen, Connectivity gir skalerbar volumproduksjon, og PIR leverer design/produksjon til blant annet forsvar og sikkerhet.",
+        "industry": "Markedene drives av digitalisering til sjøs, autonome fartøy, havbunnskartlegging, kritisk infrastruktur, bom/telematikk og økte forsvarsbudsjetter. Høy egen teknologiandel gir bedre margin enn tradisjonell kontraktsproduksjon.",
+        "position": "NORBIT er en nisjeaktør med høy vekst og høy margin. Kraken Robotics er en relevant undervanns-/sonarpeer, mens Kongsberg og Teledyne er større og bredere teknologiaktører. NORBITs styrke er kombinasjonen av egen sensor-IP og intern produksjonskompetanse.",
+        "growth": ["Autonome undervannssystemer og maritime droner.", "Forsvar/sikkerhet i PIR.", "Water Linked gir flere produkter per Oceans-kunde.", "Connectivity kan skalere raskt ved store europeiske ordre."],
+        "risks": ["Høy verdsettelse hvis veksten avtar.", "Prosjekt- og kundekonsentrasjon.", "M&A/integrasjon.", "Kapasitetsinvesteringer foran etterspørsel."],
+        "watch": ["Oceans-ordre", "Forsvarsvekst", "EBIT-margin", "ROCE", "Netto gjeld/EBITDA"],
+        "peer_note": "Kongsberg og Teledyne er langt større konsern; Kraken er mer direkte på subsea/sonar. Sammenlign derfor vekst og margin mer enn absolutt størrelse.",
+        "peers": [
+            {"Selskap":"NORBIT","Omsetning 2025":"NOK 2,50 mrd.","Omsetning CAGR":"5 år 32,2%","EBIT-margin":"5 år 16,5%","EPS CAGR":"5 år 67,5%","Bransje-KPI":"ROCE >30% mål"},
+            {"Selskap":"Kraken Robotics","Omsetning 2025":"CAD 102m","Omsetning CAGR":"4 år ca. 41%","Margin":"Adj. EBITDA ca. 19% snitt","EPS CAGR":"N/M","Bransje-KPI":"Subsea / UUV"},
+            {"Selskap":"Kongsberg Gruppen","Omsetning 2025":"NOK 58,6 mrd.","Omsetning CAGR":"4 år ca. 20,8%","EBIT-margin":"5 år ca. 12,3%","EPS CAGR":"Ikke sammenlignbar pga. split","Bransje-KPI":"Backlog NOK 157 mrd."},
+            {"Selskap":"Teledyne","Omsetning 2025":"$6,12 mrd.","Omsetning CAGR":"ca. 7%","EBIT-margin":"2025 18,8%","EPS CAGR":"ca. tosifret","Bransje-KPI":"Imaging/instrumentation"},
+        ],
+    },
+    "NOTE": {
+        "status": [("Omsetning 2025", "SEK 3,81 mrd."), ("EBIT-margin 2025", "10,0%"), ("5y EPS CAGR", "19,2%")],
+        "company": "NOTE er en nordisk/europeisk EMS-leverandør med fokus på high-mix/low-volume elektronikk til industri, medtech, defence og green-tech. Produksjonen ligger nær kundene i Europa.",
+        "industry": "Samme strukturelle drivere som Kitron: outsourcing, nearshoring, høyere elektronikkinnhold og behov for robuste leverandørkjeder. NOTE har normalt høyere margin, men mindre skala.",
+        "position": "NOTE konkurrerer direkte med Kitron, Incap og Scanfil. Selskapet skiller seg ut med høy EBIT-margin og relativt fokusert europeisk footprint, mens Kitron er større og bredere geografisk.",
+        "growth": ["Nearshoring og forsvar/medtech.", "Oppkjøp og nye fabrikker.", "Høyere kapasitetsutnyttelse.", "Kryssalg til større kunder."],
+        "risks": ["Kundekonsentrasjon.", "Industrisyklus.", "M&A/integrasjon.", "Marginpress ved svak kapasitetsutnyttelse."],
+        "watch": ["Organisk vekst", "EBIT-margin", "Defence/medtech", "Cash conversion", "Ordretrend"],
+        "peer_note": "Samme EMS-peergruppe som for Kitron for å gjøre relative forskjeller lett synlige.",
+        "peers": [
+            {"Selskap":"NOTE","Omsetning 2025":"SEK 3,81 mrd.","Omsetning CAGR":"5 år 15,3%","EBIT-margin":"5 år 9,6%","EPS CAGR":"5 år 19,2%","Bransje-KPI":"High-mix / Europa"},
+            {"Selskap":"Kitron","Omsetning 2025":"€738m","Omsetning CAGR":"5 år 14,4%","EBIT-margin":"5 år 7,7%","EPS CAGR":"5 år 15,4%","Bransje-KPI":"Større defence-miks"},
+            {"Selskap":"Incap","Omsetning 2025":"€214,6m","Omsetning CAGR":"5 år ca. 15,0%","EBIT-margin":"5 år ca. 13,5%","EPS CAGR":"5 år ca. 3,3%","Bransje-KPI":"Høyest margin"},
+            {"Selskap":"Scanfil","Omsetning 2025":"€797m","Omsetning CAGR":"4 år ca. 3,5%","EBIT-margin":"5 år ca. 6,6%","EPS CAGR":"4 år ca. 8,2%","Bransje-KPI":"Størst peer"},
+        ],
+    },
+    "Nordic Semiconductor": {
+        "status": [("Omsetning 2025", "$668m"), ("Bruttomargin", "51,8%"), ("Kontanter", "$307m")],
+        "company": "Nordic Semiconductor designer lavenergi trådløse halvledere og SoC-er for Bluetooth Low Energy, cellular IoT, Wi-Fi og nye kortdistanseprotokoller. Selskapet er fabless og bruker eksterne foundries.",
+        "industry": "IoT-halvledere har lange designsirkler og høy FoU-intensitet. Vekst drives av antall tilkoblede enheter, energieffektivitet og nye radiostandarder, mens lagerkorreksjoner kan gi store konjunktursvingninger.",
+        "position": "Nordic er en sterk nisjeleder innen low-power wireless og konkurrerer særlig med Silicon Labs og deler av NXP. NXP er langt større og bredere; Silicon Labs er mer direkte innen trådløs IoT.",
+        "growth": ["Ny nRF54-plattform og nye Wi-Fi/cellular produkter.", "Normalisering etter IoT-lagerkorreksjon.", "Flere protokoller per kunde øker share-of-wallet.", "AI/edge og batteridrevne sensorer øker behovet for energieffektive SoC-er."],
+        "risks": ["Halvledersyklus og kundelagre.", "Høy FoU før inntekter.", "Konkurranse fra større chip-leverandører.", "Foundry/geopolitisk risiko."],
+        "watch": ["Design wins", "Bruttomargin", "nRF54 ramp", "Cellular IoT", "FCF"],
+        "peer_note": "Bruttomargin og FoU-effektivitet er viktigere enn vanlig EBIT-margin i en investeringsfase.",
+        "peers": [
+            {"Selskap":"Nordic Semi","Omsetning 2025":"$668m","Omsetning CAGR":"5 år 10,5%","Margin":"EBIT snitt 6,2% / GM 51,8%","EPS CAGR":"N/M pga. tapsår","Bransje-KPI":"Low-power wireless"},
+            {"Selskap":"Silicon Labs","Omsetning 2025":"$785m","Omsetning CAGR":"Syklisk / porteføljeendring","Margin":"GAAP EBIT -9% / non-GAAP +3%","EPS CAGR":"N/M","Bransje-KPI":"Industrial + Home IoT"},
+            {"Selskap":"NXP","Omsetning 2025":"$12,27 mrd.","Omsetning CAGR":"Moderat","Margin":"GAAP EBIT 24,8%","EPS CAGR":"Positiv, men syklisk","Bransje-KPI":"Auto + Industrial IoT"},
+        ],
+    },
+    "Protector": {
+        "status": [("Premieinntekter 2025", "14,1 mrd. NOK"), ("Combined ratio", "84,7%"), ("ROE", "42,2%")],
+        "company": "Protector er et skadeforsikringsselskap som selger via meglere og agenter til bedrifter, offentlig sektor og affinity-programmer. Strategien er lave kostnader, høy kvalitet og disiplinert prising.",
+        "industry": "Skadeforsikring skaper verdi gjennom premievolum, combined ratio og avkastning på den investerte floaten. Underwriting-disciplin er viktigere enn markedsandel alene.",
+        "position": "Protector er mindre enn Gjensidige, Tryg og Sampo/If, men har vokst raskere og har historisk levert svært lav combined ratio. Broker-modellen og lav kostnadsbase gjør selskapet annerledes enn brede privatkundeselskaper.",
+        "growth": ["Videre vekst i UK og Frankrike.", "Lav kostnadsprosent gir skalaeffekt.", "Prisdisiplin kan holde combined ratio lav.", "Større investeringsportefølje gir mer investeringsresultat over tid."],
+        "risks": ["Store skader og værhendelser.", "For rask vekst med svakere prising.", "Investeringsmarkedsfall.", "Reservestyring og regulatorisk kapital."],
+        "watch": ["Premievekst", "Combined ratio", "Cost ratio", "Solvens", "Investeringsavkastning"],
+        "peer_note": "For forsikring brukes combined ratio, premie-/insurance revenue-vekst, ROE og solvens fremfor EBIT-margin.",
+        "peers": [
+            {"Selskap":"Protector","2025 premie/inntekt":"NOK 14,1 mrd.","Vekst":"5 år 20,7%","Combined ratio":"84,7% (5y snitt 87,2%)","EPS/ROE":"EPS CAGR 21,5% / ROE 42%","Solvens":"219%"},
+            {"Selskap":"Gjensidige","2025 premie/inntekt":"NOK 42,8 mrd.","Vekst":"2022–25 ca. 10% CAGR","Combined ratio":"83,4%","EPS/ROE":"ROE 27,3%","Solvens":"188%"},
+            {"Selskap":"Tryg","2025 premie/inntekt":"Stor nordisk P&C","Vekst":"3,8% LFL 2025","Combined ratio":"80,3%","EPS/ROE":"Sterkt resultat","Solvens":"196%"},
+            {"Selskap":"Sampo","2025 premie/inntekt":"€9,08 mrd. insurance rev.","Vekst":"8% 2025","Combined ratio":"83,6%","EPS/ROE":"Op. EPS €0,50 / ROE 32%","Solvens":"174%"},
+        ],
+    },
+    "SATS": {
+        "status": [("Omsetning 2025", "5,5 mrd. NOK"), ("Medlemmer", "755k"), ("Leverage", "1,1x")],
+        "company": "SATS er den største treningskjeden i Norden med et premium/fullservice-konsept og Fresh Fitness som lavpristilbud. Inntektene er i hovedsak gjentakende medlemsinntekter.",
+        "industry": "Treningsmarkedet drives av medlemsvekst, pris/yield, churn og klubbkapasitet. Når eksisterende klubber fylles, kan ekstra medlemmer gi høy inkrementell margin.",
+        "position": "SATS har en sterk nordisk lokalposisjon. Basic-Fit er Europas store lavprisvekstcase, mens Actic er en mindre nordisk peer. SATS har høyere servicegrad og høyere ARPM enn lavprisaktørene.",
+        "growth": ["Medlemsvekst og høyere ARPM.", "Bedre kapasitetsutnyttelse i eksisterende klubber.", "Selektiv nyåpning og Fresh Fitness.", "Lavere leverage gir lavere finansieringskostnad og mer kapital til aksjonærene."],
+        "risks": ["Svakere forbrukerøkonomi.", "Høy husleie og lønnskost.", "Prispress fra lavprisaktører.", "For aggressiv klubbvekst."],
+        "watch": ["Medlemmer", "ARPM", "EBITDA før IFRS16", "Churn", "Leverage"],
+        "peer_note": "For treningskjeder er medlemsvekst, ARPM/yield, EBITDA less rent og leverage de viktigste sammenligningspunktene.",
+        "peers": [
+            {"Selskap":"SATS","Omsetning 2025":"NOK 5,51 mrd.","Omsetning CAGR":"5 år 9,3%","Margin":"EBIT 5y 7,5% / EBITDA 15,8% 2025","EPS CAGR":"N/M","Bransje-KPI":"755k medlemmer / 1,1x lev."},
+            {"Selskap":"Basic-Fit","Omsetning 2025":"€1,42 mrd.","Omsetning CAGR":"4 år ca. 43%*","Margin":"EBITDA less rent 25%","EPS CAGR":"N/M pga. tapsår","Bransje-KPI":"4,93m owned memberships / 2,7x"},
+            {"Selskap":"Actic","Omsetning 2025":"SEK 695m","Omsetning CAGR":"Lav / porteføljeendring","Margin":"EBITDA ex IFRS16 18%","EPS CAGR":"N/M","Bransje-KPI":"~150k medlemmer"},
+            {"Selskap":"The Gym Group","Omsetning 2025":"£245m","Omsetning CAGR":"Sterk post-covid","Margin":"Adj. EBITDA less rent 23%","EPS CAGR":"N/M","Bransje-KPI":"UK low-cost"},
+        ],
+    },
+    "Selvaag Bolig": {
+        "status": [("Omsetning 2025", "2,1 mrd. NOK"), ("Under bygging", "912 boliger"), ("Tomtebank", "~10,4k boliger")],
+        "company": "Selvaag Bolig utvikler boligprosjekter i de største norske byområdene, særlig Oslo-regionen. Verdiskapingen kommer fra tomtebank, regulering, salg, prosjektmargin og kapitaldisiplin.",
+        "industry": "Boligutvikling er svært rente- og konjunkturfølsomt. Salgstakt før byggestart, byggekost, tomtekost og boligpriser bestemmer lønnsomheten.",
+        "position": "Selvaag er en spesialisert norsk boligutvikler. JM og Bonava er relevante nordiske børsnoterte sammenligninger, men opererer i flere markeder og har ulike regnskapsprinsipper/timing.",
+        "growth": ["Lavere renter kan øke boligsalg og prosjektstarter.", "Stor tomtebank gir opsjonalitet når markedet bedres.", "Høyere volum gir bedre kostnadsabsorpsjon.", "Kapitalfrigjøring fra ferdigstilte prosjekter."],
+        "risks": ["Høye renter og lavt forhåndssalg.", "Byggekostnadsinflasjon.", "Reguleringsforsinkelser.", "Kapitalbinding i tomter/prosjekter."],
+        "watch": ["Solgte boliger", "Produksjonsstarter", "Under bygging", "Prosjektmargin", "Netto gjeld"],
+        "peer_note": "Boligutviklere har store timingforskjeller. Se derfor også på salg, starter og margin, ikke bare EPS-CAGR.",
+        "peers": [
+            {"Selskap":"Selvaag Bolig","Omsetning 2025":"NOK 2,09 mrd.","Omsetning CAGR":"5 år -5,0%","EBIT-margin":"5 år 9,3%","EPS CAGR":"5 år -28,4%","Bransje-KPI":"912 under bygging"},
+            {"Selskap":"JM","Omsetning 2025":"SEK 9,98 mrd.","Omsetning CAGR":"Syklisk / fallende","EBIT-margin":"2025 3,0% (4,0% adj.)","EPS CAGR":"N/M","Bransje-KPI":"2 270 starter"},
+            {"Selskap":"Bonava","Omsetning 2025":"SEK 8,22 mrd. operativt","Omsetning CAGR":"4 år ca. -15%","EBIT-margin":"2025 6,7% operativt","EPS CAGR":"N/M","Bransje-KPI":"2 775 starter totalt"},
+        ],
+    },
+    "Storebrand": {
+        "status": [("AUM 2025", "1 609 mrd. NOK"), ("Cash ROE", "16,0%"), ("Solvens II", "194%")],
+        "company": "Storebrand er et nordisk spare-, pensjons- og kapitalforvaltningskonsern med livsforsikring, pensjon, asset management og skadeforsikring. En stadig større del av verdien kommer fra kapitallette gebyrinntekter.",
+        "industry": "Pensjon og sparing drives av AUM, netto nytegning, gebyrmargin og kostnadsnivå. Solvens og kapitalgenerering avgjør hvor mye som kan deles ut til aksjonærene.",
+        "position": "Storebrand har en sterk posisjon i norsk tjenestepensjon og nordisk kapitalforvaltning. Mandatum er en kapitallett nordisk peer, mens NN Group er en større europeisk liv/pensjonsreferanse.",
+        "growth": ["AUM-vekst og positiv nettoflyt.", "Mer kapitallette produkter med høyere kapitalavkastning.", "Kostnadsdisiplin og skalafordeler.", "Kapitalfrigjøring fra garanterte porteføljer støtter utbytte/tilbakekjøp."],
+        "risks": ["Markedsfall reduserer AUM og gebyrer.", "Rentebevegelser påvirker garantier og solvens.", "Prispress i kapitalforvaltning.", "Regulatoriske kapitalkrav."],
+        "watch": ["AUM", "Nettoflyt", "Cash EPS", "Cash ROE", "Solvens II"],
+        "peer_note": "For liv/pensjon brukes AUM, fee result/capital generation, ROE og solvens fremfor vanlig omsetning og EBIT-margin.",
+        "peers": [
+            {"Selskap":"Storebrand","2025 størrelse":"AUM NOK 1 609 mrd.","Vekst":"AUM CAGR 5 år 10,8%","Lønnsomhet":"Cash EPS 11,25 / ROE 16%","Kapital":"Solvens 194%","Bransje-KPI":"Kapitallett vekst"},
+            {"Selskap":"Mandatum","2025 størrelse":"AUM €15,3 mrd.","Vekst":"AUM +10% 2025","Lønnsomhet":"PBT €182m / EPS €0,31","Kapital":"Solvens 169%","Bransje-KPI":"Fee result +21%"},
+            {"Selskap":"NN Group","2025 størrelse":"Stor europeisk liv/pensjon","Vekst":"OCG +9%","Lønnsomhet":"Operating result €3,0 mrd.","Kapital":"Solvens 220%","Bransje-KPI":"FCF €1,6 mrd."},
+        ],
+    },
+    "Vend": {
+        "status": [("Omsetning 2025", "6,3 mrd. NOK"), ("EBITDA-margin", "33,7%"), ("FCF", "1,25 mrd. NOK")],
+        "company": "Vend eier digitale markedsplasser i Norden, blant annet innen rubrikk, jobb, eiendom og recommerce. Modellen kjennetegnes av sterke nettverkseffekter, høy bruttomargin og stor kontantgenerering.",
+        "industry": "Digitale markedsplasser vokser med trafikk, betalingsvilje, ARPU og nye tjenester rundt transaksjonen. Når plattformen har høy markedsandel, kan pris og produktutvidelser gi betydelig operasjonell gearing.",
+        "position": "Vend har ledende lokale nordiske markedsplasser. Hemnet er en svensk eiendomsmarkedsplass med svært høy margin, Scout24 er en større tysk eiendomsplattform og Auto Trader er en moden britisk bilmarkedsplass.",
+        "growth": ["Pris/ARPU i markedsplassene.", "Mer betalte produkter og transaksjonstjenester.", "AI kan forbedre matching og produktivitet.", "Kostnadskutt gir operasjonell gearing."],
+        "risks": ["Regulatorikk og konkurranse fra globale plattformer.", "Lavere transaksjonsvolum i bolig/bil/jobb.", "Feilprising kan svekke brukerengasjement.", "Porteføljeendringer gjør historiske tall vanskeligere å sammenligne."],
+        "watch": ["ARPU", "Trafikk/markedsandel", "EBITDA-margin", "FCF", "Adevinta-verdi"],
+        "peer_note": "Markedsplasser bør sammenlignes på vekst, EBITDA/EBIT-margin, ARPU og cash conversion; Vend har større porteføljeendringer enn rene peers.",
+        "peers": [
+            {"Selskap":"Vend","Omsetning 2025":"NOK 6,32 mrd.","Omsetning CAGR":"N/M pga. scope-endringer","Margin":"EBITDA 33,7%","EPS CAGR":"N/M","Bransje-KPI":"Nordiske #1-posisjoner"},
+            {"Selskap":"Hemnet","Omsetning 2025":"SEK 1,53 mrd.","Omsetning CAGR":"Sterk tosifret historisk","Margin":"EBIT ca. 44%","EPS CAGR":"Sterk","Bransje-KPI":"ARPL +28% 2025"},
+            {"Selskap":"Scout24","Omsetning 2025":"€650m","Omsetning CAGR":"Tosifret","Margin":"ooEBITDA 62,5%","EPS CAGR":"Sterk","Bransje-KPI":"Real-estate marketplace"},
+            {"Selskap":"Auto Trader","Omsetning FY25":"£601m","Omsetning CAGR":"Moderat høy ensifret","Margin":"Op. margin ca. 63%","EPS CAGR":"Sterk","Bransje-KPI":"UK auto #1"},
+        ],
+    },
+}
+
+
+def render_company_overview_v2(company_name, info):
+    """Kompakt selskapsoversikt med mer forretningsforståelse og peer-sammenligning."""
+    profile = OVERVIEW_V2.get(company_name)
+    if profile is None:
+        st.subheader("Investeringscase")
+        st.write(info.get("case", ""))
+        return
+
+    st.subheader("Investeringscase")
+    st.write(info.get("case", ""))
+
+    status = profile.get("status", [])
+    if status:
+        cols = st.columns(len(status))
+        for col, (label, value) in zip(cols, status):
+            col.metric(label, value)
+
+    st.divider()
+    c1, c2 = st.columns(2, gap="large")
+    with c1:
+        st.subheader("Hva selskapet gjør")
+        st.write(profile["company"])
+    with c2:
+        st.subheader("Bransjen")
+        st.write(profile["industry"])
+
+    st.subheader("Posisjon og konkurrenter")
+    st.write(profile["position"])
+
+    peers = profile.get("peers", [])
+    if peers:
+        st.markdown("**Peer-sammenligning**")
+        st.dataframe(pd.DataFrame(peers), width="stretch", hide_index=True)
+        if profile.get("peer_note"):
+            st.caption(profile["peer_note"] + " Tall er avrundet; historiske perioder er angitt der de avviker fra fem år.")
+
+    st.subheader("Hvorfor inntjeningen kan vokse")
+    for item in profile.get("growth", []):
+        st.markdown(f"- {item}")
+
+    r1, r2 = st.columns(2, gap="large")
+    with r1:
+        st.subheader("Viktigste risikoer")
+        for item in profile.get("risks", []):
+            st.markdown(f"- {item}")
+    with r2:
+        st.subheader("Hva vi følger")
+        for item in profile.get("watch", []):
+            st.markdown(f"- {item}")
+
+    st.caption("Detaljerte regnskapstall ligger under Nøkkeltall og, der det er aktivert, Rapportering.")
 
 # =========================================================
 # DATA
@@ -2863,6 +3182,51 @@ companies = {
                 "investments": 4.0,
                 "leverage": 2.5,
             },
+            "overview": {
+                "company": (
+                    "B2 Impact kjøper misligholdte låneporteføljer fra banker og andre finansinstitusjoner "
+                    "og krever dem inn over mange år. Strategien er nå tydelig konsentrert mot usikret gjeld – "
+                    "altså krav uten pant i bolig, bil eller andre eiendeler – mens sikrede porteføljer bygges gradvis ned. "
+                    "Ved utgangen av 2025 var om lag 91 % av ERC knyttet til usikrede porteføljer, og nye investeringer "
+                    "i 2026 har i hovedsak også vært usikrede. Mange relativt små krav og stor geografisk spredning gir "
+                    "god diversifisering på tvers av enkeltdebitorer. Selskapet driver også innfordring for tredjeparter "
+                    "og joint ventures i utvalgte markeder."
+                ),
+                "industry": (
+                    "Bransjen kobler banker som ønsker å frigjøre kapital og redusere problemlån med "
+                    "spesialister som kan kjøpe, prise og følge opp slike porteføljer. Avkastningen bestemmes "
+                    "i stor grad av kjøpspris, faktisk innkreving mot forventet innkreving og finansieringskostnad."
+                ),
+                "position": (
+                    "B2 Impact er en pan-europeisk aktør med virksomhet i 18 europeiske markeder og konkurrerer "
+                    "blant annet med Axactor, Hoist Finance og Intrum. Axactor er den mest direkte sammenlignbare "
+                    "konkurrenten innen usikret B2C-gjeld, men har virksomhet i seks hovedmarkeder og en større andel "
+                    "tredjepartsinkasso (3PC). Hoist er også en stor europeisk NPL-investor, mens Intrum er større og "
+                    "mer serviceorientert og beveger seg mot en mer kapitallett modell. B2s styrke er bred geografisk "
+                    "spredning, høy andel usikrede porteføljer, lokal tilstedeværelse og historiske innkrevingsdata som "
+                    "brukes ved prising av nye porteføljer."
+                ),
+                "growth_drivers": [
+                    "Høyere investeringer i nye porteføljer gir et større grunnlag for fremtidige kontantinnbetalinger og EPS.",
+                    "Innkreving over forventning kan gi positive revalueringer og høyere avkastning på eksisterende porteføljer.",
+                    "Lavere finansieringskostnad gir direkte støtte til nettoresultat i en kapitalintensiv forretningsmodell.",
+                    "Skala, automatisering og mer bruk av data/AI kan redusere kostnaden per innkrevd krone.",
+                    "Ledelsen styrer mot leverage under 2,5x, slik at vekst kan kombineres med utbytte og finansiell fleksibilitet.",
+                ],
+                "risks": [
+                    "For høye priser på nye gjeldsporteføljer kan svekke fremtidig avkastning.",
+                    "Svakere innkreving enn modellert kan gi negative revalueringer og lavere kontantstrøm.",
+                    "Høyere renter eller svakere tilgang på finansiering slår relativt raskt inn i resultatet.",
+                    "Regulatoriske endringer i inkasso og forbrukerbeskyttelse kan påvirke prosesser, kostnader og avkastning.",
+                ],
+                "watch": [
+                    "Porteføljeinvesteringer og forventet avkastning på nye kjøp",
+                    "Collection performance, særlig usikrede porteføljer",
+                    "ERC-utvikling og hvor stor del som kommer fra nye investeringer",
+                    "Leverage og gjennomsnittlig finansieringskostnad",
+                    "EPS/ROE mot selskapets 2026–2028-mål",
+                ],
+            },
             "annual": [
                 {
                     "Periode": "2024",
@@ -4022,6 +4386,161 @@ companies = {
     },
 }
 
+
+# =========================================================
+# UTVIDET ÅRSHISTORIKK – NØKKELTALL
+# =========================================================
+# Årsutvikling vises fra 2019 der en meningsfull/sammenlignbar serie finnes.
+# For selskaper med scope-/regnskapsendringer brukes den sammenlignbare historikken
+# som er tilgjengelig. Kvartals-/H1-seriene nedenfor påvirkes ikke av dette.
+
+HISTORICAL_FINANCIALS = {
+    "NORBIT": [
+        {"Periode": "2019", "Omsetning": 668.2, "Vekst": "52%", "EBIT": 102.9, "EBIT-margin": "15%", "EPS": 1.45},
+        {"Periode": "2020", "Omsetning": 618.8, "Vekst": "-7%", "EBIT": 44.3, "EBIT-margin": "7%", "EPS": 0.48},
+        {"Periode": "2021", "Omsetning": 787.8, "Vekst": "27%", "EBIT": 73.5, "EBIT-margin": "9%", "EPS": 0.83},
+        {"Periode": "2022", "Omsetning": 1167.5, "Vekst": "48%", "EBIT": 148.8, "EBIT-margin": "13%", "EPS": 1.82},
+        {"Periode": "2023", "Omsetning": 1518.9, "Vekst": "30%", "EBIT": 284.2, "EBIT-margin": "19%", "EPS": 3.10},
+    ],
+    "Cambi": [
+        {"Periode": "2019", "Omsetning": 280.6, "Vekst": "-20%", "EBIT": -5.7, "EBIT-margin": "-2.0%", "EPS": -0.13},
+        {"Periode": "2020", "Omsetning": 367.0, "Vekst": "31%", "EBIT": 18.2, "EBIT-margin": "5.0%", "EPS": 0.11},
+        {"Periode": "2021", "Omsetning": 457.7, "Vekst": "25%", "EBIT": 28.7, "EBIT-margin": "6.3%", "EPS": 0.08},
+        {"Periode": "2022", "Omsetning": 440.4, "Vekst": "-4%", "EBIT": -15.6, "EBIT-margin": "-3.5%", "EPS": -0.07},
+        {"Periode": "2023", "Omsetning": 976.6, "Vekst": "122%", "EBIT": 225.1, "EBIT-margin": "23.1%", "EPS": 1.15},
+    ],
+    "Kitron": [
+        {"Periode": "2019", "Omsetning": 334.9, "Vekst": "–", "EBIT": 20.4, "EBIT-margin": "6.1%", "EPS": 0.07},
+        {"Periode": "2020", "Omsetning": 369.4, "Vekst": "10%", "EBIT": 29.2, "EBIT-margin": "7.9%", "EPS": 0.11},
+        {"Periode": "2021", "Omsetning": 365.7, "Vekst": "-1%", "EBIT": 23.8, "EBIT-margin": "6.5%", "EPS": 0.08},
+        {"Periode": "2022", "Omsetning": 641.0, "Vekst": "75%", "EBIT": 45.2, "EBIT-margin": "7.1%", "EPS": 0.14},
+        {"Periode": "2023", "Omsetning": 775.2, "Vekst": "21%", "EBIT": 70.7, "EBIT-margin": "9.1%", "EPS": 0.26},
+    ],
+    "NOTE": [
+        {"Periode": "2019", "Omsetning": 1760.4, "Vekst": "–", "EBIT": 124.4, "EBIT-margin": "7.1%", "EPS": 3.20},
+        {"Periode": "2020", "Omsetning": 1873.8, "Vekst": "6%", "EBIT": 149.1, "EBIT-margin": "8.0%", "EPS": 4.11},
+        {"Periode": "2021", "Omsetning": 2643.4, "Vekst": "41%", "EBIT": 250.5, "EBIT-margin": "9.5%", "EPS": 6.82},
+        {"Periode": "2022", "Omsetning": 3687.2, "Vekst": "39%", "EBIT": 344.7, "EBIT-margin": "9.3%", "EPS": 8.79},
+        {"Periode": "2023", "Omsetning": 4243.4, "Vekst": "15%", "EBIT": 429.6, "EBIT-margin": "10.1%", "EPS": 11.04},
+    ],
+    "LINK Mobility": [
+        {"Periode": "2019", "Omsetning": 2933.0, "Vekst": "–", "EBIT": 30.0, "EBIT-margin": "1.0%", "EPS": -0.87},
+        {"Periode": "2020", "Omsetning": 3539.0, "Vekst": "21%", "EBIT": 51.8, "EBIT-margin": "1.5%", "EPS": -1.21},
+        {"Periode": "2021", "Omsetning": 4291.0, "Vekst": "21%", "EBIT": 56.9, "EBIT-margin": "1.3%", "EPS": -0.26},
+        {"Periode": "2022", "Omsetning": 4914.0, "Vekst": "15%", "EBIT": 115.6, "EBIT-margin": "2.4%", "EPS": -0.51},
+        {"Periode": "2023", "Omsetning": 6282.0, "Vekst": "28%", "EBIT": 154.4, "EBIT-margin": "2.5%", "EPS": 0.23},
+    ],
+    "Endúr": [
+        {"Periode": "2021", "Omsetning": 2009.1, "Vekst": "–", "EBIT": -3.5, "EBIT-margin": "-0.2%", "EPS": None},
+        {"Periode": "2022", "Omsetning": 2510.5, "Vekst": "25%", "EBIT": 96.3, "EBIT-margin": "3.8%", "EPS": None},
+        {"Periode": "2023", "Omsetning": 1978.1, "Vekst": "-21%", "EBIT": 86.1, "EBIT-margin": "4.4%", "EPS": -0.84},
+    ],
+}
+
+HISTORICAL_NESTED_ANNUAL = {
+    "Protector": (
+        "protector",
+        [
+            {"Periode": "2019", "Premieinntekter": 5100.5, "Combined ratio": 103.8, "Investeringsresultat": 157.2, "ROE": -0.2, "EPS": None, "Solvens": 168},
+            {"Periode": "2020", "Premieinntekter": 5516.3, "Combined ratio": 94.8, "Investeringsresultat": 969.6, "ROE": 43.7, "EPS": 12.0, "Solvens": 190},
+            {"Periode": "2021", "Premieinntekter": 5950.6, "Combined ratio": 87.3, "Investeringsresultat": 954.5, "ROE": 35.6, "EPS": 14.6, "Solvens": 206},
+            {"Periode": "2022", "Premieinntekter": 7097.8, "Combined ratio": 89.4, "Investeringsresultat": 1084.0, "ROE": 42.9, "EPS": 16.7, "Solvens": 195},
+            {"Periode": "2023", "Premieinntekter": 10423.0, "Combined ratio": 88.5, "Investeringsresultat": 944.2, "ROE": 37.7, "EPS": 18.3, "Solvens": 195},
+        ],
+    ),
+    "B2 Impact": (
+        "b2",
+        [
+            {"Periode": "2021", "Cash collections": 4857, "Cash EBITDA": 3779, "Adj. EPS": 1.45, "Investeringer": 1.2, "ERC": 19.9, "Leverage": 2.4},
+            {"Periode": "2022", "Cash collections": 5161, "Cash EBITDA": 3996, "Adj. EPS": 1.41, "Investeringer": 2.6, "ERC": 20.2, "Leverage": 2.4},
+            {"Periode": "2023", "Cash collections": 6164, "Cash EBITDA": 4762, "Adj. EPS": 1.27, "Investeringer": 2.7, "ERC": 22.5, "Leverage": 1.9},
+        ],
+    ),
+    "Byggmax": (
+        "byggmax",
+        [
+            {"Periode": "2019", "Omsetning": 5277, "EBIT": 230, "EBIT-margin": 4.4, "EPS": 2.30, "OCF": None, "Nettogjeld eks. IFRS 16": None, "Utbytte": 0.00},
+            {"Periode": "2020", "Omsetning": 6801, "EBIT": 665, "EBIT-margin": 9.8, "EPS": 7.90, "OCF": None, "Nettogjeld eks. IFRS 16": None, "Utbytte": 2.75},
+            {"Periode": "2021", "Omsetning": 7645, "EBIT": 850, "EBIT-margin": 11.1, "EPS": 10.20, "OCF": None, "Nettogjeld eks. IFRS 16": None, "Utbytte": 4.00},
+            {"Periode": "2022", "Omsetning": 7260, "EBIT": 452, "EBIT-margin": 6.2, "EPS": 5.30, "OCF": None, "Nettogjeld eks. IFRS 16": None, "Utbytte": 0.00},
+            {"Periode": "2023", "Omsetning": 6113, "EBIT": 123, "EBIT-margin": 2.0, "EPS": 0.40, "OCF": None, "Nettogjeld eks. IFRS 16": None, "Utbytte": 0.50},
+        ],
+    ),
+    "Bakkafrost": (
+        "bakkafrost",
+        [
+            {"Periode": "2019", "Omsetning": 4511, "Operasjonell EBIT": 1325, "Operasjonell EBIT-margin": 29.4, "Slaktevolum": 65100, "EPS DKK": 19.77, "Utbytte DKK": None},
+            {"Periode": "2020", "Omsetning": 4652, "Operasjonell EBIT": 622, "Operasjonell EBIT-margin": 13.4, "Slaktevolum": 85700, "EPS DKK": 6.19, "Utbytte DKK": None},
+            {"Periode": "2021", "Omsetning": 5554, "Operasjonell EBIT": 821, "Operasjonell EBIT-margin": 14.8, "Slaktevolum": 96900, "EPS DKK": 10.29, "Utbytte DKK": None},
+            {"Periode": "2022", "Omsetning": 7130, "Operasjonell EBIT": 1705, "Operasjonell EBIT-margin": 23.9, "Slaktevolum": 90603, "EPS DKK": 19.02, "Utbytte DKK": None},
+            {"Periode": "2023", "Omsetning": 7141, "Operasjonell EBIT": 1544, "Operasjonell EBIT-margin": 21.6, "Slaktevolum": 73006, "EPS DKK": 17.45, "Utbytte DKK": None},
+        ],
+    ),
+    "Nordic Semiconductor": (
+        "nordicsemi",
+        [
+            {"Periode": "2019", "Omsetning USDm": 289.2, "Bruttomargin": 51.0, "EBIT USDm": 9.3, "EBIT-margin": 3.2, "EPS USD": 0.04, "OCF USDm": None, "Kontanter USDm": None},
+            {"Periode": "2020", "Omsetning USDm": 406.2, "Bruttomargin": 52.9, "EBIT USDm": 45.7, "EBIT-margin": 11.3, "EPS USD": 0.20, "OCF USDm": None, "Kontanter USDm": None},
+            {"Periode": "2021", "Omsetning USDm": 610.5, "Bruttomargin": 53.5, "EBIT USDm": 79.9, "EBIT-margin": 13.1, "EPS USD": 0.37, "OCF USDm": None, "Kontanter USDm": None},
+            {"Periode": "2022", "Omsetning USDm": 776.7, "Bruttomargin": 56.2, "EBIT USDm": 161.6, "EBIT-margin": 20.8, "EPS USD": 0.63, "OCF USDm": None, "Kontanter USDm": None},
+            {"Periode": "2023", "Omsetning USDm": 542.9, "Bruttomargin": 52.3, "EBIT USDm": 4.7, "EBIT-margin": 0.9, "EPS USD": 0.04, "OCF USDm": None, "Kontanter USDm": None},
+        ],
+    ),
+    "SATS": (
+        "sats",
+        [
+            {"Periode": "2019", "Omsetning": 3986, "EBITDA før IFRS 16": 551, "EBIT før IFRS 16": None, "EPS": 1.52, "OCF": None, "FCF": None, "Medlemmer": 688, "ARPM": None, "Leverage": 1.95},
+            {"Periode": "2020", "Omsetning": 3534, "EBITDA før IFRS 16": 136, "EBIT før IFRS 16": None, "EPS": -1.90, "OCF": None, "FCF": None, "Medlemmer": None, "ARPM": None, "Leverage": None},
+            {"Periode": "2021", "Omsetning": 3247, "EBITDA før IFRS 16": -170, "EBIT før IFRS 16": None, "EPS": -2.65, "OCF": None, "FCF": None, "Medlemmer": None, "ARPM": None, "Leverage": None},
+            {"Periode": "2022", "Omsetning": 4082, "EBITDA før IFRS 16": 99, "EBIT før IFRS 16": None, "EPS": -1.25, "OCF": None, "FCF": None, "Medlemmer": 721, "ARPM": None, "Leverage": 11.3},
+            {"Periode": "2023", "Omsetning": 4734, "EBITDA før IFRS 16": 614, "EBIT før IFRS 16": None, "EPS": 1.10, "OCF": None, "FCF": None, "Medlemmer": 731, "ARPM": 543, "Leverage": 2.3},
+        ],
+    ),
+    "Selvaag Bolig": (
+        "selvaag",
+        [
+            {"Periode": "2019", "Omsetning": 3368.8, "EBIT": 864.8, "EBIT-margin": 25.7, "EPS": 7.04, "Solgte boliger": None, "Overleverte boliger": None, "Under bygging": 1504, "Tomtebank": None, "Utbytte": None},
+            {"Periode": "2020", "Omsetning": 2698.0, "EBIT": 1643.8, "EBIT-margin": 60.9, "EPS": 16.33, "Solgte boliger": None, "Overleverte boliger": None, "Under bygging": 1310, "Tomtebank": None, "Utbytte": None},
+            {"Periode": "2021", "Omsetning": 3402.7, "EBIT": 648.3, "EBIT-margin": 19.1, "EPS": 5.40, "Solgte boliger": None, "Overleverte boliger": None, "Under bygging": 1323, "Tomtebank": None, "Utbytte": None},
+            {"Periode": "2022", "Omsetning": 2896.4, "EBIT": 422.4, "EBIT-margin": 14.6, "EPS": 3.63, "Solgte boliger": None, "Overleverte boliger": None, "Under bygging": 1253, "Tomtebank": None, "Utbytte": None},
+            {"Periode": "2023", "Omsetning": 3254.7, "EBIT": 300.9, "EBIT-margin": 9.2, "EPS": 2.62, "Solgte boliger": None, "Overleverte boliger": None, "Under bygging": 784, "Tomtebank": None, "Utbytte": None},
+        ],
+    ),
+    "Storebrand": (
+        "storebrand",
+        [
+            {"Periode": "2019", "Konsernresultat": 3037, "Driftsresultat": 2298, "Cash EPS": 5.38, "Cash ROE": 8.0, "Solvens II": 176, "AUM mrd.": 831, "Combined ratio": None, "Utbytte": 3.25},
+            {"Periode": "2020", "Konsernresultat": 2711, "Driftsresultat": None, "Cash EPS": 6.07, "Cash ROE": 8.6, "Solvens II": 178, "AUM mrd.": 962, "Combined ratio": None, "Utbytte": 3.25},
+            {"Periode": "2021", "Konsernresultat": None, "Driftsresultat": None, "Cash EPS": None, "Cash ROE": 10.7, "Solvens II": 175, "AUM mrd.": None, "Combined ratio": None, "Utbytte": None},
+            {"Periode": "2022", "Konsernresultat": 2716, "Driftsresultat": None, "Cash EPS": 6.31, "Cash ROE": 8.3, "Solvens II": 184, "AUM mrd.": 1020, "Combined ratio": None, "Utbytte": None},
+            {"Periode": "2023", "Konsernresultat": None, "Driftsresultat": None, "Cash EPS": 7.85, "Cash ROE": 14.6, "Solvens II": 192, "AUM mrd.": 1212, "Combined ratio": None, "Utbytte": None},
+        ],
+    ),
+}
+
+# Legg historikken foran eksisterende 2024/2025 + kvartaler.
+for _company, _rows in HISTORICAL_FINANCIALS.items():
+    if _company in companies:
+        _existing = companies[_company].get("financials", [])
+        _existing_periods = {str(r.get("Periode")) for r in _existing}
+        companies[_company]["financials"] = [
+            r for r in _rows if str(r.get("Periode")) not in _existing_periods
+        ] + _existing
+
+for _company, (_nested_key, _rows) in HISTORICAL_NESTED_ANNUAL.items():
+    if _company in companies and _nested_key in companies[_company]:
+        _existing = companies[_company][_nested_key].get("annual", [])
+        _existing_periods = {str(r.get("Periode")) for r in _existing}
+        companies[_company][_nested_key]["annual"] = [
+            r for r in _rows if str(r.get("Periode")) not in _existing_periods
+        ] + _existing
+
+# Korriger en skrivefeil i tidligere Kitron-rad: offisiell 2024-omsetning var EUR 547,2m.
+for _row in companies.get("Kitron", {}).get("financials", []):
+    if str(_row.get("Periode")) == "2024":
+        _row["Omsetning"] = 547.2
+        _row["Vekst"] = "-29%"
+
 # =========================================================
 # HISTORISK VERDSETTELSE / HJELPEFUNKSJONER
 # =========================================================
@@ -4840,8 +5359,44 @@ def _save_valuation_to_github(settings, config, commit_message):
 
 
 def _test_github_valuation_connection(config):
-    """Sikker diagnostikk: tester repo, branch og fil uten å vise tokenet."""
+    """Sikker diagnostikk: tester token, synlige repositories, repo, branch og fil uten å vise tokenet."""
     results = []
+    token = config["token"]
+
+    # 1) Test at tokenet faktisk er gyldig og hvilken GitHub-bruker det tilhører.
+    try:
+        user = _github_request("GET", "https://api.github.com/user", token)
+        login = user.get("login", "ukjent bruker")
+        results.append(("Token/autentisering", True, f"OK – autentisert som {login}"))
+    except urllib.error.HTTPError as exc:
+        results.append(("Token/autentisering", False, f"HTTP {exc.code} – tokenet blir ikke godkjent av GitHub"))
+        return results
+    except Exception as exc:
+        results.append(("Token/autentisering", False, str(exc)))
+        return results
+
+    # 2) List repositories som dette tokenet faktisk kan se. Dette skiller
+    #    gyldig token fra feil repository-scope.
+    target_repo = config["repo"].lower()
+    try:
+        repos = _github_request(
+            "GET",
+            "https://api.github.com/user/repos?per_page=100&visibility=all&affiliation=owner,collaborator,organization_member",
+            token,
+        )
+        visible = [str(r.get("full_name", "")) for r in repos if isinstance(r, dict)] if isinstance(repos, list) else []
+        seen = any(name.lower() == target_repo for name in visible)
+        if seen:
+            results.append(("Repository-scope", True, f"OK – {config['repo']} er synlig for tokenet"))
+        else:
+            sample = ", ".join(visible[:5]) if visible else "ingen repositories"
+            results.append(("Repository-scope", False, f"Tokenet ser ikke {config['repo']} (synlig: {sample})"))
+    except urllib.error.HTTPError as exc:
+        results.append(("Repository-scope", False, f"HTTP {exc.code} ved listing av repositories"))
+    except Exception as exc:
+        results.append(("Repository-scope", False, str(exc)))
+
+    # 3) Test de konkrete endepunktene modellen bruker.
     repo_url = f"https://api.github.com/repos/{config['repo']}"
     branch_q = urllib.parse.quote(config["branch"], safe="")
     branch_url = f"https://api.github.com/repos/{config['repo']}/branches/{branch_q}"
@@ -4850,11 +5405,11 @@ def _test_github_valuation_connection(config):
 
     for label, url in [("Repository", repo_url), ("Branch", branch_url), ("Verdsettelsesfil", file_url)]:
         try:
-            _github_request("GET", url, config["token"])
+            _github_request("GET", url, token)
             results.append((label, True, "OK"))
         except urllib.error.HTTPError as exc:
             accepted = exc.headers.get("X-Accepted-GitHub-Permissions", "") if getattr(exc, "headers", None) else ""
-            extra = f"; tillatelse: {accepted}" if accepted else ""
+            extra = f"; endepunktet godtar: {accepted}" if accepted else ""
             results.append((label, False, f"HTTP {exc.code}{extra}"))
         except Exception as exc:
             results.append((label, False, str(exc)))
@@ -5039,6 +5594,7 @@ def render_valuation_save_controls(company_name):
             st.caption(
                 f"Repository: {config['repo']} · Branch: {config['branch']} · Fil: {config['path']}"
             )
+            st.caption("Testen viser først om tokenet er gyldig og om det faktisk kan se repositoryet, deretter repo/branch/fil.")
             if st.button(
                 "Test GitHub-tilkobling",
                 key=f"test_github_valuation_{re.sub(r'[^a-z0-9]+', '_', company_name.lower())}",
@@ -5692,58 +6248,68 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("ERC", f"{b2['q2']['erc']:.1f} mrd. NOK".replace(".", ","))
-            k2.metric("Leverage", f"{b2['q2']['leverage']:.1f}x".replace(".", ","))
-            k3.metric("EPS-mål 2026", f"{b2['targets_2026']['eps']:.2f} NOK".replace(".", ","))
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric("ROE-mål 2026", f"{b2['targets_2026']['roe']:.0f}%")
-            k5.metric("Investeringer 2026", f"{b2['targets_2026']['investments']:.1f} mrd. NOK".replace(".", ","))
-            k6.metric("Likviditetsreserve Q2", f"{b2['q2']['liquidity_eur']:.0f} MEUR")
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(q1, "Cash collections", f"{b2['q2']['cash_collections']:,} MNOK".replace(",", " "), b2["q2_yoy"]["cash_collections"])
-            metric_with_yoy(q2, "Cash EBITDA", f"{b2['q2']['cash_ebitda']:,} MNOK".replace(",", " "), b2["q2_yoy"]["cash_ebitda"])
-            metric_with_yoy(q3, "Adj. EPS", f"{b2['q2']['eps']:.2f}".replace(".", ","), b2["q2_yoy"]["eps"])
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(q4, "Adj. EBIT", f"{b2['q2']['adj_ebit']:,} MNOK".replace(",", " "), b2["q2_yoy"]["adj_ebit"])
-            metric_with_yoy(q5, "Collection performance", f"{b2['q2']['collection_performance']:.0f}%", b2["q2_yoy"]["collection_performance"])
-            metric_with_yoy(q6, "Porteføljeinvesteringer", f"{b2['q2']['investments']/1000:.1f} mrd. NOK".replace(".", ","), b2["q2_yoy"]["investments"])
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(h1, "Cash collections", f"{b2['h1']['cash_collections']:,} MNOK".replace(",", " "), b2["h1_yoy"]["cash_collections"])
-            metric_with_yoy(h2, "Cash EBITDA", f"{b2['h1']['cash_ebitda']:,} MNOK".replace(",", " "), b2["h1_yoy"]["cash_ebitda"])
-            metric_with_yoy(h3, "Adj. EPS", f"{b2['h1']['eps']:.2f}".replace(".", ","), b2["h1_yoy"]["eps"])
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(h4, "Adj. EBIT", f"{b2['h1']['adj_ebit']:,} MNOK".replace(",", " "), b2["h1_yoy"]["adj_ebit"])
-            metric_with_yoy(h5, "Adj. nettoresultat", f"{b2['h1']['adj_net_profit']:,} MNOK".replace(",", " "), b2["h1_yoy"]["adj_net_profit"])
-            metric_with_yoy(h6, "Leverage Q2", f"{b2['q2']['leverage']:.1f}x".replace(".", ","), b2["h1_yoy"]["leverage"])
-
-            st.caption(
-                "H1-tallene er summen av rapportert Q1 og Q2. Neste rapport: "
-                f"{b2['next_report']}."
-            )
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                ov = b2["overview"]
+    
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                # Kun noen få tall på Oversikt. Detaljert kvartals-/årsrapportering ligger på
+                # Nøkkeltall og senere i egen Rapportering-fane.
+                k1, k2, k3 = st.columns(3)
+                k1.metric("ERC", f"{b2['q2']['erc']:.1f} mrd. NOK".replace(".", ","))
+                k2.metric("Leverage", f"{b2['q2']['leverage']:.1f}x".replace(".", ","))
+                k3.metric("EPS-mål 2026", f"{b2['targets_2026']['eps']:.2f} NOK".replace(".", ","))
+                st.caption(
+                    "Leverage = netto rentebærende gjeld / Cash EBITDA siste 12 måneder. "
+                    f"{b2['q2']['leverage']:.1f}x betyr at netto rentebærende gjeld tilsvarer omtrent "
+                    f"{b2['q2']['leverage']:.1f} års Cash EBITDA, før renter, skatt og andre forhold.".replace(".", ",")
+                )
+    
+                st.divider()
+                c1, c2 = st.columns(2, gap="large")
+                with c1:
+                    st.subheader("Hva selskapet gjør")
+                    st.write(ov["company"])
+                with c2:
+                    st.subheader("Bransjen")
+                    st.write(ov["industry"])
+    
+                st.subheader("Posisjon og konkurrenter")
+                st.write(ov["position"])
+    
+                st.subheader("Hvorfor inntjeningen kan vokse")
+                for item in ov["growth_drivers"]:
+                    st.markdown(f"- {item}")
+    
+                r1, r2 = st.columns(2, gap="large")
+                with r1:
+                    st.subheader("Viktigste risikoer")
+                    for item in ov["risks"]:
+                        st.markdown(f"- {item}")
+                with r2:
+                    st.subheader("Hva vi følger")
+                    for item in ov["watch"]:
+                        st.markdown(f"- {item}")
+    
+                st.caption(
+                    f"Status basert på Q2 2026. Neste rapport: {b2['next_report']}. "
+                    "Detaljerte regnskapstall ligger under Nøkkeltall; egen Rapportering-fane legges til senere."
+                )
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(b2["annual"]).copy()
             annual_df = add_eps_growth_after_column(annual_df, "Adj. EPS")
-            annual_df["Cash collections"] = annual_df["Cash collections"].map(lambda x: f"{x:,.0f}".replace(",", " "))
-            annual_df["Cash EBITDA"] = annual_df["Cash EBITDA"].map(lambda x: f"{x:,.0f}".replace(",", " "))
-            annual_df["Adj. EPS"] = annual_df["Adj. EPS"].map(lambda x: f"{x:.2f}".replace(".", ","))
-            annual_df["Investeringer"] = annual_df["Investeringer"].map(lambda x: f"{x:.1f} mrd.".replace(".", ","))
-            annual_df["ERC"] = annual_df["ERC"].map(lambda x: f"{x:.1f} mrd.".replace(".", ","))
-            annual_df["Leverage"] = annual_df["Leverage"].map(lambda x: f"{x:.1f}x".replace(".", ","))
+            annual_df["Cash collections"] = annual_df["Cash collections"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Cash EBITDA"] = annual_df["Cash EBITDA"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Adj. EPS"] = annual_df["Adj. EPS"].map(lambda x: _fmt_table_number(x, 2))
+            annual_df["Investeringer"] = annual_df["Investeringer"].map(lambda x: _fmt_bn_or_dash(x, 1))
+            annual_df["ERC"] = annual_df["ERC"].map(lambda x: _fmt_bn_or_dash(x, 1))
+            annual_df["Leverage"] = annual_df["Leverage"].map(lambda x: _fmt_x_or_dash(x, 1))
             st.dataframe(annual_df, width="stretch", hide_index=True)
+            st.caption("Sammenlignbar B2-serie med dagens Cash collections/Cash EBITDA-KPIer starter i 2021.")
 
             st.subheader("2026 – kvartal/H1")
             b2_q1_eps = b2["h1"]["eps"] - b2["q2"]["eps"]
@@ -5900,116 +6466,109 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("Combined ratio Q2", f"{prot['q2']['combined_ratio']:.1f}%".replace(".", ","))
-            k2.metric("Solvensgrad Q2", f"{prot['q2']['solvency']:.0f}%")
-            k3.metric("EPS H1 2026", f"{prot['h1']['eps']:.1f} NOK".replace(".", ","))
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric("ROE 2025", "42,2%")
-            k5.metric("Bruttopremie H1", f"{prot['h1']['gwp']:,} MNOK".replace(",", " "))
-            k6.metric("Investeringsresultat H1", f"{prot['h1']['investment_return']:,} MNOK".replace(",", " "))
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1, "Bruttopremie",
-                f"{prot['q2']['gwp']:,} MNOK".replace(",", " "),
-                prot["q2_yoy"]["gwp"],
-            )
-            metric_with_yoy(
-                q2, "Forsikringsinntekter",
-                f"{prot['q2']['insurance_revenue']:,} MNOK".replace(",", " "),
-                prot["q2_yoy"]["insurance_revenue"],
-            )
-            metric_with_yoy(
-                q3, "Combined ratio",
-                f"{prot['q2']['combined_ratio']:.1f}%".replace(".", ","),
-                prot["q2_yoy"]["combined_ratio"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4, "Investeringsresultat",
-                f"{prot['q2']['investment_return']:,} MNOK".replace(",", " "),
-                prot["q2_yoy"]["investment_return"],
-            )
-            metric_with_yoy(
-                q5, "Resultat",
-                f"{prot['q2']['profit']:,} MNOK".replace(",", " "),
-                prot["q2_yoy"]["profit"],
-            )
-            metric_with_yoy(
-                q6, "EPS",
-                f"{prot['q2']['eps']:.1f}".replace(".", ","),
-                prot["q2_yoy"]["eps"],
-            )
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1, "Bruttopremie",
-                f"{prot['h1']['gwp']:,} MNOK".replace(",", " "),
-                prot["h1_yoy"]["gwp"],
-            )
-            metric_with_yoy(
-                h2, "Forsikringsresultat",
-                f"{prot['h1']['insurance_service_result']:,} MNOK".replace(",", " "),
-                prot["h1_yoy"]["insurance_service_result"],
-            )
-            metric_with_yoy(
-                h3, "Combined ratio",
-                f"{prot['h1']['combined_ratio']:.1f}%".replace(".", ","),
-                prot["h1_yoy"]["combined_ratio"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4, "Investeringsresultat",
-                f"{prot['h1']['investment_return']:,} MNOK".replace(",", " "),
-                prot["h1_yoy"]["investment_return"],
-            )
-            metric_with_yoy(
-                h5, "Resultat",
-                f"{prot['h1']['profit']:,} MNOK".replace(",", " "),
-                prot["h1_yoy"]["profit"],
-            )
-            metric_with_yoy(
-                h6, "EPS",
-                f"{prot['h1']['eps']:.1f}".replace(".", ","),
-                prot["h1_yoy"]["eps"],
-            )
-
-            st.caption(f"Neste rapport: {prot['next_report']}.")
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                k1, k2, k3 = st.columns(3)
+                k1.metric("Combined ratio Q2", f"{prot['q2']['combined_ratio']:.1f}%".replace(".", ","))
+                k2.metric("Solvensgrad Q2", f"{prot['q2']['solvency']:.0f}%")
+                k3.metric("EPS H1 2026", f"{prot['h1']['eps']:.1f} NOK".replace(".", ","))
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric("ROE 2025", "42,2%")
+                k5.metric("Bruttopremie H1", f"{prot['h1']['gwp']:,} MNOK".replace(",", " "))
+                k6.metric("Investeringsresultat H1", f"{prot['h1']['investment_return']:,} MNOK".replace(",", " "))
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1, "Bruttopremie",
+                    f"{prot['q2']['gwp']:,} MNOK".replace(",", " "),
+                    prot["q2_yoy"]["gwp"],
+                )
+                metric_with_yoy(
+                    q2, "Forsikringsinntekter",
+                    f"{prot['q2']['insurance_revenue']:,} MNOK".replace(",", " "),
+                    prot["q2_yoy"]["insurance_revenue"],
+                )
+                metric_with_yoy(
+                    q3, "Combined ratio",
+                    f"{prot['q2']['combined_ratio']:.1f}%".replace(".", ","),
+                    prot["q2_yoy"]["combined_ratio"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4, "Investeringsresultat",
+                    f"{prot['q2']['investment_return']:,} MNOK".replace(",", " "),
+                    prot["q2_yoy"]["investment_return"],
+                )
+                metric_with_yoy(
+                    q5, "Resultat",
+                    f"{prot['q2']['profit']:,} MNOK".replace(",", " "),
+                    prot["q2_yoy"]["profit"],
+                )
+                metric_with_yoy(
+                    q6, "EPS",
+                    f"{prot['q2']['eps']:.1f}".replace(".", ","),
+                    prot["q2_yoy"]["eps"],
+                )
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1, "Bruttopremie",
+                    f"{prot['h1']['gwp']:,} MNOK".replace(",", " "),
+                    prot["h1_yoy"]["gwp"],
+                )
+                metric_with_yoy(
+                    h2, "Forsikringsresultat",
+                    f"{prot['h1']['insurance_service_result']:,} MNOK".replace(",", " "),
+                    prot["h1_yoy"]["insurance_service_result"],
+                )
+                metric_with_yoy(
+                    h3, "Combined ratio",
+                    f"{prot['h1']['combined_ratio']:.1f}%".replace(".", ","),
+                    prot["h1_yoy"]["combined_ratio"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4, "Investeringsresultat",
+                    f"{prot['h1']['investment_return']:,} MNOK".replace(",", " "),
+                    prot["h1_yoy"]["investment_return"],
+                )
+                metric_with_yoy(
+                    h5, "Resultat",
+                    f"{prot['h1']['profit']:,} MNOK".replace(",", " "),
+                    prot["h1_yoy"]["profit"],
+                )
+                metric_with_yoy(
+                    h6, "EPS",
+                    f"{prot['h1']['eps']:.1f}".replace(".", ","),
+                    prot["h1_yoy"]["eps"],
+                )
+    
+                st.caption(f"Neste rapport: {prot['next_report']}.")
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(prot["annual"]).copy()
             annual_df = add_eps_growth_after_column(annual_df, "EPS")
             annual_df["Premieinntekter"] = annual_df["Premieinntekter"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
+                lambda x: _fmt_table_number(x, 0)
             )
             annual_df = annual_df.rename(columns={"Premieinntekter": "Bruttopremie"})
-            annual_df["Combined ratio"] = annual_df["Combined ratio"].map(
-                lambda x: f"{x:.1f}%".replace(".", ",")
-            )
-            annual_df["Investeringsresultat"] = annual_df["Investeringsresultat"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["ROE"] = annual_df["ROE"].map(
-                lambda x: f"{x:.1f}%".replace(".", ",")
-            )
-            annual_df["EPS"] = annual_df["EPS"].map(
-                lambda x: f"{x:.1f}".replace(".", ",")
-            )
-            annual_df["Solvens"] = annual_df["Solvens"].map(
-                lambda x: f"{x:.0f}%"
-            )
+            annual_df["Combined ratio"] = annual_df["Combined ratio"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["Investeringsresultat"] = annual_df["Investeringsresultat"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["ROE"] = annual_df["ROE"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["EPS"] = annual_df["EPS"].map(lambda x: _fmt_table_number(x, 1))
+            annual_df["Solvens"] = annual_df["Solvens"].map(lambda x: _fmt_pct_or_dash(x, 0))
             st.dataframe(annual_df, width="stretch", hide_index=True)
+            st.caption("Protector: 2021 og tidligere er basert på datidens rapporterte nøkkeltall; senere år inkluderer IFRS 17/restated sammenligningstall der selskapet har publisert dette.")
 
             st.subheader("2026 – kvartal/H1")
             prot_q1_eps = prot["h1"]["eps"] - prot["q2"]["eps"]
@@ -6315,117 +6874,105 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("EBIT-margin Q2", f"{bmax['q2']['ebit_margin']:.1f}%".replace(".", ","))
-            k2.metric("Nettogjeld / EBITDA", f"{bmax['q2']['net_debt_ebitda']:.1f}x".replace(".", ","))
-            k3.metric("EPS H1 2026", f"{bmax['h1']['eps']:.2f} SEK".replace(".", ","))
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric("Bruttomargin Q2", f"{bmax['q2']['gross_margin']:.1f}%".replace(".", ","))
-            k5.metric(f"OCF {info.get('_ytd_label', 'H1 2026')}", f"{bmax['h1']['ocf']:,} MSEK".replace(",", " "))
-            k6.metric("Nettogjeld eks. leasing", f"{bmax['q2']['net_debt_ex_leases']:,} MSEK".replace(",", " "))
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1, "Omsetning",
-                f"{bmax['q2']['revenue']:,} MSEK".replace(",", " "),
-                bmax["q2_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                q2, "Bruttomargin",
-                f"{bmax['q2']['gross_margin']:.1f}%".replace(".", ","),
-                bmax["q2_yoy"]["gross_margin"],
-            )
-            metric_with_yoy(
-                q3, "EBIT-margin",
-                f"{bmax['q2']['ebit_margin']:.1f}%".replace(".", ","),
-                bmax["q2_yoy"]["ebit_margin"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4, "EBIT",
-                f"{bmax['q2']['ebit']:,} MSEK".replace(",", " "),
-                bmax["q2_yoy"]["ebit"],
-            )
-            metric_with_yoy(
-                q5, "EPS",
-                f"{bmax['q2']['eps']:.2f}".replace(".", ","),
-                bmax["q2_yoy"]["eps"],
-            )
-            metric_with_yoy(
-                q6, "OCF",
-                f"{bmax['q2']['ocf']:,} MSEK".replace(",", " "),
-                bmax["q2_yoy"]["ocf"],
-            )
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1, "Omsetning",
-                f"{bmax['h1']['revenue']:,} MSEK".replace(",", " "),
-                bmax["h1_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                h2, "Bruttomargin",
-                f"{bmax['h1']['gross_margin']:.1f}%".replace(".", ","),
-                bmax["h1_yoy"]["gross_margin"],
-            )
-            metric_with_yoy(
-                h3, "EBIT-margin",
-                f"{bmax['h1']['ebit_margin']:.1f}%".replace(".", ","),
-                bmax["h1_yoy"]["ebit_margin"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4, "EBIT",
-                f"{bmax['h1']['ebit']:,} MSEK".replace(",", " "),
-                bmax["h1_yoy"]["ebit"],
-            )
-            metric_with_yoy(
-                h5, "EPS",
-                f"{bmax['h1']['eps']:.2f}".replace(".", ","),
-                bmax["h1_yoy"]["eps"],
-            )
-            metric_with_yoy(
-                h6, "OCF",
-                f"{bmax['h1']['ocf']:,} MSEK".replace(",", " "),
-                bmax["h1_yoy"]["ocf"],
-            )
-
-            st.caption(f"Neste rapport: {bmax['next_report']}.")
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                k1, k2, k3 = st.columns(3)
+                k1.metric("EBIT-margin Q2", f"{bmax['q2']['ebit_margin']:.1f}%".replace(".", ","))
+                k2.metric("Nettogjeld / EBITDA", f"{bmax['q2']['net_debt_ebitda']:.1f}x".replace(".", ","))
+                k3.metric("EPS H1 2026", f"{bmax['h1']['eps']:.2f} SEK".replace(".", ","))
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric("Bruttomargin Q2", f"{bmax['q2']['gross_margin']:.1f}%".replace(".", ","))
+                k5.metric(f"OCF {info.get('_ytd_label', 'H1 2026')}", f"{bmax['h1']['ocf']:,} MSEK".replace(",", " "))
+                k6.metric("Nettogjeld eks. leasing", f"{bmax['q2']['net_debt_ex_leases']:,} MSEK".replace(",", " "))
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1, "Omsetning",
+                    f"{bmax['q2']['revenue']:,} MSEK".replace(",", " "),
+                    bmax["q2_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    q2, "Bruttomargin",
+                    f"{bmax['q2']['gross_margin']:.1f}%".replace(".", ","),
+                    bmax["q2_yoy"]["gross_margin"],
+                )
+                metric_with_yoy(
+                    q3, "EBIT-margin",
+                    f"{bmax['q2']['ebit_margin']:.1f}%".replace(".", ","),
+                    bmax["q2_yoy"]["ebit_margin"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4, "EBIT",
+                    f"{bmax['q2']['ebit']:,} MSEK".replace(",", " "),
+                    bmax["q2_yoy"]["ebit"],
+                )
+                metric_with_yoy(
+                    q5, "EPS",
+                    f"{bmax['q2']['eps']:.2f}".replace(".", ","),
+                    bmax["q2_yoy"]["eps"],
+                )
+                metric_with_yoy(
+                    q6, "OCF",
+                    f"{bmax['q2']['ocf']:,} MSEK".replace(",", " "),
+                    bmax["q2_yoy"]["ocf"],
+                )
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1, "Omsetning",
+                    f"{bmax['h1']['revenue']:,} MSEK".replace(",", " "),
+                    bmax["h1_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    h2, "Bruttomargin",
+                    f"{bmax['h1']['gross_margin']:.1f}%".replace(".", ","),
+                    bmax["h1_yoy"]["gross_margin"],
+                )
+                metric_with_yoy(
+                    h3, "EBIT-margin",
+                    f"{bmax['h1']['ebit_margin']:.1f}%".replace(".", ","),
+                    bmax["h1_yoy"]["ebit_margin"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4, "EBIT",
+                    f"{bmax['h1']['ebit']:,} MSEK".replace(",", " "),
+                    bmax["h1_yoy"]["ebit"],
+                )
+                metric_with_yoy(
+                    h5, "EPS",
+                    f"{bmax['h1']['eps']:.2f}".replace(".", ","),
+                    bmax["h1_yoy"]["eps"],
+                )
+                metric_with_yoy(
+                    h6, "OCF",
+                    f"{bmax['h1']['ocf']:,} MSEK".replace(",", " "),
+                    bmax["h1_yoy"]["ocf"],
+                )
+    
+                st.caption(f"Neste rapport: {bmax['next_report']}.")
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(bmax["annual"]).copy()
             annual_df = add_eps_growth_after_column(annual_df, "EPS")
-            annual_df["Omsetning"] = annual_df["Omsetning"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["EBIT"] = annual_df["EBIT"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["EBIT-margin"] = annual_df["EBIT-margin"].map(
-                lambda x: f"{x:.1f}%".replace(".", ",")
-            )
-            annual_df["EPS"] = annual_df["EPS"].map(
-                lambda x: f"{x:.2f}".replace(".", ",")
-            )
-            annual_df["OCF"] = annual_df["OCF"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["Nettogjeld eks. IFRS 16"] = annual_df["Nettogjeld eks. IFRS 16"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["Utbytte"] = annual_df["Utbytte"].map(
-                lambda x: f"{x:.2f}".replace(".", ",")
-            )
+            annual_df["Omsetning"] = annual_df["Omsetning"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["EBIT"] = annual_df["EBIT"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["EBIT-margin"] = annual_df["EBIT-margin"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["EPS"] = annual_df["EPS"].map(lambda x: _fmt_table_number(x, 2))
+            annual_df["OCF"] = annual_df["OCF"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Nettogjeld eks. IFRS 16"] = annual_df["Nettogjeld eks. IFRS 16"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Utbytte"] = annual_df["Utbytte"].map(lambda x: _fmt_table_number(x, 2))
             st.dataframe(annual_df, width="stretch", hide_index=True)
 
             st.subheader("2026 – kvartal/H1")
@@ -6719,114 +7266,104 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("Slaktevolum Q2", f"{bakka['q2']['harvest']:,} tonn".replace(",", " "))
-            k2.metric("Operasjonell EBIT Q2", f"{bakka['q2']['operational_ebit']:,} MDKK".replace(",", " "))
-            k3.metric("Guiding 2026", "117 000 tonn")
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric("FO EBIT/kg Q2", f"{bakka['q2']['fo_ebit_per_kg']:.2f} DKK".replace(".", ","))
-            k5.metric("Slaktevolum H1", f"{bakka['h1']['harvest']:,} tonn".replace(",", " "))
-            k6.metric("Smolt overført H1", f"{bakka['h1']['smolt_transfer']:.1f}".replace(".", ",") + " mill.")
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1, "Slaktevolum",
-                f"{bakka['q2']['harvest']:,} tonn".replace(",", " "),
-                bakka["q2_yoy"]["harvest"],
-            )
-            metric_with_yoy(
-                q2, "Operasjonell EBIT",
-                f"{bakka['q2']['operational_ebit']:,} MDKK".replace(",", " "),
-                bakka["q2_yoy"]["operational_ebit"],
-            )
-            metric_with_yoy(
-                q3, "Kontantstrøm fra drift",
-                f"{bakka['q2']['ocf']:,} MDKK".replace(",", " "),
-                bakka["q2_yoy"]["ocf"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4, "FO operasjonell EBIT/kg",
-                f"{bakka['q2']['fo_ebit_per_kg']:.2f} DKK".replace(".", ","),
-                bakka["q2_yoy"]["fo_ebit_per_kg"],
-            )
-            metric_with_yoy(
-                q5, "SCT operasjonell EBIT/kg",
-                f"{bakka['q2']['sct_ebit_per_kg']:.2f} DKK".replace(".", ","),
-                bakka["q2_yoy"]["sct_ebit_per_kg"],
-            )
-            metric_with_yoy(
-                q6, "Smolt overført",
-                f"{bakka['q2']['smolt_transfer']:.1f}".replace(".", ",") + " mill.",
-                bakka["q2_yoy"]["smolt_transfer"],
-            )
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1, "Slaktevolum",
-                f"{bakka['h1']['harvest']:,} tonn".replace(",", " "),
-                bakka["h1_yoy"]["harvest"],
-            )
-            metric_with_yoy(
-                h2, "Operasjonell EBIT",
-                f"{bakka['h1']['operational_ebit']:,} MDKK".replace(",", " "),
-                bakka["h1_yoy"]["operational_ebit"],
-            )
-            metric_with_yoy(
-                h3, "FO slaktevolum",
-                f"{bakka['h1']['fo_harvest']:,} tonn".replace(",", " "),
-                bakka["h1_yoy"]["fo_harvest"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4, "SCT slaktevolum",
-                f"{bakka['h1']['sct_harvest']:,} tonn".replace(",", " "),
-                bakka["h1_yoy"]["sct_harvest"],
-            )
-            metric_with_yoy(
-                h5, "Smolt overført",
-                f"{bakka['h1']['smolt_transfer']:.1f}".replace(".", ",") + " mill.",
-                bakka["h1_yoy"]["smolt_transfer"],
-            )
-            metric_with_yoy(
-                h6, "FOF operasjonell EBIT-margin",
-                f"{bakka['h1']['fof_margin']:.0f}%",
-                bakka["h1_yoy"]["fof_margin"],
-            )
-
-            st.caption(f"Neste rapport: {bakka['next_report']}.")
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                k1, k2, k3 = st.columns(3)
+                k1.metric("Slaktevolum Q2", f"{bakka['q2']['harvest']:,} tonn".replace(",", " "))
+                k2.metric("Operasjonell EBIT Q2", f"{bakka['q2']['operational_ebit']:,} MDKK".replace(",", " "))
+                k3.metric("Guiding 2026", "117 000 tonn")
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric("FO EBIT/kg Q2", f"{bakka['q2']['fo_ebit_per_kg']:.2f} DKK".replace(".", ","))
+                k5.metric("Slaktevolum H1", f"{bakka['h1']['harvest']:,} tonn".replace(",", " "))
+                k6.metric("Smolt overført H1", f"{bakka['h1']['smolt_transfer']:.1f}".replace(".", ",") + " mill.")
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1, "Slaktevolum",
+                    f"{bakka['q2']['harvest']:,} tonn".replace(",", " "),
+                    bakka["q2_yoy"]["harvest"],
+                )
+                metric_with_yoy(
+                    q2, "Operasjonell EBIT",
+                    f"{bakka['q2']['operational_ebit']:,} MDKK".replace(",", " "),
+                    bakka["q2_yoy"]["operational_ebit"],
+                )
+                metric_with_yoy(
+                    q3, "Kontantstrøm fra drift",
+                    f"{bakka['q2']['ocf']:,} MDKK".replace(",", " "),
+                    bakka["q2_yoy"]["ocf"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4, "FO operasjonell EBIT/kg",
+                    f"{bakka['q2']['fo_ebit_per_kg']:.2f} DKK".replace(".", ","),
+                    bakka["q2_yoy"]["fo_ebit_per_kg"],
+                )
+                metric_with_yoy(
+                    q5, "SCT operasjonell EBIT/kg",
+                    f"{bakka['q2']['sct_ebit_per_kg']:.2f} DKK".replace(".", ","),
+                    bakka["q2_yoy"]["sct_ebit_per_kg"],
+                )
+                metric_with_yoy(
+                    q6, "Smolt overført",
+                    f"{bakka['q2']['smolt_transfer']:.1f}".replace(".", ",") + " mill.",
+                    bakka["q2_yoy"]["smolt_transfer"],
+                )
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1, "Slaktevolum",
+                    f"{bakka['h1']['harvest']:,} tonn".replace(",", " "),
+                    bakka["h1_yoy"]["harvest"],
+                )
+                metric_with_yoy(
+                    h2, "Operasjonell EBIT",
+                    f"{bakka['h1']['operational_ebit']:,} MDKK".replace(",", " "),
+                    bakka["h1_yoy"]["operational_ebit"],
+                )
+                metric_with_yoy(
+                    h3, "FO slaktevolum",
+                    f"{bakka['h1']['fo_harvest']:,} tonn".replace(",", " "),
+                    bakka["h1_yoy"]["fo_harvest"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4, "SCT slaktevolum",
+                    f"{bakka['h1']['sct_harvest']:,} tonn".replace(",", " "),
+                    bakka["h1_yoy"]["sct_harvest"],
+                )
+                metric_with_yoy(
+                    h5, "Smolt overført",
+                    f"{bakka['h1']['smolt_transfer']:.1f}".replace(".", ",") + " mill.",
+                    bakka["h1_yoy"]["smolt_transfer"],
+                )
+                metric_with_yoy(
+                    h6, "FOF operasjonell EBIT-margin",
+                    f"{bakka['h1']['fof_margin']:.0f}%",
+                    bakka["h1_yoy"]["fof_margin"],
+                )
+    
+                st.caption(f"Neste rapport: {bakka['next_report']}.")
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(bakka["annual"]).copy()
             annual_df = add_eps_growth_after_column(annual_df, "EPS DKK", "EPS vekst")
-            annual_df["Omsetning"] = annual_df["Omsetning"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["Operasjonell EBIT"] = annual_df["Operasjonell EBIT"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["Operasjonell EBIT-margin"] = annual_df["Operasjonell EBIT-margin"].map(
-                lambda x: f"{x:.1f}%".replace(".", ",")
-            )
-            annual_df["Slaktevolum"] = annual_df["Slaktevolum"].map(
-                lambda x: f"{x:,.0f}".replace(",", " ")
-            )
-            annual_df["EPS DKK"] = annual_df["EPS DKK"].map(
-                lambda x: f"{x:.2f}".replace(".", ",")
-            )
-            annual_df["Utbytte DKK"] = annual_df["Utbytte DKK"].map(
-                lambda x: f"{x:.2f}".replace(".", ",")
-            )
+            annual_df["Omsetning"] = annual_df["Omsetning"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Operasjonell EBIT"] = annual_df["Operasjonell EBIT"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Operasjonell EBIT-margin"] = annual_df["Operasjonell EBIT-margin"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["Slaktevolum"] = annual_df["Slaktevolum"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["EPS DKK"] = annual_df["EPS DKK"].map(lambda x: _fmt_table_number(x, 2))
+            annual_df["Utbytte DKK"] = annual_df["Utbytte DKK"].map(lambda x: _fmt_table_number(x, 2))
             st.dataframe(annual_df, width="stretch", hide_index=True)
 
             st.subheader("2026 – kvartal/H1")
@@ -7101,113 +7638,107 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("Omsetning Q2", f"{nod['q2']['revenue']:.1f} MUSD".replace(".", ","))
-            k2.metric("Bruttomargin Q2", f"{nod['q2']['gross_margin']:.1f}%".replace(".", ","))
-            k3.metric("Just. EBITDA-margin Q2", f"{nod['q2']['adj_ebitda_margin']:.1f}%".replace(".", ","))
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric("Long-range Q2", f"{nod['q2']['long_range']:.1f} MUSD".replace(".", ","))
-            k5.metric("Kontanter H1", f"{nod['h1']['cash']:.1f} MUSD".replace(".", ","))
-            k6.metric("Bluetooth designandel Q2", f"{nod['q2']['design_share']:.0f}%")
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1, "Omsetning",
-                f"{nod['q2']['revenue']:.1f} MUSD".replace(".", ","),
-                nod["q2_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                q2, "Bruttomargin",
-                f"{nod['q2']['gross_margin']:.1f}%".replace(".", ","),
-                nod["q2_yoy"]["gross_margin"],
-            )
-            metric_with_yoy(
-                q3, "Just. EBITDA-margin",
-                f"{nod['q2']['adj_ebitda_margin']:.1f}%".replace(".", ","),
-                nod["q2_yoy"]["adj_ebitda_margin"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4, "Just. EBITDA",
-                f"{nod['q2']['adj_ebitda']:.1f} MUSD".replace(".", ","),
-                nod["q2_yoy"]["adj_ebitda"],
-            )
-            metric_with_yoy(
-                q5, "EBIT",
-                f"{nod['q2']['ebit']:.1f} MUSD".replace(".", ","),
-                nod["q2_yoy"]["ebit"],
-            )
-            metric_with_yoy(
-                q6, "EPS",
-                f"{nod['q2']['eps_usd']:.3f} USD".replace(".", ","),
-                nod["q2_yoy"]["eps_usd"],
-            )
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1, "Omsetning",
-                f"{nod['h1']['revenue']:.1f} MUSD".replace(".", ","),
-                nod["h1_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                h2, "Bruttomargin",
-                f"{nod['h1']['gross_margin']:.1f}%".replace(".", ","),
-                nod["h1_yoy"]["gross_margin"],
-            )
-            metric_with_yoy(
-                h3, "Just. EBITDA-margin",
-                f"{nod['h1']['adj_ebitda_margin']:.1f}%".replace(".", ","),
-                nod["h1_yoy"]["adj_ebitda_margin"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4, "EBIT",
-                f"{nod['h1']['ebit']:.1f} MUSD".replace(".", ","),
-                nod["h1_yoy"]["ebit"],
-            )
-            metric_with_yoy(
-                h5, "EPS",
-                f"{nod['h1']['eps_usd']:.3f} USD".replace(".", ","),
-                nod["h1_yoy"]["eps_usd"],
-            )
-            metric_with_yoy(
-                h6, "Kontantstrøm fra drift",
-                f"{nod['h1']['ocf']:.1f} MUSD".replace(".", ","),
-                nod["h1_yoy"]["ocf"],
-            )
-
-            st.caption(
-                "Svakere kontantstrøm i H1 skyldes hovedsakelig bevisst lageroppbygging "
-                "for å sikre kapasitet og støtte nRF54-rampen. "
-                f"Neste rapport: {nod['next_report']}."
-            )
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                k1, k2, k3 = st.columns(3)
+                k1.metric("Omsetning Q2", f"{nod['q2']['revenue']:.1f} MUSD".replace(".", ","))
+                k2.metric("Bruttomargin Q2", f"{nod['q2']['gross_margin']:.1f}%".replace(".", ","))
+                k3.metric("Just. EBITDA-margin Q2", f"{nod['q2']['adj_ebitda_margin']:.1f}%".replace(".", ","))
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric("Long-range Q2", f"{nod['q2']['long_range']:.1f} MUSD".replace(".", ","))
+                k5.metric("Kontanter H1", f"{nod['h1']['cash']:.1f} MUSD".replace(".", ","))
+                k6.metric("Bluetooth designandel Q2", f"{nod['q2']['design_share']:.0f}%")
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1, "Omsetning",
+                    f"{nod['q2']['revenue']:.1f} MUSD".replace(".", ","),
+                    nod["q2_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    q2, "Bruttomargin",
+                    f"{nod['q2']['gross_margin']:.1f}%".replace(".", ","),
+                    nod["q2_yoy"]["gross_margin"],
+                )
+                metric_with_yoy(
+                    q3, "Just. EBITDA-margin",
+                    f"{nod['q2']['adj_ebitda_margin']:.1f}%".replace(".", ","),
+                    nod["q2_yoy"]["adj_ebitda_margin"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4, "Just. EBITDA",
+                    f"{nod['q2']['adj_ebitda']:.1f} MUSD".replace(".", ","),
+                    nod["q2_yoy"]["adj_ebitda"],
+                )
+                metric_with_yoy(
+                    q5, "EBIT",
+                    f"{nod['q2']['ebit']:.1f} MUSD".replace(".", ","),
+                    nod["q2_yoy"]["ebit"],
+                )
+                metric_with_yoy(
+                    q6, "EPS",
+                    f"{nod['q2']['eps_usd']:.3f} USD".replace(".", ","),
+                    nod["q2_yoy"]["eps_usd"],
+                )
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1, "Omsetning",
+                    f"{nod['h1']['revenue']:.1f} MUSD".replace(".", ","),
+                    nod["h1_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    h2, "Bruttomargin",
+                    f"{nod['h1']['gross_margin']:.1f}%".replace(".", ","),
+                    nod["h1_yoy"]["gross_margin"],
+                )
+                metric_with_yoy(
+                    h3, "Just. EBITDA-margin",
+                    f"{nod['h1']['adj_ebitda_margin']:.1f}%".replace(".", ","),
+                    nod["h1_yoy"]["adj_ebitda_margin"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4, "EBIT",
+                    f"{nod['h1']['ebit']:.1f} MUSD".replace(".", ","),
+                    nod["h1_yoy"]["ebit"],
+                )
+                metric_with_yoy(
+                    h5, "EPS",
+                    f"{nod['h1']['eps_usd']:.3f} USD".replace(".", ","),
+                    nod["h1_yoy"]["eps_usd"],
+                )
+                metric_with_yoy(
+                    h6, "Kontantstrøm fra drift",
+                    f"{nod['h1']['ocf']:.1f} MUSD".replace(".", ","),
+                    nod["h1_yoy"]["ocf"],
+                )
+    
+                st.caption(
+                    "Svakere kontantstrøm i H1 skyldes hovedsakelig bevisst lageroppbygging "
+                    "for å sikre kapasitet og støtte nRF54-rampen. "
+                    f"Neste rapport: {nod['next_report']}."
+                )
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(nod["annual"]).copy()
             annual_df = add_eps_growth_after_column(annual_df, "EPS USD", "EPS vekst")
             for col in ["Omsetning USDm", "EBIT USDm", "OCF USDm", "Kontanter USDm"]:
-                annual_df[col] = annual_df[col].map(
-                    lambda x: f"{x:,.1f}".replace(",", " ").replace(".", ",")
-                )
-            annual_df["Bruttomargin"] = annual_df["Bruttomargin"].map(
-                lambda x: f"{x:.1f}%".replace(".", ",")
-            )
-            annual_df["EBIT-margin"] = annual_df["EBIT-margin"].map(
-                lambda x: f"{x:.1f}%".replace(".", ",")
-            )
-            annual_df["EPS USD"] = annual_df["EPS USD"].map(
-                lambda x: f"{x:.3f}".replace(".", ",")
-            )
+                annual_df[col] = annual_df[col].map(lambda x: _fmt_table_number(x, 1))
+            annual_df["Bruttomargin"] = annual_df["Bruttomargin"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["EBIT-margin"] = annual_df["EBIT-margin"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["EPS USD"] = annual_df["EPS USD"].map(lambda x: _fmt_table_number(x, 3))
             st.dataframe(annual_df, width="stretch", hide_index=True)
 
             st.subheader("2026 – kvartal/H1")
@@ -7484,96 +8015,98 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("Medlemmer Q2", f"{sats['q2']['members']:.0f} 000")
-            k2.metric("ARPM Q2", f"{sats['q2']['arpm']:.0f} NOK/mnd.")
-            k3.metric("EBITDA-margin Q2", f"{sats['q2']['ebitda_margin']:.0f}%")
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric(f"FCF {info.get('_ytd_label', 'H1 2026')}", f"{sats['h1']['fcf']:,} MNOK".replace(",", " "))
-            k5.metric("Leverage", f"{sats['h1']['leverage']:.1f}x".replace(".", ","))
-            k6.metric("Klubber Q2", f"{sats['q2']['clubs']:.0f}")
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1, "Omsetning",
-                f"{sats['q2']['revenue']:,} MNOK".replace(",", " "),
-                sats["q2_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                q2, "Medlemmer",
-                f"{sats['q2']['members']:.0f} 000",
-                sats["q2_yoy"]["members"],
-            )
-            metric_with_yoy(
-                q3, "ARPM",
-                f"{sats['q2']['arpm']:.0f} NOK/mnd.",
-                sats["q2_yoy"]["arpm"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4, "EBITDA før IFRS 16",
-                f"{sats['q2']['ebitda_pre_ifrs16']:,} MNOK".replace(",", " "),
-                sats["q2_yoy"]["ebitda_pre_ifrs16"],
-            )
-            metric_with_yoy(
-                q5, "EBIT før IFRS 16",
-                f"{sats['q2']['ebit_pre_ifrs16']:,} MNOK".replace(",", " "),
-                sats["q2_yoy"]["ebit_pre_ifrs16"],
-            )
-            metric_with_yoy(
-                q6, "EPS",
-                f"{sats['q2']['eps']:.2f}".replace(".", ","),
-                sats["q2_yoy"]["eps"],
-            )
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1, "Omsetning",
-                f"{sats['h1']['revenue']:,} MNOK".replace(",", " "),
-                sats["h1_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                h2, "EBITDA før IFRS 16",
-                f"{sats['h1']['ebitda_pre_ifrs16']:,} MNOK".replace(",", " "),
-                sats["h1_yoy"]["ebitda_pre_ifrs16"],
-            )
-            metric_with_yoy(
-                h3, "EBIT før IFRS 16",
-                f"{sats['h1']['ebit_pre_ifrs16']:,} MNOK".replace(",", " "),
-                sats["h1_yoy"]["ebit_pre_ifrs16"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4, "EPS",
-                f"{sats['h1']['eps']:.2f}".replace(".", ","),
-                sats["h1_yoy"]["eps"],
-            )
-            metric_with_yoy(
-                h5, "Kontantstrøm fra drift",
-                f"{sats['h1']['ocf']:,} MNOK".replace(",", " "),
-                sats["h1_yoy"]["ocf"],
-            )
-            metric_with_yoy(
-                h6, "Fri kontantstrøm",
-                f"{sats['h1']['fcf']:,} MNOK".replace(",", " "),
-                sats["h1_yoy"]["fcf"],
-            )
-
-            st.caption(
-                "Q2: treningsøkter økte 3% mot i fjor. SATS har signert 13 nye klubber "
-                "som skal åpne frem til og med 2028. "
-                f"Neste rapport: {sats['next_report']}."
-            )
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                k1, k2, k3 = st.columns(3)
+                k1.metric("Medlemmer Q2", f"{sats['q2']['members']:.0f} 000")
+                k2.metric("ARPM Q2", f"{sats['q2']['arpm']:.0f} NOK/mnd.")
+                k3.metric("EBITDA-margin Q2", f"{sats['q2']['ebitda_margin']:.0f}%")
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric(f"FCF {info.get('_ytd_label', 'H1 2026')}", f"{sats['h1']['fcf']:,} MNOK".replace(",", " "))
+                k5.metric("Leverage", f"{sats['h1']['leverage']:.1f}x".replace(".", ","))
+                k6.metric("Klubber Q2", f"{sats['q2']['clubs']:.0f}")
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1, "Omsetning",
+                    f"{sats['q2']['revenue']:,} MNOK".replace(",", " "),
+                    sats["q2_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    q2, "Medlemmer",
+                    f"{sats['q2']['members']:.0f} 000",
+                    sats["q2_yoy"]["members"],
+                )
+                metric_with_yoy(
+                    q3, "ARPM",
+                    f"{sats['q2']['arpm']:.0f} NOK/mnd.",
+                    sats["q2_yoy"]["arpm"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4, "EBITDA før IFRS 16",
+                    f"{sats['q2']['ebitda_pre_ifrs16']:,} MNOK".replace(",", " "),
+                    sats["q2_yoy"]["ebitda_pre_ifrs16"],
+                )
+                metric_with_yoy(
+                    q5, "EBIT før IFRS 16",
+                    f"{sats['q2']['ebit_pre_ifrs16']:,} MNOK".replace(",", " "),
+                    sats["q2_yoy"]["ebit_pre_ifrs16"],
+                )
+                metric_with_yoy(
+                    q6, "EPS",
+                    f"{sats['q2']['eps']:.2f}".replace(".", ","),
+                    sats["q2_yoy"]["eps"],
+                )
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1, "Omsetning",
+                    f"{sats['h1']['revenue']:,} MNOK".replace(",", " "),
+                    sats["h1_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    h2, "EBITDA før IFRS 16",
+                    f"{sats['h1']['ebitda_pre_ifrs16']:,} MNOK".replace(",", " "),
+                    sats["h1_yoy"]["ebitda_pre_ifrs16"],
+                )
+                metric_with_yoy(
+                    h3, "EBIT før IFRS 16",
+                    f"{sats['h1']['ebit_pre_ifrs16']:,} MNOK".replace(",", " "),
+                    sats["h1_yoy"]["ebit_pre_ifrs16"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4, "EPS",
+                    f"{sats['h1']['eps']:.2f}".replace(".", ","),
+                    sats["h1_yoy"]["eps"],
+                )
+                metric_with_yoy(
+                    h5, "Kontantstrøm fra drift",
+                    f"{sats['h1']['ocf']:,} MNOK".replace(",", " "),
+                    sats["h1_yoy"]["ocf"],
+                )
+                metric_with_yoy(
+                    h6, "Fri kontantstrøm",
+                    f"{sats['h1']['fcf']:,} MNOK".replace(",", " "),
+                    sats["h1_yoy"]["fcf"],
+                )
+    
+                st.caption(
+                    "Q2: treningsøkter økte 3% mot i fjor. SATS har signert 13 nye klubber "
+                    "som skal åpne frem til og med 2028. "
+                    f"Neste rapport: {sats['next_report']}."
+                )
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(sats["annual"]).copy()
@@ -7585,21 +8118,11 @@ elif side == "Selskaper":
                 "OCF",
                 "FCF",
             ]:
-                annual_df[col] = annual_df[col].map(
-                    lambda x: f"{x:,.0f}".replace(",", " ")
-                )
-            annual_df["EPS"] = annual_df["EPS"].map(
-                lambda x: f"{x:.2f}".replace(".", ",")
-            )
-            annual_df["Medlemmer"] = annual_df["Medlemmer"].map(
-                lambda x: f"{x:.0f} 000"
-            )
-            annual_df["ARPM"] = annual_df["ARPM"].map(
-                lambda x: f"{x:.0f}"
-            )
-            annual_df["Leverage"] = annual_df["Leverage"].map(
-                lambda x: f"{x:.1f}x".replace(".", ",")
-            )
+                annual_df[col] = annual_df[col].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["EPS"] = annual_df["EPS"].map(lambda x: _fmt_table_number(x, 2))
+            annual_df["Medlemmer"] = annual_df["Medlemmer"].map(_fmt_members_or_dash)
+            annual_df["ARPM"] = annual_df["ARPM"].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Leverage"] = annual_df["Leverage"].map(lambda x: _fmt_x_or_dash(x, 1))
             st.dataframe(annual_df, width="stretch", hide_index=True)
 
             st.subheader("2026 – kvartal/H1")
@@ -7880,116 +8403,118 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            approx_adevinta_per_share = vend["adevinta_per_share"]
-
-            k1, k2, k3 = st.columns(3)
-            k1.metric("EBITDA-margin Q2", f"{vend['q2']['ebitda_margin']:.0f}%")
-            k2.metric("Adj. EPS H1", f"{vend['h1']['adj_eps']:.2f} NOK".replace(".", ","))
-            k3.metric(f"FCF {info.get('_ytd_label', 'H1 2026')}", f"{vend['h1']['fcf']:,} MNOK".replace(",", " "))
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric("Netto kontanter H1", f"{vend['h1']['net_cash']:,} MNOK".replace(",", " "))
-            k5.metric("Adevinta-verdi", f"{vend['h1']['adevinta_value']/1000:.1f} mrd. NOK".replace(".", ","))
-            k6.metric("Adevinta / aksje", f"~{approx_adevinta_per_share:.0f} NOK")
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1, "Omsetning",
-                f"{vend['q2']['revenue']:,} MNOK".replace(",", " "),
-                vend["q2_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                q2, "EBITDA",
-                f"{vend['q2']['ebitda']:,} MNOK".replace(",", " "),
-                vend["q2_yoy"]["ebitda"],
-            )
-            metric_with_yoy(
-                q3, "EBITDA-margin",
-                f"{vend['q2']['ebitda_margin']:.0f}%",
-                vend["q2_yoy"]["ebitda_margin"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4, "Adj. EPS – videreført virksomhet",
-                f"{vend['q2']['adj_eps']:.2f}".replace(".", ","),
-                vend["q2_yoy"]["adj_eps"],
-            )
-            metric_with_yoy(
-                q5, "Kontantstrøm fra drift",
-                f"{vend['q2']['ocf']:,} MNOK".replace(",", " "),
-                vend["q2_yoy"]["ocf"],
-            )
-            metric_with_yoy(
-                q6, "Fri kontantstrøm",
-                f"{vend['q2']['fcf']:,} MNOK".replace(",", " "),
-                vend["q2_yoy"]["fcf"],
-            )
-
-            st.subheader("Vertikaler – Q2 2026")
-            v1, v2, v3 = st.columns(3)
-            metric_with_yoy(
-                v1, "Recommerce omsetning",
-                f"{vend['q2']['recommerce_revenue']:,} MNOK".replace(",", " "),
-                vend["q2_yoy"]["recommerce_revenue"],
-            )
-            metric_with_yoy(
-                v2, "Recommerce EBITDA",
-                f"{vend['q2']['recommerce_ebitda']:,} MNOK".replace(",", " "),
-                vend["q2_yoy"]["recommerce_ebitda"],
-            )
-            v3.metric(
-                "Real Estate EBITDA",
-                f"{vend['q2']['real_estate_ebitda']:,} MNOK".replace(",", " "),
-            )
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1, "Omsetning",
-                f"{vend['h1']['revenue']:,} MNOK".replace(",", " "),
-                vend["h1_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                h2, "EBITDA",
-                f"{vend['h1']['ebitda']:,} MNOK".replace(",", " "),
-                vend["h1_yoy"]["ebitda"],
-            )
-            metric_with_yoy(
-                h3, "EBITDA-margin",
-                f"{vend['h1']['ebitda_margin']:.0f}%",
-                vend["h1_yoy"]["ebitda_margin"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4, "Adj. EPS – videreført virksomhet",
-                f"{vend['h1']['adj_eps']:.2f}".replace(".", ","),
-                vend["h1_yoy"]["adj_eps"],
-            )
-            metric_with_yoy(
-                h5, "Kontantstrøm fra drift",
-                f"{vend['h1']['ocf']:,} MNOK".replace(",", " "),
-                vend["h1_yoy"]["ocf"],
-            )
-            metric_with_yoy(
-                h6, "Fri kontantstrøm",
-                f"{vend['h1']['fcf']:,} MNOK".replace(",", " "),
-                vend["h1_yoy"]["fcf"],
-            )
-
-            st.caption(
-                "Rapportert EPS i H1 påvirkes kraftig av ikke-kontante verdiendringer i "
-                "Adevinta. Derfor bruker vi justert EPS fra videreført virksomhet i "
-                "driftsanalysen og verdsettelsen. "
-                f"Neste rapport: {vend['next_report']}."
-            )
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                approx_adevinta_per_share = vend["adevinta_per_share"]
+    
+                k1, k2, k3 = st.columns(3)
+                k1.metric("EBITDA-margin Q2", f"{vend['q2']['ebitda_margin']:.0f}%")
+                k2.metric("Adj. EPS H1", f"{vend['h1']['adj_eps']:.2f} NOK".replace(".", ","))
+                k3.metric(f"FCF {info.get('_ytd_label', 'H1 2026')}", f"{vend['h1']['fcf']:,} MNOK".replace(",", " "))
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric("Netto kontanter H1", f"{vend['h1']['net_cash']:,} MNOK".replace(",", " "))
+                k5.metric("Adevinta-verdi", f"{vend['h1']['adevinta_value']/1000:.1f} mrd. NOK".replace(".", ","))
+                k6.metric("Adevinta / aksje", f"~{approx_adevinta_per_share:.0f} NOK")
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1, "Omsetning",
+                    f"{vend['q2']['revenue']:,} MNOK".replace(",", " "),
+                    vend["q2_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    q2, "EBITDA",
+                    f"{vend['q2']['ebitda']:,} MNOK".replace(",", " "),
+                    vend["q2_yoy"]["ebitda"],
+                )
+                metric_with_yoy(
+                    q3, "EBITDA-margin",
+                    f"{vend['q2']['ebitda_margin']:.0f}%",
+                    vend["q2_yoy"]["ebitda_margin"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4, "Adj. EPS – videreført virksomhet",
+                    f"{vend['q2']['adj_eps']:.2f}".replace(".", ","),
+                    vend["q2_yoy"]["adj_eps"],
+                )
+                metric_with_yoy(
+                    q5, "Kontantstrøm fra drift",
+                    f"{vend['q2']['ocf']:,} MNOK".replace(",", " "),
+                    vend["q2_yoy"]["ocf"],
+                )
+                metric_with_yoy(
+                    q6, "Fri kontantstrøm",
+                    f"{vend['q2']['fcf']:,} MNOK".replace(",", " "),
+                    vend["q2_yoy"]["fcf"],
+                )
+    
+                st.subheader("Vertikaler – Q2 2026")
+                v1, v2, v3 = st.columns(3)
+                metric_with_yoy(
+                    v1, "Recommerce omsetning",
+                    f"{vend['q2']['recommerce_revenue']:,} MNOK".replace(",", " "),
+                    vend["q2_yoy"]["recommerce_revenue"],
+                )
+                metric_with_yoy(
+                    v2, "Recommerce EBITDA",
+                    f"{vend['q2']['recommerce_ebitda']:,} MNOK".replace(",", " "),
+                    vend["q2_yoy"]["recommerce_ebitda"],
+                )
+                v3.metric(
+                    "Real Estate EBITDA",
+                    f"{vend['q2']['real_estate_ebitda']:,} MNOK".replace(",", " "),
+                )
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1, "Omsetning",
+                    f"{vend['h1']['revenue']:,} MNOK".replace(",", " "),
+                    vend["h1_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    h2, "EBITDA",
+                    f"{vend['h1']['ebitda']:,} MNOK".replace(",", " "),
+                    vend["h1_yoy"]["ebitda"],
+                )
+                metric_with_yoy(
+                    h3, "EBITDA-margin",
+                    f"{vend['h1']['ebitda_margin']:.0f}%",
+                    vend["h1_yoy"]["ebitda_margin"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4, "Adj. EPS – videreført virksomhet",
+                    f"{vend['h1']['adj_eps']:.2f}".replace(".", ","),
+                    vend["h1_yoy"]["adj_eps"],
+                )
+                metric_with_yoy(
+                    h5, "Kontantstrøm fra drift",
+                    f"{vend['h1']['ocf']:,} MNOK".replace(",", " "),
+                    vend["h1_yoy"]["ocf"],
+                )
+                metric_with_yoy(
+                    h6, "Fri kontantstrøm",
+                    f"{vend['h1']['fcf']:,} MNOK".replace(",", " "),
+                    vend["h1_yoy"]["fcf"],
+                )
+    
+                st.caption(
+                    "Rapportert EPS i H1 påvirkes kraftig av ikke-kontante verdiendringer i "
+                    "Adevinta. Derfor bruker vi justert EPS fra videreført virksomhet i "
+                    "driftsanalysen og verdsettelsen. "
+                    f"Neste rapport: {vend['next_report']}."
+                )
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(vend["annual"]).copy()
@@ -8010,6 +8535,7 @@ elif side == "Selskaper":
                 lambda x: f"{x:.2f}".replace(".", ",")
             )
             st.dataframe(annual_df, width="stretch", hide_index=True)
+            st.caption("Vend: sammenlignbar historikk for dagens videreførte virksomhet starter i 2024 etter store scope-/porteføljeendringer.")
 
             st.subheader("2026 – kvartal/H1")
             vend_q1_revenue = vend["h1"]["revenue"] - vend["q2"]["revenue"]
@@ -8327,133 +8853,127 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("Solgte boliger Q2", f"{sbo['q2']['units_sold']:.0f}")
-            k2.metric("Overleverte boliger Q2", f"{sbo['q2']['units_delivered']:.0f}")
-            k3.metric(
-                "Ordrebok / under bygging",
-                f"{sbo['q2']['backlog_value']/1000:.1f} mrd. NOK".replace(".", ",")
-            )
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric(
-                "Just. EBITDA-margin Q2",
-                f"{sbo['q2']['adj_ebitda_margin']:.1f}%".replace(".", ",")
-            )
-            k5.metric("Boliger under bygging", f"{sbo['q2']['under_construction']:,}".replace(",", " "))
-            k6.metric("Egenkapitalgrad", f"{sbo['q2']['equity_ratio']:.1f}%".replace(".", ","))
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1, "Solgte boliger",
-                f"{sbo['q2']['units_sold']:.0f}",
-                sbo["q2_yoy"]["units_sold"],
-            )
-            metric_with_yoy(
-                q2, "Salgsverdi",
-                f"{sbo['q2']['sales_value']:,} MNOK".replace(",", " "),
-                sbo["q2_yoy"]["sales_value"],
-            )
-            metric_with_yoy(
-                q3, "Overleverte boliger",
-                f"{sbo['q2']['units_delivered']:.0f}",
-                sbo["q2_yoy"]["units_delivered"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4, "Just. EBITDA",
-                f"{sbo['q2']['adj_ebitda']:,} MNOK".replace(",", " "),
-                sbo["q2_yoy"]["adj_ebitda"],
-            )
-            metric_with_yoy(
-                q5, "Just. EBITDA-margin",
-                f"{sbo['q2']['adj_ebitda_margin']:.1f}%".replace(".", ","),
-                sbo["q2_yoy"]["adj_ebitda_margin"],
-            )
-            metric_with_yoy(
-                q6, "EPS",
-                f"{sbo['q2']['eps']:.2f}".replace(".", ","),
-                sbo["q2_yoy"]["eps"],
-            )
-
-            st.subheader("Prosjektportefølje – Q2 2026")
-            p1, p2, p3 = st.columns(3)
-            metric_with_yoy(
-                p1, "Boliger under bygging",
-                f"{sbo['q2']['under_construction']:,}".replace(",", " "),
-                sbo["q2_yoy"]["under_construction"],
-            )
-            metric_with_yoy(
-                p2, "Verdi under bygging",
-                f"{sbo['q2']['backlog_value']/1000:.1f} mrd. NOK".replace(".", ","),
-                sbo["q2_yoy"]["backlog_value"],
-            )
-            p3.metric("Andel solgt under bygging", f"{sbo['q2']['sold_share']:.0f}%")
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1, "Omsetning",
-                f"{sbo['h1']['revenue']:,} MNOK".replace(",", " "),
-                sbo["h1_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                h2, "Solgte boliger",
-                f"{sbo['h1']['units_sold']:.0f}",
-                sbo["h1_yoy"]["units_sold"],
-            )
-            metric_with_yoy(
-                h3, "Overleverte boliger",
-                f"{sbo['h1']['units_delivered']:.0f}",
-                sbo["h1_yoy"]["units_delivered"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4, "Just. EBITDA",
-                f"{sbo['h1']['adj_ebitda']:,} MNOK".replace(",", " "),
-                sbo["h1_yoy"]["adj_ebitda"],
-            )
-            metric_with_yoy(
-                h5, "EPS",
-                f"{sbo['h1']['eps']:.2f}".replace(".", ","),
-                sbo["h1_yoy"]["eps"],
-            )
-            metric_with_yoy(
-                h6, "Kontantstrøm fra drift",
-                f"{sbo['h1']['ocf']:,} MNOK".replace(",", " "),
-                sbo["h1_yoy"]["ocf"],
-            )
-
-            st.caption(
-                "Negativ H1-kontantstrøm skyldes hovedsakelig flere boliger i produksjon "
-                "og dermed høyere varelager. "
-                f"Neste rapport: {sbo['next_report']}."
-            )
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                k1, k2, k3 = st.columns(3)
+                k1.metric("Solgte boliger Q2", f"{sbo['q2']['units_sold']:.0f}")
+                k2.metric("Overleverte boliger Q2", f"{sbo['q2']['units_delivered']:.0f}")
+                k3.metric(
+                    "Ordrebok / under bygging",
+                    f"{sbo['q2']['backlog_value']/1000:.1f} mrd. NOK".replace(".", ",")
+                )
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric(
+                    "Just. EBITDA-margin Q2",
+                    f"{sbo['q2']['adj_ebitda_margin']:.1f}%".replace(".", ",")
+                )
+                k5.metric("Boliger under bygging", f"{sbo['q2']['under_construction']:,}".replace(",", " "))
+                k6.metric("Egenkapitalgrad", f"{sbo['q2']['equity_ratio']:.1f}%".replace(".", ","))
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1, "Solgte boliger",
+                    f"{sbo['q2']['units_sold']:.0f}",
+                    sbo["q2_yoy"]["units_sold"],
+                )
+                metric_with_yoy(
+                    q2, "Salgsverdi",
+                    f"{sbo['q2']['sales_value']:,} MNOK".replace(",", " "),
+                    sbo["q2_yoy"]["sales_value"],
+                )
+                metric_with_yoy(
+                    q3, "Overleverte boliger",
+                    f"{sbo['q2']['units_delivered']:.0f}",
+                    sbo["q2_yoy"]["units_delivered"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4, "Just. EBITDA",
+                    f"{sbo['q2']['adj_ebitda']:,} MNOK".replace(",", " "),
+                    sbo["q2_yoy"]["adj_ebitda"],
+                )
+                metric_with_yoy(
+                    q5, "Just. EBITDA-margin",
+                    f"{sbo['q2']['adj_ebitda_margin']:.1f}%".replace(".", ","),
+                    sbo["q2_yoy"]["adj_ebitda_margin"],
+                )
+                metric_with_yoy(
+                    q6, "EPS",
+                    f"{sbo['q2']['eps']:.2f}".replace(".", ","),
+                    sbo["q2_yoy"]["eps"],
+                )
+    
+                st.subheader("Prosjektportefølje – Q2 2026")
+                p1, p2, p3 = st.columns(3)
+                metric_with_yoy(
+                    p1, "Boliger under bygging",
+                    f"{sbo['q2']['under_construction']:,}".replace(",", " "),
+                    sbo["q2_yoy"]["under_construction"],
+                )
+                metric_with_yoy(
+                    p2, "Verdi under bygging",
+                    f"{sbo['q2']['backlog_value']/1000:.1f} mrd. NOK".replace(".", ","),
+                    sbo["q2_yoy"]["backlog_value"],
+                )
+                p3.metric("Andel solgt under bygging", f"{sbo['q2']['sold_share']:.0f}%")
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1, "Omsetning",
+                    f"{sbo['h1']['revenue']:,} MNOK".replace(",", " "),
+                    sbo["h1_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    h2, "Solgte boliger",
+                    f"{sbo['h1']['units_sold']:.0f}",
+                    sbo["h1_yoy"]["units_sold"],
+                )
+                metric_with_yoy(
+                    h3, "Overleverte boliger",
+                    f"{sbo['h1']['units_delivered']:.0f}",
+                    sbo["h1_yoy"]["units_delivered"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4, "Just. EBITDA",
+                    f"{sbo['h1']['adj_ebitda']:,} MNOK".replace(",", " "),
+                    sbo["h1_yoy"]["adj_ebitda"],
+                )
+                metric_with_yoy(
+                    h5, "EPS",
+                    f"{sbo['h1']['eps']:.2f}".replace(".", ","),
+                    sbo["h1_yoy"]["eps"],
+                )
+                metric_with_yoy(
+                    h6, "Kontantstrøm fra drift",
+                    f"{sbo['h1']['ocf']:,} MNOK".replace(",", " "),
+                    sbo["h1_yoy"]["ocf"],
+                )
+    
+                st.caption(
+                    "Negativ H1-kontantstrøm skyldes hovedsakelig flere boliger i produksjon "
+                    "og dermed høyere varelager. "
+                    f"Neste rapport: {sbo['next_report']}."
+                )
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(sbo["annual"]).copy()
             annual_df = add_eps_growth_after_column(annual_df, "EPS")
             for col in ["Omsetning", "EBIT", "Solgte boliger", "Overleverte boliger", "Under bygging", "Tomtebank"]:
-                annual_df[col] = annual_df[col].map(
-                    lambda x: f"{x:,.0f}".replace(",", " ")
-                )
-            annual_df["EBIT-margin"] = annual_df["EBIT-margin"].map(
-                lambda x: f"{x:.1f}%".replace(".", ",")
-            )
-            annual_df["EPS"] = annual_df["EPS"].map(
-                lambda x: f"{x:.2f}".replace(".", ",")
-            )
-            annual_df["Utbytte"] = annual_df["Utbytte"].map(
-                lambda x: f"{x:.2f}".replace(".", ",")
-            )
+                annual_df[col] = annual_df[col].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["EBIT-margin"] = annual_df["EBIT-margin"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["EPS"] = annual_df["EPS"].map(lambda x: _fmt_table_number(x, 2))
+            annual_df["Utbytte"] = annual_df["Utbytte"].map(lambda x: _fmt_table_number(x, 2))
             st.dataframe(annual_df, width="stretch", hide_index=True)
 
             st.subheader("2026 – kvartal/H1")
@@ -8741,83 +9261,85 @@ elif side == "Selskaper":
         )
 
         with tab1:
-            k1, k2, k3 = st.columns(3)
-            k1.metric("Cash EPS Q2", f"{stb['q2']['cash_eps']:.2f} NOK".replace(".", ","))
-            k2.metric("ROE LTM", f"{stb['q2']['roe_ltm']:.0f}%")
-            k3.metric("Solvens II", f"{stb['q2']['solvency']:.0f}%")
-
-            k4, k5, k6 = st.columns(3)
-            k4.metric("AUM Q2", f"{stb['q2']['aum']:,} mrd. NOK".replace(",", " "))
-            k5.metric("Combined ratio Q2", f"{stb['q2']['combined_ratio']:.1f}%".replace(".", ","))
-            k6.metric("Konsernresultat Q2", f"{stb['q2']['group_profit']:,} MNOK".replace(",", " "))
-
-            st.divider()
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(q1, "Driftsresultat",
-                            f"{stb['q2']['operating_profit']:,} MNOK".replace(",", " "),
-                            stb["q2_yoy"]["operating_profit"])
-            metric_with_yoy(q2, "Konsernresultat",
-                            f"{stb['q2']['group_profit']:,} MNOK".replace(",", " "),
-                            stb["q2_yoy"]["group_profit"])
-            metric_with_yoy(q3, "Cash EPS",
-                            f"{stb['q2']['cash_eps']:.2f}".replace(".", ","),
-                            stb["q2_yoy"]["cash_eps"])
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(q4, "Forsikringsresultat",
-                            f"{stb['q2']['insurance_result']:,} MNOK".replace(",", " "),
-                            stb["q2_yoy"]["insurance_result"])
-            metric_with_yoy(q5, "Combined ratio",
-                            f"{stb['q2']['combined_ratio']:.1f}%".replace(".", ","),
-                            stb["q2_yoy"]["combined_ratio"])
-            metric_with_yoy(q6, "AUM",
-                            f"{stb['q2']['aum']:,} mrd. NOK".replace(",", " "),
-                            stb["q2_yoy"]["aum"])
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(h1, "Driftsresultat",
-                            f"{stb['h1']['operating_profit']:,} MNOK".replace(",", " "),
-                            stb["h1_yoy"]["operating_profit"])
-            metric_with_yoy(h2, "Konsernresultat",
-                            f"{stb['h1']['group_profit']:,} MNOK".replace(",", " "),
-                            stb["h1_yoy"]["group_profit"])
-            metric_with_yoy(h3, "Cash EPS",
-                            f"{stb['h1']['cash_eps']:.2f}".replace(".", ","),
-                            stb["h1_yoy"]["cash_eps"])
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(h4, "Forsikringsresultat",
-                            f"{stb['h1']['insurance_result']:,} MNOK".replace(",", " "),
-                            stb["h1_yoy"]["insurance_result"])
-            metric_with_yoy(h5, "Combined ratio",
-                            f"{stb['h1']['combined_ratio']:.0f}%",
-                            stb["h1_yoy"]["combined_ratio"])
-            metric_with_yoy(h6, "Fee- og administrasjonsinntekter",
-                            f"{stb['h1']['fee_income']:,} MNOK".replace(",", " "),
-                            stb["h1_yoy"]["fee_income"])
-
-            st.caption(
-                "Storebrand hadde 200% Solvens II ved utgangen av Q2. "
-                "Andre tilbakekjøpstransje på 1 mrd. NOK er i gang. "
-                f"Neste rapport: {stb['next_report']}."
-            )
-
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                k1, k2, k3 = st.columns(3)
+                k1.metric("Cash EPS Q2", f"{stb['q2']['cash_eps']:.2f} NOK".replace(".", ","))
+                k2.metric("ROE LTM", f"{stb['q2']['roe_ltm']:.0f}%")
+                k3.metric("Solvens II", f"{stb['q2']['solvency']:.0f}%")
+    
+                k4, k5, k6 = st.columns(3)
+                k4.metric("AUM Q2", f"{stb['q2']['aum']:,} mrd. NOK".replace(",", " "))
+                k5.metric("Combined ratio Q2", f"{stb['q2']['combined_ratio']:.1f}%".replace(".", ","))
+                k6.metric("Konsernresultat Q2", f"{stb['q2']['group_profit']:,} MNOK".replace(",", " "))
+    
+                st.divider()
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(q1, "Driftsresultat",
+                                f"{stb['q2']['operating_profit']:,} MNOK".replace(",", " "),
+                                stb["q2_yoy"]["operating_profit"])
+                metric_with_yoy(q2, "Konsernresultat",
+                                f"{stb['q2']['group_profit']:,} MNOK".replace(",", " "),
+                                stb["q2_yoy"]["group_profit"])
+                metric_with_yoy(q3, "Cash EPS",
+                                f"{stb['q2']['cash_eps']:.2f}".replace(".", ","),
+                                stb["q2_yoy"]["cash_eps"])
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(q4, "Forsikringsresultat",
+                                f"{stb['q2']['insurance_result']:,} MNOK".replace(",", " "),
+                                stb["q2_yoy"]["insurance_result"])
+                metric_with_yoy(q5, "Combined ratio",
+                                f"{stb['q2']['combined_ratio']:.1f}%".replace(".", ","),
+                                stb["q2_yoy"]["combined_ratio"])
+                metric_with_yoy(q6, "AUM",
+                                f"{stb['q2']['aum']:,} mrd. NOK".replace(",", " "),
+                                stb["q2_yoy"]["aum"])
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(h1, "Driftsresultat",
+                                f"{stb['h1']['operating_profit']:,} MNOK".replace(",", " "),
+                                stb["h1_yoy"]["operating_profit"])
+                metric_with_yoy(h2, "Konsernresultat",
+                                f"{stb['h1']['group_profit']:,} MNOK".replace(",", " "),
+                                stb["h1_yoy"]["group_profit"])
+                metric_with_yoy(h3, "Cash EPS",
+                                f"{stb['h1']['cash_eps']:.2f}".replace(".", ","),
+                                stb["h1_yoy"]["cash_eps"])
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(h4, "Forsikringsresultat",
+                                f"{stb['h1']['insurance_result']:,} MNOK".replace(",", " "),
+                                stb["h1_yoy"]["insurance_result"])
+                metric_with_yoy(h5, "Combined ratio",
+                                f"{stb['h1']['combined_ratio']:.0f}%",
+                                stb["h1_yoy"]["combined_ratio"])
+                metric_with_yoy(h6, "Fee- og administrasjonsinntekter",
+                                f"{stb['h1']['fee_income']:,} MNOK".replace(",", " "),
+                                stb["h1_yoy"]["fee_income"])
+    
+                st.caption(
+                    "Storebrand hadde 200% Solvens II ved utgangen av Q2. "
+                    "Andre tilbakekjøpstransje på 1 mrd. NOK er i gang. "
+                    f"Neste rapport: {stb['next_report']}."
+                )
+    
         with tab2:
             st.subheader("Årsutvikling")
             annual_df = pd.DataFrame(stb["annual"]).copy()
             annual_df = add_eps_growth_after_column(annual_df, "Cash EPS", "EPS vekst")
             for col in ["Konsernresultat", "Driftsresultat", "AUM mrd."]:
-                annual_df[col] = annual_df[col].map(lambda x: f"{x:,.0f}".replace(",", " "))
-            annual_df["Cash EPS"] = annual_df["Cash EPS"].map(lambda x: f"{x:.2f}".replace(".", ","))
-            annual_df["Cash ROE"] = annual_df["Cash ROE"].map(lambda x: f"{x:.1f}%".replace(".", ","))
-            annual_df["Solvens II"] = annual_df["Solvens II"].map(lambda x: f"{x:.0f}%")
-            annual_df["Combined ratio"] = annual_df["Combined ratio"].map(lambda x: f"{x:.0f}%")
-            annual_df["Utbytte"] = annual_df["Utbytte"].map(lambda x: f"{x:.2f}".replace(".", ","))
+                annual_df[col] = annual_df[col].map(lambda x: _fmt_table_number(x, 0))
+            annual_df["Cash EPS"] = annual_df["Cash EPS"].map(lambda x: _fmt_table_number(x, 2))
+            annual_df["Cash ROE"] = annual_df["Cash ROE"].map(lambda x: _fmt_pct_or_dash(x, 1))
+            annual_df["Solvens II"] = annual_df["Solvens II"].map(lambda x: _fmt_pct_or_dash(x, 0))
+            annual_df["Combined ratio"] = annual_df["Combined ratio"].map(lambda x: _fmt_pct_or_dash(x, 0))
+            annual_df["Utbytte"] = annual_df["Utbytte"].map(lambda x: _fmt_table_number(x, 2))
             st.dataframe(annual_df, width="stretch", hide_index=True)
             st.caption(
                 "Konsernresultatet i 2024 inkluderte en gevinst på 1 047 MNOK fra salget "
@@ -9099,197 +9621,199 @@ elif side == "Selskaper":
         # OVERSIKT
         # -------------------------------------------------
         with tab1:
-            # Selskapsnøkkeltall vises kun på Oversikt.
-            k1, k2, k3 = st.columns(3)
-
-            k1.metric(
-                "Markedsverdi",
-                f"{info['market_cap']:.2f} {billion_unit}".replace(".", ",")
-            )
-            k2.metric(
-                "P/E LTM",
-                f"{info['pe_ltm']:.1f}x".replace(".", ",")
-            )
-            if selskap == "NOTE":
-                k3.metric(
-                    "OCF LTM",
-                    f"{info['ocf_ltm']:.0f} {cashflow_unit}"
+            render_company_overview_v2(selskap, info)
+            if False:  # gammel Oversikt beholdes i koden som rollback
+                # Selskapsnøkkeltall vises kun på Oversikt.
+                k1, k2, k3 = st.columns(3)
+    
+                k1.metric(
+                    "Markedsverdi",
+                    f"{info['market_cap']:.2f} {billion_unit}".replace(".", ",")
                 )
-            else:
-                k3.metric(
-                    "FCF Yield LTM",
-                    f"{info['fcf_yield']:.1f}%".replace(".", ",")
+                k2.metric(
+                    "P/E LTM",
+                    f"{info['pe_ltm']:.1f}x".replace(".", ",")
                 )
-
-            k4, k5, k6 = st.columns(3)
-
-            k4.metric(
-                "ROE LTM",
-                f"{info['roe_ltm']:.1f}%".replace(".", ",")
-            )
-            k5.metric(
-                "ROCE",
-                f"{info['roce']:.1f}%".replace(".", ",")
-            )
-            leverage_label = (
-                "Netto kontanter / EBITDA"
-                if info["nibd_ebitda"] < 0
-                else "Netto gjeld / EBITDA"
-            )
-            leverage_value = abs(info["nibd_ebitda"])
-
-            k6.metric(
-                leverage_label,
-                f"{leverage_value:.1f}x".replace(".", ",")
-            )
-
-            st.divider()
-
-            st.subheader("Investeringscase")
-            st.write(info["case"])
-
-            st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
-
-            q1, q2, q3 = st.columns(3)
-            metric_with_yoy(
-                q1,
-                "Omsetning",
-                f"{info['q2']['revenue']:.1f} {million_unit}".replace(".", ","),
-                info["q2_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                q2,
-                "OCF",
-                f"{info['q2']['ocf']:.1f} {cashflow_unit}".replace(".", ","),
-                info["q2_yoy"]["ocf"],
-            )
-            metric_with_yoy(
-                q3,
-                "EBIT-margin",
-                f"{info['q2']['ebit_margin']:.1f}%".replace(".", ","),
-                info["q2_yoy"]["ebit_margin"],
-            )
-
-            q4, q5, q6 = st.columns(3)
-            metric_with_yoy(
-                q4,
-                "EBIT",
-                f"{info['q2']['ebit']:.1f} {million_unit}".replace(".", ","),
-                info["q2_yoy"]["ebit"],
-            )
-            metric_with_yoy(
-                q5,
-                "EPS",
-                f"{info['q2']['eps']:.2f}".replace(".", ","),
-                info["q2_yoy"]["eps"],
-            )
-            metric_with_yoy(
-                q6,
-                "CF etter investeringer" if selskap == "NOTE" else "FCF",
-                f"{info['q2']['fcf']:.1f} {cashflow_unit}".replace(".", ","),
-                info["q2_yoy"]["fcf"],
-            )
-
-            st.subheader(info.get("_ytd_label", "H1 2026"))
-
-            h1, h2, h3 = st.columns(3)
-            metric_with_yoy(
-                h1,
-                "Omsetning",
-                f"{info['h1']['revenue']:,.1f} {million_unit}".replace(",", " ").replace(".", ","),
-                info["h1_yoy"]["revenue"],
-            )
-            metric_with_yoy(
-                h2,
-                "OCF",
-                f"{info['h1']['ocf']:.1f} {cashflow_unit}".replace(".", ","),
-                info["h1_yoy"]["ocf"],
-            )
-            metric_with_yoy(
-                h3,
-                "EBIT-margin",
-                f"{info['h1']['ebit_margin']:.1f}%".replace(".", ","),
-                info["h1_yoy"]["ebit_margin"],
-            )
-
-            h4, h5, h6 = st.columns(3)
-            metric_with_yoy(
-                h4,
-                "EBIT",
-                f"{info['h1']['ebit']:.1f} {million_unit}".replace(".", ","),
-                info["h1_yoy"]["ebit"],
-            )
-            metric_with_yoy(
-                h5,
-                "EPS",
-                f"{info['h1']['eps']:.2f}".replace(".", ","),
-                info["h1_yoy"]["eps"],
-            )
-            metric_with_yoy(
-                h6,
-                "CF etter investeringer" if selskap == "NOTE" else "FCF",
-                f"{info['h1']['fcf']:.1f} {cashflow_unit}".replace(".", ","),
-                info["h1_yoy"]["fcf"],
-            )
-
-            if "order_kpis" in info:
-                st.subheader("Ordre og backlog")
-                ok1, ok2, ok3, ok4 = st.columns(4)
-                order_items = list(info["order_kpis"].items())
-                for col, (label, value) in zip(
-                    [ok1, ok2, ok3, ok4],
-                    order_items
-                ):
-                    col.metric(label, value)
-
-            st.subheader("Balansestyrke og kontantstrøm")
-            b1, b2, b3 = st.columns(3)
-            debt_label = (
-                "Netto kontanter"
-                if info["nibd"] < 0
-                else "Netto rentebærende gjeld"
-            )
-            debt_value = (
-                abs(info["nibd"])
-                if info["nibd"] < 0
-                else info["nibd"]
-            )
-            b1.metric(
-                debt_label,
-                f"{debt_value:.0f} {million_unit}"
-            )
-            balance_leverage_label = (
-                "Netto kontanter / EBITDA"
-                if info["nibd_ebitda"] < 0
-                else "NIBD / EBITDA"
-            )
-            balance_leverage_value = abs(info["nibd_ebitda"])
-
-            b2.metric(
-                balance_leverage_label,
-                f"{balance_leverage_value:.1f}x".replace(".", ",")
-            )
-            if selskap == "NOTE":
-                b3.metric(
-                    "OCF LTM",
-                    f"{info['ocf_ltm']:.0f} {million_unit}"
+                if selskap == "NOTE":
+                    k3.metric(
+                        "OCF LTM",
+                        f"{info['ocf_ltm']:.0f} {cashflow_unit}"
+                    )
+                else:
+                    k3.metric(
+                        "FCF Yield LTM",
+                        f"{info['fcf_yield']:.1f}%".replace(".", ",")
+                    )
+    
+                k4, k5, k6 = st.columns(3)
+    
+                k4.metric(
+                    "ROE LTM",
+                    f"{info['roe_ltm']:.1f}%".replace(".", ",")
                 )
-            else:
-                b3.metric(
-                    "FCF LTM",
-                    f"{info['fcf_ltm']:.0f} {cashflow_unit}"
+                k5.metric(
+                    "ROCE",
+                    f"{info['roce']:.1f}%".replace(".", ",")
                 )
-
-            st.subheader("Selskapets guiding")
-            for item in info["guidance"]:
-                st.write(f"• {item}")
-
-            st.subheader("Siste utvikling")
-            st.success(info["latest_development"])
-
-        # -------------------------------------------------
-        # NØKKELTALL
-        # -------------------------------------------------
+                leverage_label = (
+                    "Netto kontanter / EBITDA"
+                    if info["nibd_ebitda"] < 0
+                    else "Netto gjeld / EBITDA"
+                )
+                leverage_value = abs(info["nibd_ebitda"])
+    
+                k6.metric(
+                    leverage_label,
+                    f"{leverage_value:.1f}x".replace(".", ",")
+                )
+    
+                st.divider()
+    
+                st.subheader("Investeringscase")
+                st.write(info["case"])
+    
+                st.subheader(f"Siste kvartal – {info.get('_latest_period', 'Q2 2026')}")
+    
+                q1, q2, q3 = st.columns(3)
+                metric_with_yoy(
+                    q1,
+                    "Omsetning",
+                    f"{info['q2']['revenue']:.1f} {million_unit}".replace(".", ","),
+                    info["q2_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    q2,
+                    "OCF",
+                    f"{info['q2']['ocf']:.1f} {cashflow_unit}".replace(".", ","),
+                    info["q2_yoy"]["ocf"],
+                )
+                metric_with_yoy(
+                    q3,
+                    "EBIT-margin",
+                    f"{info['q2']['ebit_margin']:.1f}%".replace(".", ","),
+                    info["q2_yoy"]["ebit_margin"],
+                )
+    
+                q4, q5, q6 = st.columns(3)
+                metric_with_yoy(
+                    q4,
+                    "EBIT",
+                    f"{info['q2']['ebit']:.1f} {million_unit}".replace(".", ","),
+                    info["q2_yoy"]["ebit"],
+                )
+                metric_with_yoy(
+                    q5,
+                    "EPS",
+                    f"{info['q2']['eps']:.2f}".replace(".", ","),
+                    info["q2_yoy"]["eps"],
+                )
+                metric_with_yoy(
+                    q6,
+                    "CF etter investeringer" if selskap == "NOTE" else "FCF",
+                    f"{info['q2']['fcf']:.1f} {cashflow_unit}".replace(".", ","),
+                    info["q2_yoy"]["fcf"],
+                )
+    
+                st.subheader(info.get("_ytd_label", "H1 2026"))
+    
+                h1, h2, h3 = st.columns(3)
+                metric_with_yoy(
+                    h1,
+                    "Omsetning",
+                    f"{info['h1']['revenue']:,.1f} {million_unit}".replace(",", " ").replace(".", ","),
+                    info["h1_yoy"]["revenue"],
+                )
+                metric_with_yoy(
+                    h2,
+                    "OCF",
+                    f"{info['h1']['ocf']:.1f} {cashflow_unit}".replace(".", ","),
+                    info["h1_yoy"]["ocf"],
+                )
+                metric_with_yoy(
+                    h3,
+                    "EBIT-margin",
+                    f"{info['h1']['ebit_margin']:.1f}%".replace(".", ","),
+                    info["h1_yoy"]["ebit_margin"],
+                )
+    
+                h4, h5, h6 = st.columns(3)
+                metric_with_yoy(
+                    h4,
+                    "EBIT",
+                    f"{info['h1']['ebit']:.1f} {million_unit}".replace(".", ","),
+                    info["h1_yoy"]["ebit"],
+                )
+                metric_with_yoy(
+                    h5,
+                    "EPS",
+                    f"{info['h1']['eps']:.2f}".replace(".", ","),
+                    info["h1_yoy"]["eps"],
+                )
+                metric_with_yoy(
+                    h6,
+                    "CF etter investeringer" if selskap == "NOTE" else "FCF",
+                    f"{info['h1']['fcf']:.1f} {cashflow_unit}".replace(".", ","),
+                    info["h1_yoy"]["fcf"],
+                )
+    
+                if "order_kpis" in info:
+                    st.subheader("Ordre og backlog")
+                    ok1, ok2, ok3, ok4 = st.columns(4)
+                    order_items = list(info["order_kpis"].items())
+                    for col, (label, value) in zip(
+                        [ok1, ok2, ok3, ok4],
+                        order_items
+                    ):
+                        col.metric(label, value)
+    
+                st.subheader("Balansestyrke og kontantstrøm")
+                b1, b2, b3 = st.columns(3)
+                debt_label = (
+                    "Netto kontanter"
+                    if info["nibd"] < 0
+                    else "Netto rentebærende gjeld"
+                )
+                debt_value = (
+                    abs(info["nibd"])
+                    if info["nibd"] < 0
+                    else info["nibd"]
+                )
+                b1.metric(
+                    debt_label,
+                    f"{debt_value:.0f} {million_unit}"
+                )
+                balance_leverage_label = (
+                    "Netto kontanter / EBITDA"
+                    if info["nibd_ebitda"] < 0
+                    else "NIBD / EBITDA"
+                )
+                balance_leverage_value = abs(info["nibd_ebitda"])
+    
+                b2.metric(
+                    balance_leverage_label,
+                    f"{balance_leverage_value:.1f}x".replace(".", ",")
+                )
+                if selskap == "NOTE":
+                    b3.metric(
+                        "OCF LTM",
+                        f"{info['ocf_ltm']:.0f} {million_unit}"
+                    )
+                else:
+                    b3.metric(
+                        "FCF LTM",
+                        f"{info['fcf_ltm']:.0f} {cashflow_unit}"
+                    )
+    
+                st.subheader("Selskapets guiding")
+                for item in info["guidance"]:
+                    st.write(f"• {item}")
+    
+                st.subheader("Siste utvikling")
+                st.success(info["latest_development"])
+    
+            # -------------------------------------------------
+            # NØKKELTALL
+            # -------------------------------------------------
         with tab2:
             st.subheader("Nøkkeltall – utvikling")
 
@@ -9356,6 +9880,8 @@ elif side == "Selskaper":
                     width="stretch",
                     hide_index=True
                 )
+                if selskap == "Endúr":
+                    st.caption("Endúr: sammenlignbar historikk i dagens konsernstruktur er kortere; serien er derfor lagt inn fra 2021.")
             else:
                 st.caption("Ingen helårstall registrert.")
 
