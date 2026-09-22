@@ -12,14 +12,15 @@
     "status": "Aktivt anbud",
     "next_date": "02.10.2026",
     "date_type": "Tilbudsfrist",
-    "last_checked": "21.09.2026",
+    "last_checked": "22.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "494addc0b1781f77d057d7a6119954389bd1311894f551bddcaa38fe6fbc36ee",
+    "content_hash": "7cc41da78983df0c07b7a03a0a3ed33df9775049e0498e047cfd889a8f3279b5",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
-      "https://app.govly.com/public/opportunities/16935200"
+      "https://app.govly.com/public/opportunities/16935200",
+      "https://groundintel.ca/tenders"
     ],
-    "last_source_change": "21.09.2026",
+    "last_source_change": "22.09.2026",
     "review_note": "Kildene for Clarkson WRRF – Peel Region, Ontario er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "rosedale_ntp": {
@@ -36,7 +37,7 @@
     "status": "Engineering pågår",
     "next_date": "Ikke offentlig",
     "date_type": "Notice to proceed",
-    "last_checked": "21.09.2026",
+    "last_checked": "22.09.2026",
     "last_updated": "16.09.2026",
     "content_hash": "29c5fad69e51e8380c0db0c6e1764016f32376078c8cdc848ce0aef7a8916bf5",
     "last_change_summary": "Engineeringfasen er i gang. Cambi opplyste 29.04.2026 at produksjon starter etter en senere notice to proceed og tidligst 12 måneder etter kontraktsinngåelsen.",
@@ -59,15 +60,15 @@
     "status": "Planlagt anskaffelse / overvåkes",
     "next_date": "01.12.2026",
     "date_type": "Indikativ kontraktstildeling",
-    "last_checked": "21.09.2026",
+    "last_checked": "22.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "c5fceac69b5b90088175630b4ab540d118835e0c59b27c97e36df2d3cb00f6d8",
+    "content_hash": "8c6f006a32f6301bbe910bb874004773411c00224f31ecd6eee5f87c184c5774",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
       "https://www.find-tender.service.gov.uk/procurement/ocds-h6vhtk-055934"
     ],
-    "last_source_change": "21.09.2026",
+    "last_source_change": "22.09.2026",
     "review_note": "Kildene for Beckton STW THP Upgrade – Thames Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "daldowie_west_central": {
@@ -84,14 +85,14 @@
     "status": "Cambi teknologileverandør / designfase",
     "next_date": "04.2027",
     "date_type": "Planlagt byggestart",
-    "last_checked": "21.09.2026",
+    "last_checked": "22.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "3e123de24c61bc3c2490bf8e4ad215bb396a2627e287acd9014a2a5a2e2243c4",
+    "content_hash": "4d0822d7c8e8cf7222efcd098fb6e2e9c70d1ba6c7bfd530b6c758c7e342088a",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
     ],
-    "last_source_change": "21.09.2026",
+    "last_source_change": "22.09.2026",
     "review_note": "Kildene for West Central Bio-Resource / Daldowie – Scottish Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "netheridge_thp": {
@@ -107,15 +108,15 @@
     "status": "Preliminary market engagement / avventer tender",
     "next_date": "Ikke offentlig",
     "date_type": "Neste procurement-steg",
-    "last_checked": "21.09.2026",
+    "last_checked": "22.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "61036be423dd38a8d1c8ff90b0035a44d49f9dc79028ab08e10bfef494db2192",
+    "content_hash": "0d2a7233cd5a8b65067f2dca6fb4170be2b20ca71677c6eeb8cd02a3b2ca3ef6",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
       "https://www.sell2wales.gov.wales/search/show/search_view.aspx?ID=MAY514386&catID="
     ],
-    "last_source_change": "21.09.2026",
+    "last_source_change": "22.09.2026",
     "review_note": "Kildene for Netheridge STW THP – Severn Trent er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "roundhill_thp": {
@@ -135,7 +136,7 @@
     "last_updated": "16.09.2026",
     "last_change_summary": "Severn Trent opplyser i PR24-materialet at AMP8-planen inkluderer to nye THP-anlegg ved Netheridge og Roundhill, samt utvidelser ved Wanlip og Derby. Roundhill har et gjeldende miljøtillatelsesgrunnlag for sludge treatment, men ingen offentlig UK4 tender eller UK6 award for det nye THP-anlegget er identifisert.",
     "content_hash": "dd534965fb84949d39f4116411e26decee3bb9a2ce4f4d14bba477ca966b56a6",
-    "last_checked": "21.09.2026",
+    "last_checked": "22.09.2026",
     "source_urls_used": [
       "https://www.stwater.co.uk/content/dam/stw/about_us/pr24-response/totex/sve4-34-bioresources-botex-plus-cost-assessment.pdf",
       "https://www.severntrent.com/sustainability/bioresources/treatment/",
