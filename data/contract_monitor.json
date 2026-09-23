@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "23.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "a93ba838ffcbcf77510d61af6cbafa3cb978dc50825381589f21c9364a00bb4d",
+    "content_hash": "eb94dd0dc337d5613da6d25d9a2fcc76e5c00b18d97d6d2c3c1d208a11815a31",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "23.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "502a72624cd3f6895935d08466413780ac6ebc76a626f96488adc746d6eba6c5",
+    "content_hash": "f32a63c60a0266232f47603be25696cf74720a7d79c1db8fea2b4c7d4bd7984f",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "23.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "3d68f23e535dea2ea8a9317ce1b911e5ca4c1f0d2fdd547312d54f1d36f836ad",
+    "content_hash": "a267f2b825e2305e869a63fd1817327313b5677727de10adedb2ee25705efcc5",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "23.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "c78bccc763e949b11c787749f15761cc2af60d1faea1ca17839744f00669de61",
+    "content_hash": "47510a76743be2b47d235089b9082a722b6e1fbb38522a8efaba8ce978176bf0",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -401,15 +401,58 @@
       "b8b2410911e8285899099469",
       "e7b9519cd46142b86b079f76",
       "8418081b845ee1f4404262e4",
-      "668dc6cb473b67f295a67c7e"
+      "668dc6cb473b67f295a67c7e",
+      "bf4e21ced48ea09f76cc80a7",
+      "6a1053710563899255df87b3",
+      "675c35a19ae69308cde5d0bc",
+      "e9660bd4bd5511c8528da48c"
     ],
-    "signals": [],
+    "signals": [
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "NOTE receives SEK 135 million order from leading Nordic defence company - Finansavisen",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOLXFtUll0a3RjM1pteVMyNmM5ekJFTkFyRXZ6VEhiT0EyWXA3ZEx5UVV0V1M5NmlIcGV6VHJFM19IcnBsSThNOVBLcjJDeU5hQ0s0V1RuOThodkNyMFdKeGhfZ0h3M1l0VndCVnBKLW9WZUhxMEViMUhNZzZrNXEyaldnRGxoM0RWY0tXcjBKb3V5T19GbjFXaURjRUU3a25GdnRJRTZmZGxlVnh5aEt6U3IwakRkczJVOFZUZkdEc2xGZUJhZTdPTnE0N2NGTDI1bW03ckFUWmVKSnJibjZYM21KbndqRzZvLXFiRHEydFRLQ2s?oc=5",
+        "id": "e9660bd4bd5511c8528da48c"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "NOTE Wins New Customer in AI Data Centre Hardware - Finansavisen",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQX2F2YjI4OC1UWENWbTdBZE0wSGlJNndUQ3IzYUREcFlWN0c1RkVrbG1UWlJyMXE3ZGdKVzhBWjBPcDZjMndQcms2VjJxYXZZa3VEbm1BMnl3VjA3MDNWanlDVTQ5TnkzYk1GTzVaNzJ1ZVg4Rk5CU1VIQ1dMN1dETmdCMVFKUkl5Qno1OFFqNXh3RFlfSjFoZUg4cXY4UGticzlLTFRSOUZqYnhDMHRacHFka1d2M2xTVGFpaE5VeUdnUFJMSmF6NzlrWFFSb2VDQUJYYnNB?oc=5",
+        "id": "675c35a19ae69308cde5d0bc"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "NOTE wins Security & Defence contract worth approximately SEK 160 million - Finansavisen",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQUkFVa0RaN1p6WFZkNzJ5dUd5aGNDS1NKZjVrUnBOeWg5d0E2cW5nX0xTUHRmTE82NEFFZmRJRVB2Y2h5RnhIZjNrTy1hdjN2VnNVUGM2NnJGM0JJZVFSRkR2LWY2UExrYUJ3aEcwMzhrUFNmUUxFeE9ROWVaWUZOZmxkWkVDaUlIVEhYN05vV1o2YnY2dkIzaEg4UEJwbzhtTk5rZTZWVUdsMEdzUjFhSzZZVjZRVjQyRmV0NkN5R2ZjWm1nY2l1OUVmOXlvSFo5Vy1xSkNDUlpCVFRFek9YRENMVTlGZjlCSWltSXdxa0VFYXNRTXRjNA?oc=5",
+        "id": "6a1053710563899255df87b3"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "NOTE joins the Swedish Security and Defence Industry Association (SOFF) - Finansavisen",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxNbWhTelhBOXpzT1E5bzRJdlVJVUpnODFOSVo1TENCWXRfOWw1ZWtkM1hRZmJxTlhldXoySzI3Y3hyZUZYWGhlSjNyekkyaUlRak9sTzNXSVM5ZFpuWWRJNUhxMlFlQkJGR19IekpSWXc2OVBXcHVkWjMzdHFvWjFTeFFJYUNzRGhhbU1TdDVKeEJwNjZNOXdwemdUTEhTQVVLcnpzS09EbUdwYWVzMTdwbDhLUVNUaVhXRGlpeXdOVzdvU2x4eVJKaE1iWmY3b09kSnIyOE84WWVldUJCNHlSd2dKVWNNQzlmS1VFblFrOTA?oc=5",
+        "id": "bf4e21ced48ea09f76cc80a7"
+      }
+    ],
     "last_checked": "23.09.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=%22NOTE%20AB%22%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20%22data%20centre%22%20OR%20%22data%20center%22)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
-    "last_baseline": "23.09.2026"
+    "last_baseline": "23.09.2026",
+    "last_updated": "23.09.2026",
+    "last_change_summary": "4 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "kitron_external_signals": {
     "company": "Kitron",
@@ -482,15 +525,38 @@
       "6a1c2c0323d1e0b280a848f0",
       "9952691fb8ba342475043b7e",
       "e9c14604372489f2cd614066",
-      "5e3a23110e3bfdc27d3ed086"
+      "5e3a23110e3bfdc27d3ed086",
+      "d07d8ab5b3c23d9f2798c8bf",
+      "b5334378e56109283883ddfa"
     ],
-    "signals": [],
+    "signals": [
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "Kitron Receives $47M Naval Strike Missile Electronics Contract - The Defense Post",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9SSERzWDFEM2VwR2s0U0dzWXktaEtKTG80WHJuODI1ZlRDUklieDRjdks2WHdNaUVZSnlpbTgwcVMyWmFUbmlFOTN1Y3c2bVU5T1J5aXFXem05aV9rUzRwd09ueXlrVG8yT2NoMlFPOFJFVDdm0gF6QVVfeXFMTlUyMl9zV2ZPOWo0ZHZzOEdwMVAtYTY0b0RkSGg5UXZQWlR2ZGtvWlFqVlJWM0tzWWRGaV9DQW40NjZTaUxYX2xFaEUwSE5KLVJRdWIzTEVnX19TSGI0c19XaTFxd1hzdldoUi1YV3JraENMNWdYS0YwMHc?oc=5",
+        "id": "b5334378e56109283883ddfa"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "Kitron Signs €7 Million Annual Manufacturing Agreement for Advanced Sensor Technology - Yahoo Finance UK",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQdkI4RC1hMy1GbFJsaVZ4NXFCWU5zclZJMk5uaVNIMlFPekhJdXpqcG53UjFJV0pvTHJ1QXBhUlZ3S2hFQW9vbU94QWY1XzhSVThOMmp0MEhfdUdtZE1QMWNUdjVlX2trcHdiV19nemE0OUxGWjJRT3pxSTRGZFhHY19odnM?oc=5",
+        "id": "d07d8ab5b3c23d9f2798c8bf"
+      }
+    ],
     "last_checked": "23.09.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=Kitron%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20autonomous%20OR%20customer)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
-    "last_baseline": "23.09.2026"
+    "last_baseline": "23.09.2026",
+    "last_updated": "23.09.2026",
+    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "norbit_external_signals": {
     "company": "NORBIT",
@@ -651,14 +717,67 @@
       "880a883c1e380ec64621e14a",
       "4cf0249d804f7e9355263275",
       "c80d16c463407707818a06d2",
-      "7c38db92519ac57bc3f688c6"
+      "7c38db92519ac57bc3f688c6",
+      "cad27bec1c47d8beb7155f01",
+      "0d093e7bc415674decd1821a",
+      "69bedada5a370f637ebab51c",
+      "39bce300164de76ec9e03353",
+      "0a44114306c991436a09d3e4"
     ],
-    "signals": [],
+    "signals": [
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "Elsa Energy wins AUV subsea inspection contract from major E&P company - KLSE Screener",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOS0R1dTMwdkJmS1JDdWltUllNRFotV042RG9JVjBaREJzcnNfMkZCZmhiVGdnLURxaXRORmN5Y0RYNHZwSGI1R1RxT2FoWFBnZDNWU1QtQnZBTll2UXg4YW5wTUJkQUFNMVctODFRYWQ0YXlhTDBEaW1ieTQ1eldwaGJGNG1oZ09MeUdWVjl4VC1OODlTLTNaTXBVTXlXVEtlcWdZdFlVelR4RDI3SldyV09XbUo0a1A1RGVPSA?oc=5",
+        "id": "0a44114306c991436a09d3e4"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "Elsa wins AUV subsea inspection contract from major E&P company - thestar.com.my",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQbFBMNEJBUHhKdm9lTEZSMklyVl9vR242X3hfQ3I3Y3VEdXdlN3JLQm9PWU9XT1Z3a0VHdnhBdWJGUlJYVndLQlM4d1I0a082Z2lTMjRxNGI4OGhacElZbkpDdlVpVm5QTHVKSG5BSFNDYm11TU5kWVFWQ29uZzhRcGhnWnRSU2RVaTcyNmdHNms1ampObTBIZnA1eDBwdHh5UEp6NU5jbThUR2lodVNlNUJmMWRjYllNd3VJWm9BU3RzYlJhM1p1RE93?oc=5",
+        "id": "39bce300164de76ec9e03353"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "Seasats books over $24M in Lightfish USV orders in a single month - app.dealroom.co",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQal9KZnctN0R1cDhkc21KbUJfNTNaVmVzT0dzZXZvNHFiUnlBMFN6M2FEYm9fVDV2VjZXMUdOSWlWM2hWMTJOeGNtMUNHQ29uMndrR1hka3BqX3hSWV9ZaFUta2VWVWVYN0huRDBaanROOExqZUM2OWxsQzVVc0M5QVg5V05GVFJwVzcyVkt2bGk2TFpHZTFaNXlPWjY0blE?oc=5",
+        "id": "69bedada5a370f637ebab51c"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "Norwegian Firm Grows USV Fleet with Additional HydroSurv Units - Marine Technology News",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQR29xUHVxdDRTbEg4N0J4cEJFLVpBaUJPdGs4bGRUcXRHM0xrbHBvRTdZTGVXZ0dacFBNanpaczF5S1ppUEV1djFNM3FRR0RaYi16T0xKSER2eEVYbTdMNnA4bUQ1OFZmTzNSSGFSalU2c2wtUlZKQTVFb2Z6ci1samlhUTdzbzd5?oc=5",
+        "id": "0d093e7bc415674decd1821a"
+      },
+      {
+        "Oppdaget": "23.09.2026",
+        "Signal": "NORBIT Acquires Water Linked To Expand Underwater Technology Offering - Pulse 2.0",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPcjBmT3A3UFBValRkZkI5b2txbUxZQkExTmhDOXNVTjlvWHNOU1VuV2pWSUxsdnE0Nm9QbUx3NHNhWVIzVndHLWVBb0hyRGpQNm1Oa2xuSE5OdDdJdVJHQUNkbUNwRFhwa3JIMmxoRWl2NDBXVEF2aWxlRzFlN1JvelVuYnJPU2l5VloydHpOUXdoWDTSAZgBQVVfeXFMT2VKc3JxWDBtSFA4R0s0R1lreUxVMGhETFFQY2dhNXBLZkVXb2piQ0ppdk9LaGd1ckk1WjAwN2tFNWZhYXlyYUxTdXV4a01DRVRkNkVub2ZfMDZoM3NNb3BXZHZtYkRPd29qMDE0YWVxQTI4UGVTN2tNQ2JFd1FKem1NX0hvX2ZfQU1IS010STZUd2V5RGlBVGE?oc=5",
+        "id": "cad27bec1c47d8beb7155f01"
+      }
+    ],
     "last_checked": "23.09.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=NORBIT%20(contract%20OR%20sonar%20OR%20AUV%20OR%20USV%20OR%20underwater%20OR%20security)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=(%22underwater%20security%22%20OR%20sonar%20OR%20AUV%20OR%20USV)%20(contract%20OR%20award%20OR%20procurement%20OR%20tender)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
-    "last_baseline": "23.09.2026"
+    "last_baseline": "23.09.2026",
+    "last_updated": "23.09.2026",
+    "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   }
 }
