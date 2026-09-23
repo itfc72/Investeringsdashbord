@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "23.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "a1fc0b4b7a8d2f3f2be274d65721889c81c283be9b398f4b99fe0ba58b16fd6f",
+    "content_hash": "a93ba838ffcbcf77510d61af6cbafa3cb978dc50825381589f21c9364a00bb4d",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "23.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "5541171307a35e3e4058a7b79bca4bd857d76a7bf2e29d4f36430207d29a3663",
+    "content_hash": "3dc9698a9c14768c577fb188e7ac882872d0af8f8204b1ae1ac5ef83dcbf3d0c",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "23.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "9d775c8ec55a9a6856a073f85c0e7c16ce969a7b6feb81293ed8115e37e0692a",
+    "content_hash": "70f9534d05545575acd9834634493b7781ba63098671d2932ec9fbf8cbc93b73",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "23.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "bc6e845c468fccabbc5831cfe88b3afbd571a511050a2ad469352ca0e1055fb7",
+    "content_hash": "c66cf88e88e57f25dce741e1515a27e1ff9ba537e955511891d82900ebf9a8f0",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -142,5 +142,205 @@
       "https://www.severntrent.com/sustainability/bioresources/treatment/",
       "https://www.gov.uk/government/publications/dy7-6px-severn-trent-water-limited-environmental-issued-eprkb3701fka001"
     ]
+  },
+  "note_news_signals": {
+    "company": "NOTE",
+    "title": "NOTE – automatiske kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "NOTE Press & News",
+    "source_urls": [
+      "https://www.note-ems.com/en/press-news/"
+    ],
+    "high_keywords": [
+      "contract",
+      "order",
+      "awarded",
+      "award",
+      "wins",
+      "new customer",
+      "new client",
+      "agreement",
+      "selected"
+    ],
+    "signal_keywords": [
+      "security & defence",
+      "defence",
+      "defense",
+      "data centre",
+      "data center",
+      "production",
+      "industrialisation",
+      "industrialization",
+      "facility",
+      "plant",
+      "capacity",
+      "invests",
+      "partnership",
+      "certification",
+      "qualified",
+      "qualification"
+    ],
+    "exclude_keywords": [
+      "interim report",
+      "year-end report",
+      "annual report",
+      "invitation to",
+      "annual general meeting",
+      "nomination committee",
+      "number of shares",
+      "financial calendar"
+    ],
+    "status": "Aktiv nyhetsovervåkning",
+    "seen_signal_ids": [
+      "67a73071097c7c41141d9ed7",
+      "47517bb447efa34cfde181a0",
+      "30dc179b2772baec14e5de64",
+      "6feadeae18608057e5ec08fd"
+    ],
+    "signals": [],
+    "last_checked": "23.09.2026",
+    "source_urls_used": [
+      "https://www.note-ems.com/en/press-news/"
+    ],
+    "last_baseline": "23.09.2026"
+  },
+  "kitron_news_signals": {
+    "company": "Kitron",
+    "title": "Kitron – automatiske kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "Kitron Newsroom / Investors",
+    "source_urls": [
+      "https://www.kitron.com/",
+      "https://www.kitron.com/newsroom"
+    ],
+    "high_keywords": [
+      "contract",
+      "order",
+      "awarded",
+      "award",
+      "selected",
+      "new customer",
+      "agreement",
+      "framework",
+      "customer wins",
+      "wins"
+    ],
+    "signal_keywords": [
+      "customer",
+      "defence",
+      "defense",
+      "aerospace",
+      "factory",
+      "facility",
+      "capacity",
+      "industrialisation",
+      "industrialization",
+      "data centre",
+      "data center",
+      "electrification",
+      "partnership",
+      "qualification",
+      "certification",
+      "opens",
+      "invest"
+    ],
+    "exclude_keywords": [
+      "quarterly report",
+      "annual report",
+      "financial calendar",
+      "annual general meeting",
+      "capital markets",
+      "webcast",
+      "share price",
+      "governance"
+    ],
+    "status": "Aktiv nyhetsovervåkning",
+    "seen_signal_ids": [
+      "adad43a90278f50ff45c8ed5",
+      "1ceb1701b1853fff24acfb52",
+      "bdc228a5c769e659a7af6cb6",
+      "6cdcd4c054d4c65b7637e023",
+      "358b543b4d632d74c2ac7d60",
+      "f857cd2865374c3b23b01048",
+      "fed60b2791f2cc75a41a3534",
+      "a1a1717421c4ae4a681861dd",
+      "2ddc3187d9e024350ea2ef57"
+    ],
+    "signals": [],
+    "last_checked": "23.09.2026",
+    "source_urls_used": [
+      "https://www.kitron.com/",
+      "https://www.kitron.com/newsroom"
+    ],
+    "last_baseline": "23.09.2026"
+  },
+  "norbit_news_signals": {
+    "company": "NORBIT",
+    "title": "NORBIT – automatiske kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "NORBIT Newsroom",
+    "source_urls": [
+      "https://norbit.com/newsroom"
+    ],
+    "high_keywords": [
+      "contract",
+      "awarded",
+      "award",
+      "selected",
+      "agreement",
+      "partner",
+      "partnership",
+      "customer",
+      "deployment",
+      "integrate",
+      "integration"
+    ],
+    "signal_keywords": [
+      "launch",
+      "launches",
+      "rov",
+      "auv",
+      "usv",
+      "uuv",
+      "uncrewed",
+      "autonomous",
+      "sonar",
+      "security",
+      "subsea",
+      "underwater",
+      "defence",
+      "defense",
+      "port",
+      "critical infrastructure",
+      "pilot",
+      "trial",
+      "navigation",
+      "oem"
+    ],
+    "exclude_keywords": [
+      "quarterly report",
+      "annual report",
+      "financial calendar",
+      "general meeting",
+      "webcast",
+      "shareholder"
+    ],
+    "status": "Aktiv nyhetsovervåkning",
+    "seen_signal_ids": [
+      "5d403dbad95161b10ab125ea",
+      "3285a63fb7b6c527f813bd78",
+      "99dc748440746f8265d5c9df",
+      "9167bfa34bf93fff4b9b4f7d",
+      "4ddce884e988a1d56c32e03d",
+      "c57b39423ec4b9f84f491d25",
+      "afe04db20b39332cb7a8edc2",
+      "c3e985c36de7b98ded70ce99"
+    ],
+    "signals": [],
+    "last_checked": "23.09.2026",
+    "source_urls_used": [
+      "https://norbit.com/newsroom"
+    ],
+    "last_baseline": "23.09.2026"
   }
 }
