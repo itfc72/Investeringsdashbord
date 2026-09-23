@@ -10348,6 +10348,62 @@ elif side == "Selskaper":
                 "Estimert verdi står tom der vi ikke har et forsvarlig offentlig anslag."
             )
 
+            if selskap in {"NOTE", "Kitron", "NORBIT"}:
+                auto_signal_rows = []
+                active_news_monitor = False
+
+                for auto in contract_monitor.values():
+                    if (
+                        auto.get("company") != selskap
+                        or auto.get("monitor_type") != "news_signal"
+                    ):
+                        continue
+
+                    active_news_monitor = True
+                    for signal in auto.get("signals", []):
+                        auto_signal_rows.append({
+                            "Oppdaget": signal.get("Oppdaget", "–"),
+                            "Viktighet": signal.get("Viktighet", "–"),
+                            "Type": signal.get("Type", "–"),
+                            "Signal": signal.get("Signal", "–"),
+                            "Kilde": signal.get("Kilde", auto.get("source_label", "–")),
+                            "Lenke": signal.get("Lenke", ""),
+                        })
+
+                st.subheader("Automatiske kontraktsignaler")
+
+                if auto_signal_rows:
+                    signal_df = pd.DataFrame(auto_signal_rows)
+                    st.dataframe(
+                        signal_df,
+                        width="stretch",
+                        hide_index=True,
+                        column_config={
+                            "Lenke": st.column_config.LinkColumn(
+                                "Lenke",
+                                display_text="Åpne kilde",
+                            )
+                        },
+                    )
+                elif active_news_monitor:
+                    st.caption(
+                        "Overvåkningen er aktiv. Ingen nye kontraktsignaler er oppdaget "
+                        "siden monitorens baseline ble etablert."
+                    )
+                else:
+                    st.caption(
+                        "Nyhetsovervåkningen er konfigurert, men har ikke kjørt første "
+                        "baseline ennå."
+                    )
+
+                st.caption(
+                    "Monitoren følger selskapets egne nyhetskilder to ganger daglig og "
+                    "varsler når nye saker inneholder kommersielle signaler som kontrakt, "
+                    "ordre, ny kunde, partnerskap, kapasitetsutvidelse eller relevante "
+                    "produkt-/forsvarssignaler. Treffene må vurderes manuelt før de regnes "
+                    "som potensielle kontrakter."
+                )
+
         # -------------------------------------------------
         # VERDSETTELSE
         # -------------------------------------------------
