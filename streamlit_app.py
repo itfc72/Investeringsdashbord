@@ -4615,6 +4615,56 @@ for _row in companies.get("Kitron", {}).get("financials", []):
         _row["Omsetning"] = 647.2
         _row["Vekst"] = "-17%"
 
+# === SEGMENT_MIX_5Y_V6_9_8_START ===
+# Historisk segmentmiks: andel av rapportert segmentomsetning, 2021–2025.
+SEGMENT_MIX_5Y = {
+    "Cambi": [
+        {"År": "2021", "Technology": None, "Solutions": None},
+        {"År": "2022", "Technology": 54.2, "Solutions": 45.8},
+        {"År": "2023", "Technology": 75.1, "Solutions": 24.9},
+        {"År": "2024", "Technology": 71.6, "Solutions": 28.4},
+        {"År": "2025", "Technology": 72.8, "Solutions": 27.2},
+    ],
+    "Kitron": [
+        {"År": "2021", "Connectivity": 12.4, "Electrification": 26.5, "Industry": 23.5, "Medical Devices": 17.1, "Defence & Aerospace": 20.6},
+        {"År": "2022", "Connectivity": 26.1, "Electrification": 20.6, "Industry": 29.4, "Medical Devices": 11.6, "Defence & Aerospace": 12.3},
+        {"År": "2023", "Connectivity": 18.1, "Electrification": 31.6, "Industry": 27.2, "Medical Devices": 8.6, "Defence & Aerospace": 14.4},
+        {"År": "2024", "Connectivity": 18.7, "Electrification": 27.7, "Industry": 23.3, "Medical Devices": 9.2, "Defence & Aerospace": 21.1},
+        {"År": "2025", "Connectivity": 15.9, "Electrification": 23.4, "Industry": 22.0, "Medical Devices": 6.9, "Defence & Aerospace": 31.7},
+    ],
+    "NOTE": [
+        {"År": "2021", "Industrial inkl. S&D": 52.8, "Communications": 12.5, "Medtech": 10.8, "Greentech": 23.9},
+        {"År": "2022", "Industrial inkl. S&D": 52.0, "Communications": 15.9, "Medtech": 11.9, "Greentech": 20.2},
+        {"År": "2023", "Industrial inkl. S&D": 51.7, "Communications": 16.1, "Medtech": 16.5, "Greentech": 15.7},
+        {"År": "2024", "Industrial inkl. S&D": 57.9, "Communications": 14.5, "Medtech": 15.1, "Greentech": 12.5},
+        {"År": "2025", "Industrial inkl. S&D": 55.9, "Communications": 13.5, "Medtech": 13.6, "Greentech": 16.9},
+    ],
+    "NORBIT": [
+        {"År": "2021", "Oceans": 46.4, "Connectivity": 17.9, "PIR": 35.7},
+        {"År": "2022", "Oceans": 36.7, "Connectivity": 25.5, "PIR": 37.8},
+        {"År": "2023", "Oceans": 38.6, "Connectivity": 34.8, "PIR": 26.5},
+        {"År": "2024", "Oceans": 41.3, "Connectivity": 28.6, "PIR": 30.1},
+        {"År": "2025", "Oceans": 34.1, "Connectivity": 23.8, "PIR": 42.1},
+    ],
+}
+
+SEGMENT_MIX_NOTES = {
+    "Cambi": (
+        "Sammenlignbar Technology/Solutions-historikk starter i 2022 etter endring i "
+        "segmentstrukturen. 2021 vises derfor som N/M."
+    ),
+    "NOTE": (
+        "Fra 2025 rapporterer NOTE Security & Defence som eget kundesegment. "
+        "I 5-årsserien er Security & Defence lagt sammen med Industrial for bedre "
+        "sammenlignbarhet med 2021–2024."
+    ),
+    "NORBIT": (
+        "NORBIT har intersegment-salg. Andelene er derfor beregnet av summen av "
+        "rapportert segmentomsetning, slik at de tre segmentene summerer til 100 %."
+    ),
+}
+# === SEGMENT_MIX_5Y_V6_9_8_END ===
+
 # =========================================================
 # HISTORISK VERDSETTELSE / HJELPEFUNKSJONER
 # =========================================================
@@ -9999,6 +10049,37 @@ elif side == "Selskaper":
                 width="stretch",
                 hide_index=True
             )
+
+
+            if selskap in SEGMENT_MIX_5Y:
+                st.subheader("Segmentmiks – andel av omsetning")
+
+                segment_mix_numeric = pd.DataFrame(SEGMENT_MIX_5Y[selskap])
+
+                segment_mix_display = segment_mix_numeric.copy()
+                for col in segment_mix_display.columns:
+                    if col == "År":
+                        continue
+                    segment_mix_display[col] = segment_mix_display[col].map(
+                        lambda x: "N/M" if pd.isna(x)
+                        else f"{float(x):.1f}%".replace(".", ",")
+                    )
+
+                st.dataframe(
+                    segment_mix_display,
+                    width="stretch",
+                    hide_index=True,
+                )
+
+                chart_data = segment_mix_numeric.copy()
+                chart_data["År"] = chart_data["År"].astype(str)
+                chart_data = chart_data.set_index("År")
+                st.line_chart(chart_data, height=260)
+
+                st.caption(
+                    "Andel i prosent av rapportert segmentomsetning. "
+                    + SEGMENT_MIX_NOTES.get(selskap, "")
+                )
 
             st.subheader("Kontantstrøm")
 
