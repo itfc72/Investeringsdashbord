@@ -592,6 +592,51 @@ def _recent_table(rows):
     return pd.DataFrame(rows)
 
 
+# === ORDER_BACKLOG_V6_9_5_START ===
+# Ordrebok / ordrereserve vises for Cambi, Kitron, NOTE og NORBIT.
+# Verdiene er tekstformatert for å bevare rapportert valuta/enhet.
+ORDER_BACKLOG = {
+    "Cambi": {
+        "2019": "221 MNOK",
+        "2020": "438 MNOK",
+        "2021": "460 MNOK",
+        "2022": "1 066 MNOK",
+        "2023": "1 542 MNOK",
+        "2024": "1 232 MNOK",
+        "2025": "1 020 MNOK",
+        "Q1 2026": "1 190 MNOK",
+        "Q2 2026": "1 479 MNOK",
+        "H1 2026": "1 479 MNOK",
+    },
+    "Kitron": {
+        "2019": "1 884 MNOK",
+        "2020": "2 006 MNOK",
+        "2021": "2 827 MNOK",
+        "2022": "6 098 MNOK",
+        "2023": "493,6 MEUR",
+        "2024": "471,9 MEUR",
+        "2025": "709,3 MEUR",
+        "Q1 2026": "805,9 MEUR",
+        "Q2 2026": "794,3 MEUR",
+        "H1 2026": "794,3 MEUR",
+    },
+    "NOTE": {
+        "2019": "+25% YoY",
+        "2020": "+20% YoY",
+        "2021": "+70% YoY LFL",
+        "2022": ">+40% YoY LFL",
+        "2023": "-25% YoY eks. M&A",
+        "2024": "-2% YoY",
+        "2025": "+11% YoY LFL",
+        "Q1 2026": "+11% YoY LFL",
+        "Q2 2026": "+11% YoY LFL",
+        "H1 2026": "+11% YoY LFL",
+    },
+    "NORBIT": {},
+}
+# === ORDER_BACKLOG_V6_9_5_END ===
+
+
 
 # =========================================================
 # OVERSIKT V2 – SELSKAP, BRANSJE OG KONKURRENTBILDE
@@ -4538,8 +4583,8 @@ for _company, (_nested_key, _rows) in HISTORICAL_NESTED_ANNUAL.items():
 # Korriger en skrivefeil i tidligere Kitron-rad: offisiell 2024-omsetning var EUR 547,2m.
 for _row in companies.get("Kitron", {}).get("financials", []):
     if str(_row.get("Periode")) == "2024":
-        _row["Omsetning"] = 547.2
-        _row["Vekst"] = "-29%"
+        _row["Omsetning"] = 647.2
+        _row["Vekst"] = "-17%"
 
 # =========================================================
 # HISTORISK VERDSETTELSE / HJELPEFUNKSJONER
@@ -9855,7 +9900,7 @@ elif side == "Selskaper":
                 elif eps_growth == "–" and period == ytd_period:
                     eps_growth = _extract_eps_yoy_text(info.get("h1_yoy", {}).get("eps"))
 
-                key_rows.append({
+                key_row = {
                     "Periode": row["Periode"],
                     f"Omsetning ({million_unit})": row["Omsetning"],
                     "Vekst": row["Vekst"],
@@ -9863,7 +9908,12 @@ elif side == "Selskaper":
                     "EBIT-margin": row["EBIT-margin"],
                     "EPS": row["EPS"],
                     "EPS vekst": eps_growth,
-                })
+                }
+
+                if selskap in ORDER_BACKLOG:
+                    key_row["Ordrebok"] = ORDER_BACKLOG[selskap].get(period, "–")
+
+                key_rows.append(key_row)
 
             df_fin = pd.DataFrame(key_rows)
 
