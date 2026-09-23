@@ -33,6 +33,9 @@ jobs:
       - name: Run contract monitor
         run: python scripts/update_contract_monitor.py
 
+      - name: Run contract news signal monitor
+        run: python scripts/update_contract_news_signals.py
+
       - name: Commit changes if any
         run: |
           if git diff --quiet; then
