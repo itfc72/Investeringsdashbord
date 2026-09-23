@@ -10397,11 +10397,12 @@ elif side == "Selskaper":
                     )
 
                 st.caption(
-                    "Monitoren følger selskapets egne nyhetskilder to ganger daglig og "
-                    "varsler når nye saker inneholder kommersielle signaler som kontrakt, "
-                    "ordre, ny kunde, partnerskap, kapasitetsutvidelse eller relevante "
-                    "produkt-/forsvarssignaler. Treffene må vurderes manuelt før de regnes "
-                    "som potensielle kontrakter."
+                    "Monitoren følger både selskapets egne nyhetskilder og eksterne "
+                    "nyhets-/bransjekilder to ganger daglig. Den varsler når nye saker "
+                    "inneholder kommersielle signaler som kontrakt, ordre, ny kunde, "
+                    "partnerskap, kapasitetsutvidelse, anbud eller relevante produkt-/"
+                    "forsvarssignaler. Treffene må vurderes manuelt før de regnes som "
+                    "potensielle kontrakter."
                 )
 
         # -------------------------------------------------
