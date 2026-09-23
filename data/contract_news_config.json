@@ -1,0 +1,153 @@
+{
+  "note_news_signals": {
+    "company": "NOTE",
+    "title": "NOTE – automatiske kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "NOTE Press & News",
+    "source_urls": [
+      "https://www.note-ems.com/en/press-news/"
+    ],
+    "high_keywords": [
+      "contract",
+      "order",
+      "awarded",
+      "award",
+      "wins",
+      "new customer",
+      "new client",
+      "agreement",
+      "selected"
+    ],
+    "signal_keywords": [
+      "security & defence",
+      "defence",
+      "defense",
+      "data centre",
+      "data center",
+      "production",
+      "industrialisation",
+      "industrialization",
+      "facility",
+      "plant",
+      "capacity",
+      "invests",
+      "partnership",
+      "certification",
+      "qualified",
+      "qualification"
+    ],
+    "exclude_keywords": [
+      "interim report",
+      "year-end report",
+      "annual report",
+      "invitation to",
+      "annual general meeting",
+      "nomination committee",
+      "number of shares",
+      "financial calendar"
+    ]
+  },
+  "kitron_news_signals": {
+    "company": "Kitron",
+    "title": "Kitron – automatiske kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "Kitron Newsroom / Investors",
+    "source_urls": [
+      "https://www.kitron.com/",
+      "https://www.kitron.com/newsroom"
+    ],
+    "high_keywords": [
+      "contract",
+      "order",
+      "awarded",
+      "award",
+      "selected",
+      "new customer",
+      "agreement",
+      "framework",
+      "customer wins",
+      "wins"
+    ],
+    "signal_keywords": [
+      "customer",
+      "defence",
+      "defense",
+      "aerospace",
+      "factory",
+      "facility",
+      "capacity",
+      "industrialisation",
+      "industrialization",
+      "data centre",
+      "data center",
+      "electrification",
+      "partnership",
+      "qualification",
+      "certification",
+      "opens",
+      "invest"
+    ],
+    "exclude_keywords": [
+      "quarterly report",
+      "annual report",
+      "financial calendar",
+      "annual general meeting",
+      "capital markets",
+      "webcast",
+      "share price",
+      "governance"
+    ]
+  },
+  "norbit_news_signals": {
+    "company": "NORBIT",
+    "title": "NORBIT – automatiske kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "NORBIT Newsroom",
+    "source_urls": [
+      "https://norbit.com/newsroom"
+    ],
+    "high_keywords": [
+      "contract",
+      "awarded",
+      "award",
+      "selected",
+      "agreement",
+      "partner",
+      "partnership",
+      "customer",
+      "deployment",
+      "integrate",
+      "integration"
+    ],
+    "signal_keywords": [
+      "launch",
+      "launches",
+      "rov",
+      "auv",
+      "usv",
+      "uuv",
+      "uncrewed",
+      "autonomous",
+      "sonar",
+      "security",
+      "subsea",
+      "underwater",
+      "defence",
+      "defense",
+      "port",
+      "critical infrastructure",
+      "pilot",
+      "trial",
+      "navigation",
+      "oem"
+    ],
+    "exclude_keywords": [
+      "quarterly report",
+      "annual report",
+      "financial calendar",
+      "general meeting",
+      "webcast",
+      "shareholder"
+    ]
+  }
+}
