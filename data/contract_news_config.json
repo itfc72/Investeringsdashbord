@@ -149,5 +149,147 @@
       "webcast",
       "shareholder"
     ]
+  },
+  "note_external_signals": {
+    "company": "NOTE",
+    "title": "NOTE – eksterne kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "Eksterne nyhetskilder / Google News",
+    "source_urls": [
+      "https://news.google.com/rss/search?q=%22NOTE%20AB%22%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20%22data%20centre%22%20OR%20%22data%20center%22)&hl=en-GB&gl=GB&ceid=GB:en",
+      "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
+    ],
+    "high_keywords": [
+      "contract",
+      "order",
+      "awarded",
+      "award",
+      "wins",
+      "new customer",
+      "agreement",
+      "selected"
+    ],
+    "signal_keywords": [
+      "defence",
+      "defense",
+      "data centre",
+      "data center",
+      "customer",
+      "production programme",
+      "production program",
+      "industrialisation",
+      "industrialization",
+      "capacity",
+      "plant",
+      "electronics manufacturing"
+    ],
+    "exclude_keywords": [
+      "interim report",
+      "year-end report",
+      "annual report",
+      "results",
+      "webcast",
+      "annual general meeting",
+      "share price"
+    ],
+    "high_signal_type": "Eksternt kontraktssignal",
+    "signal_type": "Eksternt markedsignal",
+    "max_new_per_run": 5
+  },
+  "kitron_external_signals": {
+    "company": "Kitron",
+    "title": "Kitron – eksterne kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "Eksterne nyhetskilder / Google News",
+    "source_urls": [
+      "https://news.google.com/rss/search?q=Kitron%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20autonomous%20OR%20customer)&hl=en-GB&gl=GB&ceid=GB:en",
+      "https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en"
+    ],
+    "high_keywords": [
+      "contract",
+      "order",
+      "awarded",
+      "award",
+      "selected",
+      "new customer",
+      "agreement",
+      "framework",
+      "wins"
+    ],
+    "signal_keywords": [
+      "customer",
+      "defence",
+      "defense",
+      "aerospace",
+      "autonomous",
+      "missile",
+      "air defence",
+      "air defense",
+      "data centre",
+      "data center",
+      "electrification",
+      "electronics",
+      "production",
+      "capacity"
+    ],
+    "exclude_keywords": [
+      "quarterly report",
+      "annual report",
+      "results",
+      "webcast",
+      "annual general meeting",
+      "share price"
+    ],
+    "high_signal_type": "Eksternt kontraktssignal",
+    "signal_type": "Eksternt markedsignal",
+    "max_new_per_run": 5
+  },
+  "norbit_external_signals": {
+    "company": "NORBIT",
+    "title": "NORBIT – eksterne kontraktsignaler",
+    "monitor_type": "news_signal",
+    "source_label": "Eksterne nyhets-/bransjekilder / Google News",
+    "source_urls": [
+      "https://news.google.com/rss/search?q=NORBIT%20(contract%20OR%20sonar%20OR%20AUV%20OR%20USV%20OR%20underwater%20OR%20security)&hl=en-GB&gl=GB&ceid=GB:en",
+      "https://news.google.com/rss/search?q=(%22underwater%20security%22%20OR%20sonar%20OR%20AUV%20OR%20USV)%20(contract%20OR%20award%20OR%20procurement%20OR%20tender)&hl=en-GB&gl=GB&ceid=GB:en"
+    ],
+    "high_keywords": [
+      "contract",
+      "awarded",
+      "award",
+      "selected",
+      "agreement",
+      "procurement",
+      "tender",
+      "deployment"
+    ],
+    "signal_keywords": [
+      "sonar",
+      "auv",
+      "usv",
+      "uuv",
+      "underwater",
+      "subsea",
+      "security",
+      "autonomous",
+      "uncrewed",
+      "rov",
+      "hydrographic",
+      "critical infrastructure",
+      "port",
+      "oem",
+      "navigation"
+    ],
+    "exclude_keywords": [
+      "quarterly report",
+      "annual report",
+      "results",
+      "webcast",
+      "shareholder",
+      "share price"
+    ],
+    "high_signal_type": "Eksternt kontraktssignal",
+    "signal_type": "Eksternt markedsignal",
+    "max_new_per_run": 5
   }
 }
