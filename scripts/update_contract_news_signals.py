@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 import sys
+import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
@@ -55,6 +56,36 @@ def signal_id(title: str, url: str) -> str:
 def fetch_links(source_url: str):
     r = requests.get(source_url, timeout=30, headers=HEADERS)
     r.raise_for_status()
+
+    content_type = (r.headers.get("content-type") or "").lower()
+    head = r.text.lstrip()[:300].lower()
+
+    # RSS/Atom feeds are useful for external news discovery.
+    if "xml" in content_type or head.startswith("<?xml") or "<rss" in head or "<feed" in head:
+        rows = []
+        root = ET.fromstring(r.text)
+
+        def local_name(tag):
+            return str(tag).split("}")[-1].lower()
+
+        for entry in root.iter():
+            if local_name(entry.tag) not in {"item", "entry"}:
+                continue
+
+            title = ""
+            href = ""
+            for child in entry.iter():
+                name = local_name(child.tag)
+                if name == "title" and not title:
+                    title = clean_text(child.text or "")
+                elif name == "link" and not href:
+                    href = (child.attrib.get("href") or child.text or "").strip()
+
+            if 12 <= len(title) <= 240 and href:
+                rows.append({"title": title, "url": href})
+
+        return rows
+
     soup = BeautifulSoup(r.text, "html.parser")
     source_host = urlparse(source_url).netloc.lower().removeprefix("www.")
 
@@ -101,8 +132,14 @@ def is_relevant(title: str, cfg: dict) -> bool:
 
 def classify_signal(title: str, cfg: dict):
     if contains_any(title, cfg.get("high_keywords", [])):
-        return "Høy", "Konkret kommersielt signal"
-    return "Middels", "Mulig kontraktssignal"
+        return (
+            cfg.get("high_importance", "Høy"),
+            cfg.get("high_signal_type", "Konkret kommersielt signal"),
+        )
+    return (
+        cfg.get("default_importance", "Middels"),
+        cfg.get("signal_type", "Mulig kontraktssignal"),
+    )
 
 
 def collect_candidates(cfg: dict):
@@ -158,6 +195,11 @@ def merge_config_and_state(cfg: dict, state: dict):
         "high_keywords",
         "signal_keywords",
         "exclude_keywords",
+        "high_signal_type",
+        "signal_type",
+        "high_importance",
+        "default_importance",
+        "max_new_per_run",
     ):
         if key in cfg:
             item[key] = cfg[key]
@@ -194,7 +236,8 @@ def process_news_monitor(key: str, cfg: dict, state: dict, updates: list):
 
     seen_set = set(seen)
     new_candidates = [x for x in candidates if x["id"] not in seen_set]
-    processed_candidates = new_candidates[:8]
+    max_new = int(cfg.get("max_new_per_run", 8))
+    processed_candidates = new_candidates[:max_new]
 
     for candidate in processed_candidates:
         importance, signal_type = classify_signal(candidate["title"], cfg)
