@@ -14,8 +14,37 @@ import urllib.parse
 st.set_page_config(
     page_title="Investeringsdashboard",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed",
 )
+
+# === MOBILE_LAYOUT_V6_9_6 ===
+st.markdown("""
+<style>
+@media (max-width: 768px) {
+    .block-container {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 1rem !important;
+    }
+    h1 { font-size: 2rem !important; line-height: 1.15 !important; }
+    h2 { font-size: 1.55rem !important; line-height: 1.2 !important; }
+    h3 { font-size: 1.25rem !important; line-height: 1.2 !important; }
+    [data-testid="stHorizontalBlock"] {
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+    [data-testid="column"] {
+        min-width: 100% !important;
+        width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+    [data-testid="stMetricValue"] { font-size: 1.5rem !important; }
+    [data-testid="stDataFrame"] { overflow-x: auto !important; }
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 
 def _read_shareholder_csv(uploaded_file):
@@ -5230,6 +5259,19 @@ side = st.sidebar.radio(
     ]
 )
 
+selected_company = None
+if side == "Selskaper":
+    st.sidebar.markdown("### Selskaper")
+    selected_company = st.sidebar.radio(
+        "Velg selskap",
+        sorted(
+            companies.keys(),
+            key=lambda x: x.casefold().replace("ú", "u"),
+        ),
+        label_visibility="collapsed",
+        key="sidebar_company_navigation",
+    )
+
 # =========================================================
 # RAPPORTERINGSDATA – TEST FOR NORBIT
 # =========================================================
@@ -6280,7 +6322,7 @@ elif side == "Selskaper":
         unsafe_allow_html=True,
     )
 
-    selskap = st.selectbox("Velg selskap", sorted(companies.keys(), key=lambda x: x.casefold().replace("ú", "u")))
+    selskap = selected_company
     info = companies[selskap]
 
     st.header(selskap)
