@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "24.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "dc8096bde624b20032a6d441192ca4fe4da06011ad438e352ccfd3367b63223e",
+    "content_hash": "e5ca8c0fb7a7b8138c7ddc19342e8f9d91913247e19fd438fa69b6fb71e95ed5",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "24.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "f2ad48ff5097280f3039e64695273c83c90de668bf936eef3e7d477ae00ff8a6",
+    "content_hash": "5a225b392fb34df17036d0f1fdf893fd8eb0d7549d5d93fc81c40e628e3bff4b",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "24.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "c9e5dff5df4da3c3e8a143d1b24f38cfd4e88bac69bb71c181dedbd3d571329a",
+    "content_hash": "51b621dbdf0091c7b3156ceab6c502dae55e2209693c6d5b44acee91e7306b34",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "24.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "c19557b825b2adfd0f42f8c7f14f4129f77e464331d5cf8118109383fb081c2b",
+    "content_hash": "8a241ad5d0992e044cae36d7c56b96f5faff2bc5ddf3e5ae081cbb3324e61ed6",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -542,9 +542,29 @@
       "c0d7c3b4069d62b5ca44414d",
       "07416359d97fd781ea04885d",
       "3411e6ee4e50d32b17694606",
-      "ee9a55a71dc37c59d3d09ddd"
+      "ee9a55a71dc37c59d3d09ddd",
+      "0412dcaa7aaefe622003c296",
+      "12c4a9600156bd6064eec857"
     ],
     "signals": [
+      {
+        "Oppdaget": "24.09.2026",
+        "Signal": "Corvus Energy Enters Contract Manufacturing Agreement with Kitron for Battery Management Control Systems - Batteries News",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNVE1weW9sYy1DNlJtWm84TkVsdDJ2QTFqZERGMFI4TTdKeV9PTmN5MVpIQnEwM3lJak9sZWd2aHN2TmRNUy1LMEMyQ3VMYnN3VmxwRjZQRC1jM3NlcElGUjFwXzhyLUdjOC00RkFNLU1DWEFvMlpJOFF5a09lUjNmXzg3enhrZWtsaFl1dU4ydTMwSHFPVEd3?oc=5",
+        "id": "12c4a9600156bd6064eec857"
+      },
+      {
+        "Oppdaget": "24.09.2026",
+        "Signal": "Scandinavia’s Kitron leans into AI but depends on ERP and local links to keep electronics production - computerweekly.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPU2djUURZeEhLcWd4SGR0MXlNLXNDbnJFaUdtSDI5MmRrazlXdTRueVk4eEttZl9TVUpkUnJVR3JZbEVkTEd5NWlzdkQ3aDdHRUpkeTNzeWJrT3lYTTNnN2dzX21ELXhzY1c4cW1PR2N0aTRSZmNGVG5ncjFHLXMycUZNTmtNQUtpR3hzcmNRM2dYQ0w4RmRGeXZDNG9MU2hPdGhYNGFNNmc2N2FqMzJtdE0yeXNTcE9PN3NGUGkzOHRyOGtMNkoxR2dfS0NjdXNMWGxNaw?oc=5",
+        "id": "0412dcaa7aaefe622003c296"
+      },
       {
         "Oppdaget": "24.09.2026",
         "Signal": "Kitron Sweden to expand Jönköping factory to meet growing demand - defence-industry.eu",
@@ -616,7 +636,7 @@
     ],
     "last_baseline": "23.09.2026",
     "last_updated": "24.09.2026",
-    "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "norbit_external_signals": {
     "company": "NORBIT",
@@ -787,9 +807,59 @@
       "23c052bd1e433ca4d210cc44",
       "5c5aad3eaaaa160603f5c9b7",
       "41384fe170dafbe0352cf453",
-      "bc1ae2b78bd9b58cf2048ebe"
+      "bc1ae2b78bd9b58cf2048ebe",
+      "b968033d097b88429918fa79",
+      "cb46884d178b480218dcc871",
+      "c579df73f030e8e7b3e24b13",
+      "5694aee77b1c585e505309d9",
+      "f249f1405ee3f19327c00248"
     ],
     "signals": [
+      {
+        "Oppdaget": "24.09.2026",
+        "Signal": "Government awards Ocius Bluebottle USV fleet contract - Australian Defence Magazine",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOZUtJTVQyN0lWS041UDJJYXNUbWFJOFBsaTlfc3hpbndFVFU0THNXSVMtLW5fck5LZTVPb1RRbWZ4aXF6NVREQ3M3clZWaDFoVHllNzRnM2UteDNWbmUwZkI1VldzeVlLaUVfVHZjYW81dWVudzU4emdRN3ptSlVhRmtSd3VmNjNoNnVFUTZKb2NyNmpVYjMySnd1VWxvaDRjQTUtQg?oc=5",
+        "id": "f249f1405ee3f19327c00248"
+      },
+      {
+        "Oppdaget": "24.09.2026",
+        "Signal": "Iran war drives urgent need to counter underwater attack drones - The Register",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNeXlfNV9WR1ByV2owN09mTUR4WUl3YUo0Zjk4czJ2M3ZTdUJNblhQYThHekNzOHFIRmw3WHVKSVhDb1Nla2FMbElrcEZVRklHSnlTYm9KMHdLcVNSbGk1VXlkdGdybWVlMkFoMHdUb21yMlBCSUxSMnRPN2lYVXdZM1ZXdGZTTi1mT3hQY2FvN0hvSHZiaExfZEdOc0hoWlhKYTEwbXYtM2N6NDIyUTZYOQ?oc=5",
+        "id": "5694aee77b1c585e505309d9"
+      },
+      {
+        "Oppdaget": "24.09.2026",
+        "Signal": "OPT Wins Spot On Navy IDIQ Contract For Autonomous Ocean Mapping - Ocean News & Technology",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPc3poSF95UEFQQ0I1S21Nb0k3cXhIU0VlVTJ5RDJ0TlJMM09wTVVBZXdQTjJxbUppdlhDSjlFSm10cnc1aFdjZ0U0SXNYYXZMVHlteWt5V3E2SmNBMnU2R2tZRzlELXJPRGNkd0JWZjNLcTg2OE5OT2xiX0Y5QTFPem9MUFBMaDAyYVFKS0JnUk1SdXVuc1pueWhjSlBnbDFBbVZ4cnhjVHVtazJIVHdVaw?oc=5",
+        "id": "c579df73f030e8e7b3e24b13"
+      },
+      {
+        "Oppdaget": "24.09.2026",
+        "Signal": "Freight Market Alert: Why US Tender Rejections Are Skyrocketing - FreightWaves",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZDNLRngySjVULXlwZXJLTTlrQmVjTTlid2pxeURIb2FlNXhGTm16a3c0bUc5SXhFR3dvOE1OSUw0WEZJdDRsdElPdDRsekY3R3RwUHhad3RaMGZwTmhwa1lWUmtWdlZIVVRxeWFEMERLZTdXUVRrR09veVZ2d0t6dEtlQ0lqYm1LdzNXVFJVTFVUMV82Y2ozZEpSa1U?oc=5",
+        "id": "cb46884d178b480218dcc871"
+      },
+      {
+        "Oppdaget": "24.09.2026",
+        "Signal": "NORBIT - Awarded NOK 120 million order - The Manila Times",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNNWk0TlVILWZHODdZd3duamhzQVkzaExTZWpRanljdHV2R1B4SmZoRnY2WC1NUElOY1UtaTdvbG84Ukdva1U3Z2c2bUNfdlNEMURGbG1IUU5Mb0pDM2hHU3pBcnpQM1VEM3d6bEx5MDl1QnpoQm5ZQUc1M3BxUXI1WTJBcnpwcHNxdzVkSmZWTWN5dlVxSzVHajZUWjBLWlJFY1FjUDA3S1J0OWkyY1Ew0gG0AUFVX3lxTE4tRXFTaUJhTjJMM2g2NXdlZ2pnZ0wwdUdWcDR0OHViX1pzWGx2dzlrYlBXTTQ2U05GVDZXTENQNmVKbWxmR29tOUl1UGlKaHBLQjZpRlNINlBuY2VfbEk1dkUxX29yUXVucjktMzU5TExBQU9XcWxpTEt1Wm9lVm8yV1hseVNzMHdlMkJxTDZHbHEzVkNVRERGN0JfNEVRc2xWcjdVRDA2cVpaN1Q5dkJUTWlpRQ?oc=5",
+        "id": "b968033d097b88429918fa79"
+      },
       {
         "Oppdaget": "24.09.2026",
         "Signal": "Textron Systems wins DIU contract for Tsunami USV - Calibre Defence",
