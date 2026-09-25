@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "25.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "0082c48bdb7d2c1fead0af75c697e9d2525b3e4e552b56b3112b2cc0649fbf3a",
+    "content_hash": "73a1a78c9665df14e6c1ddacb3ec0d9e2e956c7ee1ce0308f2c6d38ce46823a2",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "25.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "bc587dc17f65d5840927e1b82063c4fe3d88842d8cd3b9752522aec58944c2c6",
+    "content_hash": "478058b6133e069dbf86415ad6ceb12f00d92aac995b6fb4a06932b84d437346",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "25.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "7434d5c20cdc778ae75a6a3e4f45a2d88662bdfc8e58dff613a14690a88ed151",
+    "content_hash": "e7b5b65ea0fa48b793df6d25972115b5547191e93d7bd83afa41017aea30807c",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "25.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "ececfd2fbfd3c6664a4290e4720940ebbd2b8464e9ecd388e2a406f8394c0610",
+    "content_hash": "7a2785c78118fcc8b5910129b87a659524578583a5589502d081f2388ad26728",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -407,9 +407,19 @@
       "675c35a19ae69308cde5d0bc",
       "e9660bd4bd5511c8528da48c",
       "f1260a1012200a7c6840af62",
-      "32fdf8844768752cf80c3ed1"
+      "32fdf8844768752cf80c3ed1",
+      "a4aa58a435016b830cfc1877"
     ],
     "signals": [
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "U.S. defense struggles to keep up: End to deployment of F-15 near Taiwan - news.cgtn.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOYnRXTmtQN0RaZVdJRkdEeHFXU2NFbUxYWF9HM2d4dHN1T0RzMW1DQXlSb3d6Z1VwLWtEY29ZQmdGUEtlQTZ5VWdUTVVqNmtPblpPRDZqLWdPSjBiOEEyeUp2VHJWaEhOZ1FwUTNrUllnOVh4S2tOeXlYQ2UzWGU0QVliakFTRmp1TTNIeW9aM3FhcXFQckdmanZqTXFzdmVfQ0tOS3JwVFVuQ1pfeVhETHRJVEtLRF9mcWtjOU9aTXlUZEc1TFE?oc=5",
+        "id": "a4aa58a435016b830cfc1877"
+      },
       {
         "Oppdaget": "25.09.2026",
         "Signal": "NOTE strengthens its defence position through the acquisition of STI - the UK’s leading EMS partner to the defence industry, confirms outlook for 2026 and provides outlook for Q1 - Finansavisen",
@@ -559,9 +569,29 @@
       "90c3afc49e4c6864f1dbbdcb",
       "269656e0545e80b2db3cafda",
       "c05bdce4bc3632d55036f5f6",
-      "629297ab76ed64c9f295755b"
+      "629297ab76ed64c9f295755b",
+      "2e580520a652e1833afc6b94",
+      "f4a03206da551eec473dcd25"
     ],
     "signals": [
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "Kitron opens Longum facility as defence demand accelerates - NTB Kommunikasjon",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNQWl5SDhPdXJlWWp2V0dKdV9iMlRORm9ZZktpTlFabUdfTFVKQ01Jb0w3QlRRTms1c0wwRmRtcnN2RFJmT21Ldk9udEoxcjY5SXg0MjhyTDdLWENFc2JIWG93WXNVMVRFRklsMDhtN3JPbWk5RWhXVUxnQXNnSEJhYUFwZHNDb1NEZElDOU5PZWtZS3JqSVIzZXE3TGRwQWFWWW1Iek8ySzFCamlIUHpOZk5FZy15MnE0NXVpODMzN0RGMVZjcmVySmdqQ1UwWVFlYXZLSw?oc=5",
+        "id": "f4a03206da551eec473dcd25"
+      },
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "Kitron Strengthens Order Backlog with EUR 11 Million Contract for Defense Communication - The Manila Times",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQY2twQWtGNE9uR0FVYTBZNmt6dW55Vk5EdWtzbm03YV9zM1hxLXo2OU0tWGRVS2dZTDFSb3BHZ2tkMGc5d3JmdnM2SkE2NFk4QWJseVVsYVVYbFBZZmhVRFpHQVk5NHZFNmt0cEU0VTZUeXdUVkpQQjZEUm83NG4zeHo4QVhmRzctWmFIVlVXYjhtbGlYdURQZUw2LTZMVEMyZWd0V0dzbENMZUtGZG5xT0J0b1F4NmM3bzFralFRNzlHZzFUMk1BX0RLR0pUQ3JleTlTQzhNTFhlbnUxM0NXMG1vdmdQcV84emFaM1NWcWtlMVHSAfgBQVVfeXFMTm5iOV9XUlFERi05WFVUaGV3Yzl6dFlubE1rRFdjVW1ON0Z2MmFKdDVuOTl5NlZaUnE1VjhxSXlOMmpQNnYwVXNmdmZXV2poNFNqWEJfZnFmV08yTzdQSE5TNC1KSVZJb1FMRFhoUnNLR3BucmdnVWFMdlZ4TVBaMUxkUTRNMng1ZG9HTTdsLTZUOFBaV21IWjNUc2p3RWZKaGRmUWdMelZSTjYyVDg5MkRSZkV2ZHQ1RzhTSXRNOURycTJ5U0N6VFZlOGJhaTRXdmxNV0VvRmFtR3JuYWV3SkcxMm9kM3JTcTd4WkFQT3FWbmFDc2lxZ0w?oc=5",
+        "id": "2e580520a652e1833afc6b94"
+      },
       {
         "Oppdaget": "25.09.2026",
         "Signal": "Kitron receives USD 13 million contract for F-35 Lightning II programme - Defence Industry Europe",
@@ -696,7 +726,7 @@
     ],
     "last_baseline": "23.09.2026",
     "last_updated": "25.09.2026",
-    "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "norbit_external_signals": {
     "company": "NORBIT",
@@ -873,9 +903,59 @@
       "c579df73f030e8e7b3e24b13",
       "5694aee77b1c585e505309d9",
       "f249f1405ee3f19327c00248",
-      "65dafbfcc2b94018bcf0d1f9"
+      "65dafbfcc2b94018bcf0d1f9",
+      "9b436a38312356dd9627fc6c",
+      "54c42b4b9a82382e7b429752",
+      "0bc335ca416be8ed3a844032",
+      "0cd2f2ea85948d36469ed557",
+      "bae8b0143b3a26635943d86a"
     ],
     "signals": [
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "Ireland signs multi-million-euro contract for towed sonar - naval-technology.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPMXFzTllycnNQRmVadU9FQ3M3LThPUXREREsyYmF6QzFoY2dyc01hRnRPanVRUnJMU24tMWJiX3hsakg4WU1ONl9TdTkzcWhCR2hPUGxRTHZGUWhSU1hvTndtamJXenEwRmszZzZIMF9HUjZtV25wOHZhT19oYTJsRkowcDI?oc=5",
+        "id": "bae8b0143b3a26635943d86a"
+      },
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "Cellula Selected To Deliver AUV Prototype Under The CAMP Defense Innovation Unit Project - Ocean News & Technology",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNaDVqQU5sbGk3dVZSeFdVWkxIcnhoZGc0Qkx3VmR6RWp1X011WXZIbWdPN0l6Y0ZOMEp5ZUEwS1lrN0IwQWJqV25QRjR4RUZlVnZZYzZHT0xVczAxeW05VUJmd014X1Q5enB6SXdTQ2V2LXlONTBkd2lQTFBsVHpWUnl2YnpuTmUweEFHODVzeWRiMUxweUlSdzNZR3hyWVJQVlBBR09vYjQtOXE2WFNjNk1JLUtGR05jUmVEVkI0czJOZw?oc=5",
+        "id": "0cd2f2ea85948d36469ed557"
+      },
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "Australia to expand Bluebottle USV vessel fleet with $125m investment - naval-technology.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMieEFVX3lxTE42dlg4U2pLbkpGaUJiVGY3RC02WmY2N2lVTmFiYWNyVVh5aTBaVDZYZE5nMS11RlNwM2J5UmxWVEdKMWE5ZTVYaDdlcF9nZEJpWjh1c1BmNjVqbTlvekRhX3NaZTBMSXhKSjZZQlpTbVdEVEJJX2FmWg?oc=5",
+        "id": "0bc335ca416be8ed3a844032"
+      },
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "Lockheed Martin wins $224m contract for US Navy sonar system - naval-technology.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMif0FVX3lxTE93Vjg2Qm1jdkZieXpUNjBucEdIbm5ONTYtMFFOakZLNHBmZW5BNDIyT1E1QXQyOEtXWlE0U2x0VERsLTdJY0FpRHY0bFA3RDc1bGFoZmJINEo2ZWhXZlk0M2tJN1dZbTcwODUtakNkcVB3SFV1LWg1X3lqT2pWdFE?oc=5",
+        "id": "54c42b4b9a82382e7b429752"
+      },
+      {
+        "Oppdaget": "25.09.2026",
+        "Signal": "Norbit: Engineering Hydrographic Survey Simplicity - Marine Technology News",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQb1lybWRSbUhKS3YteTd1ZEZ0YlI4ZlNuMVZ1X0NfSGQ5aDNMd05qd3RNNktuTW51ZDB5eGt3Y2RkUm9tZnpZQVdWWmVtZF90RFpfd2k5aENnbUZWVEZuTUNfcEotY2t3dF9fRGRQYng3UjdJT3FoNkZURFFBaWF5a0xyaF9WcXdJTG5aelJYVUExMVNLOUdON3lSVHgtOXpVQ056d09pbUtadw?oc=5",
+        "id": "9b436a38312356dd9627fc6c"
+      },
       {
         "Oppdaget": "25.09.2026",
         "Signal": "Norbit receives major order from the defence and security sector - Evertiq",
@@ -1028,6 +1108,6 @@
     ],
     "last_baseline": "23.09.2026",
     "last_updated": "25.09.2026",
-    "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   }
 }
