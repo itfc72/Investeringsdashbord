@@ -14,10 +14,11 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "27.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "494addc0b1781f77d057d7a6119954389bd1311894f551bddcaa38fe6fbc36ee",
+    "content_hash": "219ecddea86552c9cb8f1c694f6ed0c842fab8baa1240229d132cb6523190a2c",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
-      "https://app.govly.com/public/opportunities/16935200"
+      "https://app.govly.com/public/opportunities/16935200",
+      "https://groundintel.ca/tenders"
     ],
     "last_source_change": "27.09.2026",
     "review_note": "Kildene for Clarkson WRRF – Peel Region, Ontario er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
@@ -61,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "27.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "965045bf198135496e2ea0b71a0a566886c62078545089f497a7a3ae576ba442",
+    "content_hash": "1d58a233c2e413724370e5ba625877184a078158ba9d3b5520449740c31c3323",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -86,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "27.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "f3f2e36f72dffc4b12a93a81f1d27d64a3c97030a1a44b77eecc91f828113a0c",
+    "content_hash": "4d98cc9ffb35dc5fae63ecc78a488630301c46a8ab7fd1d665d1985bb95a535d",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -109,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "27.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "854e3d5d645b3370c7b5bff1bad54b1242e8565c39c53314a6a6118d56bd7baf",
+    "content_hash": "f2cb5c37227a55ef63142a1fa1ba8e65c45d0456b45ef4f291eec3a0acd376d9",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -411,9 +412,19 @@
       "130958229aaf1f83f733fb14",
       "2bbeea3de395b7498c73e7d8",
       "0b0f9d3842725f964f2aab2a",
-      "7eb46d795b97c890eb9b9d5e"
+      "7eb46d795b97c890eb9b9d5e",
+      "cc17b436339a7d52674454d4"
     ],
     "signals": [
+      {
+        "Oppdaget": "27.09.2026",
+        "Signal": "Snigel signs contract with Thales for GO12 radar carrying systems - Nordic Defence Sector",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQU0lka2JpYnk3N19NcDI2VG9uc2Y4bnNHWkF5MlFNSFdYRHdXa0h1Mko0QmlBb25IUl91enNKSnY0Mk9QZmUyVTE4N2ZNS3dza1hLUTdEVDZEYVk0d09WNGZweEhiZTlzcDhkXzMwbF9ackFXeGdSSWFrUUtMYUFQRjBmR3ROSjkzLTFWSzRac3lrTkFxTmt0c3d1U2s0bi1qZ3p0bzhWd1VfbS1QMXNBSg?oc=5",
+        "id": "cc17b436339a7d52674454d4"
+      },
       {
         "Oppdaget": "26.09.2026",
         "Signal": "FMV signs radar agreement with the Netherlands - nordicdefencesector.com",
@@ -520,8 +531,8 @@
       "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "26.09.2026",
-    "last_change_summary": "4 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_updated": "27.09.2026",
+    "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "kitron_external_signals": {
     "company": "Kitron",
@@ -611,9 +622,19 @@
       "629297ab76ed64c9f295755b",
       "2e580520a652e1833afc6b94",
       "f4a03206da551eec473dcd25",
-      "d8e063e594f6adb9a092fd33"
+      "d8e063e594f6adb9a092fd33",
+      "e4e28ab4a4491a75cc8f5e70"
     ],
     "signals": [
+      {
+        "Oppdaget": "27.09.2026",
+        "Signal": "Corvus Energy Enters Contract Manufacturing Agreement with Kitron for Battery Management Control Systems - batteriesnews.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNVE1weW9sYy1DNlJtWm84TkVsdDJ2QTFqZERGMFI4TTdKeV9PTmN5MVpIQnEwM3lJak9sZWd2aHN2TmRNUy1LMEMyQ3VMYnN3VmxwRjZQRC1jM3NlcElGUjFwXzhyLUdjOC00RkFNLU1DWEFvMlpJOFF5a09lUjNmXzg3enhrZWtsaFl1dU4ydTMwSHFPVEd3?oc=5",
+        "id": "e4e28ab4a4491a75cc8f5e70"
+      },
       {
         "Oppdaget": "27.09.2026",
         "Signal": "Nordic EMS firms step up M&A pace with defence-driven expansion - Evertiq",
@@ -972,9 +993,59 @@
       "9ed19398c5c939a9fef40acf",
       "305074a9a29a1ef4e17af03a",
       "687fc956e8aa4ac1a2015a2c",
-      "185ffe4e6d1f49d8af22e60d"
+      "185ffe4e6d1f49d8af22e60d",
+      "546cec9df42c4d427934a550",
+      "ecfacc2e2d9d9fc834d0a6fb",
+      "0ec24283aee0bb2800807750",
+      "412287dcb23fc62bd397fc46",
+      "4deafcda68de442df022a058"
     ],
     "signals": [
+      {
+        "Oppdaget": "27.09.2026",
+        "Signal": "OPT Signs Up Defense Customer For Multiple WAM-V Usvs - marinetechnologynews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPVjBlV214WjZyXzh3WXJzcGRCRmRkV2hQSjlVSkRDcmJsM1Y3dE5WWXcxR0ZuUi12UUpNV1dYSW1na2ZjcHNtVm91dGwwSFE2aUpjMFFSMHNWLTNVVDU4ZFcwbnF3M2xiWnZNV1RqcW4zMW5QdU5hZGdtRTRNMGlpbG9zQWhQR0k?oc=5",
+        "id": "4deafcda68de442df022a058"
+      },
+      {
+        "Oppdaget": "27.09.2026",
+        "Signal": "Helsing to Acquire Australian AUV Specialist Blue Ocean - marinetechnologynews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPNnlnaUtLaHRGM25KcUdNamUyZE1ZZ3NDdmZFUGMzT1kxcmZyYzBLZ2pjYnBHVkk5RDVQR3Z0dDhWUjBUMUY2UWxIWWRLQXIzTERORGpYWmtxSFNkNkxDckNYcllGdGVNS3FuWFFYbVVMNl84MUNCQkVXNEYtTDBoRGdPYW5pX2pIdmxvSlNvdw?oc=5",
+        "id": "412287dcb23fc62bd397fc46"
+      },
+      {
+        "Oppdaget": "27.09.2026",
+        "Signal": "Norbit's New WBMS X Multibeam Sonar - marinetechnologynews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMie0FVX3lxTE41SWE5UU45ZlR4Wl9jM3FjX3VKMGlTWnoyc3FNYnowQU1iOUliU21kZ3phSDllMDJKYXpRNk1BMnZmTkZsLW4xbDlIX3BlY0RlakoyOWZtZXZvZEJuMVFSTk9OTHk5b3d5M2JDMG9ONWpjY1NIMlpSbktuNA?oc=5",
+        "id": "0ec24283aee0bb2800807750"
+      },
+      {
+        "Oppdaget": "27.09.2026",
+        "Signal": "NORBIT Introduces WINGHEAD X Sonar - marinetechnologynews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQa0RaQ195WWx4VUZiSkxOZElOYU1kTGpRR0d4TWhDWWtLRTgtLVpONkJmTTVZcUpITlNLRnBtVmljQURkcU9UVFpNOFp0Z3BQcTQ3TEFpaGFyRF9rbkh1c201Ql9feHlzd0IxV3dhNWg4a2RBR2VIRzhhRWx2UlJjTVdyYWdMRnRK?oc=5",
+        "id": "ecfacc2e2d9d9fc834d0a6fb"
+      },
+      {
+        "Oppdaget": "27.09.2026",
+        "Signal": "Falcon Eye Technology and Norbit Security Win Underwater Security Contract - marinetechnologynews.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOUmEtWnhyT3IxU1hwUFowR3M5a2NPWkR0Z0FOeFFzTXlBelRFcFZ5ZkdpN3Q0WTcyUUNrQlVQVm9vUW9oVDBybG9ILVlDd3R1azZsOWVERW9zWHBIcENRUUFMWFVwdWc4aW8wdGhGODhjWWxhMUxPbnE4MFZaME1oV2JpSnUxQUZVbkE?oc=5",
+        "id": "546cec9df42c4d427934a550"
+      },
       {
         "Oppdaget": "27.09.2026",
         "Signal": "Swedish military orders USV from German manufacturer - bairdmaritime.com",
@@ -1199,51 +1270,6 @@
         "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
         "Lenke": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZDNLRngySjVULXlwZXJLTTlrQmVjTTlid2pxeURIb2FlNXhGTm16a3c0bUc5SXhFR3dvOE1OSUw0WEZJdDRsdElPdDRsekY3R3RwUHhad3RaMGZwTmhwa1lWUmtWdlZIVVRxeWFEMERLZTdXUVRrR09veVZ2d0t6dEtlQ0lqYm1LdzNXVFJVTFVUMV82Y2ozZEpSa1U?oc=5",
         "id": "cb46884d178b480218dcc871"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "NORBIT - Awarded NOK 120 million order - The Manila Times",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNNWk0TlVILWZHODdZd3duamhzQVkzaExTZWpRanljdHV2R1B4SmZoRnY2WC1NUElOY1UtaTdvbG84Ukdva1U3Z2c2bUNfdlNEMURGbG1IUU5Mb0pDM2hHU3pBcnpQM1VEM3d6bEx5MDl1QnpoQm5ZQUc1M3BxUXI1WTJBcnpwcHNxdzVkSmZWTWN5dlVxSzVHajZUWjBLWlJFY1FjUDA3S1J0OWkyY1Ew0gG0AUFVX3lxTE4tRXFTaUJhTjJMM2g2NXdlZ2pnZ0wwdUdWcDR0OHViX1pzWGx2dzlrYlBXTTQ2U05GVDZXTENQNmVKbWxmR29tOUl1UGlKaHBLQjZpRlNINlBuY2VfbEk1dkUxX29yUXVucjktMzU5TExBQU9XcWxpTEt1Wm9lVm8yV1hseVNzMHdlMkJxTDZHbHEzVkNVRERGN0JfNEVRc2xWcjdVRDA2cVpaN1Q5dkJUTWlpRQ?oc=5",
-        "id": "b968033d097b88429918fa79"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "Textron Systems wins DIU contract for Tsunami USV - Calibre Defence",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOMnNEMjBob3ZBeVR0WWxBUDZTM3M0SVB3cjdsNE5HSXVUU1VmMlVsNG5zbmtMdE9tcXpKT25NQW5kZkN3OUQ3SUVfRV82OVl6MExyRFFZNDVFZXhJbWpfTG1Td09PN2dIWjRSQXc2NWNlZjhyU1FrY0p4MHpMREVidVBhZzFUbVdQQ080?oc=5",
-        "id": "bc1ae2b78bd9b58cf2048ebe"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "shownews - Kraken to supply 20 USV K3 to the Royal Navy under project BEEHIVE - fw-mag.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQQmx6VElpQlZQTjBCVG5xX0luNmpXUmZ3MGVYX1l2OW5HTU5FemdibWJ2V2theTZvc1BSelFGX0k1cC1SdUw1T2tRcFV6SzAzdmwtU0FDem9WczRkNWtyWmJrQkxxd3dReExNZFNTM1p1Uzd5aU1zcGRtZ1p4SUVUZlVSODJMNTJ0ZjFtUmlDVWlzUk5USEx1anI4LVRjQzcyM0djOQ?oc=5",
-        "id": "41384fe170dafbe0352cf453"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "EvoLogics Sonobot 5 demonstrates efficiency and effectiveness for underwater mapping - | GIM International",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQYlNpZ1gzcnRnT0pwcXBmbHV3RWRDWW5OLVowN2NRNklSdlJKcmxfbk5zV3hLZFJVZUZYV2ZGMVBNcldTV3hiZ0Z0Mk5KOEttSEV0TzIyNUMxSWRGakNVRE5yNHBrZThPVWI4NWNtNXlHVWF5QmdZR20tNHVyd0FZTFh5S2EzMENmT2NfUjB6U1hZNjJrbDNNS05UTlZIZHJnNk84b1VpX0g3ckgtXzB0X1FIaUpwMXRiaWJIV2RqbU1uMlN4bzBOYQ?oc=5",
-        "id": "5c5aad3eaaaa160603f5c9b7"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "NORBIT Subsea Adds LMD Capability To WINGHEAD X Midwater Multibeam System - Ocean News & Technology",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPcGZJMHZkd0FlN3NQOVRrZ0tuM05odHNXYkZvOFh5Y0ZkbTRZZkVhTHBSWlFxdExHQXJqX2ZmRnpNR1dDd21rc0pnWnoyQkdTZ1Q0c1ZIUENiVUdLT2FUazc5NkNXSGVOdUpvWkF3STlDQ2ZtbXB4ZzdvX3dNWG0xRms0cmpyVENSWVZYdzlsQXpFNk8tdzZRcHBVajRfVEdXYmZZX2hadEliZU1iRVFacXI0Z2gydVBmM1RYNQ?oc=5",
-        "id": "23c052bd1e433ca4d210cc44"
       }
     ],
     "last_checked": "27.09.2026",
