@@ -12,15 +12,15 @@
     "status": "Aktivt anbud",
     "next_date": "02.10.2026",
     "date_type": "Tilbudsfrist",
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "219ecddea86552c9cb8f1c694f6ed0c842fab8baa1240229d132cb6523190a2c",
+    "content_hash": "c99e5ccb9264f29c6f411274d553dabc9b6bc37171b2b9402bbfb1e43e48fcbf",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
       "https://groundintel.ca/tenders"
     ],
-    "last_source_change": "27.09.2026",
+    "last_source_change": "28.09.2026",
     "review_note": "Kildene for Clarkson WRRF – Peel Region, Ontario er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "rosedale_ntp": {
@@ -37,7 +37,7 @@
     "status": "Engineering pågår",
     "next_date": "Ikke offentlig",
     "date_type": "Notice to proceed",
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "last_updated": "16.09.2026",
     "content_hash": "29c5fad69e51e8380c0db0c6e1764016f32376078c8cdc848ce0aef7a8916bf5",
     "last_change_summary": "Engineeringfasen er i gang. Cambi opplyste 29.04.2026 at produksjon starter etter en senere notice to proceed og tidligst 12 måneder etter kontraktsinngåelsen.",
@@ -60,15 +60,15 @@
     "status": "Planlagt anskaffelse / overvåkes",
     "next_date": "01.12.2026",
     "date_type": "Indikativ kontraktstildeling",
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "1d58a233c2e413724370e5ba625877184a078158ba9d3b5520449740c31c3323",
+    "content_hash": "643584662407eee31fe5f49b7d18aff0c0aadce1919eecd70d620471a97079da",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
       "https://www.find-tender.service.gov.uk/procurement/ocds-h6vhtk-055934"
     ],
-    "last_source_change": "27.09.2026",
+    "last_source_change": "28.09.2026",
     "review_note": "Kildene for Beckton STW THP Upgrade – Thames Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "daldowie_west_central": {
@@ -85,14 +85,14 @@
     "status": "Cambi teknologileverandør / designfase",
     "next_date": "04.2027",
     "date_type": "Planlagt byggestart",
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "4d98cc9ffb35dc5fae63ecc78a488630301c46a8ab7fd1d665d1985bb95a535d",
+    "content_hash": "b55c469e5a99ada33fc4ad4488676692a803609cb0a11bc7771fc6cafbf78f04",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
     ],
-    "last_source_change": "27.09.2026",
+    "last_source_change": "28.09.2026",
     "review_note": "Kildene for West Central Bio-Resource / Daldowie – Scottish Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "netheridge_thp": {
@@ -108,15 +108,15 @@
     "status": "Preliminary market engagement / avventer tender",
     "next_date": "Ikke offentlig",
     "date_type": "Neste procurement-steg",
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "f2cb5c37227a55ef63142a1fa1ba8e65c45d0456b45ef4f291eec3a0acd376d9",
+    "content_hash": "20e22ce71523aff3609a4e8a671a0a5d19bd9a9230c6ab565c25b710b42d6742",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
       "https://www.sell2wales.gov.wales/search/show/search_view.aspx?ID=MAY514386&catID="
     ],
-    "last_source_change": "27.09.2026",
+    "last_source_change": "28.09.2026",
     "review_note": "Kildene for Netheridge STW THP – Severn Trent er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "roundhill_thp": {
@@ -136,7 +136,7 @@
     "last_updated": "16.09.2026",
     "last_change_summary": "Severn Trent opplyser i PR24-materialet at AMP8-planen inkluderer to nye THP-anlegg ved Netheridge og Roundhill, samt utvidelser ved Wanlip og Derby. Roundhill har et gjeldende miljøtillatelsesgrunnlag for sludge treatment, men ingen offentlig UK4 tender eller UK6 award for det nye THP-anlegget er identifisert.",
     "content_hash": "dd534965fb84949d39f4116411e26decee3bb9a2ce4f4d14bba477ca966b56a6",
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "source_urls_used": [
       "https://www.stwater.co.uk/content/dam/stw/about_us/pr24-response/totex/sve4-34-bioresources-botex-plus-cost-assessment.pdf",
       "https://www.severntrent.com/sustainability/bioresources/treatment/",
@@ -198,7 +198,7 @@
       "6feadeae18608057e5ec08fd"
     ],
     "signals": [],
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "source_urls_used": [
       "https://www.note-ems.com/en/press-news/"
     ],
@@ -267,7 +267,7 @@
       "2ddc3187d9e024350ea2ef57"
     ],
     "signals": [],
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "source_urls_used": [
       "https://www.kitron.com/",
       "https://www.kitron.com/newsroom"
@@ -337,7 +337,7 @@
       "c3e985c36de7b98ded70ce99"
     ],
     "signals": [],
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "source_urls_used": [
       "https://norbit.com/newsroom"
     ],
@@ -525,7 +525,7 @@
         "id": "bf4e21ced48ea09f76cc80a7"
       }
     ],
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=%22NOTE%20AB%22%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20%22data%20centre%22%20OR%20%22data%20center%22)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
@@ -623,9 +623,19 @@
       "2e580520a652e1833afc6b94",
       "f4a03206da551eec473dcd25",
       "d8e063e594f6adb9a092fd33",
-      "e4e28ab4a4491a75cc8f5e70"
+      "e4e28ab4a4491a75cc8f5e70",
+      "e826067c16ae16f67e4a3d8a"
     ],
     "signals": [
+      {
+        "Oppdaget": "28.09.2026",
+        "Signal": "KONGSBERG to outsource production work to Kitron - news.cision.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPc1VWWmZDTFVUUGVLUGhzdU5zckhvME5FeENrOVBVTU1LWnlNWHdxaWdzdTdUdVJhNk96UEVxWDl5MmNvaU5UeVVTUXhmUmVqM2pOSllSSi1acUV0OWdmdUo5d3otRFZ5QWw3VGxDbjE4YjZLd2ZPbVQ5R0s4SzJuSEIwYVFPdHVnM2dVQTdUSWd1SFdzbFV4clRZdGgwZW9lVUxyS3BJZTU?oc=5",
+        "id": "e826067c16ae16f67e4a3d8a"
+      },
       {
         "Oppdaget": "27.09.2026",
         "Signal": "Corvus Energy Enters Contract Manufacturing Agreement with Kitron for Battery Management Control Systems - batteriesnews.com",
@@ -789,13 +799,13 @@
         "id": "d07d8ab5b3c23d9f2798c8bf"
       }
     ],
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=Kitron%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20autonomous%20OR%20customer)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "27.09.2026",
+    "last_updated": "28.09.2026",
     "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "norbit_external_signals": {
@@ -998,9 +1008,59 @@
       "ecfacc2e2d9d9fc834d0a6fb",
       "0ec24283aee0bb2800807750",
       "412287dcb23fc62bd397fc46",
-      "4deafcda68de442df022a058"
+      "4deafcda68de442df022a058",
+      "d997d8247688fec78cfc278d",
+      "52f4d81cf7b0de59f8ab54c6",
+      "3c358d524a9000a213618252",
+      "4f03e1bd3e106c01dce0a6ae",
+      "afcf984a8342e509e3f7d832"
     ],
     "signals": [
+      {
+        "Oppdaget": "28.09.2026",
+        "Signal": "Seasats books over $24M in Lightfish USV orders in a single month - Dealroom.co",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQal9KZnctN0R1cDhkc21KbUJfNTNaVmVzT0dzZXZvNHFiUnlBMFN6M2FEYm9fVDV2VjZXMUdOSWlWM2hWMTJOeGNtMUNHQ29uMndrR1hka3BqX3hSWV9ZaFUta2VWVWVYN0huRDBaanROOExqZUM2OWxsQzVVc0M5QVg5V05GVFJwVzcyVkt2bGk2TFpHZTFaNXlPWjY0blE?oc=5",
+        "id": "afcf984a8342e509e3f7d832"
+      },
+      {
+        "Oppdaget": "28.09.2026",
+        "Signal": "Kraken Secures £12.3M USV Contract with the Royal Navy - tectonicdefense.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNdHkyQUlLRzNuVTNOQW05Q29RTi1FekJOamVHRC1TdEJYaEVXcGM4TkNLZTFxLUZocXVJOGg1TkR0Q2VGLXlRRGZwczNHX0o0bUc2VkE5YWFuS2k1WTNwQ2lienJrb2RRbDRUdnZ6WFg4TFJqSFpHM01XcWpWQkxVYjhONV9WUVdmRlhfOGRYYw?oc=5",
+        "id": "4f03e1bd3e106c01dce0a6ae"
+      },
+      {
+        "Oppdaget": "28.09.2026",
+        "Signal": "AutoPilot Solution For USV/ASV - Ocean News & Technology",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOSkV0bFBjQUN3VWtGLUxVUnJwUmNyTmkxRy1mcURZS1p5Z01TVEE3TDFSQUo3aUtRbmNmU1QwNjAwczc0SEFvOHBweW5Uek8wbmVsVVI3aWh2SUhFNmtrajJXUE1DaTFvbzFvR0tUTUh2OF9Cc1NRQXlmNW9BNElpVU9UTQ?oc=5",
+        "id": "3c358d524a9000a213618252"
+      },
+      {
+        "Oppdaget": "28.09.2026",
+        "Signal": "NORBIT Awarded Order For Multiple WINGHEAD I80S Sonars - Ocean News & Technology",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPUFh0TmRsalB3MDVYT3A5aXRMMHQtaWdEZXBCSklBdDMyc2ZKS1NLUUJoQy1DbGdDSGY1bW1xX3I5cl94RkQyaWVUYWQ0S3VWOGlQWEJkbV80RGtrWjVObjVfeVduUGdWaXhveVVDNUpJVEd4b3FLTXhKNHZKVlA0MkZOZkkySjd0TEhpYlo4V0FJNzEtVzhPWFVkQzRRbDdJSnc?oc=5",
+        "id": "52f4d81cf7b0de59f8ab54c6"
+      },
+      {
+        "Oppdaget": "28.09.2026",
+        "Signal": "Norbit receives major order from the defence and security sector - evertiq.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPNDFnTjNZUDlWZTZFM2d3cVJYUlFrWDhubUVRNFhzeDBUeE5FNGxscFZ3VV9jaW85RUdhNG5Obm1sUjRCLTdmdU5QdV9rODZuOWxJdi1sUGdmQmIzX3UwRWJfMlJVUzh2eVhPbjV3ZkdFV3hxRFU5emlTUEdmZ3hoNFlxcWRGUGNES1NHV2t0Ykk5YldRMlZmbnVJb2thQUQ4MEE?oc=5",
+        "id": "d997d8247688fec78cfc278d"
+      },
       {
         "Oppdaget": "27.09.2026",
         "Signal": "OPT Signs Up Defense Customer For Multiple WAM-V Usvs - marinetechnologynews.com",
@@ -1225,60 +1285,15 @@
         "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
         "Lenke": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQb1lybWRSbUhKS3YteTd1ZEZ0YlI4ZlNuMVZ1X0NfSGQ5aDNMd05qd3RNNktuTW51ZDB5eGt3Y2RkUm9tZnpZQVdWWmVtZF90RFpfd2k5aENnbUZWVEZuTUNfcEotY2t3dF9fRGRQYng3UjdJT3FoNkZURFFBaWF5a0xyaF9WcXdJTG5aelJYVUExMVNLOUdON3lSVHgtOXpVQ056d09pbUtadw?oc=5",
         "id": "9b436a38312356dd9627fc6c"
-      },
-      {
-        "Oppdaget": "25.09.2026",
-        "Signal": "Norbit receives major order from the defence and security sector - Evertiq",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPNDFnTjNZUDlWZTZFM2d3cVJYUlFrWDhubUVRNFhzeDBUeE5FNGxscFZ3VV9jaW85RUdhNG5Obm1sUjRCLTdmdU5QdV9rODZuOWxJdi1sUGdmQmIzX3UwRWJfMlJVUzh2eVhPbjV3ZkdFV3hxRFU5emlTUEdmZ3hoNFlxcWRGUGNES1NHV2t0Ykk5YldRMlZmbnVJb2thQUQ4MEE?oc=5",
-        "id": "65dafbfcc2b94018bcf0d1f9"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "Government awards Ocius Bluebottle USV fleet contract - Australian Defence Magazine",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOZUtJTVQyN0lWS041UDJJYXNUbWFJOFBsaTlfc3hpbndFVFU0THNXSVMtLW5fck5LZTVPb1RRbWZ4aXF6NVREQ3M3clZWaDFoVHllNzRnM2UteDNWbmUwZkI1VldzeVlLaUVfVHZjYW81dWVudzU4emdRN3ptSlVhRmtSd3VmNjNoNnVFUTZKb2NyNmpVYjMySnd1VWxvaDRjQTUtQg?oc=5",
-        "id": "f249f1405ee3f19327c00248"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "Iran war drives urgent need to counter underwater attack drones - The Register",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNeXlfNV9WR1ByV2owN09mTUR4WUl3YUo0Zjk4czJ2M3ZTdUJNblhQYThHekNzOHFIRmw3WHVKSVhDb1Nla2FMbElrcEZVRklHSnlTYm9KMHdLcVNSbGk1VXlkdGdybWVlMkFoMHdUb21yMlBCSUxSMnRPN2lYVXdZM1ZXdGZTTi1mT3hQY2FvN0hvSHZiaExfZEdOc0hoWlhKYTEwbXYtM2N6NDIyUTZYOQ?oc=5",
-        "id": "5694aee77b1c585e505309d9"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "OPT Wins Spot On Navy IDIQ Contract For Autonomous Ocean Mapping - Ocean News & Technology",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPc3poSF95UEFQQ0I1S21Nb0k3cXhIU0VlVTJ5RDJ0TlJMM09wTVVBZXdQTjJxbUppdlhDSjlFSm10cnc1aFdjZ0U0SXNYYXZMVHlteWt5V3E2SmNBMnU2R2tZRzlELXJPRGNkd0JWZjNLcTg2OE5OT2xiX0Y5QTFPem9MUFBMaDAyYVFKS0JnUk1SdXVuc1pueWhjSlBnbDFBbVZ4cnhjVHVtazJIVHdVaw?oc=5",
-        "id": "c579df73f030e8e7b3e24b13"
-      },
-      {
-        "Oppdaget": "24.09.2026",
-        "Signal": "Freight Market Alert: Why US Tender Rejections Are Skyrocketing - FreightWaves",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZDNLRngySjVULXlwZXJLTTlrQmVjTTlid2pxeURIb2FlNXhGTm16a3c0bUc5SXhFR3dvOE1OSUw0WEZJdDRsdElPdDRsekY3R3RwUHhad3RaMGZwTmhwa1lWUmtWdlZIVVRxeWFEMERLZTdXUVRrR09veVZ2d0t6dEtlQ0lqYm1LdzNXVFJVTFVUMV82Y2ozZEpSa1U?oc=5",
-        "id": "cb46884d178b480218dcc871"
       }
     ],
-    "last_checked": "27.09.2026",
+    "last_checked": "28.09.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=NORBIT%20(contract%20OR%20sonar%20OR%20AUV%20OR%20USV%20OR%20underwater%20OR%20security)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=(%22underwater%20security%22%20OR%20sonar%20OR%20AUV%20OR%20USV)%20(contract%20OR%20award%20OR%20procurement%20OR%20tender)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "27.09.2026",
+    "last_updated": "28.09.2026",
     "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   }
 }
