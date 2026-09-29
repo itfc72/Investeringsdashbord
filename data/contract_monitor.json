@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "29.09.2026",
     "last_updated": "15.09.2026",
-    "content_hash": "adfca3ee418355ae9ce55478c4ad5feebdd80e9cd9294474c0dafa74f157e9fb",
+    "content_hash": "ccd1e32058a8bd07eaacf97ecb3da78a50e303b3fe125f1aac4e93c0fc429335",
     "last_change_summary": "Clarkson WRRF THP pre-purchase tender 2026-005P er aktiv. Offentlig frist er 02.10.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "29.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "137fb2d4fe53e725f6a8aca579c57d99c70e5b96856f4706c7dcda73a3d9c252",
+    "content_hash": "e76db3ff9eea9eb0b9325cb38c6445d1c75606633b2e8c9bbe2efaec57636f0d",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "29.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "22f5b8756e3274af6df7cabec75b8c254fd6aaf73cf2608fd3ec0731239f0d6f",
+    "content_hash": "d2bbf291f26b183ee4741e8ad4c10d8263b105a19b55ecbb3404a65e0d13f73b",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "29.09.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "be665933cf7bca5c26ed95f0b9098f7f6d2c88b177dd852f3c567bc80cc62b60",
+    "content_hash": "3fb6ed775dd9fe5b9c4ee1bc31ec4b36bbdb3f2591af47df14bf15cfd505bae9",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -414,9 +414,19 @@
       "0b0f9d3842725f964f2aab2a",
       "7eb46d795b97c890eb9b9d5e",
       "cc17b436339a7d52674454d4",
-      "6755b35bee7cd3d82e433161"
+      "6755b35bee7cd3d82e433161",
+      "effca05512805da00af5a17e"
     ],
     "signals": [
+      {
+        "Oppdaget": "29.09.2026",
+        "Signal": "NOTE strengthens its defence position through the acquisition of STI - the UK’s leading EMS partner to the defence industry, confirms outlook for 2026 and provides outlook for Q1 - finansavisen.no",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi_gJBVV95cUxPeDNFYWdDRi01YUNhTGNqS0dVWElzYklFUndyakJ2VUhvODN1QU1aSURod0dzdEZVYzJHYklGU1lIc1hQNXN3WmhtR3lVZnFDU1VmbXYwSmg4U0dzd3JMNkh4SDloUGFGN0NIbk91djVLckw4V29vWmV1blRuSHo0MXJ6M1dBbU51Zl9xYkgzVnY1aG1EWlc1VUViMmotZjNqblpPQUlNTW1CRHFZcVpybzduQWFlRVV5V2lsUGVtLVIxQjJ1dFdrTFRlYzBpRm5HaDAxTERvckpGN0RieldkVWFJSmJ3ajBpT1FJamtsVjFJdlFKa1FMRjBFNjRqZHBWLXhZZjhid0hMS0M1ZzBXV3RVN1R3bEtoNmxUd0QzWk9RVGl4UVR1eFpEVDREOFpBQ3VxQWlrYkZzSlQ4QnBKeS0xYWNuYlJwa2h4VWdJQUpvX0EzZklld0puR0FETzlaeHRvRlNPLWxxRGZKc3VSV3lKZjY3Q0tDZzBrNnBB?oc=5",
+        "id": "effca05512805da00af5a17e"
+      },
       {
         "Oppdaget": "28.09.2026",
         "Signal": "State Plan for New Norwegian Explosives Factory - Nordic Defence Sector",
@@ -541,7 +551,7 @@
       "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "28.09.2026",
+    "last_updated": "29.09.2026",
     "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "kitron_external_signals": {
@@ -635,9 +645,19 @@
       "d8e063e594f6adb9a092fd33",
       "e4e28ab4a4491a75cc8f5e70",
       "e826067c16ae16f67e4a3d8a",
-      "1bb6c16451f080f6d3f0ad1e"
+      "1bb6c16451f080f6d3f0ad1e",
+      "41e6a1047d0ffd977113a191"
     ],
     "signals": [
+      {
+        "Oppdaget": "29.09.2026",
+        "Signal": "Kitron receives a EUR 42 million order from a customer in the Defence/Aerospace market sector. - The Manila Times",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxOM0tpendpUjcyc0FqUnhKYzVXaEtlQThnUFQ5ZTh3OWdhREFSSl9ReVktU0pZX09aclRYbTlJblQwLURKb3hQRVZHSEMtVWZSeGVLaVBnNzdRUWdUWk9ORzBmYk1EQ3hpUWlMRExDY0lGa2tpbTVPWTJIVTdhenZRMUp0bTRGNm5RdEZxTjVCaTl6RUNNUmRId0lIRFk5WFBOTTc2TGctLVhMMllTZ1JmZ1dNaVRHVnJLdTUyQlRsZGRNb1B4M2dDMlM2TVY0a0RMWXktRk4wZ1BmTmZZTm01MjZQVnEzZ2pMNmlwT19HdGVVV1Y1QlJGT3Zn0gH_AUFVX3lxTE1Zd0ZxTjZjZGtXdHdpQVNiT1A0ZnNmN2thS0dudmt4Q0pHay1WdlJWZDN3ZXAwWWhfa0YtMDNvc2lpT09rZFh4U2FacGd0VnBCR2hpamNzbFJ0WHFJeVB6V0VodDF5YkpfeGV3bnRqdXB6cmVYSUpaSTY0YUo4WlNVUkdxUUkyRV9pdW5kT0NBV1NyUmVzTTlIZ3hySTFMZV9sOHdBWkh1NkQ1dC0xMm1kVDhFNkw4eXBaUHROXzJfelJkaW1wb1NicDIwbHp5WUJNdzFYV3piejR1cHZGc3JhVHVWeWItcmE0M1EyaHJacWYxWVFlS0xKY2lUWUpmZw?oc=5",
+        "id": "41e6a1047d0ffd977113a191"
+      },
       {
         "Oppdaget": "28.09.2026",
         "Signal": "Kitron receives USD 13 million contract for F-35 Lightning II programme - defence-industry.eu",
@@ -825,7 +845,7 @@
       "https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "28.09.2026",
+    "last_updated": "29.09.2026",
     "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "norbit_external_signals": {
@@ -1043,9 +1063,59 @@
       "fc1f0d871f81d7bafed76524",
       "74f85ebeb7310abee3f2ae8c",
       "7934b05e320f4506c01e42e4",
-      "b5eace331de09fe181f6ae77"
+      "b5eace331de09fe181f6ae77",
+      "8541ad79916a90333c613529",
+      "7a22283b7c8c363680c86d07",
+      "f9a43f6da3d9b773d234655f",
+      "2871604bae190dbc0885d703",
+      "196b8bc1f17925acef2a1866"
     ],
     "signals": [
+      {
+        "Oppdaget": "29.09.2026",
+        "Signal": "AutoPilot Solution For USV/ASV - oceannews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOSkV0bFBjQUN3VWtGLUxVUnJwUmNyTmkxRy1mcURZS1p5Z01TVEE3TDFSQUo3aUtRbmNmU1QwNjAwczc0SEFvOHBweW5Uek8wbmVsVVI3aWh2SUhFNmtrajJXUE1DaTFvbzFvR0tUTUh2OF9Cc1NRQXlmNW9BNElpVU9UTQ?oc=5",
+        "id": "196b8bc1f17925acef2a1866"
+      },
+      {
+        "Oppdaget": "29.09.2026",
+        "Signal": "NORBIT Awarded Order For Multiple WINGHEAD I80S Sonars - oceannews.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPUFh0TmRsalB3MDVYT3A5aXRMMHQtaWdEZXBCSklBdDMyc2ZKS1NLUUJoQy1DbGdDSGY1bW1xX3I5cl94RkQyaWVUYWQ0S3VWOGlQWEJkbV80RGtrWjVObjVfeVduUGdWaXhveVVDNUpJVEd4b3FLTXhKNHZKVlA0MkZOZkkySjd0TEhpYlo4V0FJNzEtVzhPWFVkQzRRbDdJSnc?oc=5",
+        "id": "2871604bae190dbc0885d703"
+      },
+      {
+        "Oppdaget": "29.09.2026",
+        "Signal": "NORBIT Subsea Adds LMD Capability To WINGHEAD X Midwater Multibeam System - oceannews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPcGZJMHZkd0FlN3NQOVRrZ0tuM05odHNXYkZvOFh5Y0ZkbTRZZkVhTHBSWlFxdExHQXJqX2ZmRnpNR1dDd21rc0pnWnoyQkdTZ1Q0c1ZIUENiVUdLT2FUazc5NkNXSGVOdUpvWkF3STlDQ2ZtbXB4ZzdvX3dNWG0xRms0cmpyVENSWVZYdzlsQXpFNk8tdzZRcHBVajRfVEdXYmZZX2hadEliZU1iRVFacXI0Z2gydVBmM1RYNQ?oc=5",
+        "id": "f9a43f6da3d9b773d234655f"
+      },
+      {
+        "Oppdaget": "29.09.2026",
+        "Signal": "NORBIT Subsea Adds Integrated Sub-Bottom Profiler To Survey Portfolio - oceannews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQMVUxMmlhelV2dk1seHlqYjlhaFJzQ3gydlI5QTRHdHFjdXVKeUhPTXp2QjRZNURVYmNUTDZWWUpBTjE0akdWVFNSZk03TW5oc1RaOTcwZGYzS0VzUHJpcHBHS0lqNHZ0S0R2OUsyRTBXN3ltUHRRZTM2QW1lQ2I4Zkd6cnZfZFNDY2VsTlNJUVJOOHJ0WjIwcVBMcEQwV2hTMTlmaDdJLTU2eXBGZ3Zld3EzLXZTT0U?oc=5",
+        "id": "7a22283b7c8c363680c86d07"
+      },
+      {
+        "Oppdaget": "29.09.2026",
+        "Signal": "NORBIT Introduces WINGHEAD X To Its Sonar Line - oceannews.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPT3BId0QzRUJoVHlSbUxvTUJlX01sMkQ3Mmp6NTB4NmhNVkR3YkJFRE1NVDI2UmlPVXdCNFJja3o5LU1ZTG43cjJFU2Qxd1B3emJyX0xvV0FULW1KS2NtS0R3MW1VZmFJTDdjMTlZSkFuaGlnb1VldHhsUnVGTGoxSjdOcG1iRklYSjM0dFJJdHlic21xTEoycQ?oc=5",
+        "id": "8541ad79916a90333c613529"
+      },
       {
         "Oppdaget": "29.09.2026",
         "Signal": "Indian Navy USVs Move From Trials to Operational Maritime Capability - Kodainya",
@@ -1270,51 +1340,6 @@
         "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
         "Lenke": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOZm1YbDdiY0NZNEJjMFNTTVg0T2RDWmNHSjAxdkdTQ2pZTnNlOVhSMEJiTGtocXR4Q0c4YVh4TlNYam9kZnZmcTVnOTQ1NzNKMmxlTEkxMGF1a25kSGxnRmFnanBXM1N4RC1JekY0OHhHMHhpWUdHdjhkaEtSRTJzRU9vTFhncEp4WlBHSl9rMGFsRS1SbXZac3VKcTZ3TmxyU3VuU1I3WTV0bnVsN2hsb2RkZXRRdw?oc=5",
         "id": "95d36c1dcece69c6abd9db8b"
-      },
-      {
-        "Oppdaget": "26.09.2026",
-        "Signal": "U.S. Navy Picks Seven Contenders for Medium USV Program - maritime-executive.com",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNcERLWjRJTEhBU2FlYThNaUFfU2lzZnYxU1k1QjVSOGlZQlY3cW43QVhsZmVYNm9JRXR2Q2dnT3R4d0pEa2oyMGNzYUFTczZ6MzMxRXFoSU8zVUdheUpBUm5Da3l3OTh5WFRDVHhOcWItdE9aUmlHU1h6VndWQXZSVGZDOU9HejVuY1QwcGRRZWkxd2hqWGJFWQ?oc=5",
-        "id": "f929b7db9e13f74f22305033"
-      },
-      {
-        "Oppdaget": "26.09.2026",
-        "Signal": "Cellula Robotics wins contract to deliver AUV prototype for US - navaltoday.com",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQUmNoWnVobmpCdmwwOTkybVU5YzV4NzhaWXlSOTB5NkoxMm44UFZKOThEbnBwcVlzQm9KUF9tM3o5bU8xczB1RTZTT2NJRi1zWEY3djJoZFZXTkV2a1hlc3RKcEVXMzR3MEN1b1NJTC1qZXZ3V2tlYkdnc0JCaXA3Qnd2LW5OTjlTR0JneTEzX015bXVyVml3QmxZM2o?oc=5",
-        "id": "3c544a52f6b21697d4dcc111"
-      },
-      {
-        "Oppdaget": "26.09.2026",
-        "Signal": "Kraken Secures £12.3M USV Contract with the Royal Navy - Tectonic Defense",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNdHkyQUlLRzNuVTNOQW05Q29RTi1FekJOamVHRC1TdEJYaEVXcGM4TkNLZTFxLUZocXVJOGg1TkR0Q2VGLXlRRGZwczNHX0o0bUc2VkE5YWFuS2k1WTNwQ2lienJrb2RRbDRUdnZ6WFg4TFJqSFpHM01XcWpWQkxVYjhONV9WUVdmRlhfOGRYYw?oc=5",
-        "id": "1dd230c04d9dba76edce2b99"
-      },
-      {
-        "Oppdaget": "26.09.2026",
-        "Signal": "EvoLogics Sonobot 5 demonstrates efficiency and effectiveness for underwater mapping - gim-international.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQYlNpZ1gzcnRnT0pwcXBmbHV3RWRDWW5OLVowN2NRNklSdlJKcmxfbk5zV3hLZFJVZUZYV2ZGMVBNcldTV3hiZ0Z0Mk5KOEttSEV0TzIyNUMxSWRGakNVRE5yNHBrZThPVWI4NWNtNXlHVWF5QmdZR20tNHVyd0FZTFh5S2EzMENmT2NfUjB6U1hZNjJrbDNNS05UTlZIZHJnNk84b1VpX0g3ckgtXzB0X1FIaUpwMXRiaWJIV2RqbU1uMlN4bzBOYQ?oc=5",
-        "id": "3d6d56168a903f6bfa1ec425"
-      },
-      {
-        "Oppdaget": "26.09.2026",
-        "Signal": "Helsing to Acquire Australian AUV Specialist Blue Ocean - Marine Technology News",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPNnlnaUtLaHRGM25KcUdNamUyZE1ZZ3NDdmZFUGMzT1kxcmZyYzBLZ2pjYnBHVkk5RDVQR3Z0dDhWUjBUMUY2UWxIWWRLQXIzTERORGpYWmtxSFNkNkxDckNYcllGdGVNS3FuWFFYbVVMNl84MUNCQkVXNEYtTDBoRGdPYW5pX2pIdmxvSlNvdw?oc=5",
-        "id": "90861540b3453421afce8293"
       }
     ],
     "last_checked": "29.09.2026",
