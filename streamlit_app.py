@@ -666,6 +666,47 @@ ORDER_BACKLOG = {
 # === ORDER_BACKLOG_V6_9_5_END ===
 
 
+# === ORDER_BACKLOG_CHANGE_V6_9_9 ===
+def _order_backlog_change_text(company, period):
+    """Vis årlig endring i ordrebok når to sammenlignbare absolutte tall finnes."""
+    period = str(period)
+    if not period.isdigit():
+        return "–"
+
+    backlog = ORDER_BACKLOG.get(company, {})
+    current_text = backlog.get(period)
+    previous_text = backlog.get(str(int(period) - 1))
+    if not current_text or not previous_text:
+        return "–"
+
+    pattern = r"^\s*([\d\s]+(?:[.,]\d+)?)\s+([A-Za-z]+)\s*$"
+    current_match = re.match(pattern, str(current_text))
+    previous_match = re.match(pattern, str(previous_text))
+    if not current_match or not previous_match:
+        return "–"
+
+    current_unit = current_match.group(2).upper()
+    previous_unit = previous_match.group(2).upper()
+    if current_unit != previous_unit:
+        return "–"
+
+    try:
+        current_value = float(
+            current_match.group(1).replace(" ", "").replace(",", ".")
+        )
+        previous_value = float(
+            previous_match.group(1).replace(" ", "").replace(",", ".")
+        )
+    except ValueError:
+        return "–"
+
+    if previous_value == 0:
+        return "–"
+
+    change = (current_value / previous_value - 1.0) * 100.0
+    return f"{change:+.0f}%"
+# === ORDER_BACKLOG_CHANGE_V6_9_9_END ===
+
 
 # =========================================================
 # OVERSIKT V2 – SELSKAP, BRANSJE OG KONKURRENTBILDE
@@ -10004,6 +10045,10 @@ elif side == "Selskaper":
 
                 if selskap in ORDER_BACKLOG:
                     key_row["Ordrebok"] = ORDER_BACKLOG[selskap].get(period, "–")
+                    key_row["Endring ordrebok"] = _order_backlog_change_text(
+                        selskap,
+                        period,
+                    )
 
                 key_rows.append(key_row)
 
