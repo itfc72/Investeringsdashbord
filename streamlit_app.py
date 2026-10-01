@@ -10055,7 +10055,9 @@ elif side == "Selskaper":
                     "EPS vekst": eps_growth,
                 }
 
-                if selskap in ORDER_BACKLOG:
+                if selskap == "NOTE":
+                    key_row["Ordrebokvekst"] = ORDER_BACKLOG[selskap].get(period, "–")
+                elif selskap in ORDER_BACKLOG:
                     key_row["Ordrebok"] = ORDER_BACKLOG[selskap].get(period, "–")
                     key_row["Ordrebok YoY"] = _order_backlog_change_text(
                         selskap,
