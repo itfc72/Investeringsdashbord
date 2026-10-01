@@ -5967,6 +5967,17 @@ def render_valuation_save_controls(company_name):
     elif config and not admin_pin:
         can_save = False
         st.warning("REPORTING_ADMIN_PIN mangler i Streamlit Secrets. Permanent lagring er låst.")
+    elif not config:
+        missing = [
+            name for name in ("GITHUB_TOKEN", "GITHUB_REPO")
+            if not _secret(name)
+        ]
+        missing_text = ", ".join(missing) if missing else "GitHub-konfigurasjon"
+        st.warning(
+            f"GitHub-lagring er ikke aktiv. Mangler {missing_text} i Streamlit Secrets. "
+            "Endringer kan brukes i denne økten, men lokal lagring er ikke en sikker "
+            "permanent lagring på Streamlit Cloud."
+        )
 
     c1, c2 = st.columns([1, 2])
     if c1.button(
@@ -5982,7 +5993,10 @@ def render_valuation_save_controls(company_name):
             st.error(message)
 
     source = st.session_state.get("valuation_settings_source", "Innebygde standardverdier")
-    c2.caption(f"Permanent kilde: {source}")
+    if config:
+        c2.caption(f"Permanent kilde: {source}")
+    else:
+        c2.caption(f"Aktiv kilde: {source} · GitHub-lagring ikke aktiv")
 
     if config:
         with st.expander("GitHub-tilkobling – test ved lagringsfeil", expanded=False):
