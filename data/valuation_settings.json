@@ -58,7 +58,29 @@
       "buy_level": 162.9,
       "sell_level": 235.3,
       "max_pe_underway": 27.0
+    },
+    "Cambi": {
+      "reference_price": 24.4,
+      "eps_2026": 0.65,
+      "growth_bear": 30.0,
+      "growth_base": 52.0,
+      "growth_bull": 71.0,
+      "revenue_growth_bear": 10.0,
+      "revenue_growth_base": 25.0,
+      "revenue_growth_bull": 30.0,
+      "operating_margin_baseline": 8.9,
+      "operating_margin_bear": 12.430578512396691,
+      "operating_margin_base": 16.0,
+      "operating_margin_bull": 20.0,
+      "pe_bear": 16.0,
+      "pe_base": 20.0,
+      "pe_bull": 24.0,
+      "required_return": 10.0,
+      "target_year": 2028,
+      "buy_level": 21.96,
+      "sell_level": 31.72,
+      "max_pe_underway": 40.0
     }
   },
-  "updated_at": "2026-10-01T16:58:44+02:00"
+  "updated_at": "2026-10-01T22:37:21+02:00"
 }
