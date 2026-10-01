@@ -11075,9 +11075,6 @@ elif side == "Selskaper":
                     )
                     render_valuation_save_controls(selskap)
 
-                    buy_pe_2028 = buy_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0
-                    sell_pe_2028 = sell_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0
-
                 years = list(range(2026, 2031))
 
                 scenario_rows = []
