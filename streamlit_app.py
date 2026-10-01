@@ -10057,7 +10057,7 @@ elif side == "Selskaper":
 
                 if selskap == "NOTE":
                     key_row["Ordrebokvekst"] = ORDER_BACKLOG[selskap].get(period, "–")
-                elif selskap in ORDER_BACKLOG:
+                elif ORDER_BACKLOG.get(selskap):
                     key_row["Ordrebok"] = ORDER_BACKLOG[selskap].get(period, "–")
                     key_row["Ordrebok YoY"] = _order_backlog_change_text(
                         selskap,
