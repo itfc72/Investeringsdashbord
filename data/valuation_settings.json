@@ -80,7 +80,29 @@
       "buy_level": 21.96,
       "sell_level": 31.72,
       "max_pe_underway": 40.0
+    },
+    "Bakkafrost": {
+      "reference_price": 434.8,
+      "eps_2026": 14.9,
+      "growth_bear": 35.0,
+      "growth_base": 66.0,
+      "growth_bull": 80.0,
+      "revenue_growth_bear": 2.0,
+      "revenue_growth_base": 9.0,
+      "revenue_growth_bull": 14.0,
+      "operating_margin_baseline": 12.7,
+      "operating_margin_bear": 15.0,
+      "operating_margin_base": 22.246972318339097,
+      "operating_margin_bull": 25.0,
+      "pe_bear": 12.0,
+      "pe_base": 15.0,
+      "pe_bull": 18.0,
+      "required_return": 10.0,
+      "target_year": 2028,
+      "buy_level": 400.0,
+      "sell_level": 600.0,
+      "max_pe_underway": 22.0
     }
   },
-  "updated_at": "2026-10-01T22:37:21+02:00"
+  "updated_at": "2026-10-02T00:05:45+02:00"
 }
