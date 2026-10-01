@@ -14,7 +14,29 @@
       "buy_level": 146.0,
       "sell_level": 299.0,
       "max_pe_underway": 40.0
+    },
+    "B2 Impact": {
+      "reference_price": 23.35,
+      "eps_2026": 2.25,
+      "growth_bear": 5.0,
+      "growth_base": 14.0,
+      "growth_bull": 20.0,
+      "revenue_growth_bear": 0.0,
+      "revenue_growth_base": 4.0,
+      "revenue_growth_bull": 8.0,
+      "operating_margin_baseline": 31.325695581014728,
+      "operating_margin_bear": 34.53657937806874,
+      "operating_margin_base": 37.63949147289825,
+      "operating_margin_bull": 38.67369824816632,
+      "pe_bear": 8.0,
+      "pe_base": 10.0,
+      "pe_bull": 12.0,
+      "required_return": 10.0,
+      "target_year": 2028,
+      "buy_level": 21.0,
+      "sell_level": 35.0,
+      "max_pe_underway": 14.0
     }
   },
-  "updated_at": "2026-09-18T11:45:39+02:00"
+  "updated_at": "2026-10-01T16:57:13+02:00"
 }
