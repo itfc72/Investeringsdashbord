@@ -5457,14 +5457,13 @@ def render_margin_and_implied_eps(company_name, eps_2026, periods=2):
     st.markdown(f"**{title}**")
     margin_avg_5 = _historical_margin_average(company_name, 5)
     margin_avg_3 = _historical_margin_average(company_name, 3)
+    baseline_text = f"{baseline:.1f}%".replace(".", ",")
     st.caption(
-        (
-            f"Referansemargin 2026: {baseline:.1f}% | "
-            f"snitt siste 5 år: {_fmt_history_pct(margin_avg_5)} | "
-            f"snitt siste 3 år: {_fmt_history_pct(margin_avg_3)}. "
-            "EPS beregnes fra omsetningsvekst × endring i denne marginen. "
-            "Scenarioene holdes automatisk i rekkefølgen Bear ≤ Base ≤ Bull."
-        ).replace(".", ",")
+        f"Referansemargin 2026: {baseline_text} | "
+        f"snitt siste 5 år: {_fmt_history_pct(margin_avg_5)} | "
+        f"snitt siste 3 år: {_fmt_history_pct(margin_avg_3)}. "
+        "EPS beregnes fra omsetningsvekst × endring i denne marginen. "
+        "Scenarioene holdes automatisk i rekkefølgen Bear ≤ Base ≤ Bull."
     )
     m1, m2, m3 = st.columns(3)
     m1.number_input(
