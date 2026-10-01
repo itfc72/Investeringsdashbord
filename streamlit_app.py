@@ -633,6 +633,9 @@ ORDER_BACKLOG = {
         "2023": "1 542 MNOK",
         "2024": "1 232 MNOK",
         "2025": "1 020 MNOK",
+        "Q1 2025": "1 177 MNOK",
+        "Q2 2025": "938 MNOK",
+        "H1 2025": "938 MNOK",
         "Q1 2026": "1 190 MNOK",
         "Q2 2026": "1 479 MNOK",
         "H1 2026": "1 479 MNOK",
@@ -645,6 +648,9 @@ ORDER_BACKLOG = {
         "2023": "493,6 MEUR",
         "2024": "471,9 MEUR",
         "2025": "709,3 MEUR",
+        "Q1 2025": "524,6 MEUR",
+        "Q2 2025": "509,3 MEUR",
+        "H1 2025": "509,3 MEUR",
         "Q1 2026": "805,9 MEUR",
         "Q2 2026": "794,3 MEUR",
         "H1 2026": "794,3 MEUR",
@@ -668,14 +674,20 @@ ORDER_BACKLOG = {
 
 # === ORDER_BACKLOG_CHANGE_V6_9_9 ===
 def _order_backlog_change_text(company, period):
-    """Vis årlig endring i ordrebok når to sammenlignbare absolutte tall finnes."""
+    """Vis endring i ordrebok mot samme sammenlignbare periode året før."""
     period = str(period)
-    if not period.isdigit():
-        return "–"
-
     backlog = ORDER_BACKLOG.get(company, {})
+
+    if period.isdigit():
+        previous_period = str(int(period) - 1)
+    else:
+        match = re.fullmatch(r"(Q[1-4]|H1)\s+(\d{4})", period)
+        if not match:
+            return "–"
+        previous_period = f"{match.group(1)} {int(match.group(2)) - 1}"
+
     current_text = backlog.get(period)
-    previous_text = backlog.get(str(int(period) - 1))
+    previous_text = backlog.get(previous_period)
     if not current_text or not previous_text:
         return "–"
 
