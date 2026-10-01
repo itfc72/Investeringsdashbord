@@ -29,7 +29,7 @@
       "operating_margin_base": 37.63949147289825,
       "operating_margin_bull": 38.67369824816632,
       "pe_bear": 8.0,
-      "pe_base": 10.0,
+      "pe_base": 11.0,
       "pe_bull": 12.0,
       "required_return": 10.0,
       "target_year": 2028,
@@ -38,5 +38,5 @@
       "max_pe_underway": 14.0
     }
   },
-  "updated_at": "2026-10-01T16:57:13+02:00"
+  "updated_at": "2026-10-01T16:58:09+02:00"
 }
