@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "01.10.2026",
     "last_updated": "30.09.2026",
-    "content_hash": "f8434f83f0ffb0de3a5ded3e49b55e0ccab3b864515583e180129ead700d5859",
+    "content_hash": "e67af48c74371677e161e95e27bfab5ed9e42b7a2edad28eba140b9f827eb700",
     "last_change_summary": "Clarkson WRRF – Peel Region, Ontario er oppdatert: frist 02.10.2026 → 01.12.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "01.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "d2a7c788197e755e5d63d55b44c9adc5e3729f724b18baa7272361f46e03349d",
+    "content_hash": "8bae50a7ed5b37d39b21aab428d88609d65b3c21e478edefbb45e1e5dea0a86f",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "01.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "ea52a1bc25ef2a7830aa6ec8bd057a0884ff211896896a7bf7628fc3791d7787",
+    "content_hash": "e86bc8c24584972ab886aac714935950c11384534f4bb8e16fc7c1164808b374",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "01.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "10ff0c5511decdf77f99c2d332321939027ced7d10e5061e7ed4ac06fb65eee8",
+    "content_hash": "0203683e5924868b4739907c10da739a6c0566c07c0600225a8d4d46abd7dcfe",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -416,9 +416,19 @@
       "cc17b436339a7d52674454d4",
       "6755b35bee7cd3d82e433161",
       "effca05512805da00af5a17e",
-      "22e17741a94213f8c6e251dc"
+      "22e17741a94213f8c6e251dc",
+      "8ffadeacf78916898ad4946f"
     ],
     "signals": [
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "Saab AB (SAABF) Q2 2026 Earnings Call Highlights: Record Order Backlog and Strong Growth - Yahoo Finance",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNaGt5SUJtalZldzJPa1FlTk9sNEFlcnpPZG5IclBYckg1Vk5Gb256T05Ea2VzcEczUDA1MEtFU2g0b3UwNnN4NlpYcnhBWFJ4Y0FhYXJrZElLN3NVSGtfSTlPd28zb3BIbUlkX1Bfa3pubzdKYzAwOFFFbnMzdmMwNDB1ZTF5MTdwbTVoMHdvOA?oc=5",
+        "id": "8ffadeacf78916898ad4946f"
+      },
       {
         "Oppdaget": "30.09.2026",
         "Signal": "Snigel signs contract with Thales for GO12 radar carrying systems - nordicdefencesector.com",
@@ -561,7 +571,7 @@
       "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "30.09.2026",
+    "last_updated": "01.10.2026",
     "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "kitron_external_signals": {
@@ -658,9 +668,49 @@
       "1bb6c16451f080f6d3f0ad1e",
       "41e6a1047d0ffd977113a191",
       "f6a514826657bf41400656f8",
-      "5f01be47867ae1a2872a2fef"
+      "5f01be47867ae1a2872a2fef",
+      "22dd7f42b92ac1e7f9beb95f",
+      "4f0a03cd18e62ac5fbd7c71b",
+      "456069a4e30cf5e22eaafe20",
+      "7a70fa9901bd19716ec5944e"
     ],
     "signals": [
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "Kitron completes acquisition of BB Electronics - NTB Kommunikasjon",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQZjloVDFWLTFnZjhVcXRxdEcza3FFRE5KUVpCUjBLTjV4OEhzUGFteUp6cVB0U0xPQkJ2UTdKMDhUaFZRR0dtZVZCUGJYNXNZZEc3VnpJbVdEQmpHcmFCR00zb2lfdjhJRWxvX0ROa1cwbnZIc3NIVWZvVTg2c1QwV2tBLTQ3WUJWZUtxMFFkbG9kTV9fT3VFMWdEbGNiUGxuTHRwc0xPOUpGN19EcmFfaUFDVnBlWHZySnc?oc=5",
+        "id": "7a70fa9901bd19716ec5944e"
+      },
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "Thales Norway awards order to Kitron - manilatimes.net",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQWWlxTFpGR2VLTTRSMUJxQmtiSnlVVkFYcEcyeTV1bXVmWExGdXVGU0p4RkY5UDRTdjJpX20zODZLd1hodklWTDhCb1JrMkdhQWlpR2RJdW9rS1FqalhxbkxSTU9LalVseE0wX1p3V195MVBSWkFpSTZlZlpCX2NadXh4STBCOTRhWDB3OE8zV1BUNUlSb0x2MHZJQmMwNUEtZzBOWmFST19XQjJoTDNB0gG0AUFVX3lxTE0zQTVzOXNSMHRJT0oyVW5LSkxVb1pZQnB1eDYtb2x5WldISnJtczZ6T0NWOXA5eS1LSGJwalowQUJsTV9aRTBCajNvSDd6WFVSVkhJb1F5cENoSDdnVmpMMWdZTVkxY2ltWDJsNTBfSFNRdGNrSHVFaHd0cm54Wk5zSXNQci1BTFY4ci1VUHRvcThrM2pER29SWHhKd3JSSl9vWk9QR3lCUUw3RFRlcUgyRmZWUg?oc=5",
+        "id": "456069a4e30cf5e22eaafe20"
+      },
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "Kitron Strengthens Order Backlog with EUR 11 Million Contract for Defense Communication - manilatimes.net",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQY2twQWtGNE9uR0FVYTBZNmt6dW55Vk5EdWtzbm03YV9zM1hxLXo2OU0tWGRVS2dZTDFSb3BHZ2tkMGc5d3JmdnM2SkE2NFk4QWJseVVsYVVYbFBZZmhVRFpHQVk5NHZFNmt0cEU0VTZUeXdUVkpQQjZEUm83NG4zeHo4QVhmRzctWmFIVlVXYjhtbGlYdURQZUw2LTZMVEMyZWd0V0dzbENMZUtGZG5xT0J0b1F4NmM3bzFralFRNzlHZzFUMk1BX0RLR0pUQ3JleTlTQzhNTFhlbnUxM0NXMG1vdmdQcV84emFaM1NWcWtlMVHSAfgBQVVfeXFMTm5iOV9XUlFERi05WFVUaGV3Yzl6dFlubE1rRFdjVW1ON0Z2MmFKdDVuOTl5NlZaUnE1VjhxSXlOMmpQNnYwVXNmdmZXV2poNFNqWEJfZnFmV08yTzdQSE5TNC1KSVZJb1FMRFhoUnNLR3BucmdnVWFMdlZ4TVBaMUxkUTRNMng1ZG9HTTdsLTZUOFBaV21IWjNUc2p3RWZKaGRmUWdMelZSTjYyVDg5MkRSZkV2ZHQ1RzhTSXRNOURycTJ5U0N6VFZlOGJhaTRXdmxNV0VvRmFtR3JuYWV3SkcxMm9kM3JTcTd4WkFQT3FWbmFDc2lxZ0w?oc=5",
+        "id": "4f0a03cd18e62ac5fbd7c71b"
+      },
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "Kitron receives EUR 19 million guidance, control and targeting systems order - manilatimes.net",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQT3d3XzgzY3NLYUdmRE96bm01czBDRDUza2JpWGZaMlR3MVhPaHJhWXZHT1JaOUhFMm5aVk14bEZQWDE0LWZxOHdVdXdwbGRwWkc3dkVmZHMxcGtOb1VmSmdodDNhZV9XTmk3X0dJTXBiTTc4bFVVaUNndGhfODJMeWQ5dDlwZlE4QUJVbkUyWDhydWotWlFULUNqeXVycVc0RVdqZ2FVM2JsNlhKUlNxRS11VVBXbVY0bUdHTnRIS1hEOTIwZ2U5eVhXcmI4MjgzTlNmTnh0MWRjZHZtNVAzYnIzVdIB6AFBVV95cUxPVGJ0M3l6NXFMQzFUbDE5RVhIMktVM1ZVZk9NLTZqdGZkVk9mNVQ3TmtRSjdwTDNRTDk3SERBN3I1NGZlQlhyemZWRjNIc01ZZnBhU19XZFFKbjFWZE1NLWZiLVFfMzNMdGRUTXdCaTRoMkxYY0JnV0xOdlhJdVJZU29CejBFc09sRUpPX1lUaTZMRkJEX3NoWXdYWEt2Wkt0YXRJU0VoWEhWNVdEVXltUGtTZVExa180NkNyNExZOEVPSldxRy1PZmNCZTRhSUptakE1cUJ4UEtXcFEwaTYzQkR6ZEN4MUJz?oc=5",
+        "id": "22dd7f42b92ac1e7f9beb95f"
+      },
       {
         "Oppdaget": "01.10.2026",
         "Signal": "Nordic EMS firms step up M&A pace with defence-driven expansion - evertiq.com",
@@ -876,7 +926,7 @@
     ],
     "last_baseline": "23.09.2026",
     "last_updated": "01.10.2026",
-    "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "4 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "norbit_external_signals": {
     "company": "NORBIT",
@@ -1113,9 +1163,59 @@
       "1f59cf985ace5201eae113e1",
       "fdd3a552aadebe0830339102",
       "7e51b518c852c9eddfad0796",
-      "4faa3981575d3fd2299156f4"
+      "4faa3981575d3fd2299156f4",
+      "7d21b2974557d3ed1a996917",
+      "e1872cb28f74b998699f6def",
+      "9c97b18d1cc0f80a5db7a6c5",
+      "594de3e65ec64927f8c07e01",
+      "4c12f59f5362c0a44ebf40a1"
     ],
     "signals": [
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "Cohort’s ELAC wins €140m Saab sonar deal for Polish submarines - UK Investor Magazine",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNSVp1QkJDZzQtblJkRVpYMHNuOGNlS3BMbWh6WlNiUHNWZ2xFV2o1QzBxQXRVWDR1YWY0eTJLQUZYclBnaTJJS2JMS0MzQ0JDVUxqODV0RElVNXZRSmotY1FnTy1IbGxUWGszUGIxSmRueF9IMTZ0M0d0Q1BEaDlfelBrWHFxVnNPcTFrODJNeVhjNG5IdmNROGljdw?oc=5",
+        "id": "4c12f59f5362c0a44ebf40a1"
+      },
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "Cohort wins £120m submarine sonar contract through German subsidiary - Insider Media Ltd",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNbnUxc3d5WWdFd25GVlU2T0I4UW5Lamw5NUJVamw2NjZOZkhIcDlHR20wRkF3cDVhWjMwdmpVaXZxMk53UFhscjh0TlgxdGJxcHVuN1FuNm5Dd3Uzb1VISmlwV0NKN1drWG10NWxKakFTTE5HZWxxM3paODZadW1INGtqNVlDR3pxS0NtanpSV0FpQjRfZmkzM2d2Ty1OQWFwRGRPLThRRUR2Qkp6d2RiNzNB?oc=5",
+        "id": "594de3e65ec64927f8c07e01"
+      },
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "3 Louisiana Shipyards to Build 30 Drone Ships in $1.2B Navy MUSV Deal - USNI News",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOYlprV2REXzBLQWF3dzJhaHEwNjM3cnNoSVM4bU9VV2RNM3dfaWp2NWcya3NRSWMzVUlrcW9GS0lUWFBrQ0MxYXduZnE3Q1M2WTZ3VXdsWW1CQXNEdkhCcVVuNzNNQ3RBZklFakx0d0pVX3Mxd2Z1eTdTQmxsN05MWDNoNFZXbEU1R2I2dFJ5RVMwYU5GbEtyd3kxV3I?oc=5",
+        "id": "9c97b18d1cc0f80a5db7a6c5"
+      },
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "NORBIT - Awarded NOK 120 million order - manilatimes.net",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNNWk0TlVILWZHODdZd3duamhzQVkzaExTZWpRanljdHV2R1B4SmZoRnY2WC1NUElOY1UtaTdvbG84Ukdva1U3Z2c2bUNfdlNEMURGbG1IUU5Mb0pDM2hHU3pBcnpQM1VEM3d6bEx5MDl1QnpoQm5ZQUc1M3BxUXI1WTJBcnpwcHNxdzVkSmZWTWN5dlVxSzVHajZUWjBLWlJFY1FjUDA3S1J0OWkyY1Ew0gG0AUFVX3lxTE4tRXFTaUJhTjJMM2g2NXdlZ2pnZ0wwdUdWcDR0OHViX1pzWGx2dzlrYlBXTTQ2U05GVDZXTENQNmVKbWxmR29tOUl1UGlKaHBLQjZpRlNINlBuY2VfbEk1dkUxX29yUXVucjktMzU5TExBQU9XcWxpTEt1Wm9lVm8yV1hseVNzMHdlMkJxTDZHbHEzVkNVRERGN0JfNEVRc2xWcjdVRDA2cVpaN1Q5dkJUTWlpRQ?oc=5",
+        "id": "e1872cb28f74b998699f6def"
+      },
+      {
+        "Oppdaget": "01.10.2026",
+        "Signal": "NORBIT to supply multiple WINGHEAD sonars for marine renewable energy projects - Cyprus Shipping News",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQOTNucjBkTlNkcHo1dnNVRTBzR1o2WDBoYzRwS2szaENXUU14bnVZWHRFR0hMT042NnZyOEtFYkttVDQwNWdJNDBCeFd5c1V0bnN3MkhpTWdzY3V6Y2xoSWRIVHJTWlJxcUxveW5NTi1HR2dJUWxmZ0hqbUFZN202YU56MG5nSDhTMTZaTmR2Z19DclptMFBtejFEeFExMHIycTcyVkhjRmlQSG1mRlZWX0dSMVl6Z0hmRk9sZkJR?oc=5",
+        "id": "7d21b2974557d3ed1a996917"
+      },
       {
         "Oppdaget": "01.10.2026",
         "Signal": "Saronic Awarded Production Contract for Marauder Under U.S. Navy’s MUSV Marketplace - navalnews.com",
@@ -1340,51 +1440,6 @@
         "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
         "Lenke": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5rSEJ3TzFibXB6WXUxMDdySjJvYXJZVGpiam1pOWlFUFJSbUROVDlqUnBuTXlGejktWjJfMWlXajlfUHppX1lwTUd2WjFFY3NkN09pQ25YZk1LTzFfN05WTWdaal84N25hOTdNOGt5aXJTOGM0R2R2ak15TXFPUQ?oc=5",
         "id": "ca2fce27f093c19cbaf8c086"
-      },
-      {
-        "Oppdaget": "28.09.2026",
-        "Signal": "Indian Navy USVs Move From Trials to Operational Maritime Capability - kodainya.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBub2t0SGprcW5HbDVQdVQ3bkdHdkJ2aklZeHVJelZEUHhrQW9iRkZKVDFhTUxienh0TkJaRkE3QU1JYWlrMFI4RG10Z0RpNjF0V2EzT0NyNm9jdw?oc=5",
-        "id": "4a672a41a83f23d4a659ed76"
-      },
-      {
-        "Oppdaget": "28.09.2026",
-        "Signal": "U.S. Navy selects Anduril’s Dive-XL for XL-AUV program to advance long-range autonomous undersea operations - defence-industry.eu",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOS3BYZklTQ0hIelUwdkQ5Z19zeFQtZGdSSlY3Y3ZjMi1lX2phYVBnanFpSFdKSWN2M3VhZGR4eEJqMXpLWktULWp1clJRWExmRTE3RUFDOTNuZ1Bwd2l6RmFuV0FCVlVISC02ZmRJdVZ4VHBUQXdXeHF3ZnMtZzVpVjJaVkwxWDJI?oc=5",
-        "id": "3910f98e663f050e8ea390ad"
-      },
-      {
-        "Oppdaget": "28.09.2026",
-        "Signal": "Navy asks L3Harris to build fat-line towed-array passive sonar systems for fast attack submarines - Military Aerospace",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiigJBVV95cUxNcU0zbFY2R2ZVM2NqQXI2bzFJSGVCUm9JSVRyQnBXUUtNLWp2NE5mdXFqSU1ObVhFeHpvWllGbll6TDY3THR0MUFWZEVMQTlhQkVwVjRWdFQ1NVVwT3NhS3ZENUZfM3dIYTNKS2pFN0ZZSGlWalQ4R0R1V0R3alJhZTl2dHJGMmhlN0lEUGZhYUlSUnlRV2VqejYwRmZYbmFEZEo2Q0w4UkcxUkM0OVhNcnVfUlRONEowUHBnQmtDQzNsQjNMRUgtbmlESGQtMTR1VmVGeGpQSnNTSmI5aU96bjRQN25tRlFPM2dFT0MyZGVTUzVVcWVVRHdzM0JnLUhhLTRITWE5cjAzQQ?oc=5",
-        "id": "1ea947b222b0bdbafa79d8b8"
-      },
-      {
-        "Oppdaget": "28.09.2026",
-        "Signal": "L3Harris wins deal for submarine-launched AUV system - ukdefencejournal.org.uk",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPck4wV29hMjVRRlVpOEd6M3BvM1IxX1Zxd2pQTS1iZ1Vta3RSQmtNcmZXazdrV2Nsa2RQRHNMeTl4eXhwV01pTWJwY3NlX1ZyZ0VHU1d1N0pqSzBVdjF0bUhmb2ZibVVwNzF2cEZ2dm1LOTBON3ZYOHFIbGZnNy1MMmlVNm5RRWhaOHNiUXhB?oc=5",
-        "id": "87b4272b531fad80a0dc82b6"
-      },
-      {
-        "Oppdaget": "28.09.2026",
-        "Signal": "Thales to supply towed array sonar for Royal Canadian Navy’s River-class destroyers - navylookout.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQQjEzN1g2aFZXZDc5TTBvMHk0eUVYUWtkNmtoTXdKZnFvX2gtT1cyb0RndThwUTVCak5HOTZ4U0VSY1M1UUkyS0RfX2Uwb3A0a3JQX1VPZnJTNHAxRkRUb1pIV0xtTW9oX0t4c1FGOTB4SjFqUFlQU2poVDI3b1czSjg3MUk2MjlzUno5LVk5aUFvSlRTNnU0cDJDcDZJaVVNSmxfNDJGemoxcGNxeDg5cA?oc=5",
-        "id": "ed04167a4a3187f57c282114"
       }
     ],
     "last_checked": "01.10.2026",
