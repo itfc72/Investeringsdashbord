@@ -10096,10 +10096,23 @@ elif side == "Selskaper":
             else:
                 st.caption("Ingen kvartalstall registrert.")
 
-            st.caption(
-                "Helår og kvartal/H1 vises separat for enklere sammenligning. "
-                "EPS-vekst sammenlignes mot tilsvarende periode året før når datagrunnlaget finnes."
-            )
+            if selskap in {"Cambi", "Kitron"}:
+                st.caption(
+                    "Helår og kvartal/H1 vises separat for enklere sammenligning. "
+                    "EPS-vekst og Ordrebok YoY sammenlignes mot tilsvarende periode året før "
+                    "når sammenlignbare tall finnes."
+                )
+            elif selskap == "NOTE":
+                st.caption(
+                    "Helår og kvartal/H1 vises separat for enklere sammenligning. "
+                    "EPS-vekst sammenlignes mot tilsvarende periode året før. "
+                    "Ordrebokvekst viser NOTEs rapporterte YoY/LFL-utvikling."
+                )
+            else:
+                st.caption(
+                    "Helår og kvartal/H1 vises separat for enklere sammenligning. "
+                    "EPS-vekst sammenlignes mot tilsvarende periode året før når datagrunnlaget finnes."
+                )
 
             st.subheader("Segmentdata – Q2 2026 (sist registrert)")
             df_seg = pd.DataFrame(info["segments_q2"])
