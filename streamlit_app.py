@@ -4976,6 +4976,39 @@ def render_consensus_eps(company_name, container):
     )
 
 
+def render_auto_strategy_levels(
+    company_name,
+    eps_2028,
+    bear_value,
+    bull_value,
+):
+    """Vis automatiske kjøps-/reduksjonsnivåer direkte fra Bear/Bull-scenarioene."""
+    currency = companies.get(company_name, {}).get("currency", "NOK")
+    eps_label = (
+        "Cash EPS 2028E – vårt scenario"
+        if company_name == "Storebrand"
+        else "Adj. EPS 2028E – vårt scenario"
+        if company_name == "Vend"
+        else "EPS 2028E – vårt scenario"
+    )
+
+    st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
+    s1, s2, s3 = st.columns(3)
+    s1.metric(eps_label, f"{float(eps_2028):.2f}".replace(".", ","))
+    render_consensus_eps(company_name, s1)
+
+    buy_level = float(bear_value)
+    sell_level = float(bull_value)
+    s2.metric(f"Kjøpsnivå = Bear ({currency})", f"{buy_level:.0f}")
+    s3.metric(f"Reduser/salgsnivå = Bull ({currency})", f"{sell_level:.0f}")
+
+    st.caption(
+        "Kjøpsnivå følger Bear-kursmålet automatisk. "
+        "Reduser/salgsnivå følger Bull-kursmålet automatisk."
+    )
+    return buy_level, sell_level
+
+
 # Session-state-nøkler for alle verdsettelsesfanene. Disse gjør at en endring
 # slår gjennom i Gode kjøp umiddelbart, også før den er lagret permanent.
 VALUATION_WIDGET_KEYS = {
@@ -5150,21 +5183,188 @@ def get_effective_valuation(company_name):
     return values
 
 
+def _history_numeric(value):
+    """Konverter historiske tabellverdier til float når de er sammenlignbare."""
+    if value is None:
+        return None
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return float(value)
+    txt = str(value).strip().replace("%", "").replace(" ", "").replace(",", ".")
+    if txt in {"", "-", "–", "N/M"}:
+        return None
+    try:
+        return float(txt)
+    except (TypeError, ValueError):
+        return None
+
+
+def _valuation_history_rows(company_name):
+    """Returner sorterte helårsrader som brukes til 3-/5-års historikk."""
+    info = companies.get(company_name, {})
+    direct = {"NORBIT", "Cambi", "Kitron", "NOTE", "Endúr", "LINK Mobility"}
+    nested_map = {
+        "Protector": "protector",
+        "B2 Impact": "b2",
+        "Byggmax": "byggmax",
+        "Bakkafrost": "bakkafrost",
+        "Nordic Semiconductor": "nordicsemi",
+        "SATS": "sats",
+        "Vend": "vend",
+        "Selvaag Bolig": "selvaag",
+        "Storebrand": "storebrand",
+    }
+
+    if company_name in direct:
+        rows = info.get("financials", [])
+    else:
+        nested_key = nested_map.get(company_name)
+        rows = info.get(nested_key, {}).get("annual", []) if nested_key else []
+
+    annual = []
+    for row in rows:
+        period = str(row.get("Periode", "")).strip()
+        if re.fullmatch(r"\d{4}", period):
+            annual.append((int(period), row))
+    return sorted(annual, key=lambda item: item[0])
+
+
+def _valuation_history_metric(company_name, row, metric):
+    """Hent sammenlignbar historisk omsetning/AUM, EPS eller operativ margin."""
+    if metric == "revenue":
+        field_map = {
+            "Protector": "Premieinntekter",
+            "B2 Impact": "Cash collections",
+            "Nordic Semiconductor": "Omsetning USDm",
+            "Storebrand": "AUM mrd.",
+        }
+        return _history_numeric(row.get(field_map.get(company_name, "Omsetning")))
+
+    if metric == "eps":
+        field_map = {
+            "B2 Impact": "Adj. EPS",
+            "Bakkafrost": "EPS DKK",
+            "Nordic Semiconductor": "EPS USD",
+            "Storebrand": "Cash EPS",
+        }
+        return _history_numeric(row.get(field_map.get(company_name, "EPS")))
+
+    if metric == "margin":
+        if company_name == "Protector":
+            combined_ratio = _history_numeric(row.get("Combined ratio"))
+            return None if combined_ratio is None else 100.0 - combined_ratio
+
+        if company_name == "B2 Impact":
+            # Historikken inneholder Cash EBITDA, mens 2026-modellen bruker Adj. EBIT.
+            # Ikke bland to ulike marginbegreper.
+            return None
+
+        if company_name == "SATS":
+            ebit = _history_numeric(row.get("EBIT før IFRS 16"))
+            revenue = _history_numeric(row.get("Omsetning"))
+            return None if ebit is None or not revenue else ebit / revenue * 100.0
+
+        if company_name == "Storebrand":
+            operating_profit = _history_numeric(row.get("Driftsresultat"))
+            aum_bn = _history_numeric(row.get("AUM mrd."))
+            if operating_profit is None or not aum_bn:
+                return None
+            return operating_profit / (aum_bn * 1000.0) * 100.0
+
+        field_map = {
+            "Bakkafrost": "Operasjonell EBIT-margin",
+            "Vend": "EBITDA-margin",
+        }
+        return _history_numeric(row.get(field_map.get(company_name, "EBIT-margin")))
+
+    return None
+
+
+def _historical_cagr(company_name, metric, years):
+    """CAGR over nøyaktig 5/3 kalenderår når sammenlignbare data finnes."""
+    if years == 5:
+        dashboard = companies.get(company_name, {}).get("dashboard_5y", {})
+        dashboard_key = "revenue_cagr" if metric == "revenue" else "eps_cagr"
+        dashboard_value = dashboard.get(dashboard_key)
+        if dashboard_value is not None:
+            return float(dashboard_value)
+
+    rows = _valuation_history_rows(company_name)
+    if not rows:
+        return None
+
+    by_year = {year: row for year, row in rows}
+    end_year = max(by_year)
+    start_year = end_year - years
+    required_years = list(range(start_year, end_year + 1))
+    if any(year not in by_year for year in required_years):
+        return None
+
+    values = [
+        _valuation_history_metric(company_name, by_year[year], metric)
+        for year in required_years
+    ]
+    if any(value is None for value in values):
+        return None
+
+    if metric == "eps" and any(value <= 0 for value in values):
+        return None
+
+    start_value = values[0]
+    end_value = values[-1]
+    if start_value is None or end_value is None or start_value <= 0 or end_value <= 0:
+        return None
+    return ((end_value / start_value) ** (1.0 / years) - 1.0) * 100.0
+
+
+def _historical_margin_average(company_name, years):
+    """Snittmargin for de siste 5/3 hele regnskapsårene."""
+    rows = _valuation_history_rows(company_name)
+    if not rows:
+        return None
+
+    by_year = {year: row for year, row in rows}
+    end_year = max(by_year)
+    required_years = list(range(end_year - years + 1, end_year + 1))
+    if any(year not in by_year for year in required_years):
+        return None
+
+    values = [
+        _valuation_history_metric(company_name, by_year[year], "margin")
+        for year in required_years
+    ]
+    if any(value is None for value in values):
+        return None
+    return sum(values) / len(values)
+
+
+def _fmt_history_pct(value):
+    return "N/M" if value is None else f"{value:.1f}%".replace(".", ",")
+
+
 def render_valuation_history_context(company_name, section):
     hist = VALUATION_HISTORY.get(company_name, {})
+
     if section == "pe":
         txt = hist.get("pe_text")
+    elif section == "revenue":
+        label = (
+            "Premie-/omsetningsvekst CAGR"
+            if company_name == "Protector"
+            else "AUM CAGR"
+            if company_name == "Storebrand"
+            else "Omsetning CAGR"
+        )
+        txt = (
+            f"{label} siste 5 år {_fmt_history_pct(_historical_cagr(company_name, 'revenue', 5))} | "
+            f"siste 3 år {_fmt_history_pct(_historical_cagr(company_name, 'revenue', 3))}"
+        )
+    elif section == "eps":
+        txt = (
+            f"EPS CAGR siste 5 år {_fmt_history_pct(_historical_cagr(company_name, 'eps', 5))} | "
+            f"siste 3 år {_fmt_history_pct(_historical_cagr(company_name, 'eps', 3))}"
+        )
     else:
-        growth_txt = hist.get("growth_text")
-        txt = growth_txt
-        if growth_txt and "|" in growth_txt:
-            parts = [part.strip() for part in growth_txt.split("|", 1)]
-            if section == "revenue":
-                txt = parts[0]
-            elif section == "eps":
-                txt = parts[1]
-        elif section == "eps" and company_name == "Vend":
-            txt = "EPS CAGR N/M pga. store portefølje- og scope-endringer"
+        txt = None
 
     if txt:
         st.markdown(
@@ -5255,10 +5455,16 @@ def render_margin_and_implied_eps(company_name, eps_2026, periods=2):
         bull_margin = max(bull_margin, base_margin)
 
     st.markdown(f"**{title}**")
+    margin_avg_5 = _historical_margin_average(company_name, 5)
+    margin_avg_3 = _historical_margin_average(company_name, 3)
     st.caption(
-        f"Referansemargin 2026: {baseline:.1f}%".replace(".", ",")
-        + ". EPS beregnes fra omsetningsvekst × endring i denne marginen. "
-        + "Scenarioene holdes automatisk i rekkefølgen Bear ≤ Base ≤ Bull."
+        (
+            f"Referansemargin 2026: {baseline:.1f}% | "
+            f"snitt siste 5 år: {_fmt_history_pct(margin_avg_5)} | "
+            f"snitt siste 3 år: {_fmt_history_pct(margin_avg_3)}. "
+            "EPS beregnes fra omsetningsvekst × endring i denne marginen. "
+            "Scenarioene holdes automatisk i rekkefølgen Bear ≤ Base ≤ Bull."
+        ).replace(".", ",")
     )
     m1, m2, m3 = st.columns(3)
     m1.number_input(
@@ -6628,13 +6834,12 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input("Kjøpsnivå (NOK)", value=float(v["buy_level"]), step=1.0, format="%.0f", key="b2_buy")
-            sell_level = s3.number_input("Reduser/salgsnivå (NOK)", value=float(v["sell_level"]), step=1.0, format="%.0f", key="b2_sell")
-            max_pe = s4.number_input("Maks P/E underveis", value=float(v["max_pe_underway"]), step=1.0, format="%.0f", key="b2_maxpe")
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
+            )
             render_valuation_save_controls(selskap)
 
             st.subheader("Estimert kurs i 2028")
@@ -6642,12 +6847,6 @@ elif side == "Selskaper":
             r1.metric("🔴 Bear", f"{target_bear:.0f} NOK")
             r2.metric("🟡 Base", f"{target_base:.0f} NOK")
             r3.metric("🟢 Bull", f"{target_bull:.0f} NOK")
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ved kurs ≤ {buy_level:.0f} NOK. "
-                f"Reduser deler av beholdningen ved kurs ≥ {sell_level:.0f} NOK "
-                f"når P/E samtidig er rundt {max_pe:.0f}x eller høyere."
-            )
 
     elif selskap == "Protector":
         prot = info["protector"]
@@ -6897,21 +7096,11 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input(
-                "Kjøpsnivå (NOK)", value=float(prot["buy_level"]),
-                step=5.0, format="%.0f", key="prot_buy"
-            )
-            sell_level = s3.number_input(
-                "Reduser/salgsnivå (NOK)", value=float(prot["sell_level"]),
-                step=5.0, format="%.0f", key="prot_sell"
-            )
-            max_pe = s4.number_input(
-                "Maks P/E underveis", value=float(prot["max_pe_underway"]),
-                step=1.0, format="%.0f", key="prot_maxpe"
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
             )
             render_valuation_save_controls(selskap)
 
@@ -7049,12 +7238,6 @@ elif side == "Selskaper":
                 pd.DataFrame(sensitivity_rows),
                 width="stretch",
                 hide_index=True,
-            )
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} NOK; "
-                f"reduser ≥ {sell_level:.0f} NOK når P/E samtidig er rundt "
-                f"{max_pe:.0f}x eller høyere."
             )
 
     elif selskap == "Byggmax":
@@ -7304,21 +7487,11 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input(
-                "Kjøpsnivå (SEK)", value=float(bmax["buy_level"]),
-                step=1.0, format="%.0f", key="bmax_buy"
-            )
-            sell_level = s3.number_input(
-                "Reduser/salgsnivå (SEK)", value=float(bmax["sell_level"]),
-                step=1.0, format="%.0f", key="bmax_sell"
-            )
-            max_pe = s4.number_input(
-                "Maks P/E underveis", value=float(bmax["max_pe_underway"]),
-                step=1.0, format="%.0f", key="bmax_maxpe"
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
             )
             render_valuation_save_controls(selskap)
 
@@ -7441,12 +7614,6 @@ elif side == "Selskaper":
                 pd.DataFrame(sensitivity_rows),
                 width="stretch",
                 hide_index=True,
-            )
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} SEK; "
-                f"reduser ≥ {sell_level:.0f} SEK når P/E samtidig er rundt "
-                f"{max_pe:.0f}x eller høyere."
             )
 
     elif selskap == "Bakkafrost":
@@ -7692,21 +7859,11 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input(
-                "Kjøpsnivå (NOK)", value=float(bakka["buy_level"]),
-                step=5.0, format="%.0f", key="bakka_buy"
-            )
-            sell_level = s3.number_input(
-                "Reduser/salgsnivå (NOK)", value=float(bakka["sell_level"]),
-                step=5.0, format="%.0f", key="bakka_sell"
-            )
-            max_pe = s4.number_input(
-                "Maks P/E underveis", value=float(bakka["max_pe_underway"]),
-                step=1.0, format="%.0f", key="bakka_maxpe"
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
             )
             render_valuation_save_controls(selskap)
 
@@ -7813,12 +7970,6 @@ elif side == "Selskaper":
                 pd.DataFrame(sensitivity_rows),
                 width="stretch",
                 hide_index=True,
-            )
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} NOK; "
-                f"reduser ≥ {sell_level:.0f} NOK når P/E samtidig er rundt "
-                f"{max_pe:.0f}x eller høyere."
             )
 
     elif selskap == "Nordic Semiconductor":
@@ -8069,21 +8220,11 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input(
-                "Kjøpsnivå (NOK)", value=float(nod["buy_level"]),
-                step=5.0, format="%.0f", key="nod_buy"
-            )
-            sell_level = s3.number_input(
-                "Reduser/salgsnivå (NOK)", value=float(nod["sell_level"]),
-                step=5.0, format="%.0f", key="nod_sell"
-            )
-            max_pe = s4.number_input(
-                "Maks P/E underveis", value=float(nod["max_pe_underway"]),
-                step=1.0, format="%.0f", key="nod_maxpe"
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
             )
             render_valuation_save_controls(selskap)
 
@@ -8190,12 +8331,6 @@ elif side == "Selskaper":
                 pd.DataFrame(sensitivity_rows),
                 width="stretch",
                 hide_index=True,
-            )
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} NOK; "
-                f"reduser ≥ {sell_level:.0f} NOK når P/E samtidig er rundt "
-                f"{max_pe:.0f}x eller høyere."
             )
 
     elif selskap == "SATS":
@@ -8455,21 +8590,11 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input(
-                "Kjøpsnivå (NOK)", value=float(sats["buy_level"]),
-                step=1.0, format="%.0f", key="sats_buy"
-            )
-            sell_level = s3.number_input(
-                "Reduser/salgsnivå (NOK)", value=float(sats["sell_level"]),
-                step=1.0, format="%.0f", key="sats_sell"
-            )
-            max_pe = s4.number_input(
-                "Maks P/E underveis", value=float(sats["max_pe_underway"]),
-                step=1.0, format="%.0f", key="sats_maxpe"
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
             )
             render_valuation_save_controls(selskap)
 
@@ -8578,12 +8703,6 @@ elif side == "Selskaper":
                 pd.DataFrame(sensitivity_rows),
                 width="stretch",
                 hide_index=True,
-            )
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} NOK; "
-                f"reduser ≥ {sell_level:.0f} NOK når P/E samtidig er rundt "
-                f"{max_pe:.0f}x eller høyere."
             )
 
     elif selskap == "Vend":
@@ -8875,23 +8994,6 @@ elif side == "Selskaper":
             eps_base = eps_2026 * (1 + gbase / 100) ** 2
             eps_bull = eps_2026 * (1 + gbull / 100) ** 2
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("Adj. EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input(
-                "Kjøpsnivå (NOK)", value=float(vend["buy_level"]),
-                step=5.0, format="%.0f", key="vend_buy"
-            )
-            sell_level = s3.number_input(
-                "Reduser/salgsnivå (NOK)", value=float(vend["sell_level"]),
-                step=5.0, format="%.0f", key="vend_sell"
-            )
-            max_pe = s4.number_input(
-                "Maks P/E underveis", value=float(vend["max_pe_underway"]),
-                step=1.0, format="%.0f", key="vend_maxpe"
-            )
-
             adevinta_per_share = st.number_input(
                 "Adevinta-verdi per Vend-aksje (NOK)",
                 min_value=0.0,
@@ -8900,7 +9002,6 @@ elif side == "Selskaper":
                 format="%.0f",
                 key="vend_adevinta_per_share",
             )
-            render_valuation_save_controls(selskap)
             st.caption(
                 "Utgangspunktet 36 NOK per aksje tilsvarer omtrent 7,2 mrd. NOK fordelt "
                 "på rundt 200 mill. utestående Vend-aksjer etter egne aksjer."
@@ -8913,6 +9014,14 @@ elif side == "Selskaper":
             target_bear = core_bear + adevinta_per_share
             target_base = core_base + adevinta_per_share
             target_bull = core_bull + adevinta_per_share
+
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
+            )
+            render_valuation_save_controls(selskap)
 
             target_year = 2028
             years_to_target = target_year - 2026
@@ -9028,12 +9137,6 @@ elif side == "Selskaper":
                 pd.DataFrame(sensitivity_rows),
                 width="stretch",
                 hide_index=True,
-            )
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} NOK; "
-                f"reduser ≥ {sell_level:.0f} NOK når P/E på kjernevirksomheten samtidig "
-                f"er rundt {max_pe:.0f}x eller høyere."
             )
 
     elif selskap == "Selvaag Bolig":
@@ -9312,21 +9415,11 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input(
-                "Kjøpsnivå (NOK)", value=float(sbo["buy_level"]),
-                step=1.0, format="%.0f", key="sbo_buy"
-            )
-            sell_level = s3.number_input(
-                "Reduser/salgsnivå (NOK)", value=float(sbo["sell_level"]),
-                step=1.0, format="%.0f", key="sbo_sell"
-            )
-            max_pe = s4.number_input(
-                "Maks P/E underveis", value=float(sbo["max_pe_underway"]),
-                step=1.0, format="%.0f", key="sbo_maxpe"
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
             )
             render_valuation_save_controls(selskap)
 
@@ -9435,12 +9528,6 @@ elif side == "Selskaper":
                 pd.DataFrame(sensitivity_rows),
                 width="stretch",
                 hide_index=True,
-            )
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} NOK; "
-                f"reduser ≥ {sell_level:.0f} NOK når P/E samtidig er rundt "
-                f"{max_pe:.0f}x eller høyere."
             )
 
 
@@ -9654,16 +9741,12 @@ elif side == "Selskaper":
             target_base = eps_base * pebase
             target_bull = eps_bull * pebull
 
-            st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.metric("Cash EPS 2028E – vårt scenario", f"{eps_base:.2f}".replace(".", ","))
-            render_consensus_eps(selskap, s1)
-            buy_level = s2.number_input("Kjøpsnivå (NOK)", value=float(stb["buy_level"]),
-                                        step=5.0, format="%.0f", key="stb_buy")
-            sell_level = s3.number_input("Reduser/salgsnivå (NOK)", value=float(stb["sell_level"]),
-                                         step=5.0, format="%.0f", key="stb_sell")
-            max_pe = s4.number_input("Maks P/E underveis", value=float(stb["max_pe_underway"]),
-                                     step=1.0, format="%.0f", key="stb_maxpe")
+            buy_level, sell_level = render_auto_strategy_levels(
+                selskap,
+                eps_base,
+                target_bear,
+                target_bull,
+            )
             render_valuation_save_controls(selskap)
 
             years_to_target = 2
@@ -9760,12 +9843,6 @@ elif side == "Selskaper":
                     "Margin of safety": f"{mos:+.0f}%",
                 })
             st.dataframe(pd.DataFrame(sensitivity_rows), width="stretch", hide_index=True)
-
-            st.caption(
-                f"Arbeidsnivåer: kjøp/øk ≤ {buy_level:.0f} NOK; "
-                f"reduser ≥ {sell_level:.0f} NOK når P/E samtidig er rundt "
-                f"{max_pe:.0f}x eller høyere."
-            )
 
     elif selskap not in ("NORBIT", "Cambi", "Endúr", "Kitron", "LINK Mobility", "NOTE"):
         st.info(
@@ -10746,6 +10823,13 @@ elif side == "Selskaper":
                 v2.metric("🟡 Base", f"{base_value:.0f} {currency}")
                 v3.metric("🟢 Bull", f"{bull_value:.0f} {currency}")
 
+                render_auto_strategy_levels(
+                    selskap,
+                    base_eps_2028,
+                    bear_value,
+                    bull_value,
+                )
+
                 st.subheader("Forventet avkastning fra referansekurs")
 
                 r1, r2, r3 = st.columns(3)
@@ -10982,67 +11066,18 @@ elif side == "Selskaper":
 
                     # Egne arbeidsnivåer på vei mot 2028.
                     # Disse endrer ikke selve bear/base/bull-verdsettelsen over.
-                    st.markdown("**Kjøps-/salgsnivå på vei mot 2028**")
-                    strategy_eps_2028_default = eps_base
-                    strategy_base_value_2028 = strategy_eps_2028_default * pe_base
-
-                    s1, s2, s3, s4 = st.columns(4)
-
-                    strategy_eps_2028 = float(strategy_eps_2028_default)
-                    s1.metric(
-                        "EPS 2028E – vårt scenario",
-                        f"{strategy_eps_2028:.2f}".replace(".", ",")
-                    )
-                    render_consensus_eps(selskap, s1)
-
-                    buy_level = s2.number_input(
-                        f"Kjøpsnivå ({currency})",
-                        min_value=0.0,
-                        value=float(round(info["valuation"].get(
-                            "buy_level",
-                            reference_price * 0.90
-                        ))),
-                        step=1.0,
-                        format="%.0f",
-                        key=f"{widget_prefix}_buy_level"
-                    )
-
-                    sell_level = s3.number_input(
-                        f"Reduser/salgsnivå ({currency})",
-                        min_value=0.0,
-                        value=float(round(info["valuation"].get(
-                            "sell_level",
-                            strategy_base_value_2028 * 1.30
-                        ))),
-                        step=1.0,
-                        format="%.0f",
-                        key=f"{widget_prefix}_sell_level"
-                    )
-
-                    max_pe_underway = s4.number_input(
-                        "Maks P/E underveis",
-                        min_value=5.0,
-                        max_value=100.0,
-                        value=float(round(info["valuation"].get(
-                            "max_pe_underway",
-                            pe_bull + 15.0
-                        ))),
-                        step=1.0,
-                        format="%.0f",
-                        key=f"{widget_prefix}_max_pe_underway"
+                    strategy_bear_value_2028 = eps_bear * pe_bear
+                    strategy_bull_value_2028 = eps_bull * pe_bull
+                    buy_level, sell_level = render_auto_strategy_levels(
+                        selskap,
+                        eps_base,
+                        strategy_bear_value_2028,
+                        strategy_bull_value_2028,
                     )
                     render_valuation_save_controls(selskap)
 
                     buy_pe_2028 = buy_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0
                     sell_pe_2028 = sell_level / strategy_eps_2028 if strategy_eps_2028 > 0 else 0.0
-
-                    st.caption(
-                        f"Arbeidsnivåer: kjøp/øk ved kurs ≤ {buy_level:.0f} {currency}. "
-                        f"Reduser deler av beholdningen ved kurs ≥ {sell_level:.0f} {currency} "
-                        f"når P/E samtidig er rundt {max_pe_underway:.0f}x eller høyere. "
-                        f"Med vårt beregnede EPS 2028E på {strategy_eps_2028:.2f} tilsvarer nivåene "
-                        f"ca. {buy_pe_2028:.1f}x / {sell_pe_2028:.1f}x mot 2028E EPS."
-                    )
 
                 years = list(range(2026, 2031))
 
