@@ -12,15 +12,15 @@
     "status": "Aktivt anbud",
     "next_date": "01.12.2026",
     "date_type": "Tilbudsfrist",
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "last_updated": "30.09.2026",
-    "content_hash": "e67af48c74371677e161e95e27bfab5ed9e42b7a2edad28eba140b9f827eb700",
+    "content_hash": "8a138c478d7e454deb67a3922f60ca26e4549bd4d21a9e27105ee821e5aa2dad",
     "last_change_summary": "Clarkson WRRF – Peel Region, Ontario er oppdatert: frist 02.10.2026 → 01.12.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
       "https://groundintel.ca/tenders"
     ],
-    "last_source_change": "01.10.2026",
+    "last_source_change": "02.10.2026",
     "review_note": "Kildene for Clarkson WRRF – Peel Region, Ontario er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "rosedale_ntp": {
@@ -37,7 +37,7 @@
     "status": "Engineering pågår",
     "next_date": "Ikke offentlig",
     "date_type": "Notice to proceed",
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "last_updated": "16.09.2026",
     "content_hash": "29c5fad69e51e8380c0db0c6e1764016f32376078c8cdc848ce0aef7a8916bf5",
     "last_change_summary": "Engineeringfasen er i gang. Cambi opplyste 29.04.2026 at produksjon starter etter en senere notice to proceed og tidligst 12 måneder etter kontraktsinngåelsen.",
@@ -60,15 +60,15 @@
     "status": "Planlagt anskaffelse / overvåkes",
     "next_date": "01.12.2026",
     "date_type": "Indikativ kontraktstildeling",
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "8bae50a7ed5b37d39b21aab428d88609d65b3c21e478edefbb45e1e5dea0a86f",
+    "content_hash": "9045e842f4ac24570172fc27ab0e75ca0a991b324fd3a8aaac0a81f58979448f",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
       "https://www.find-tender.service.gov.uk/procurement/ocds-h6vhtk-055934"
     ],
-    "last_source_change": "01.10.2026",
+    "last_source_change": "02.10.2026",
     "review_note": "Kildene for Beckton STW THP Upgrade – Thames Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "daldowie_west_central": {
@@ -85,14 +85,14 @@
     "status": "Cambi teknologileverandør / designfase",
     "next_date": "04.2027",
     "date_type": "Planlagt byggestart",
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "e86bc8c24584972ab886aac714935950c11384534f4bb8e16fc7c1164808b374",
+    "content_hash": "f9609f2f79171acbe55eec8fad75f2ee2a16173601dd074d726d30ca4a698fa7",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
     ],
-    "last_source_change": "01.10.2026",
+    "last_source_change": "02.10.2026",
     "review_note": "Kildene for West Central Bio-Resource / Daldowie – Scottish Water er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "netheridge_thp": {
@@ -108,15 +108,15 @@
     "status": "Preliminary market engagement / avventer tender",
     "next_date": "Ikke offentlig",
     "date_type": "Neste procurement-steg",
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "0203683e5924868b4739907c10da739a6c0566c07c0600225a8d4d46abd7dcfe",
+    "content_hash": "076105f861c4d187b616e8b09daa3fff34152a004d5bd2d99c9ff970da0efd2d",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
       "https://www.sell2wales.gov.wales/search/show/search_view.aspx?ID=MAY514386&catID="
     ],
-    "last_source_change": "01.10.2026",
+    "last_source_change": "02.10.2026",
     "review_note": "Kildene for Netheridge STW THP – Severn Trent er endret siden forrige kontroll, men ingen sikker status-/datoendring ble funnet automatisk."
   },
   "roundhill_thp": {
@@ -136,7 +136,7 @@
     "last_updated": "16.09.2026",
     "last_change_summary": "Severn Trent opplyser i PR24-materialet at AMP8-planen inkluderer to nye THP-anlegg ved Netheridge og Roundhill, samt utvidelser ved Wanlip og Derby. Roundhill har et gjeldende miljøtillatelsesgrunnlag for sludge treatment, men ingen offentlig UK4 tender eller UK6 award for det nye THP-anlegget er identifisert.",
     "content_hash": "dd534965fb84949d39f4116411e26decee3bb9a2ce4f4d14bba477ca966b56a6",
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "source_urls_used": [
       "https://www.stwater.co.uk/content/dam/stw/about_us/pr24-response/totex/sve4-34-bioresources-botex-plus-cost-assessment.pdf",
       "https://www.severntrent.com/sustainability/bioresources/treatment/",
@@ -198,7 +198,7 @@
       "6feadeae18608057e5ec08fd"
     ],
     "signals": [],
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "source_urls_used": [
       "https://www.note-ems.com/en/press-news/"
     ],
@@ -267,7 +267,7 @@
       "2ddc3187d9e024350ea2ef57"
     ],
     "signals": [],
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "source_urls_used": [
       "https://www.kitron.com/",
       "https://www.kitron.com/newsroom"
@@ -334,14 +334,37 @@
       "4ddce884e988a1d56c32e03d",
       "c57b39423ec4b9f84f491d25",
       "afe04db20b39332cb7a8edc2",
-      "c3e985c36de7b98ded70ce99"
+      "c3e985c36de7b98ded70ce99",
+      "d361f6dc017d3fe221b996bf",
+      "546c0a0f0191b441a869aea5"
     ],
-    "signals": [],
-    "last_checked": "01.10.2026",
+    "signals": [
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Oceans Multibeam sonar systems 25 Aug 2026 NORBIT Connect - new web-based user interface for ROV operations",
+        "Type": "Mulig kontraktssignal",
+        "Viktighet": "Middels",
+        "Kilde": "NORBIT Newsroom",
+        "Lenke": "https://norbit.com/newsroom/norbit-connect-new-web-based-user-interface-for-rov-operations",
+        "id": "546c0a0f0191b441a869aea5"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Oceans 01 Oct 2026 NORBIT Subsea is pleased to share details of a project with DIMAR (Dirección General Marítima de Colombia).",
+        "Type": "Mulig kontraktssignal",
+        "Viktighet": "Middels",
+        "Kilde": "NORBIT Newsroom",
+        "Lenke": "https://norbit.com/newsroom/norbit-subsea-is-pleased-to-share-details-of-a-project-with-dimar-direccion-general-maritima-de-colombia",
+        "id": "d361f6dc017d3fe221b996bf"
+      }
+    ],
+    "last_checked": "02.10.2026",
     "source_urls_used": [
       "https://norbit.com/newsroom"
     ],
-    "last_baseline": "23.09.2026"
+    "last_baseline": "23.09.2026",
+    "last_updated": "02.10.2026",
+    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "note_external_signals": {
     "company": "NOTE",
@@ -565,7 +588,7 @@
         "id": "bf4e21ced48ea09f76cc80a7"
       }
     ],
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=%22NOTE%20AB%22%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20%22data%20centre%22%20OR%20%22data%20center%22)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
@@ -672,9 +695,29 @@
       "22dd7f42b92ac1e7f9beb95f",
       "4f0a03cd18e62ac5fbd7c71b",
       "456069a4e30cf5e22eaafe20",
-      "7a70fa9901bd19716ec5944e"
+      "7a70fa9901bd19716ec5944e",
+      "c7c329d212142b54938d72fc",
+      "ae78e6f1c93f7c20415bc98a"
     ],
     "signals": [
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Kitron opens Longum facility as defence demand accelerates - The Manila Times",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQT1FOd3Rjb0ROMWJ1UFhhVjQwbUQ5ZkhqUTRQUC1IdFNMMlVKX19VZ1dwSnFhdGJvZmZMQ3VDLTIwOGNSVHdLcWRodzVQeTc1aTkyOHNNWVFyUW0xT21CNGkyQlZEaF93V3BWT2NIa3p5M1pBdy05b0dxczhuTTBCd1lMdWdnVzZVako5d0FTUlBZNlpvNkxyZGZSaEpzaDdkcVI3anpfVGUzeTRxajBRVUR6dWJuaVhKanRiWEYyRlFsTWRKOFlkYmg0Y23SAdIBQVVfeXFMUEZlQzJ0Yl83REsyRGVpVnB2clZXdlZmMkhkZThJdU5HQ2ZZZkZTYjZhb2k3YWtsa2JZY0IzNGE2R1Zja0R1WXlUWTJfVmhHMmxVYmZxRm5uR3hIbXBpek0zc2lwdHF3UUpFRGl6dVpJRm05NXNoUUx3OWtoaFlLYk9IOEJ6RklHSFV4NFBsSUhHVjF2OWpXQXM0bXpVU0VfSnZ1eFJDTTNWV09pSDQ3Nm9Ea19nWS1IejRxLVRfWTF6VXhTS211TUJudWFCMjJHUFd3?oc=5",
+        "id": "ae78e6f1c93f7c20415bc98a"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Prime Minister and Kitron’s President and CEO discussed strengthening cooperation in defence industry - Lietuvos Respublikos Vyriausybė",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhetskilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQaWQ3ejVsYm1qcGxOeGhsTWxCZWNKcWw4c2J0ZEJHS2hWSjQ3M1p6eFpTOURMOXFXQmRlX3pqLVJBTk1Ec3BQM2VYd1hBRm1ROVJxZS1DWDdhWVRzRHJsWVBycVBIck5EOVQ5aXU5dG5tNWVTTThyM2lvcHQ3emV3VTgwcEEzY0hjRzExVTFIT2tyT1ZBX3R3UTVQanNxSmc1RGlKVDFZdFRncDlxcFpycjNvTTZHc3NoODF1XzRFS3RPUQ?oc=5",
+        "id": "c7c329d212142b54938d72fc"
+      },
       {
         "Oppdaget": "01.10.2026",
         "Signal": "Kitron completes acquisition of BB Electronics - NTB Kommunikasjon",
@@ -919,14 +962,14 @@
         "id": "d07d8ab5b3c23d9f2798c8bf"
       }
     ],
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=Kitron%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20autonomous%20OR%20customer)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "01.10.2026",
-    "last_change_summary": "4 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_updated": "02.10.2026",
+    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "norbit_external_signals": {
     "company": "NORBIT",
@@ -1168,9 +1211,59 @@
       "e1872cb28f74b998699f6def",
       "9c97b18d1cc0f80a5db7a6c5",
       "594de3e65ec64927f8c07e01",
-      "4c12f59f5362c0a44ebf40a1"
+      "4c12f59f5362c0a44ebf40a1",
+      "29e349fd189fa78f1fe3ab21",
+      "87d6e84c8675753338bb840f",
+      "bd8530632558e6aebf16ddee",
+      "cb151650ff207e9c2768c3d9",
+      "81730b0d514dbb135b4300d1"
     ],
     "signals": [
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Cohort’s ELAC secures €140.7 million Saab contract to supply sonar systems for Poland’s Orka submarine programme through mid-2030s - Defence Industry Europe",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNYUhFNU1DWGNpdWZfNlMwMHllcXlxV0p4dExUMnoyLVJNZXd4LTRuUzJuT3lmR3kya0l6VzVFaFJNd0NfUUk2cTMwQ0stbGloQnZGNFlZUnFoNC13SUFTWHdfVTdWSV9GOFFuNWFGLU5DMnRMTHZKOE9PV3RhM2lPaVhJMTlyakNvZzB4c2JtR2h1LTRmRHhxWkxJZVkyTlJvNU9LYmhvQkEyMmZ2NmhMRXhnb1BrTjRCT19HWkxYUGpvRTJQRlZGVnFVa0tWRDFuWmJJWXBwZk4wQVE2dW92eGZVeVNDQTU2N2d4YWd3?oc=5",
+        "id": "81730b0d514dbb135b4300d1"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Cohort’s ELAC SONAR Secures €140.7m Saab Contract for Polish Submarine Programme - Yahoo Finance UK",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNUGE5QjZyYnFXcnNRczZBbU9OeGZuQ2Fnb2pRQUxQMzBTR2QxZFB2OTRRT2g5WVYtbmZTZDlKbUdPVWNMWlRGWHVxZUVuVzhtTTYyMDlTMXpkamllMDcyMjdpeWpVNG1SZnNZLVRkcUd1Nlg4VDliMlZmeDR2R3kzMzB0R3M?oc=5",
+        "id": "cb151650ff207e9c2768c3d9"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Saronic gets US Navy production contract for Marauder USV - navaltoday.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPRU93SmxvS0QtSlNXOVAtcFdLd3lFa3ZQakdtaXk3em5rXy1OODhpZ0IxaWxrMXR2UWRMV0pfdHkyRjVUd3ZUaXhKcmZCc1doa2s2Z0w0MmJWMWRzWU81NkVlSzJtYWtqaGJod0hXb2NTOUZqbWR3bGp4bmlhckNvT3l4OWFHZElzbHdjd3VlMlY5S1BlODFidjZkTQ?oc=5",
+        "id": "bd8530632558e6aebf16ddee"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "From the Baltic to the Gulf: where USV procurement is heading next - shephardmedia.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNWHowcTQ5bWRURU13YXF5bjNrMGlVUWJyYWNfajNQY0h3RFFqNjFqY0VNVmZPbWs2WWRLZ05oNTI2MEdlRGlNZjR2QXFDSC05cTJKSjIwSTBYYTZmdF93REVBMzJxeUlERllBRWlPNWhnc2FfeVZVdFdfT3FYd3I5c3pLbFVhS2VrMTNzT0dPVk1kd2swX3lVS0tiT254Q1ZzYXVSUHNLTEFNOVRIczByZFhWZTFtQQ?oc=5",
+        "id": "87d6e84c8675753338bb840f"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "NORBIT awarded contract for environmental and asset monitoring system - globenewswire.com",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQNWJYZ2NSMDhaNEJBVnU2dmo5bGlJZXBHYzFmTW5XNFVhQlk3S3lQcUFBckV0RlJiTjVRQk54T2Z1S1haT1hsenl2eElHZTZma2FvZ3VPVVZFWVZvZU5CVHR0dEc2OEJrUWUySFBVeUhoZmh5Wm51MmxWQVdhM29QWl8td1ZONEpRTkRwc09lNklYSUxDZ3ZGbzk1YmtzNkppTzJWa0FHWkx4YWZ5QTZJb245c210TVpwMzc2cmtxdGM2UmhEaTgzRm5yUmJxYVVwdXQxMjE2MU8?oc=5",
+        "id": "29e349fd189fa78f1fe3ab21"
+      },
       {
         "Oppdaget": "01.10.2026",
         "Signal": "Cohort’s ELAC wins €140m Saab sonar deal for Polish submarines - UK Investor Magazine",
@@ -1395,60 +1488,15 @@
         "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
         "Lenke": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPT3BId0QzRUJoVHlSbUxvTUJlX01sMkQ3Mmp6NTB4NmhNVkR3YkJFRE1NVDI2UmlPVXdCNFJja3o5LU1ZTG43cjJFU2Qxd1B3emJyX0xvV0FULW1KS2NtS0R3MW1VZmFJTDdjMTlZSkFuaGlnb1VldHhsUnVGTGoxSjdOcG1iRklYSjM0dFJJdHlic21xTEoycQ?oc=5",
         "id": "8541ad79916a90333c613529"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "Indian Navy USVs Move From Trials to Operational Maritime Capability - Kodainya",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBub2t0SGprcW5HbDVQdVQ3bkdHdkJ2aklZeHVJelZEUHhrQW9iRkZKVDFhTUxienh0TkJaRkE3QU1JYWlrMFI4RG10Z0RpNjF0V2EzT0NyNm9jdw?oc=5",
-        "id": "b5eace331de09fe181f6ae77"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "NATO AIS Fund Awards IDE-led Project to Accelerate USV Standardization - insideunmannedsystems.com",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOdFJ5MFZsRzltR1JXaURDVjh3SFdRWTU3dkwxSm80VkpaZHpELW4zalJyRkE3QUh6ckxCek9KN2Jia01FV0lfMjlfZGY3dWdkLUpUUm56X0IzaHdNaTdWTUhWOTNSOGZQNzNJRU9BUVpwSEQxamhRVkttVGk2eG5QQV9nSjVmc1pCeUdka3dXSDVJNnpFeFdVSnVNU0N5RFlGcXFOSGJIVzc?oc=5",
-        "id": "7934b05e320f4506c01e42e4"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "Fully certified Reach Remote USV to inspect Gassco’s subsea pipelines - Offshore Energy",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQLU1VS1V6N2NZa1BITUFBb3VKZDlSbnRIcU9BVEpNSDRJUUswVUI4T0JDQUU5SzRBTmR2TzhsTEZwWGtNSzYwZnNlNmd4dEk3cHBGNkZkVDFTVzBodm96Z3FaOUxRSWN1YlhVZms4S1hLRkxQemtzYmhEV0pMRGhKMUZLMUk4V0ViLWJqWlc2UW5ONTZiem04QUtGbDlUQ3NheUdF?oc=5",
-        "id": "74f85ebeb7310abee3f2ae8c"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "Netherlands approves work on USVs for future ASW frigates - NavalToday",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNSEQxeko0ZGdibEstNGM2NDhQbllFeTZ1bmZkSWRveE93ZWkxb0FFRHRpLWR3U2hNSVhVMTFPUUVZY2Q1V2NBN013ZXB4aVNrNHE2RExra3A2eHpfU2o2SG9DZWlHZWJzNG9Bb1BIQ0Z0WnNtUk42NzZVTFFSUXFQQUI1R29FLVV5emFOZi1sSDBxcWxZSHc?oc=5",
-        "id": "fc1f0d871f81d7bafed76524"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "Norbit receives €1.5 million sonar order - Offshore Energy",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5rSEJ3TzFibXB6WXUxMDdySjJvYXJZVGpiam1pOWlFUFJSbUROVDlqUnBuTXlGejktWjJfMWlXajlfUHppX1lwTUd2WjFFY3NkN09pQ25YZk1LTzFfN05WTWdaal84N25hOTdNOGt5aXJTOGM0R2R2ak15TXFPUQ?oc=5",
-        "id": "ca2fce27f093c19cbaf8c086"
       }
     ],
-    "last_checked": "01.10.2026",
+    "last_checked": "02.10.2026",
     "source_urls_used": [
       "https://news.google.com/rss/search?q=NORBIT%20(contract%20OR%20sonar%20OR%20AUV%20OR%20USV%20OR%20underwater%20OR%20security)&hl=en-GB&gl=GB&ceid=GB:en",
       "https://news.google.com/rss/search?q=(%22underwater%20security%22%20OR%20sonar%20OR%20AUV%20OR%20USV)%20(contract%20OR%20award%20OR%20procurement%20OR%20tender)&hl=en-GB&gl=GB&ceid=GB:en"
     ],
     "last_baseline": "23.09.2026",
-    "last_updated": "01.10.2026",
+    "last_updated": "02.10.2026",
     "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   }
 }
