@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "02.10.2026",
     "last_updated": "30.09.2026",
-    "content_hash": "8a138c478d7e454deb67a3922f60ca26e4549bd4d21a9e27105ee821e5aa2dad",
+    "content_hash": "700e5dea67962cf3cbbbf84d84d5c87bf8629566602e4cbae84bc2ab24e28af4",
     "last_change_summary": "Clarkson WRRF – Peel Region, Ontario er oppdatert: frist 02.10.2026 → 01.12.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "02.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "9045e842f4ac24570172fc27ab0e75ca0a991b324fd3a8aaac0a81f58979448f",
+    "content_hash": "172682ec76cad46f7feb083c62c9b30e60671ecac8702c1d5377315560cf0e6b",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "02.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "f9609f2f79171acbe55eec8fad75f2ee2a16173601dd074d726d30ca4a698fa7",
+    "content_hash": "398b89d0a340f35a929e9c041511ba792006d4f575458b99254c7d3c0cbff6c2",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "02.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "076105f861c4d187b616e8b09daa3fff34152a004d5bd2d99c9ff970da0efd2d",
+    "content_hash": "91c7d7458ae9540504bedfad09935ddf79b36302277fd8489de15e1da3d9508a",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -336,9 +336,39 @@
       "afe04db20b39332cb7a8edc2",
       "c3e985c36de7b98ded70ce99",
       "d361f6dc017d3fe221b996bf",
-      "546c0a0f0191b441a869aea5"
+      "546c0a0f0191b441a869aea5",
+      "b90113093e9f916e27b175d0",
+      "c90425a711d5bfe73b1f13f0",
+      "4d8554afdcbde747402e909c"
     ],
     "signals": [
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Oceans Multibeam sonar systems 01 Oct 2026 NORBIT Subsea is pleased to share details of a project with DIMAR (Dirección General Marítima de Colombia).",
+        "Type": "Mulig kontraktssignal",
+        "Viktighet": "Middels",
+        "Kilde": "NORBIT Newsroom",
+        "Lenke": "https://norbit.com/newsroom/norbit-subsea-is-pleased-to-share-details-of-a-project-with-dimar-direccion-general-maritima-de-colombia",
+        "id": "4d8554afdcbde747402e909c"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Reports and presentations",
+        "Type": "Mulig kontraktssignal",
+        "Viktighet": "Middels",
+        "Kilde": "NORBIT Newsroom",
+        "Lenke": "https://norbit.com/investor/reports-and-presentations",
+        "id": "c90425a711d5bfe73b1f13f0"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Depth-rated systems for ROV and AUV",
+        "Type": "Mulig kontraktssignal",
+        "Viktighet": "Middels",
+        "Kilde": "NORBIT Newsroom",
+        "Lenke": "https://norbit.com/oceans/subsea/multibeam-sonar-systems/depth-rated-systems-for-rov-and-auv",
+        "id": "b90113093e9f916e27b175d0"
+      },
       {
         "Oppdaget": "02.10.2026",
         "Signal": "Oceans Multibeam sonar systems 25 Aug 2026 NORBIT Connect - new web-based user interface for ROV operations",
@@ -364,7 +394,7 @@
     ],
     "last_baseline": "23.09.2026",
     "last_updated": "02.10.2026",
-    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "3 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
   },
   "note_external_signals": {
     "company": "NOTE",
@@ -1216,9 +1246,59 @@
       "87d6e84c8675753338bb840f",
       "bd8530632558e6aebf16ddee",
       "cb151650ff207e9c2768c3d9",
-      "81730b0d514dbb135b4300d1"
+      "81730b0d514dbb135b4300d1",
+      "db6db149297c40a8839a03c8",
+      "61925c921625e24053bfbe93",
+      "243474a94e9603ccc3d5e13b",
+      "504efbd8df55c2d7770baa80",
+      "b82e9e2011441bda908ced22"
     ],
     "signals": [
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "NATO naval exercises map out future USV requirements but raise questions on acquisition - Shephard Media",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPdE82TmZCc0Z3QTRLb0t4THhQRVp0MEwxejJnb1J5RUotOVFiZmxYOTVZQjI0MUoxc1JpZW13amdNVDNqMGhyVG5semNBM3l0NkprVzZVZ3BPLUZxd18tcFk2VWJpRGNwclNEZXhOb2ZVNzkzWmVJcU5XemN6YVQwbQ?oc=5",
+        "id": "b82e9e2011441bda908ced22"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Milanion and Republikorp USV Conversion Contract - Joint Forces News",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOUUprV3ZSOEtKYkZ1T0FrUVRnS21xcWxWWXlmQ2t4QXczbmtsMDl1WnNjNmgtOS00MVhrYTBmUlQ4UlRNVG05Qi1VTmt6dkVtZUtMeGZrSV9TR0ZkV3BqTGg1aldlbThPQTJFMERnOWF5dXpVcGdUODB5Y1ZrZzBLYlJoNU9xZVBic2tJMGdOcFFseExFaDFqd2cwRzUyS0hYcGRkWDVDaWtQZEk?oc=5",
+        "id": "504efbd8df55c2d7770baa80"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Smarter maintenance for Navy fleet under £1.85bn contract placed by DE&S - des.mod.uk",
+        "Type": "Eksternt kontraktssignal",
+        "Viktighet": "Høy",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOajRMWTdRMUpNTnJPaWYxNFM0akFOQzdNSmJhTDF6T1ZLOUpLYXZTcUFPdF92NjRsSHM3bk1qMzVaOE1seHAtQ1pTaG9tMXJMYlV5N1VEQWV3MHl5c0VBaHFNeGc3NWVFU3RaZk5NM2xGYWhXZjJUdWx5c2tXRHNJUUtGQVpRd3o5N2l0U2tRUXBwVVdy?oc=5",
+        "id": "243474a94e9603ccc3d5e13b"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Australia to more than triple its Bluebottle USV fleet - asianmilitaryreview.com",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPa3F0U0hxUTNLSHB5RURHUHBpV0pRRUhkR2FpYk5Qd283RHZhQ1pFelJGQ0pqSFhhM1ZTZHlGVkx5cWM0anYxV1JxQlNJZklUUXRYSVhTVUJnTFhzcHlTdWl2bC1EbTBsZl83LUdlQ2FkNEo5aUN0RlFjZ3ZRQ2wxOFZnSTBGUS1VcG13aUFqTVRpYVFqcFRGaWREbV9fdkUtRGNwWlRn?oc=5",
+        "id": "61925c921625e24053bfbe93"
+      },
+      {
+        "Oppdaget": "02.10.2026",
+        "Signal": "Elsa breaks new ground with autonomous underwater vehicle job for oil major - KLSE Screener",
+        "Type": "Eksternt markedsignal",
+        "Viktighet": "Middels",
+        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
+        "Lenke": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNYjVzSmxRQWxDNm1JTVFrLThtTUdtX1ZGRm9lQ3c4V3RsTnJIUmpmWEJpemNHa0xleGNqVWd1NVdfaFNfQjdkM1JOdWhqcGVCS3RMUkpkMlAyNlVSVF9pdUZsc0NiVVdNOG16cWxwSTBIMkpwOWhpQlBmdmVEOWhXR2NLbVY3eDJvcURzZWhBdUh2SVV3WDQyblRGanotX1BSU1JsVE11MC1xUnJlTmdERWhsTThla2tRS3F0VXdnQkZHQzA?oc=5",
+        "id": "db6db149297c40a8839a03c8"
+      },
       {
         "Oppdaget": "02.10.2026",
         "Signal": "Cohort’s ELAC secures €140.7 million Saab contract to supply sonar systems for Poland’s Orka submarine programme through mid-2030s - Defence Industry Europe",
@@ -1443,51 +1523,6 @@
         "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
         "Lenke": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOZm1YbDdiY0NZNEJjMFNTTVg0T2RDWmNHSjAxdkdTQ2pZTnNlOVhSMEJiTGtocXR4Q0c4YVh4TlNYam9kZnZmcTVnOTQ1NzNKMmxlTEkxMGF1a25kSGxnRmFnanBXM1N4RC1JekY0OHhHMHhpWUdHdjhkaEtSRTJzRU9vTFhncEp4WlBHSl9rMGFsRS1SbXZac3VKcTZ3TmxyU3VuU1I3WTV0bnVsN2hsb2RkZXRRdw?oc=5",
         "id": "e0e77faa5f2f1e483bf5fcf5"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "AutoPilot Solution For USV/ASV - oceannews.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOSkV0bFBjQUN3VWtGLUxVUnJwUmNyTmkxRy1mcURZS1p5Z01TVEE3TDFSQUo3aUtRbmNmU1QwNjAwczc0SEFvOHBweW5Uek8wbmVsVVI3aWh2SUhFNmtrajJXUE1DaTFvbzFvR0tUTUh2OF9Cc1NRQXlmNW9BNElpVU9UTQ?oc=5",
-        "id": "196b8bc1f17925acef2a1866"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "NORBIT Awarded Order For Multiple WINGHEAD I80S Sonars - oceannews.com",
-        "Type": "Eksternt kontraktssignal",
-        "Viktighet": "Høy",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPUFh0TmRsalB3MDVYT3A5aXRMMHQtaWdEZXBCSklBdDMyc2ZKS1NLUUJoQy1DbGdDSGY1bW1xX3I5cl94RkQyaWVUYWQ0S3VWOGlQWEJkbV80RGtrWjVObjVfeVduUGdWaXhveVVDNUpJVEd4b3FLTXhKNHZKVlA0MkZOZkkySjd0TEhpYlo4V0FJNzEtVzhPWFVkQzRRbDdJSnc?oc=5",
-        "id": "2871604bae190dbc0885d703"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "NORBIT Subsea Adds LMD Capability To WINGHEAD X Midwater Multibeam System - oceannews.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPcGZJMHZkd0FlN3NQOVRrZ0tuM05odHNXYkZvOFh5Y0ZkbTRZZkVhTHBSWlFxdExHQXJqX2ZmRnpNR1dDd21rc0pnWnoyQkdTZ1Q0c1ZIUENiVUdLT2FUazc5NkNXSGVOdUpvWkF3STlDQ2ZtbXB4ZzdvX3dNWG0xRms0cmpyVENSWVZYdzlsQXpFNk8tdzZRcHBVajRfVEdXYmZZX2hadEliZU1iRVFacXI0Z2gydVBmM1RYNQ?oc=5",
-        "id": "f9a43f6da3d9b773d234655f"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "NORBIT Subsea Adds Integrated Sub-Bottom Profiler To Survey Portfolio - oceannews.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQMVUxMmlhelV2dk1seHlqYjlhaFJzQ3gydlI5QTRHdHFjdXVKeUhPTXp2QjRZNURVYmNUTDZWWUpBTjE0akdWVFNSZk03TW5oc1RaOTcwZGYzS0VzUHJpcHBHS0lqNHZ0S0R2OUsyRTBXN3ltUHRRZTM2QW1lQ2I4Zkd6cnZfZFNDY2VsTlNJUVJOOHJ0WjIwcVBMcEQwV2hTMTlmaDdJLTU2eXBGZ3Zld3EzLXZTT0U?oc=5",
-        "id": "7a22283b7c8c363680c86d07"
-      },
-      {
-        "Oppdaget": "29.09.2026",
-        "Signal": "NORBIT Introduces WINGHEAD X To Its Sonar Line - oceannews.com",
-        "Type": "Eksternt markedsignal",
-        "Viktighet": "Middels",
-        "Kilde": "Eksterne nyhets-/bransjekilder / Google News",
-        "Lenke": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPT3BId0QzRUJoVHlSbUxvTUJlX01sMkQ3Mmp6NTB4NmhNVkR3YkJFRE1NVDI2UmlPVXdCNFJja3o5LU1ZTG43cjJFU2Qxd1B3emJyX0xvV0FULW1KS2NtS0R3MW1VZmFJTDdjMTlZSkFuaGlnb1VldHhsUnVGTGoxSjdOcG1iRklYSjM0dFJJdHlic21xTEoycQ?oc=5",
-        "id": "8541ad79916a90333c613529"
       }
     ],
     "last_checked": "02.10.2026",
