@@ -124,7 +124,29 @@
       "buy_level": 90.0,
       "sell_level": 140.0,
       "max_pe_underway": 25.0
+    },
+    "Kitron": {
+      "reference_price": 100.7,
+      "eps_2026": 4.4,
+      "growth_bear": 10.0,
+      "growth_base": 20.0,
+      "growth_bull": 25.0,
+      "revenue_growth_bear": 6.0,
+      "revenue_growth_base": 14.0,
+      "revenue_growth_bull": 18.0,
+      "operating_margin_baseline": 9.5,
+      "operating_margin_bear": 9.5,
+      "operating_margin_base": 10.0,
+      "operating_margin_bull": 10.905612244897958,
+      "pe_bear": 15.0,
+      "pe_base": 18.0,
+      "pe_bull": 22.0,
+      "required_return": 10.0,
+      "target_year": 2028,
+      "buy_level": 90.63000000000001,
+      "sell_level": 130.91,
+      "max_pe_underway": 27.0
     }
   },
-  "updated_at": "2026-10-02T00:07:52+02:00"
+  "updated_at": "2026-10-02T02:53:47+02:00"
 }
