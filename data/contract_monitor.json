@@ -14,7 +14,7 @@
     "date_type": "Tilbudsfrist",
     "last_checked": "03.10.2026",
     "last_updated": "30.09.2026",
-    "content_hash": "8bdbdb161103f571ee35b10825b0c4444cc775d136fb58d7805496764086df66",
+    "content_hash": "f765f33412b6c1f5c8a3d37fec394337b9d2210774ff5f1f83eaeafea33d0947",
     "last_change_summary": "Clarkson WRRF – Peel Region, Ontario er oppdatert: frist 02.10.2026 → 01.12.2026.",
     "source_urls_used": [
       "https://app.govly.com/public/opportunities/16935200",
@@ -62,7 +62,7 @@
     "date_type": "Indikativ kontraktstildeling",
     "last_checked": "03.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "cd2d3d43bbc39918a49d5032a903f764fb91f2b1b774450623b6abd33b35a5ff",
+    "content_hash": "621c08ec063f04031624926f5ff4658ab8dee39933e542d907ca3a2e4d2936b3",
     "last_change_summary": "Thames Water S39830 omfatter en ekstra THP-enhet og tilhørende sludge-treatment assets. Indikativ total prosjektverdi er £130m eks. mva.; indikativ kontraktstildeling er 01.12.2026. Dette er totalprosjektet, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.thameswater.co.uk/media-library/home/about-us/our-suppliers/twul-capital-delivery-major-projects-pipeline.pdf",
@@ -87,7 +87,7 @@
     "date_type": "Planlagt byggestart",
     "last_checked": "03.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "d9b71f4107198fb25d62a2258350fc555e625c9655fb1cb4ccd1db7f2d10fede",
+    "content_hash": "adf24984589f510ce60aa19fc14435351eafa2e06a426a9c9c028b205c2571c7",
     "last_change_summary": "Scottish Water har valgt Daldowie som foretrukket lokasjon for West Central Bio-Resource. Find a Tender beskriver Cambi som designated technology provider i designfasen. Planlagt byggestart er april 2027. Total prosjektverdi er £265–415m, ikke et Cambi-verdiestimat.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/031884-2024"
@@ -110,7 +110,7 @@
     "date_type": "Neste procurement-steg",
     "last_checked": "03.10.2026",
     "last_updated": "16.09.2026",
-    "content_hash": "c72f1ed0ee35b196128a59f8a75aac9d685f04c8f153afcb1f69a5204bb4d83f",
+    "content_hash": "5f55589a89eaade738f6794df726c59f45c64df87977bdcdd4a519905ba656f8",
     "last_change_summary": "Severn Trent gjennomførte preliminary market engagement for et THP-system ved Netheridge STW. Scope omfatter supply, delivery, installation/support, commissioning, operator training og maintenance. Levering var planlagt tidlig 2027, installasjon innen midten av 2027 og commissioning innen utgangen av 2027. Neste relevante trigger er UK4 tender notice, UK6 award eller leverandørvalg.",
     "source_urls_used": [
       "https://www.find-tender.service.gov.uk/Notice/022304-2025",
@@ -629,13 +629,11 @@
       }
     ],
     "last_checked": "03.10.2026",
-    "source_urls_used": [
-      "https://news.google.com/rss/search?q=%22NOTE%20AB%22%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20%22data%20centre%22%20OR%20%22data%20center%22)&hl=en-GB&gl=GB&ceid=GB:en",
-      "https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
-    ],
+    "source_urls_used": [],
     "last_baseline": "23.09.2026",
     "last_updated": "03.10.2026",
-    "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "1 nytt/nye relevant(e) nyhetssignal(er) oppdaget.",
+    "check_error": "https://news.google.com/rss/search?q=%22NOTE%20AB%22%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20%22data%20centre%22%20OR%20%22data%20center%22)&hl=en-GB&gl=GB&ceid=GB:en: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22NOTE%20AB%22%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20%22data%20centre%22%20OR%20%22data%20center%22)&hl=en-GB&gl=GB&ceid=GB:en | https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22NOTE%20EMS%22%20(defence%20OR%20defense%20OR%20customer%20OR%20contract%20OR%20production)&hl=en-GB&gl=GB&ceid=GB:en"
   },
   "kitron_external_signals": {
     "company": "Kitron",
@@ -1014,13 +1012,11 @@
       }
     ],
     "last_checked": "03.10.2026",
-    "source_urls_used": [
-      "https://news.google.com/rss/search?q=Kitron%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20autonomous%20OR%20customer)&hl=en-GB&gl=GB&ceid=GB:en",
-      "https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en"
-    ],
+    "source_urls_used": [],
     "last_baseline": "23.09.2026",
     "last_updated": "03.10.2026",
-    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "2 nytt/nye relevant(e) nyhetssignal(er) oppdaget.",
+    "check_error": "https://news.google.com/rss/search?q=Kitron%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20autonomous%20OR%20customer)&hl=en-GB&gl=GB&ceid=GB:en: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=Kitron%20(contract%20OR%20order%20OR%20defence%20OR%20defense%20OR%20autonomous%20OR%20customer)&hl=en-GB&gl=GB&ceid=GB:en | https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=Kitron%20(%22data%20centre%22%20OR%20%22data%20center%22%20OR%20electrification%20OR%20aerospace%20OR%20missile)&hl=en-GB&gl=GB&ceid=GB:en"
   },
   "norbit_external_signals": {
     "company": "NORBIT",
@@ -1552,12 +1548,10 @@
       }
     ],
     "last_checked": "03.10.2026",
-    "source_urls_used": [
-      "https://news.google.com/rss/search?q=NORBIT%20(contract%20OR%20sonar%20OR%20AUV%20OR%20USV%20OR%20underwater%20OR%20security)&hl=en-GB&gl=GB&ceid=GB:en",
-      "https://news.google.com/rss/search?q=(%22underwater%20security%22%20OR%20sonar%20OR%20AUV%20OR%20USV)%20(contract%20OR%20award%20OR%20procurement%20OR%20tender)&hl=en-GB&gl=GB&ceid=GB:en"
-    ],
+    "source_urls_used": [],
     "last_baseline": "23.09.2026",
     "last_updated": "03.10.2026",
-    "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget."
+    "last_change_summary": "5 nytt/nye relevant(e) nyhetssignal(er) oppdaget.",
+    "check_error": "https://news.google.com/rss/search?q=NORBIT%20(contract%20OR%20sonar%20OR%20AUV%20OR%20USV%20OR%20underwater%20OR%20security)&hl=en-GB&gl=GB&ceid=GB:en: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=NORBIT%20(contract%20OR%20sonar%20OR%20AUV%20OR%20USV%20OR%20underwater%20OR%20security)&hl=en-GB&gl=GB&ceid=GB:en | https://news.google.com/rss/search?q=(%22underwater%20security%22%20OR%20sonar%20OR%20AUV%20OR%20USV)%20(contract%20OR%20award%20OR%20procurement%20OR%20tender)&hl=en-GB&gl=GB&ceid=GB:en: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=(%22underwater%20security%22%20OR%20sonar%20OR%20AUV%20OR%20USV)%20(contract%20OR%20award%20OR%20procurement%20OR%20tender)&hl=en-GB&gl=GB&ceid=GB:en"
   }
 }
